@@ -1,0 +1,61 @@
+{
+"_comment": "This JSON file contains mandatory structure|information to be contained in  C3S NetCDF files - Seasonal",
+"_author": "C.Bergeron",
+"_source": "https://software.ecmwf.int/wiki/display/DGOV/Draft+File+Structure+for+C3S+netCDF+Files",
+
+"Mandatory_cf_convention"		: "CF-1.6",
+"Mandatory_netcdf_format"		: "NETCDF4_CLASSIC",
+"Mandatory_number_datavariable_per_netcdf": 1,
+"Mandatory_dimensions" 			: ["time","plev","lat","lon","bnds"],
+
+
+"Mandatory_variable_names":	{
+					"Cfcoordinatevar"	:	["time", "lat", "lon", "plev"],
+					"Cfauxiliarycoordinatevar"	:	["forecast_period", "forecast_reference_time"]
+							},
+
+"Mandatory_attributes_per_variablename": 	{
+					"time"	:	["axis","bounds","units","standard_name", "calendar", "long_name"],
+					"lat"	:	["axis","bounds","units","standard_name", "long_name"],
+					"lon"	:	["axis","bounds","units","standard_name", "long_name"],
+					"plev"	:	["axis","bounds","units","positive","standard_name", "long_name"],
+					"realization"	:	["units","standard_name"],
+					"leadtime"	:	["units", "long_name","standard_name"],
+					"forecast_period"	:	["bounds","units", "long_name","standard_name"],
+					"forecast_period_time"	:	["units","standard_name", "calendar", "long_name"]
+							},
+
+
+
+"Mandatory_attributes_per_variabletype": 	{
+					"Cfcoordinatevar"	:	{ 
+												"All":  ["axis","bounds","units","standard_name", "long_name"],
+												"T":	["calendar"],
+												"Y":	[],										
+												"X":	[],
+												"Z":	["positive"]
+
+											},
+					"Cfauxiliarycoordinatevar"	:	{ 
+												"T":	["bounds","units","standard_name", "long_name"]
+											},											
+					"Cfdatavar"			: 	{
+												"All" :	[ "_FillValue", "standard_name", "long_name", "coordinates", "cell_measures"]
+											}
+							},
+
+
+"Mandatory_attributes_content": 	{
+					"calendar" 	: ["gregorian"]
+							},
+"Mandatory_global_attributes": 	[	"Conventions","References","comments","source","Institution","forecast_type",
+									"forecast_reference_time","startdate","realization","contact","creation_date",
+									"experiment_id","frequency","initialisation_method","initialisation_description",
+									"institute_id","model_id","modelling_realm","physics_description","physics_version",
+									"project_id","table_id","title","tracking_id"],
+
+"Mandatory_global_attributes_content": 	{
+					"forecast_type" 	: ["forecast","reforecast"]
+									}
+
+}

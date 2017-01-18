@@ -1,0 +1,5 @@
+include C3Schecker/cf/cf-1_6/resources/udunits/*xml
+include C3Schecker/cf/cf-1_6/resources/*xml
+
+recursive-include resources *
+
