@@ -58,11 +58,13 @@ class Cfreader():
 
 
         try:
-            from  mycfunits import Units
+            from  cfunits import Units
             self.cfuni = Units
 
         except Exception as e:
-            raise Exception("A problem occured with Udunits2 library. Error: " + str(e))
+            from  mycfunits import Units
+            self.cfuni = Units
+            self.logger.error("A problem occured with Udunits2 library. Error: " + str(e))
 
 
         try:
