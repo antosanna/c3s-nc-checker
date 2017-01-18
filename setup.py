@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# Author: C. BERGERON 
+# Author: C. BERGERON
 #
 #
-#(C) Copyright 1996-2016 ECMWF.
+# (C) Copyright 1996-2016 ECMWF.
 #
 # This software is licensed under the terms of the Apache Licence Version 2.0
 # which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
@@ -17,7 +17,6 @@
 import os
 
 from setuptools import setup, find_packages
-
 
 
 def read(fname):
@@ -41,9 +40,9 @@ setup(
     package_dir={'': 'C3Schecker'},
     include_package_data=True,
     install_requires=[
-    'cfunits==1.1.4',
-	'netcdf4==1.2.1',
-    'numpy==1.10.2'
+        'cfunits==1.1.4',
+        'netcdf4==1.2.1',
+        'numpy==1.10.2'
     ],
     classifiers=[
         'Development Status :: Alpha',

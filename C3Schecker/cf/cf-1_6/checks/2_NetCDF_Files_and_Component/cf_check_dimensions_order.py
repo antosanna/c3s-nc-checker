@@ -34,7 +34,7 @@ class cf_check_dimensions_order(Basiccheck):
 
 
 
-  			if v.cftype  in ['Cfboundaryvar','Cfauxiliarycoordinatevar']:
+  			if v.cftype  in ['Cfboundaryvar','Cfauxiliarycoordinatevar','Cflabelvar']:
 				continue
 
 

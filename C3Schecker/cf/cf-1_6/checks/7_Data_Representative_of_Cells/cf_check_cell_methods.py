@@ -53,7 +53,7 @@ class cf_check_cell_methods(Basiccheck):
 					units = cfc.get_intervals_units
 					for u in units:
 							try:
-								unit = self.cfuni.Units(u)  
+								unit = self.cfuni(u)  
 							except:
 								self.status = 0
 								self.check_msgs_logger.error("[%s]- Error in Cell_methods attribute for variable %s. Interval unit [%s] is not recognized by UDUNITS2 library",str(ref), str(k) , str(u) )

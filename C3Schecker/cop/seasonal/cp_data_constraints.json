@@ -55,7 +55,7 @@
 			"mandatory_ranges": {
 						"lat": [-90,90],
 						"lon": [0,359],
-						"tasmax": [0,5000]						
+						"tasmax": [273,500]						
 					}
 						,
 			"mandatory_intervals" :

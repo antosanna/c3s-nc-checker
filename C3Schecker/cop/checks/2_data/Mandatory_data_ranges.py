@@ -26,6 +26,7 @@ class Mandatory_data_ranges(Basiccheck):
     def apply(self):
 
 		for k,v  in self.cfcollection.data_variables.iteritems():
+			
 
 			datavariables_checks = self.consdata.get( "default" , {}) 
 
@@ -51,6 +52,9 @@ class Mandatory_data_ranges(Basiccheck):
 		 				if values.ndim == 0: 	values = np.array([values])
 						valuesoutofrange=np.where( np.logical_or(values>y[1], values<y[0] ) )
 
+						# if values a des NaN -> traiter le cas
+						# print str(y)
+						
 						if valuesoutofrange[0].size > 0:
 							self.status = 0
 							self.logger.error("[%s]- [%s] range must be %s  - First %s", str(self.ref) , str(x), str(y), str(valuesoutofrange[0][0]) )

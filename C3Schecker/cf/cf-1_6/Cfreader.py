@@ -73,7 +73,7 @@ class Cfreader():
             self.variablesset = self.dataset.variables
 
         except Exception as e :
-            self.messages.append( "For an unexpected reason, the file cannot be interpreted as a NetCDF dataset: " + str(e) )
+            self.logger.error( "For an unexpected reason, the file cannot be interpreted as a NetCDF dataset: " + str(e) )
 
 
 

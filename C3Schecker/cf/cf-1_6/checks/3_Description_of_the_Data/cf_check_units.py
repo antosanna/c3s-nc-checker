@@ -27,7 +27,7 @@ class cf_check_units(Basiccheck):
 
 		for k,v in self.cfcollection:
 
-			unit = self.cfuni.Units()  
+			unit = self.cfuni
 			v.cfudunit = unit
 
 			# Apply except for CF Boundary Variables and CF Climatological Variables 
@@ -53,7 +53,7 @@ class cf_check_units(Basiccheck):
 					continue
 				# MUST be recognized by udunits
 				try:
-					unit = self.cfuni.Units(  v.units  )  
+					unit = self.cfuni(  v.units  )  
 					v.cfudunit = unit
 				except:
 					self.status = 0
@@ -70,10 +70,10 @@ class cf_check_units(Basiccheck):
 						if stn_name_modifier:
 							if  not self.cfref.cf_standard_names_modifiers[stn_name_modifier]: #if a unit is specified for modification
 								std_unit = self.cfref.cf_standard_names_modifiers[stn_name_modifier]
-								std_unit_unit 	= self.cfuni.Units(  std_unit  )
+								std_unit_unit 	= self.cfuni(std_unit)
 						else:	
 							std_unit 		= self.std_names[std_name]
-							std_unit_unit 	= self.cfuni.Units(  std_unit  ) #udunit instance
+							std_unit_unit 	= self.cfuni(  std_unit  ) #udunit instance
 
 
 
@@ -85,7 +85,7 @@ class cf_check_units(Basiccheck):
 			
 					if unit.isreftime: # Reference Time remove
 						tmp = str(v.units).split()[0] 
-						unit = self.cfuni.Units(  tmp )  
+						unit = self.cfuni(tmp)  
 			 
 					if not ( unit.equivalent(std_unit_unit) ):
 						self.status = 0

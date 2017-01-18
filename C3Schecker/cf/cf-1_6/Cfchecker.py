@@ -102,13 +102,13 @@ class Cfchecker:
 
 	### Udunits2
 		try:
-			from  mycfunits import Units
-			import mycfunits
-			self.toto = mycfunits
+			from  cfunits import Units
 			self.cfuni = Units
 
 		except Exception as e:
-			self.check_msgs_logger.critical("A problem occured with Udunits2 library  [%s]", str(e))
+			from  mycfunits import Units
+			self.cfuni = Units
+			self.logger.error("A problem occured with Udunits2 library. Error: " + str(e))
 
 
 
@@ -270,7 +270,7 @@ class Cfchecker:
 
 			classname  = modulepath.split(".")[-1]
 			module = importlib.import_module("cf.cf-1_6.checks." + modulepath)
-			checkclass = getattr(module, classname )(self.check_msgs_logger ,self.status, self.cfref, self.cfcollection, self.toto, self.std_names)
+			checkclass = getattr(module, classname )(self.check_msgs_logger ,self.status, self.cfref, self.cfcollection, self.cfuni, self.std_names)
 			checkclass.status = 1
 			checkclass.apply()
 			if not checkclass.status:

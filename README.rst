@@ -34,7 +34,7 @@ Install package
 Install with::
 
     python setup.py install
-
+    pip install 
 
 Initial Test
 ------------

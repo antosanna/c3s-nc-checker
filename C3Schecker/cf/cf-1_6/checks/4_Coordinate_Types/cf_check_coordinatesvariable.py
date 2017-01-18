@@ -49,7 +49,7 @@ class cf_check_coordinatesvariable(Basiccheck):
 						if unit.islatitude: unit_axis = "Y"
 						if unit.islongitude: unit_axis = "X"
 						if unit.isreftime: unit_axis = "T"
-
+ 
 					except Exception as e :
 						if v.unit in self.cfref.cf_Zaxis_units():
 							unit_axis = "Z"
