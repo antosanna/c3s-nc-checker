@@ -18,58 +18,53 @@
 from Basiccpcheck import Basiccheck
 import numpy
 
+
 class Mandatory_data_values(Basiccheck):
-    """ Inheritated from parent Basiccheck     
+    """ Inheritated from parent Basiccheck
         Apply checks for mandatory data in a list of values
-    """ 
+    """
 
     def apply(self):
 
-		
-		for k,v  in self.cfcollection.data_variables.iteritems():
+        for k, v in self.cfcollection.data_variables.iteritems():
 
-			datavariables_checks = self.consdata.get( "default" , {}) 
+            datavariables_checks = self.consdata.get("default", {})
 
+            try:
+                datavariables_tocheck = (self.consdata.get(v.standard_name, {})).get(''.join(v.cell_methods.split()), {})
 
-			try:
-				datavariables_tocheck = (self.consdata.get( v.standard_name , {}) ).get( ''.join(v.cell_methods.split())  ,{})
+            except:
+                datavariables_tocheck = ""
 
-			except:
-				datavariables_tocheck = ""
+            if bool(datavariables_tocheck):
+                datavariables_checks = datavariables_tocheck
 
+            mandatorylov = datavariables_checks.get("mandatory_values", {})
+            if bool(mandatorylov):
 
-			if bool(datavariables_tocheck):
-				datavariables_checks = datavariables_tocheck
+                for x, y in mandatorylov.iteritems():
 
-			mandatorylov = datavariables_checks.get("mandatory_values", {})
-			if bool(mandatorylov):
+                    try:
+                        errorvalue = ""
+                        vv = self.cfcollection[x]
+                        values = vv.netcdfinit[:]
+                        if values.ndim == 0:
+                            values = [values]
 
-				for x,y in mandatorylov.iteritems():
- 					
-					try:
-						errorvalue=""
-						vv= self.cfcollection[x]
-						values = vv.netcdfinit[:]
-		 				if values.ndim == 0: 	values = [values]
+                        if isinstance(values, numpy.ma.core.MaskedArray):  # work around when Netcdf4 var is a MaskedArray (get only unmasked values)
+                            values = values.compressed()
 
-		 				
-		 				if type(values) == numpy.ma.core.MaskedArray: #work around when Netcdf4 var is a MaskedArray (get only unmasked values)
-		 					values = values.compressed()
+                        for l in values:
 
-						for l in values:
-							
-							if str(l) not in [ str(i) for i in y ]: #dirty
-								errorvalue = str(l)
-								break
-							
+                            if str(l) not in [str(i) for i in y]:  # dirty
+                                errorvalue = str(l)
+                                break
 
-						if errorvalue:
-							self.status = 0
-							self.logger.error("[%s]- [%s] values must be in %s  - Some other values has been found - First: %s  ", str(self.ref) , str(x), str(y), str( len(values) ) )
-			 					
+                        if errorvalue:
+                            self.status = 0
+                            self.logger.error("[%s]- [%s] values must be in %s  - Some other values has been found - First: %s  ", str(self.ref), str(x), str(y), str(len(values)))
 
-					except Exception as e:
-						self.status = 0
-						self.logger.error("[%s]- [%s] intervals must be %s  - Problem in the check (Could be: no variable [%s] found) %s ", str(self.ref) , str(x), str(y), str(x) , str(e) )
-						continue
-
+                    except Exception as e:
+                        self.status = 0
+                        self.logger.error("[%s]- [%s] intervals must be %s  - Problem in the check (Could be: no variable [%s] found) %s ", str(self.ref), str(x), str(y), str(x), str(e))
+                        continue

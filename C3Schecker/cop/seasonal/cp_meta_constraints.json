@@ -1,75 +1,75 @@
 {
-"_comment": "This JSON file contains mandatory structure|information to be contained in  C3S NetCDF files - Seasonal",
-"_author": "C.Bergeron",
-"_source": "",
+    "_comment": "This JSON file contains mandatory structure|information to be contained in  C3S NetCDF files - Seasonal",
+    "_author": "C.Bergeron",
+    "_source": "",
 
 
-"mandatory_cf_convention"		: "CF-1.6",
-"mandatory_netcdf_format"		: "NETCDF4_CLASSIC",
-"mandatory_number_datavariable_per_netcdf": 1,
-"mandatory_dimensions" 			: ["lat","lon","time","height","realization_dim","str_length"],
-"authorized_other_dimensions" 			: ["bounds"],
+    "mandatory_cf_convention"		: "CF-1.6",
+    "mandatory_netcdf_format"		: "NETCDF4_CLASSIC",
+    "mandatory_number_datavariable_per_netcdf": 1,
+    "mandatory_dimensions" 			: ["lat", "lon", "time", "height", "realization_dim", "str_length"],
+    "authorized_other_dimensions" 			: ["bounds"],
 
 
-"mandatory_variablenames":	{
-					"Cfcoordinatevar"	:	["lon", "lat", "time"],
-					"Cfauxiliarycoordinatevar"	:	["height"]
+    "mandatory_variablenames": {
+        "Cfcoordinatevar"	: ["lon", "lat", "time"],
+        "Cfauxiliarycoordinatevar"	: ["height"]
 
-							},
+    },
 
-"mandatory_standardnames":	{
-					"Cfcoordinatevar"	:	["time", "latitude", "longitude"],
-					"Cfauxiliarycoordinatevar"	:	["height"]
-							},
-
-
+    "mandatory_standardnames": {
+        "Cfcoordinatevar"	: ["time", "latitude", "longitude"],
+        "Cfauxiliarycoordinatevar"	: ["height"]
+    },
 
 
-"mandatory_attributes_per_standardname": 	{
-					"time"	:	["axis","units", "calendar", "long_name"],
-					"latitude"	:	["axis","units", "long_name","valid_min","valid_max"],
-					"longitude"	:	["axis","units", "long_name","valid_min","valid_max"],
-					"height"	:	["axis","units", "long_name","valid_min","valid_max","positive"],
-					"realization"	:	["units", "long_name"]
-							},
 
 
-"mandatory_attributes_per_variabletype": 	{										
-					"Cfdatavar"			: 	{
-												"All" :	[ "standard_name","units", "long_name","valid_min","valid_max","mars_paramid","coordinates","cell_methods"]
-											}
-							},
+    "mandatory_attributes_per_standardname": {
+        "time"	: ["axis", "units", "calendar", "long_name"],
+        "latitude"	: ["axis", "units", "long_name", "valid_min", "valid_max"],
+        "longitude"	: ["axis", "units", "long_name", "valid_min", "valid_max"],
+        "height"	: ["axis", "units", "long_name", "valid_min", "valid_max", "positive"],
+        "realization"	: ["units", "long_name"]
+    },
 
 
-"mandatory_attributes_values": 	{
-					"calendar" 	: ["gregorian"]
-							},
-
-"mandatory_attributes_values_per_standardname": 	{
-					"height"	:	{
-												"units":	"m",
-												"positive":	"up",
-												"axis":"Z",
-												"valid_min":1.0,
-												"valid_max":10.0
-
-											},
-					"air_temperature"	:	{
-												"units":	"K"
-											}
-							},
+    "mandatory_attributes_per_variabletype": {
+        "Cfdatavar"			: {
+            "All": ["standard_name", "units", "long_name", "valid_min", "valid_max", "mars_paramid", "coordinates", "cell_methods"]
+        }
+    },
 
 
-"mandatory_global_attributes": 	[	"Conventions","title","references","source","institution","contact",
-									"project","creation_date","forecast_type","summary","keywords",
-									"forecast_reference_time","history"],
+    "mandatory_attributes_values": {
+        "calendar" 	: ["gregorian"]
+    },
 
-"mandatory_global_attributes_values": 	{
-					"conventions" 	: ["C3S-1.0 CF-1.6"],
-					"title" 	: ["Seasonal forecast data for C3S"],
-					"contact" 	: ["http://copernicus-support.ecmwf.int"],
-					"project" 	: ["C3S Seasonal Forecast"],
-					"keywords" 	: ["C3S","seasonal","C3S,seasonal"]
-									}
+    "mandatory_attributes_values_per_standardname": {
+        "height"	: {
+            "units": "m",
+            "positive": "up",
+            "axis": "Z",
+            "valid_min": 1.0,
+            "valid_max": 10.0
+
+        },
+        "air_temperature"	: {
+            "units": "K"
+        }
+    },
+
+
+    "mandatory_global_attributes": ["Conventions", "title", "references", "source", "institution", "contact",
+                                    "project", "creation_date", "forecast_type", "summary", "keywords",
+                                    "forecast_reference_time", "history"],
+
+    "mandatory_global_attributes_values": {
+        "conventions" 	: ["C3S-1.0 CF-1.6"],
+        "title" 	: ["Seasonal forecast data for C3S"],
+        "contact" 	: ["http://copernicus-support.ecmwf.int"],
+        "project" 	: ["C3S Seasonal Forecast"],
+        "keywords" 	: ["C3S", "seasonal", "C3S,seasonal"]
+    }
 
 }

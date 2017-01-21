@@ -6,7 +6,7 @@
 # Note: None
 #
 #
-#(C) Copyright 1996-2016 ECMWF.
+# (C) Copyright 1996-2016 ECMWF.
 #
 # This software is licensed under the terms of the Apache Licence Version 2.0
 # which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
@@ -17,26 +17,27 @@
 
 from Basiccpcheck import Basiccheck
 
+
 class Mandatory_attributes_per_standardname(Basiccheck):
-    """ Inheritated from parent Basiccheck     
+    """ Inheritated from parent Basiccheck
         Apply checks on mandatory attributes according to short names
-    """ 
+    """
 
     def apply(self):
-    	
-		mapv = self.consmeta.get("mandatory_attributes_per_standardname", {})
-		for k,v  in self.cfcollection:
-			try:
-				stdname = v.standard_name
 
-				mandatoryattributes = mapv.get(stdname,[]) 
-				cfattrs = v.attributesnames
+        mapv = self.consmeta.get("mandatory_attributes_per_standardname", {})
+        for k, v in self.cfcollection:
+            try:
+                stdname = v.standard_name
 
-				if len(mandatoryattributes) > 0:
-					for attr in mandatoryattributes:
-						if attr not in  cfattrs:
-							self.status = 0				
-							self.logger.error("[%s]-Attribute [%s] is mandatory - Variable [%s] ", str(self.ref) , str(attr) , str(k)  )
+                mandatoryattributes = mapv.get(stdname, [])
+                cfattrs = v.attributesnames
 
-			except:
-				continue
+                if len(mandatoryattributes) > 0:
+                    for attr in mandatoryattributes:
+                        if attr not in cfattrs:
+                            self.status = 0
+                            self.logger.error("[%s]-Attribute [%s] is mandatory - Variable [%s] ", str(self.ref), str(attr), str(k))
+
+            except:
+                continue

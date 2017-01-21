@@ -17,50 +17,44 @@
 
 from Basiccpcheck import Basiccheck
 
+
 class Mandatory_data_minmax(Basiccheck):
-    """ Inheritated from parent Basiccheck     
+    """ Inheritated from parent Basiccheck
         Apply checks for mandatory data minimum and maximum (can be used for global fields)
-    """ 
+    """
 
     def apply(self):
 
- 
-		for k,v  in self.cfcollection.data_variables.iteritems():
+        for k, v in self.cfcollection.data_variables.iteritems():
 
-			datavariables_checks = self.consdata.get( "default" , {}) 
-			try:
-				datavariables_tocheck = (self.consdata.get( v.standard_name , {}) ).get( ''.join(v.cell_methods.split())  ,{})
-			except:
-				datavariables_tocheck = ""			
+            datavariables_checks = self.consdata.get("default", {})
+            try:
+                datavariables_tocheck = (self.consdata.get(v.standard_name, {})).get(''.join(v.cell_methods.split()), {})
+            except:
+                datavariables_tocheck = ""
 
-			if bool(datavariables_tocheck):
-				datavariables_checks = datavariables_tocheck
+            if bool(datavariables_tocheck):
+                datavariables_checks = datavariables_tocheck
 
-			mandatoryminmax = datavariables_checks.get("mandatory_min_max", "")
+            mandatoryminmax = datavariables_checks.get("mandatory_min_max", "")
 
+            if bool(mandatoryminmax):
 
-			if bool(mandatoryminmax):
+                for x, y in mandatoryminmax.iteritems():
+                    res = []
 
-				for x,y in mandatoryminmax.iteritems():
-					res=[]
- 
+                    try:
+                        vv = self.cfcollection[x]
+                        values = vv.netcdfinit[:]
+                        valuesminmax = [values.min(), values.max()]
+                        res = [i for i, j in zip(valuesminmax, y) if i != j]
 
-					try:
-						vv= self.cfcollection[x]
-						values = vv.netcdfinit[:]
-						valuesminmax=[values.min(), values.max()]
-						res=[i for i, j in zip(valuesminmax, y) if i != j]
+                        if len(res) > 0:
+                            self.status = 0
+                            self.logger.error("[%s]- [%s] minimum and maximum values must be %s  - Currently %s", str(self.ref), str(x), str(y), str(valuesminmax))
 
+                    except Exception as e:
 
-						if len(res)>0:
-							self.status = 0
-							self.logger.error("[%s]- [%s] minimum and maximum values must be %s  - Currently %s", str(self.ref) , str(x), str(y), str(valuesminmax) )
-		 		 
-					except Exception as e:
-
-						self.status = 0
-						self.logger.error("[%s]- [%s] minimum and maximum values must be %s  - Problem in the check (Could be: no variable [%s] found) %s", str(self.ref) , str(x), str(y), str(x) , str(e) )
-						continue
-
-
-
+                        self.status = 0
+                        self.logger.error("[%s]- [%s] minimum and maximum values must be %s  - Problem in the check (Could be: no variable [%s] found) %s", str(self.ref), str(x), str(y), str(x), str(e))
+                        continue

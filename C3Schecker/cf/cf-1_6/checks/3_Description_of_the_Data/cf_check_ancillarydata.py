@@ -6,7 +6,7 @@
 # Note: None
 #
 #
-#(C) Copyright 1996-2016 ECMWF.
+# (C) Copyright 1996-2016 ECMWF.
 #
 # This software is licensed under the terms of the Apache Licence Version 2.0
 # which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
@@ -17,29 +17,28 @@
 
 from Basiccheck import Basiccheck
 
+
 class cf_check_ancillarydata(Basiccheck):
-	""" Inheritated from parent Basiccheck     
-	""" 
+    """ Inheritated from parent Basiccheck
+    """
 
-	def apply(self):
+    def apply(self):
 
-		ref = "CFREF-ch3.4"
+        ref = "CFREF-ch3.4"
 
-		# The cf_interpreter has already checked if the corresponding variable existing	
-		#	Test only for the type string	
+        # The cf_interpreter has already checked if the corresponding variable existing
+        #	Test only for the type string
 
-		for k,v in self.cfcollection:
-			if v.ancillary_variables:
-				if not ( isinstance( v.ancillary_variables , basestring ) ):
-					self.check_msgs_logger.error("[%s]- Ancillary_variables attribute [%s] must be a string for variable [%s]",str(ref), str(v.ancillary_variables), str( var ) )
-					self.status = 0
-				else:
-					for var in v.ancillary_variables.split():
-						try:
-							self.cfcollection[var]
-						except:
-							self.check_msgs_logger.error("[%s]-Ancillary_variables attribute [%s] contain non existing  variable [%s]",str(ref), str(v.ancillary_variables), str( var ) )
-							self.status = 0
-							continue					
-
-
+        for k, v in self.cfcollection:
+            if v.ancillary_variables:
+                if not (isinstance(v.ancillary_variables, basestring)):
+                    self.check_msgs_logger.error("[%s]- Ancillary_variables attribute [%s] must be a string for variable [%s]", str(ref), str(v.ancillary_variables), str(var))
+                    self.status = 0
+                else:
+                    for var in v.ancillary_variables.split():
+                        try:
+                            self.cfcollection[var]
+                        except:
+                            self.check_msgs_logger.error("[%s]-Ancillary_variables attribute [%s] contain non existing  variable [%s]", str(ref), str(v.ancillary_variables), str(var))
+                            self.status = 0
+                            continue

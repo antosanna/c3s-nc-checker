@@ -17,19 +17,19 @@
 
 from Basiccheck import Basiccheck
 
-class TemplateCheck(Basiccheck):
-	""" Please duplicate this class adding the class name and the check code
-		Class variables to be used:
-		-    self.collection : collection of CF variables
-		- 	 self.consmeta  : Constraints regarding the metadata
-		-    self.consdata  : Comstraints regarding the data 
-		-    self.name 		: Name of the current class
-		-    self.logger 	: Logger to get check log
-		-    self.status 	: Status of the check ( 0: KO, 1: OK)
-		-    self.ref 		: Reference of the check
-	"""
- 	
-	def apply(self):
-    	
 
-		self.logger.error( "[%s]- Nothing to Check", self.ref   )
+class TemplateCheck(Basiccheck):
+    """ Please duplicate this class adding the class name and the check code
+            Class variables to be used:
+            -    self.collection : collection of CF variables
+            - 	 self.consmeta  : Constraints regarding the metadata
+            -    self.consdata  : Comstraints regarding the data
+            -    self.name 		: Name of the current class
+            -    self.logger 	: Logger to get check log
+            -    self.status 	: Status of the check ( 0: KO, 1: OK)
+            -    self.ref 		: Reference of the check
+    """
+
+    def apply(self):
+
+        self.logger.error("[%s]- Nothing to Check", self.ref)

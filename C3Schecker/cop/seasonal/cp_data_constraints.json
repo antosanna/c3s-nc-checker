@@ -1,74 +1,68 @@
 {
 
-"_comment": "This JSON file contains data constraints for C3S NetCDF files - Seasonal",
-"_author": "C.Bergeron",
-"_source": "",
+    "_comment": "This JSON file contains data constraints for C3S NetCDF files - Seasonal",
+    "_author": "C.Bergeron",
+    "_source": "",
 
-"default": {
-			"mandatory_min_max": {
-						"lat": [-90,90],
-						"lon": [0,359]
-						}
-						,
-			"mandatory_ranges": {
-						}
-						,
-			"mandatory_intervals" :
-					{
-					},
-			"mandatory_values" :
-					{
-					}
-					},
+    "default": {
+        "mandatory_min_max": {
+            "lat": [-90, 90],
+            "lon": [0, 359]
+        },
+        "mandatory_ranges": {
+        },
+        "mandatory_intervals":
+        {
+        },
+        "mandatory_values":
+        {
+        }
+    },
 
-"air_temperature": {
-	"time:point": {
-			"mandatory_min_max": {
-						"lat": [-90,90],
-						"lon": [0,359]
-						}
-						,
-			"mandatory_ranges": {
-						"lat": [-90,90],
-						"lon": [0,359],
-						"height": [1,10]						}
-						,
-			"mandatory_intervals" :
-					{
-						"time": "6"
-					},
-			"mandatory_values" :
-					{
-						"realization": [1],
-						"height":[2.0],
-						"tas": [0,5000]						
+    "air_temperature": {
+        "time:point": {
+            "mandatory_min_max": {
+                "lat": [-90, 90],
+                "lon": [0, 359]
+            },
+            "mandatory_ranges": {
+                "lat": [-90, 90],
+                "lon": [0, 359],
+                "height": [1, 10]						},
+            "mandatory_intervals":
+            {
+                "time": "6"
+            },
+            "mandatory_values":
+            {
+                "realization": [1],
+                "height": [2.0],
+                "tas": [0, 5000]
 
-					}
-					},
+            }
+        },
 
-	"time:maximum(interval:1hour)": {
-		
-			"mandatory_min_max": {
-						"lat": [-90,90],
-						"lon": [0,359]						}
-						,
-			"mandatory_ranges": {
-						"lat": [-90,90],
-						"lon": [0,359],
-						"tasmax": [273,500]						
-					}
-						,
-			"mandatory_intervals" :
-					{
-						"time": "24"
-					},
-			"mandatory_values" :
-					{
-						"realization": [1],
-						"height":[2.0]
-					}
-					}
+        "time:maximum(interval:1hour)": {
+
+            "mandatory_min_max": {
+                "lat": [-90, 90],
+                "lon": [0, 359]						},
+            "mandatory_ranges": {
+                "lat": [-90, 90],
+                "lon": [0, 359],
+                "tasmax": [273, 500]
+            },
+            "mandatory_intervals":
+            {
+                "time": "24"
+            },
+            "mandatory_values":
+            {
+                "realization": [1],
+                "height": [2.0]
+            }
+        }
 
 
-			}	
+    }
 }

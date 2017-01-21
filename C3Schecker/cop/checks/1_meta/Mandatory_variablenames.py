@@ -6,7 +6,7 @@
 # Note: None
 #
 #
-#(C) Copyright 1996-2016 ECMWF.
+# (C) Copyright 1996-2016 ECMWF.
 #
 # This software is licensed under the terms of the Apache Licence Version 2.0
 # which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
@@ -17,16 +17,17 @@
 
 from Basiccpcheck import Basiccheck
 
+
 class Mandatory_variablenames(Basiccheck):
-    """ Inheritated from parent Basiccheck     
+    """ Inheritated from parent Basiccheck
         Apply checks for mandatory variable names
-    """ 
+    """
 
     def apply(self):
 
-		mvn = self.consmeta.get("mandatory_variablenames", {})
-		for cftype, mvnvars in mvn.iteritems():
-			for mvnvar in mvnvars:
-				if mvnvar not in str(self.cfcollection.onevartypenames(cftype)):
-					self.status = 0
-		   			self.logger.error("[%s]-Variable [%s] is missing", str(self.ref) , str(mvnvar)  )
+        mvn = self.consmeta.get("mandatory_variablenames", {})
+        for cftype, mvnvars in mvn.iteritems():
+            for mvnvar in mvnvars:
+                if mvnvar not in str(self.cfcollection.onevartypenames(cftype)):
+                    self.status = 0
+                    self.logger.error("[%s]-Variable [%s] is missing", str(self.ref), str(mvnvar))

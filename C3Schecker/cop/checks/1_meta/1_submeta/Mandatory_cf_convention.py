@@ -17,14 +17,15 @@
 
 from Basiccpcheck import Basiccheck
 
+
 class Mandatory_cf_convention(Basiccheck):
-    """ Inheritated from parent Basiccheck     
+    """ Inheritated from parent Basiccheck
         Apply checks for CF convention
-    """ 
+    """
 
     def apply(self):
-    	
-		mcc = self.consmeta.get("Mandatory_cf_convention", None)
-		if self.cfcollection.convention != mcc and mcc:
-			self.status = 0
-		   	self.logger.error("[%s]-CF Convention [%s] is mandatory - currently [%s]", str(self.ref) , str(mcc) , str(self.cfcollection.convention)   )
+
+        mcc = self.consmeta.get("Mandatory_cf_convention", None)
+        if self.cfcollection.convention != mcc and mcc:
+            self.status = 0
+            self.logger.error("[%s]-CF Convention [%s] is mandatory - currently [%s]", str(self.ref), str(mcc), str(self.cfcollection.convention))

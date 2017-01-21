@@ -6,7 +6,7 @@
 # Note: None
 #
 #
-#(C) Copyright 1996-2016 ECMWF.
+# (C) Copyright 1996-2016 ECMWF.
 #
 # This software is licensed under the terms of the Apache Licence Version 2.0
 # which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
@@ -18,28 +18,25 @@
 from Basiccheck import Basiccheck
 import re
 
+
 class cf_check_naming_conventions(Basiccheck):
-    """ Inheritated from parent Basiccheck     
-    """ 
+    """ Inheritated from parent Basiccheck
+    """
 
     def apply(self):
 
-		ref = "CFREF-ch2.3"
+        ref = "CFREF-ch2.3"
 
-		rname = re.compile("[a-zA-Z][a-zA-Z0-9_]*")
+        rname = re.compile("[a-zA-Z][a-zA-Z0-9_]*")
 
-		for k, v in self.cfcollection:
-			# For variable Names
-			if not rname.match(k):
-				self.status = 0
-				self.check_msgs_logger.error('[%s]- Variable [%s] has a wrong name syntax',str(ref), v.name)
+        for k, v in self.cfcollection:
+            # For variable Names
+            if not rname.match(k):
+                self.status = 0
+                self.check_msgs_logger.error('[%s]- Variable [%s] has a wrong name syntax', str(ref), v.name)
 
-			# For attribute Names
-			for a,b in v.attributes_notexcluded:
-				if not rname.match(a):
-					self.status = 0
-					self.check_msgs_logger.error('[%s]- Attribute [%s] has a wrong name syntax',str(ref), a )
-
-
-
- 
+            # For attribute Names
+            for a, b in v.attributes_notexcluded:
+                if not rname.match(a):
+                    self.status = 0
+                    self.check_msgs_logger.error('[%s]- Attribute [%s] has a wrong name syntax', str(ref), a)
