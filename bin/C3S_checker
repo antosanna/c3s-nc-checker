@@ -4,7 +4,7 @@
 #
 # AUTHOR: ECMWF - C. BERGERON
 #
-#(C) Copyright 1996-2016 ECMWF.
+# (C) Copyright 1996-2016 ECMWF.
 #
 # This software is licensed under the terms of the Apache Licence Version 2.0
 # which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
@@ -12,14 +12,14 @@
 # granted to it by virtue of its status as an intergovernmental organisation nor
 # does it submit to any jurisdiction.
 
-import os, sys, inspect
-
-sys.path.append(  os.path.dirname(   os.path.abspath(os.path.join(os.path.realpath(__file__), os.pardir))   )    )
-
-
+import os
+import sys
+import inspect
 from C3Schecker import C3S_checker
 
+
+# sys.path.append(os.path.dirname(os.path.abspath(os.path.join(os.path.realpath(__file__), os.pardir))))
+
+
 if __name__ == "__main__":
-	     sys.exit( C3S_checker.check(  sys.argv[1:] )  )
-
-
+    sys.exit(C3S_checker.check(sys.argv[1:]))
