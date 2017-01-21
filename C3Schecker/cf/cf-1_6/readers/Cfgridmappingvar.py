@@ -6,7 +6,7 @@
 # Note: None
 #
 #
-#(C) Copyright 1996-2016 ECMWF.
+# (C) Copyright 1996-2016 ECMWF.
 #
 # This software is licensed under the terms of the Apache Licence Version 2.0
 # which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
@@ -25,22 +25,20 @@ class Cfgridmappingvar(Cfbasicvar):
     @staticmethod
     def define(variables, logger):
 
+        identifiedvars = {}
+        comment = "This is a CF grid mapping variable"
 
-        identifiedvars   = {}
-        comment         = "This is a CF grid mapping variable"
+        for varname, varclass in variables.iteritems():
 
-        for  varname, varclass in variables.iteritems():
-
-            attr = getattr(varclass, 'grid_mapping' , None)
+            attr = getattr(varclass, 'grid_mapping', None)
 
             if attr:
 
-                    try:
-                        klass = Cfgridmappingvar( attr, variables[attr] )
-                        klass.comment = comment
-                        identifiedvars[attr] = klass
-                    except:
-                        pass
+                try:
+                    klass = Cfgridmappingvar(attr, variables[attr])
+                    klass.comment = comment
+                    identifiedvars[attr] = klass
+                except:
+                    pass
 
         return identifiedvars
-

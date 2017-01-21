@@ -6,7 +6,7 @@
 # Note: None
 #
 #
-#(C) Copyright 1996-2016 ECMWF.
+# (C) Copyright 1996-2016 ECMWF.
 #
 # This software is licensed under the terms of the Apache Licence Version 2.0
 # which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
@@ -29,31 +29,27 @@ class Cfauxiliarycoordinatevar(Cfbasicvar):
     @staticmethod
     def define(variables, logger):
 
+        identifiedvars = {}
 
-        identifiedvars   = {}
+        for varname, varclass in variables.iteritems():
 
-        for  varname, varclass in variables.iteritems():
-
-            attr = getattr(varclass, 'coordinates' , None)
+            attr = getattr(varclass, 'coordinates', None)
 
             if attr:
                 for name in attr.split():
 
                     try:
                         if fct.is_string(variables[name]):
-                            comment         = "This is a CF Label Variable"
-                            klass = Cflabelvar( str(name), variables[str(name)] )
+                            comment = "This is a CF Label Variable"
+                            klass = Cflabelvar(str(name), variables[str(name)])
                             klass.comment = comment
                             identifiedvars[name] = klass
                         else:
-                            comment         = "This is a CF Auxiliary Variable"
-                            klass = Cfauxiliarycoordinatevar( str(name), variables[str(name)] )
+                            comment = "This is a CF Auxiliary Variable"
+                            klass = Cfauxiliarycoordinatevar(str(name), variables[str(name)])
                             klass.comment = comment
                             identifiedvars[name] = klass
                     except:
                         pass
 
         return identifiedvars
-
-
-

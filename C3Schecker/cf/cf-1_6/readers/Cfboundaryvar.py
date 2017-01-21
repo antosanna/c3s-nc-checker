@@ -6,7 +6,7 @@
 # Note: None
 #
 #
-#(C) Copyright 1996-2016 ECMWF.
+# (C) Copyright 1996-2016 ECMWF.
 #
 # This software is licensed under the terms of the Apache Licence Version 2.0
 # which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
@@ -27,21 +27,20 @@ class Cfboundaryvar(Cfbasicvar):
     @staticmethod
     def define(variables, logger):
 
+        identifiedvars = {}
+        comment = "This is a CF Boundary variable"
 
-        identifiedvars   = {}
-        comment         = "This is a CF Boundary variable"
+        for varname, varclass in variables.iteritems():
 
-        for  varname, varclass in variables.iteritems():
-
-            attr = getattr(varclass, 'bounds' , None)
+            attr = getattr(varclass, 'bounds', None)
 
             if attr:
 
-                    try:
-                        klass = Cfboundaryvar( attr, variables[attr] )
-                        klass.comment = comment
-                        identifiedvars[attr] = klass
-                    except:
-                        pass
+                try:
+                    klass = Cfboundaryvar(attr, variables[attr])
+                    klass.comment = comment
+                    identifiedvars[attr] = klass
+                except:
+                    pass
 
         return identifiedvars

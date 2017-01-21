@@ -6,7 +6,7 @@
 # Note: None
 #
 #
-#(C) Copyright 1996-2016 ECMWF.
+# (C) Copyright 1996-2016 ECMWF.
 #
 # This software is licensed under the terms of the Apache Licence Version 2.0
 # which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
@@ -25,22 +25,20 @@ class Cfclimatologyvar(Cfbasicvar):
     @staticmethod
     def define(variables, logger):
 
+        identifiedvars = {}
+        comment = "This is a CF Climatology variable"
 
-        identifiedvars   = {}
-        comment         = "This is a CF Climatology variable"
+        for varname, varclass in variables.iteritems():
 
-        for  varname, varclass in variables.iteritems():
-
-            attr = getattr(varclass, 'climatology' , None)
+            attr = getattr(varclass, 'climatology', None)
 
             if attr:
 
-                    try:
-                        klass = Cfclimatologyvar( attr, variables[attr] )
-                        klass.comment = comment
-                        identifiedvars[attr] = klass
-                    except:
-                        pass
+                try:
+                    klass = Cfclimatologyvar(attr, variables[attr])
+                    klass.comment = comment
+                    identifiedvars[attr] = klass
+                except:
+                    pass
 
         return identifiedvars
-

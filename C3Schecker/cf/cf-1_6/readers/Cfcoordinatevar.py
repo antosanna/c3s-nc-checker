@@ -6,7 +6,7 @@
 # Note: None
 #
 #
-#(C) Copyright 1996-2016 ECMWF.
+# (C) Copyright 1996-2016 ECMWF.
 #
 # This software is licensed under the terms of the Apache Licence Version 2.0
 # which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
@@ -28,12 +28,12 @@ class Cfcoordinatevar(Cfbasicvar):
     @staticmethod
     def define(variables, logger):
 
-        identifiedvars   = {}
-        comment         = "This is a CF Coordinate Variable"
+        identifiedvars = {}
+        comment = "This is a CF Coordinate Variable"
 
-        for  varname, varclass in variables.iteritems():
+        for varname, varclass in variables.iteritems():
 
-            if  ( (varclass.ndim == 0) or (varclass.ndim == 1 and varname in varclass.dimensions) ):
+            if ((varclass.ndim == 0) or (varclass.ndim == 1 and varname in varclass.dimensions)):
 
                 klass = Cfcoordinatevar(varname, varclass)
                 klass.comment = comment

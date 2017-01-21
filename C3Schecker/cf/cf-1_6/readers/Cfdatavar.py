@@ -6,7 +6,7 @@
 # Note: None
 #
 #
-#(C) Copyright 1996-2016 ECMWF.
+# (C) Copyright 1996-2016 ECMWF.
 #
 # This software is licensed under the terms of the Apache Licence Version 2.0
 # which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
@@ -25,15 +25,11 @@ class Cfdatavar(Cfbasicvar):
         Define a CF variable as a data variable
     """
 
-
-
     @staticmethod
     def define(variables, collections, logger):
 
-
-
-        identifiedvars   = {}
-        comment         = "This is a CF Data Variable"
+        identifiedvars = {}
+        comment = "This is a CF Data Variable"
 
         for varname, varclass in variables.iteritems():
 
@@ -41,7 +37,6 @@ class Cfdatavar(Cfbasicvar):
 
                 klass = Cfdatavar(varname, varclass)
                 klass.cf_comment = comment
-                collections.addvar({varname : klass })
-
+                collections.addvar({varname: klass})
 
         return identifiedvars

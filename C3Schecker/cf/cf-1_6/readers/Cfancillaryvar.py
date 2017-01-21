@@ -6,7 +6,7 @@
 # Note: None
 #
 #
-#(C) Copyright 1996-2016 ECMWF.
+# (C) Copyright 1996-2016 ECMWF.
 #
 # This software is licensed under the terms of the Apache Licence Version 2.0
 # which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
@@ -28,14 +28,12 @@ class Cfancillaryvar(Cfbasicvar):
     @staticmethod
     def define(variables, logger):
 
-        identifiedvars   = {}
-        comment         = "This is a CF Ancillary Variable"
+        identifiedvars = {}
+        comment = "This is a CF Ancillary Variable"
 
+        for varname, varclass in variables.iteritems():
 
-
-        for  varname, varclass in variables.iteritems():
-
-            attr = getattr(varclass, 'ancillary_variables' , None)
+            attr = getattr(varclass, 'ancillary_variables', None)
             if attr:
 
                 klass = Cfancillaryvar(varname, varclass)
@@ -43,7 +41,3 @@ class Cfancillaryvar(Cfbasicvar):
                 identifiedvars[varname] = klass
 
         return identifiedvars
-
-
-
-
