@@ -6,7 +6,7 @@
 # Note: None
 #
 #
-#(C) Copyright 1996-2016 ECMWF.
+# (C) Copyright 1996-2016 ECMWF.
 #
 # This software is licensed under the terms of the Apache Licence Version 2.0
 # which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
@@ -16,7 +16,7 @@
 #
 
 from Basiccpcheck import Basiccheck
-import numpy
+import numpy as np
 
 
 class Mandatory_data_values(Basiccheck):
@@ -51,7 +51,7 @@ class Mandatory_data_values(Basiccheck):
                         if values.ndim == 0:
                             values = [values]
 
-                        if isinstance(values, numpy.ma.core.MaskedArray):  # work around when Netcdf4 var is a MaskedArray (get only unmasked values)
+                        if isinstance(values, np.ma.core.MaskedArray):  # work around when Netcdf4 var is a MaskedArray (get only unmasked values)
                             values = values.compressed()
 
                         for l in values:
