@@ -119,6 +119,8 @@ class Cfreader():
         self.cfvariablescollection.addvar(Cfgridmappingvar.define(variablesset, self.logger))
         self.cfvariablescollection.addvar(Cfmeasurevar.define(variablesset, self.logger))
 
+        self.cfvariablescollection.addvar(Cflabelvar.define(self.dataset.variables, self.cfvariablescollection, self.logger))
+
         # Define the remained variables as Data
         self.cfvariablescollection.addvar(Cfdatavar.define(self.dataset.variables, self.cfvariablescollection, self.logger))
 

@@ -16,6 +16,8 @@ def cdl_files(dname):
 @pytest.yield_fixture(params=cdl_files("compliant"))
 def compliant_file(request):
     dname = tempfile.mkdtemp()
+    print request.param
+    print dir(C3S_checker)
     fname, _ = os.path.splitext(request.param)
     fname += ".nc"
     fname = fname.replace("/", "-")

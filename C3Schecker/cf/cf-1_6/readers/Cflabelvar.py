@@ -14,7 +14,7 @@
 # granted to it by virtue of its status as an intergovernmental organisation nor
 # does it submit to any jurisdiction.
 #
-
+import numpy as np
 from C3Schecker.utils import functions as fct
 
 from Cfbasicvar import Cfbasicvar
@@ -26,6 +26,20 @@ class Cflabelvar(Cfbasicvar):
     """
 
     @staticmethod
-    def define(variables, logger):
+    def define(variables, collections, logger):
 
-        pass
+        identifiedvars = {}
+        comment = "This is a CF label variable"
+
+        for varname, varclass in variables.iteritems():
+
+            if np.issubdtype(varclass.dtype, np.str):
+
+                try:
+                    klass = Cflabelvar(varname, varclass)
+                    klass.comment = comment
+                    identifiedvars[varname] = klass
+                except:
+                    pass
+
+        return identifiedvars
