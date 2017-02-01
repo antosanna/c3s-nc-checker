@@ -1,4 +1,5 @@
 {
+
     "129": {
         "name": "z",
         "cf": {
@@ -7,12 +8,12 @@
             "standard_name": "geopotential"
         }
     },
-    "130": {
+    "167": {
         "name": "t",
         "cf": {
-            "units": "K",
+            "units": "Ko",
             "long_name": "Temperature",
-            "standard_name": "air_temperature"
+            "standard_name": "eair_temperature"
         }
     },
     "133": {
