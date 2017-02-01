@@ -18,7 +18,7 @@
 
 class Basiccheck:
 
-    def __init__(self, logger, status, ref, cfcollection, consmeta, consdata):
+    def __init__(self, logger, status, ref, cfcollection, consmeta, consdata, consgrib):
         self.name = self.__class__.__name__
         self.logger = logger
         self.status = status
@@ -27,6 +27,7 @@ class Basiccheck:
         self.cfcollection = cfcollection
         self.consmeta = consmeta
         self.consdata = consdata
+        self.consgrib = consgrib
 
     def __repr__(self):
         return "C3S Check Class: %s" % (self.__class__.__name__)

@@ -21,6 +21,7 @@ import types
 import numpy as np
 
 from C3Schecker.utils import functions as fct
+from Getgribinfo import Getgribinfo
 
 import json
 
@@ -94,12 +95,9 @@ class Cpchecker:
     def cp_get_gribcf(self):
 
         try:
-            cp_cons_json = os.path.join(os.path.dirname(__file__) + "/" + self.c3stype, "grib_to_cf.json")
-            cp_cons = json.loads(open(cp_cons_json).read())
-
-            return cp_cons
+            return Getgribinfo(self.c3stype)
         except Exception as e:
-            self.check_msgs_logger.error("Checking Stopped - Problem with JSON %s grib to CF file, %s,  ", str(cp_cons_json), str(e))
+            self.check_msgs_logger.error("Checking Stopped - Problem with JSON grib to CF file, %s,  ", str(e))
             return {}
 
     @manage_status
@@ -145,7 +143,7 @@ class Cpchecker:
 
         classname = modulepath.split(".")[-1]
         module = importlib.import_module("cop.checks." + modulepath)
-        checkclass = getattr(module, classname)(self.check_msgs_logger, self.status, self.ref, self.cfvariablescollection, self.cp_consmeta, self.cp_consdata)
+        checkclass = getattr(module, classname)(self.check_msgs_logger, self.status, self.ref, self.cfvariablescollection, self.cp_consmeta, self.cp_consdata, self.cp_grib2cf)
         checkclass.status = 1
         checkclass.apply()
         self.status = checkclass.status
