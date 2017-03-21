@@ -100,7 +100,7 @@ class Cfchecker:
         except Exception as e:
             from Units import Units
             self.cfuni = Units
-            self.logger.error("A problem occured with Udunits2 library. Error: " + str(e))
+            self.check_msgs_logger.error("A problem occured with Udunits2 library. Error: " + str(e))
 
     # Standard_name
         try:
