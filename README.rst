@@ -24,7 +24,7 @@ Deploy
 
 To deploy the 'master' branch from the GIT repository::
 
-    git clone https://software.ecmwf.int/stash/scm/cds/C3SChecker.git
+    git clone https://software.ecmwf.int/stash/scm/cds/checker.git
 
 
 
