@@ -40,8 +40,8 @@ setup(
     package_dir={'': 'C3Schecker'},
     include_package_data=True,
     install_requires=[
-        'cfunits==1.1.4',
-        'netcdf4==1.2.1',
+        'netCDF4==1.2.4',
+        'cfunits',
         'numpy==1.10.2'
     ],
     classifiers=[
