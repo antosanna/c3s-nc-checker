@@ -57,6 +57,7 @@ setup(
     keywords='',
     entry_points={
         'console_scripts': [
+            'C3Schecker = C3Schecker.cmd:main'
         ],
     },
 )

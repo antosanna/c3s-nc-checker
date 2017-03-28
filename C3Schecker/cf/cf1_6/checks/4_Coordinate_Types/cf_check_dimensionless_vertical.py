@@ -15,11 +15,12 @@
 # does it submit to any jurisdiction.
 #
 
-from Basiccheck import Basiccheck
+from C3Schecker.cf.cf1_6.checks.Basiccheck import Basiccheck
+
 
 class cf_check_dimensionless_vertical(Basiccheck):
-	""" Inheritated from parent Basiccheck     
-	""" 
+	""" Inheritated from parent Basiccheck
+	"""
 
 	def apply(self):
 
@@ -33,7 +34,7 @@ class cf_check_dimensionless_vertical(Basiccheck):
 				else:
 					self.status = 0
 					self.check_msgs_logger.error("[%s]- Formula_term attribute not compliant with  dimensionless vertical variable [%s] definition",str(ref), str( k ) )
-					continue					
+					continue
 
 
 

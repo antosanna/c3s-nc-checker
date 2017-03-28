@@ -17,7 +17,8 @@
 
 import re
 import numpy as np
-from Basiccheck import Basiccheck
+
+from C3Schecker.cf.cf1_6.checks.Basiccheck import Basiccheck
 
 
 class cf_check_flags(Basiccheck):

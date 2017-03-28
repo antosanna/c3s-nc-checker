@@ -15,7 +15,7 @@
 # does it submit to any jurisdiction.
 #
 
-from Basiccpcheck import Basiccheck
+from C3Schecker.cop.checks.Basiccpcheck import Basiccheck
 
 
 class Mandatory_netcdf_format(Basiccheck):

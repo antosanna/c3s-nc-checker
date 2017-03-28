@@ -227,11 +227,8 @@ class Cfchecker:
 
     @manage_status
     def runcheck(self, modulepath):
-
-        sys.path.append(os.path.dirname(os.path.realpath(__file__)) + "/checks")  # add to PYTHONPATH
-
         classname = modulepath.split(".")[-1]
-        module = importlib.import_module("cf.cf-1_6.checks." + modulepath)
+        module = importlib.import_module('C3Schecker.cf.cf1_6.checks.' + modulepath)
         checkclass = getattr(module, classname)(self.check_msgs_logger, self.status, self.cfref, self.cfcollection, self.cfuni, self.std_names)
         checkclass.status = 1
         checkclass.apply()

@@ -150,10 +150,8 @@ class Cpchecker:
 
     @manage_status
     def runcheck(self, modulepath):
-        sys.path.append(os.path.dirname(os.path.realpath(__file__)) + "/checks")  # add to PYTHONPATH
-
         classname = modulepath.split(".")[-1]
-        module = importlib.import_module("cop.checks." + modulepath)
+        module = importlib.import_module("C3Schecker.cop.checks." + modulepath)
         checkclass = getattr(module, classname)(self.check_msgs_logger, self.status, self.ref, self.cfvariablescollection, self.cp_consmeta, self.cp_consdata, self.cp_grib2cf)
         checkclass.status = 1
         checkclass.apply()

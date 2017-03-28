@@ -15,7 +15,7 @@
 # does it submit to any jurisdiction.
 #
 
-from Basiccpcheck import Basiccheck
+from C3Schecker.cop.checks.Basiccpcheck import Basiccheck
 
 
 class Mandatory_gribconsistency(Basiccheck):
@@ -25,7 +25,7 @@ class Mandatory_gribconsistency(Basiccheck):
 
     def apply(self):
 
-        # loop sur les datavars si paramid on test 
+        # loop sur les datavars si paramid on test
         for k, v in self.cfcollection.data_variables.iteritems():
             if v.mars_paramid:
                 for info in ["units", "standard_name"]:

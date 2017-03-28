@@ -15,7 +15,7 @@
 # nor does it submit to any jurisdiction.
 #
 
-from Basiccheck import Basiccheck
+from C3Schecker.cf.cf1_6.checks.Basiccheck import Basiccheck
 
 
 class cf_check_datatypes(Basiccheck):

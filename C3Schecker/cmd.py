@@ -24,7 +24,7 @@ from C3Schecker.cop.Cpchecker import Cpchecker
 from C3Schecker.utils import functions as fct
 
 
-__CFVERSION__ = ("CF-1.6", "cf-1_6")  # (CF version code, files directory)
+__CFVERSION__ = ("CF-1.6", "cf1_6")  # (CF version code, files directory)
 
 
 __VERSION__ = "0.1"
@@ -32,8 +32,7 @@ __FAILURECODE__ = 0
 __SUCCESSCODE__ = 1
 
 
-def check(argv):
-
+def main():
     parser = argparse.ArgumentParser(
         description='C3S NetCDF Compliancy Checker', epilog=" ")
     parser.add_argument('-V', '--version',
@@ -51,8 +50,7 @@ def check(argv):
                         choices=["info", "warning", "error"],
                         help="information level output")
 
-    l = set(fct.get_immediate_subdirectories(os.path.join(
-        os.path.dirname(__file__) + "/cop/"))) - set(["checks"])
+    l = set(fct.get_immediate_subdirectories(os.path.join(os.path.dirname(__file__), "cop"))) - set(["checks"])
     parser.add_argument('-t', '--type',
                         required=False,
                         action="store",
@@ -87,7 +85,7 @@ def check(argv):
                         action="store",
                         help="NetCDF files list separated by blank")
 
-    args = parser.parse_args(argv)
+    args = parser.parse_args()
 
     if not (args.type or args.confdir):
        parser.error('No configuration fileset requested, add --type or --confdir')
@@ -172,4 +170,4 @@ def display_messages(verbose, msgs):
 
 
 if __name__ == "__main__":
-    sys.exit(check(sys.argv[1:]))
+    sys.exit(main())

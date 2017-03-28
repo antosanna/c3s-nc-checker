@@ -15,11 +15,10 @@
 # does it submit to any jurisdiction.
 #
 
-from Basiccheck import Basiccheck
-import re
+from C3Schecker.cf.cf1_6.checks.Basiccheck import Basiccheck
 
 
-class cf_check_naming_conventions(Basiccheck):
+class cf_check_naming_unicity(Basiccheck):
     """ Inheritated from parent Basiccheck
     """
 
@@ -27,17 +26,15 @@ class cf_check_naming_conventions(Basiccheck):
 
         ref = "CFREF-ch2.3"
 
-        rname = re.compile("[a-zA-Z][a-zA-Z0-9_]*")
-
+        occurence_name = {}
         for k, v in self.cfcollection:
-            # For variable Names
-            if not rname.match(k):
+            try:
+                occurence_name[str(k).lower()] += 1
+            except:
+                occurence_name[str(k).lower()] = 1
+                continue
+
+        for k, v in occurence_name.iteritems():
+            if v > 1:
                 self.status = 0
-                self.check_msgs_logger.error('[%s]- Variable [%s] has a wrong name syntax', str(ref), v.name)
-
-            # For attribute Names
-            for a, b in v.attributes_notexcluded:
-                if not rname.match(a):
-                    self.status = 0
-                    self.check_msgs_logger.error('[%s]- Attribute [%s] has a wrong name syntax', str(ref), a)
-
+                self.check_msgs_logger.error('[%s]- Variable [%s] name is not unique: %s occurences found', str(ref), str(k), str(v))

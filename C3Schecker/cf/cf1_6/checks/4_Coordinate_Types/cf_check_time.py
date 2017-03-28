@@ -15,11 +15,12 @@
 # does it submit to any jurisdiction.
 #
 
-from Basiccheck import Basiccheck
+from C3Schecker.cf.cf1_6.checks.Basiccheck import Basiccheck
+
 
 class cf_check_time(Basiccheck):
-	""" Inheritated from parent Basiccheck     
-	""" 
+	""" Inheritated from parent Basiccheck
+	"""
 
 	def apply(self):
 
@@ -30,7 +31,7 @@ class cf_check_time(Basiccheck):
 
 
 				if not v.calendar:
-					self.check_msgs_logger.warning("[%s]- Calendar is recommended for the time coordinate variable [%s]",str(ref), str( k ) )					
+					self.check_msgs_logger.warning("[%s]- Calendar is recommended for the time coordinate variable [%s]",str(ref), str( k ) )
 					if not v.month_length:
 						self.check_msgs_logger.warning("[%s]- Month_length attribute is recommended when the calendar is not declared for the time coordinate variable [%s]",str(ref), str( k ) )
 
@@ -42,4 +43,4 @@ class cf_check_time(Basiccheck):
 							self.check_msgs_logger.warning("[%s]- Month_length attribute is recommended when the calendar is not standard for the time coordinate variable [%s]",str(ref), str( k ) )
 
 
-	 
+

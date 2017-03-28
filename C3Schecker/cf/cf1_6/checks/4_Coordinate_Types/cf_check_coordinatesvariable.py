@@ -15,11 +15,12 @@
 # does it submit to any jurisdiction.
 #
 
-from Basiccheck import Basiccheck
+from C3Schecker.cf.cf1_6.checks.Basiccheck import Basiccheck
+
 
 class cf_check_coordinatesvariable(Basiccheck):
-	""" Inheritated from parent Basiccheck     
-	""" 
+	""" Inheritated from parent Basiccheck
+	"""
 
 	def apply(self):
 
@@ -33,15 +34,15 @@ class cf_check_coordinatesvariable(Basiccheck):
 				if not v.units:
 					if not self.cf_isdimensionless_vertical_coordinates(v):
 						self.status = 0
-						self.check_msgs_logger.error("[%s]- Unit is required for coordinates variable [%s]",str(ref), str( k ) )	
+						self.check_msgs_logger.error("[%s]- Unit is required for coordinates variable [%s]",str(ref), str( k ) )
 						continue # except dimensionless vertical coordinate
 
 				else:
 					unit_axis=""
 					if v.positive and str(v.positive).lower() not in self.cfref.cf_positive_values():
 						self.status = 0
-						self.check_msgs_logger.error("[%s]- Positive attribute value not allowed for coordinates variable [%s]",str(ref), str( e) )	
-						continue						
+						self.check_msgs_logger.error("[%s]- Positive attribute value not allowed for coordinates variable [%s]",str(ref), str( e) )
+						continue
 
 					try:
 						unit = v.cfudunit
@@ -49,31 +50,31 @@ class cf_check_coordinatesvariable(Basiccheck):
 						if unit.islatitude: unit_axis = "Y"
 						if unit.islongitude: unit_axis = "X"
 						if unit.isreftime: unit_axis = "T"
- 
+
 					except Exception as e :
 						if v.unit in self.cfref.cf_Zaxis_units():
 							unit_axis = "Z"
 						else:
 							self.status = 0
-							self.check_msgs_logger.error("[%s]- Unit not recognized for coordinates variable [%s]",str(ref), str( e) )	
+							self.check_msgs_logger.error("[%s]- Unit not recognized for coordinates variable [%s]",str(ref), str( e) )
 							continue
 
 				if v.axis:
 					if v.axis not in ['X', 'Y', 'Z', 'T']:
 						self.status = 0
 						self.check_msgs_logger.error("[%s]- Axis contains not allowed value for variable [%s]",str(ref), str( k ) )
-						continue					
+						continue
 
 
 					if unit_axis != v.axis:
 						self.status = 0
 						self.check_msgs_logger.error("[%s]- Axis [%s] value not consistent with unit [%s] for variable [%s]",str(ref), str(v.axis), str(v.units), str( k ) )
-						continue						
+						continue
 
 			else:
 				if v.axis:
 						self.status = 0
-						self.check_msgs_logger.error("[%s]- Axis attribute is not allowed for variable [%s]",str(ref), str( k ) )	
+						self.check_msgs_logger.error("[%s]- Axis attribute is not allowed for variable [%s]",str(ref), str( k ) )
 				if v.positive:
 						self.status = 0
-						self.check_msgs_logger.warning("[%s]- Positive attribute is not allowed for variable [%s]",str(ref), str( k ) )					
+						self.check_msgs_logger.warning("[%s]- Positive attribute is not allowed for variable [%s]",str(ref), str( k ) )

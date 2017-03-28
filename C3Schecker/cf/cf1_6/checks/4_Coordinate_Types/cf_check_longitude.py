@@ -15,11 +15,12 @@
 # does it submit to any jurisdiction.
 #
 
-from Basiccheck import Basiccheck
+from C3Schecker.cf.cf1_6.checks.Basiccheck import Basiccheck
+
 
 class cf_check_longitude(Basiccheck):
-	""" Inheritated from parent Basiccheck     
-	""" 
+	""" Inheritated from parent Basiccheck
+	"""
 
 	def apply(self):
 
@@ -29,9 +30,9 @@ class cf_check_longitude(Basiccheck):
 			if v.cfcate == "X"  and v.units not in self.cfref.cf_longitude_units():
 						self.status = 0
 						self.check_msgs_logger.error("[%s]- Longitude unit [%s] is not allowed for variable [%s]",str(ref), str( v.unit ), str( k ) )
-						continue	
+						continue
 
 
 
 			if v.cfcate == "X"  and v.units != self.cfref.cf_longitude_units()[0]:
-						self.check_msgs_logger.error("[%s]- Longitude unit [%s] is highly recommended for variable [%s]", str(ref), str(self.cfref.cf_recommended_longitude_units()[0]), str( k ) )	
+						self.check_msgs_logger.error("[%s]- Longitude unit [%s] is highly recommended for variable [%s]", str(ref), str(self.cfref.cf_recommended_longitude_units()[0]), str( k ) )
