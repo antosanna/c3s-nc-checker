@@ -43,7 +43,7 @@ class Cpchecker:
     """ A class to Check the netCDF input file  Copernicus compliancy
     """
 
-    def __init__(self, cfcollection, c3stype="seasonal", infolevel="INFO", stop=False, checks=[], ignorechecks=[]):
+    def __init__(self, cfcollection, c3stype="", infolevel="INFO", stop=False, checks=[], ignorechecks=[], confdir=None):
 
         __REF__ = "C3S"
 
@@ -61,6 +61,8 @@ class Cpchecker:
 
         self.checks = checks
         self.ignorechecks = ignorechecks
+
+        self.confdir = confdir
 
         self.cp_check_compliance()
 
@@ -84,18 +86,27 @@ class Cpchecker:
 
     def cp_get_cons(self, category):
 
+
+        dirc = str( os.path.dirname(__file__) + "/" + str(self.c3stype))
+
+        if self.confdir != None:
+            if os.path.isdir(self.confdir):
+                dirc = self.confdir
+
+
         try:
-            cp_cons_json = os.path.join(os.path.dirname(__file__) + "/" + self.c3stype, "cp_" + category + "_constraints.json")
+            cp_cons_json = os.path.join( str(dirc), "cp_" + category + "_constraints.json")
             cp_cons = json.loads(open(cp_cons_json).read())
             return cp_cons
         except Exception as e:
-            self.check_msgs_logger.error("Checking Stopped - Problem with JSON %s %s constraints file, %s,  ", str(cp_cons_json), str(category), str(e))
+
+            self.check_msgs_logger.error("Checking Stopped - Cannot read JSON %s %s constraints file, %s,  ", str(cp_cons_json), str(category), str(e))
             return {}
 
     def cp_get_gribcf(self):
 
         try:
-            return Getgribinfo(self.c3stype)
+            return Getgribinfo(self.c3stype,self.confdir)
         except Exception as e:
             self.check_msgs_logger.error("Checking Stopped - Problem with JSON grib to CF file, %s,  ", str(e))
             return {}

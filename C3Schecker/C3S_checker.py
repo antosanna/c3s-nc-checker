@@ -45,7 +45,7 @@ def check(argv):
                         action="store_true",
                         help="verbose")
 
-    parser.add_argument('-d', '--infolevel',
+    parser.add_argument('-m', '--infolevel',
                         default="info",
                         action="store",
                         choices=["info", "warning", "error"],
@@ -54,10 +54,10 @@ def check(argv):
     l = set(fct.get_immediate_subdirectories(os.path.join(
         os.path.dirname(__file__) + "/cop/"))) - set(["checks"])
     parser.add_argument('-t', '--type',
-                        required=True,
+                        required=False,
                         action="store",
                         choices=l,
-                        help="type of dataset" + str(l))
+                        help="Type of dataset" + str(l))
 
     parser.add_argument('-c', '--cf',
                         action="store_true",
@@ -65,17 +65,22 @@ def check(argv):
 
     parser.add_argument('-k', '--checks',
                         action="store",
-                        help="optional list of checks - default [All]")
+                        help="Optional list of checks - default [All]")
 
     parser.add_argument(
         '-i',
         '--ignorechecks',
         action="store",
-        help="optional list of checks to ignore - default [None]")
+        help="Optional list of checks to ignore - default [None]")
 
     parser.add_argument('-s', '--stop',
                         action="store_true",
                         help="stop on error")
+
+    parser.add_argument('-d', '--confdir',
+                        action="store",
+                        help="Directory containing the configuration files. It overrides the -t option")
+
 
     parser.add_argument('inputfiles',
                         nargs="+",
@@ -83,6 +88,10 @@ def check(argv):
                         help="NetCDF files list separated by blank")
 
     args = parser.parse_args(argv)
+
+    if not (args.type or args.confdir):
+       parser.error('No configuration fileset requested, add --type or --confdir')
+
     return run(args)
 
 
@@ -127,7 +136,8 @@ def run(args):
                 args.infolevel,
                 args.stop,
                 args.checks,
-                args.ignorechecks)
+                args.ignorechecks,
+                args.confdir)
 
             copstatus = copcheckings.status
             copmessgs = copcheckings.messages
