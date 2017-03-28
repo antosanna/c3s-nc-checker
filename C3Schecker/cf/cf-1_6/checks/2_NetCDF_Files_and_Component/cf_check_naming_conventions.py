@@ -40,3 +40,4 @@ class cf_check_naming_conventions(Basiccheck):
                 if not rname.match(a):
                     self.status = 0
                     self.check_msgs_logger.error('[%s]- Attribute [%s] has a wrong name syntax', str(ref), a)
+

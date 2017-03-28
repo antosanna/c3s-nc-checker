@@ -15,6 +15,8 @@
 # does it submit to any jurisdiction.
 #
 
+import re
+import numpy as np
 from Basiccheck import Basiccheck
 
 
@@ -85,11 +87,12 @@ class cf_check_flags(Basiccheck):
 
             isok = True
             for i in fv:
-                if not isinstance(i, v.dtype):
+                if not  np.issubdtype(type(i),v.dtype.type):
                     self.status = 0
                     isok = False
                     self.check_msgs_logger.error("[%s]- Flag_values values must have the same type as variable [%s] [%s]", str(ref), str(k), str(v.dtype))
                     continue
+
             if not isok:
                 continue
 
@@ -104,13 +107,13 @@ class cf_check_flags(Basiccheck):
                 self.check_msgs_logger.error("[%s]- Flag_values values must be unique for variable [%s]", str(ref), str(k))
                 continue
 
-        # check flag_values
+        # check flag_mask
             if fma is not None:
 
-                if not (isinstance(fma, np.ndarray)):
-                    self.status = 0
-                    self.check_msgs_logger.error("[%s]- Flag_values must be a list for variable [%s]", str(ref), str(k))
-                    continue
+                # if not (isinstance(fma, np.ndarray)):
+                #     self.status = 0
+                #     self.check_msgs_logger.error("[%s]- Flag_values must be a list for variable [%s]", str(ref), str(k))
+                #     continue
 
                 if fma.dtype != v.dtype:
                     self.status = 0

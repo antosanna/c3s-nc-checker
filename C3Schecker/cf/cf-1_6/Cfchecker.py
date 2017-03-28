@@ -138,7 +138,7 @@ class Cfchecker:
                 self.runcheck(pc)
 
         except Exception as e:
-            self.check_msgs_logger.critical("Checker stopped - [%s]", str(e))
+            self.check_msgs_logger.critical("Checker stopped - [%s] because of check [%s]", str(e), str(pc))
 
         try:
             self.cf_describe()
