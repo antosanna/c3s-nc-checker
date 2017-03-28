@@ -36,8 +36,8 @@ setup(
     url='https://software.ecmwf.int/stash/projects/CDS/repos/checkers/browse/C3SChecker',
     description="Checker for C3S NetCDF files",
     long_description=read('README.rst'),
-    packages=find_packages(where='C3Schecker'),
-    package_dir={'': 'C3Schecker'},
+    packages=find_packages(),
+    package_dir={'C3Schecker': 'C3Schecker'},
     include_package_data=True,
     install_requires=[
         'netCDF4==1.2.4',
