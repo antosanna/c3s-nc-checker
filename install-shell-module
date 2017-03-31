@@ -4,12 +4,15 @@ here="$(cd $(dirname $0) && pwd)"
 ncchecker_version="$(grep ^version ${here}/setup.py | awk '{print $3}' | tr -d \')"
 ncchecker_home="/usr/local/apps/ncchecker/${ncchecker_version}"
 
+virtualenv_home="${ncchecker_home}/virtualenv"
 echo "Creating Python virtualenv at $ncchecker_home ..."
-virtualenv --quiet $ncchecker_home
-export PATH="${ncchecker_home}/bin:$PATH"
+virtualenv --quiet $virtualenv_home
+export PATH="${virtualenv_home}/bin:$PATH"
 
 echo "Installing the latest versin of \`pip\` ..."
 pip install --quiet --upgrade pip
 
 echo "Installing ncchecker to $ncchecker_home ..."
 pip install --quiet --upgrade $here
+mkdir -p "${ncchecker_home}/bin"
+(cd ${ncchecker_home}/bin && ln -sf ${virtualenv_home}/bin/C3Schecker .)
