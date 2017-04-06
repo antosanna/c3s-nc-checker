@@ -28,8 +28,8 @@ __CFVERSION__ = ("CF-1.6", "cf1_6")  # (CF version code, files directory)
 
 
 __VERSION__ = "0.1"
-__FAILURECODE__ = 0
-__SUCCESSCODE__ = 1
+__FAILURECODE__ = 1
+__SUCCESSCODE__ = 0
 
 
 def main():
