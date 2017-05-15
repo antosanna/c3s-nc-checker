@@ -26,13 +26,15 @@ class cf_check_longitude(Basiccheck):
 
 		ref = "CFREF-ch4.2"
 
-		for k,v in self.cfcollection.coordinate_variables.iteritems():
-			if v.cfcate == "X"  and v.units not in self.cfref.cf_longitude_units():
-						self.status = 0
-						self.check_msgs_logger.error("[%s]- Longitude unit [%s] is not allowed for variable [%s]",str(ref), str( v.unit ), str( k ) )
-						continue
+		pass
+
+		# for k,v in self.cfcollection.coordinate_variables.iteritems():
+		# 	if v.cfcate == "X"  and v.units not in self.cfref.cf_longitude_units():
+		# 				self.status = 0
+		# 				self.check_msgs_logger.error("[%s]- Longitude unit [%s] is not allowed for variable [%s]",str(ref), str( v.unit ), str( k ) )
+		# 				continue
 
 
 
-			if v.cfcate == "X"  and v.units != self.cfref.cf_longitude_units()[0]:
-						self.check_msgs_logger.error("[%s]- Longitude unit [%s] is highly recommended for variable [%s]", str(ref), str(self.cfref.cf_recommended_longitude_units()[0]), str( k ) )
+		# 	if v.cfcate == "X"  and v.units != self.cfref.cf_longitude_units()[0]:
+		# 				self.check_msgs_logger.error("[%s]- Longitude unit [%s] is highly recommended for variable [%s]", str(ref), str(self.cfref.cf_recommended_longitude_units()[0]), str( k ) )

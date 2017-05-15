@@ -24,7 +24,7 @@ class cf_check_coordinatesvariable(Basiccheck):
 
 	def apply(self):
 
-		ref = "CFREF-ch4"
+		ref = "CFREF-ch4666"
 
 
 		for k,v in self.cfcollection:
@@ -63,6 +63,7 @@ class cf_check_coordinatesvariable(Basiccheck):
 					if v.axis not in ['X', 'Y', 'Z', 'T']:
 						self.status = 0
 						self.check_msgs_logger.error("[%s]- Axis contains not allowed value for variable [%s]",str(ref), str( k ) )
+
 						continue
 
 
@@ -74,7 +75,7 @@ class cf_check_coordinatesvariable(Basiccheck):
 			else:
 				if v.axis:
 						self.status = 0
-						self.check_msgs_logger.error("[%s]- Axis attribute is not allowed for variable [%s]",str(ref), str( k ) )
+						self.check_msgs_logger.error("[%s]- Axis attribute is not allowed for variable [%s] because it is not identified as a coordinate",str(ref), str( k ) )
 				if v.positive:
 						self.status = 0
 						self.check_msgs_logger.warning("[%s]- Positive attribute is not allowed for variable [%s]",str(ref), str( k ) )

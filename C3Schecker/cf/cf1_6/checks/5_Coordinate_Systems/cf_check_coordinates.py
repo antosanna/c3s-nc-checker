@@ -38,7 +38,7 @@ class cf_check_coordinates(Basiccheck):
 
                     except:
                         self.status = 0
-                        self.check_msgs_logger.error("[%s]- Auxilliary Coordinate [%s] declared in  coordinate attributes but does not exist for coordinate variable [%s] ", str(ref), str(v_coord_name), str(k))
+                        self.check_msgs_logger.error("[%s]- Auxilliary Coordinate [%s] declared for variable [%s] does not exist  ", str(ref), str(v_coord_name), str(k))
                         continue
 
                     if v_coord.cfcate == "X":
@@ -51,7 +51,7 @@ class cf_check_coordinates(Basiccheck):
                             self.status = 0
                             self.check_msgs_logger.error("[%s]- 2-dimensional Auxilliary Coordinate [%s] dimensions not part of coordinate variable [%s] dimensions", str(ref), str(v_coord_name), str(k))
 
-                    if v_coord.cfcate == "X":
+                    if v_coord.cfcate == "Y":
                         if not len(v_coord.dimensions) == 2:
                             self.check_msgs_logger.warning("[%s]- Auxilliary Coordinate [%s] not a 2-dimensional Auxilliary latitude  ", str(ref), str(v_coord_name))
 
