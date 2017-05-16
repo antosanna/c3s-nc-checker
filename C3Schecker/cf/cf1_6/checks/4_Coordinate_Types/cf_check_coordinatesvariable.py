@@ -24,7 +24,7 @@ class cf_check_coordinatesvariable(Basiccheck):
 
 	def apply(self):
 
-		ref = "CFREF-ch4666"
+		ref = "CFREF-ch4"
 
 
 		for k,v in self.cfcollection:
@@ -35,7 +35,7 @@ class cf_check_coordinatesvariable(Basiccheck):
 					if not self.cf_isdimensionless_vertical_coordinates(v):
 						self.status = 0
 						self.check_msgs_logger.error("[%s]- Unit is required for coordinates variable [%s]",str(ref), str( k ) )
-						continue # except dimensionless vertical coordinate
+						continue 
 
 				else:
 					unit_axis=""
@@ -60,14 +60,18 @@ class cf_check_coordinatesvariable(Basiccheck):
 							continue
 
 				if v.axis:
-					if v.axis not in ['X', 'Y', 'Z', 'T']:
+					if v.axis not in ['X', 'Y', 'Z', 'T', 'E']:
 						self.status = 0
 						self.check_msgs_logger.error("[%s]- Axis contains not allowed value for variable [%s]",str(ref), str( k ) )
 
 						continue
 
+					# special warning. E is accepted even if not part of CF 1.6
+					if v.axis == 'E':
+						self.check_msgs_logger.warning("[%s]- Axis E is not part of CF 1.6 but may be allowed in CF 1.7 - for variable [%s]",str(ref), str( k ) )
 
-					if unit_axis != v.axis:
+
+					if unit_axis != v.axis and v.units != "1":
 						self.status = 0
 						self.check_msgs_logger.error("[%s]- Axis [%s] value not consistent with unit [%s] for variable [%s]",str(ref), str(v.axis), str(v.units), str( k ) )
 						continue
@@ -75,7 +79,7 @@ class cf_check_coordinatesvariable(Basiccheck):
 			else:
 				if v.axis:
 						self.status = 0
-						self.check_msgs_logger.error("[%s]- Axis attribute is not allowed for variable [%s] because it is not identified as a coordinate",str(ref), str( k ) )
+						self.check_msgs_logger.warning("[%s]- Axis attribute may not be allowed for variable [%s] because it is not identified as a coordinate",str(ref), str( k ) )
 				if v.positive:
 						self.status = 0
-						self.check_msgs_logger.warning("[%s]- Positive attribute is not allowed for variable [%s]",str(ref), str( k ) )
+						self.check_msgs_logger.warning("[%s]- Positive attribute may not be allowed for variable [%s] because it is not identified as a coordinate",str(ref), str( k ) )

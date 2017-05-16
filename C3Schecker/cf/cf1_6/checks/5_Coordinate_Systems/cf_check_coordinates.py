@@ -43,17 +43,17 @@ class cf_check_coordinates(Basiccheck):
 
                     if v_coord.cfcate == "X":
 
-                        if not len(v_coord.dimensions) == 2:
-
-                            self.check_msgs_logger.warning("[%s]- Auxilliary Coordinate [%s] not a 2-dimensional Auxilliary longitude  ", str(ref), str(v_coord_name))
+                        # if not len(v_coord.dimensions) == 2:
+                        #     self.check_msgs_logger.warning(v_coord.dimensions)
+                        #     self.check_msgs_logger.warning("[%s]- Auxilliary Coordinate [%s] not a 2-dimensional Auxilliary longitude  ", str(ref), str(v_coord_name))
 
                         if not set(v_coord.dimensions).issubset(set(v.dimensions)):
                             self.status = 0
                             self.check_msgs_logger.error("[%s]- 2-dimensional Auxilliary Coordinate [%s] dimensions not part of coordinate variable [%s] dimensions", str(ref), str(v_coord_name), str(k))
 
                     if v_coord.cfcate == "Y":
-                        if not len(v_coord.dimensions) == 2:
-                            self.check_msgs_logger.warning("[%s]- Auxilliary Coordinate [%s] not a 2-dimensional Auxilliary latitude  ", str(ref), str(v_coord_name))
+                        # if not len(v_coord.dimensions) == 2:
+                        #     self.check_msgs_logger.warning("[%s]- Auxilliary Coordinate [%s] not a 2-dimensional Auxilliary latitude  ", str(ref), str(v_coord_name))
 
                         if not set(v_coord.dimensions).issubset(set(v.dimensions)):
                             self.status = 0

@@ -32,10 +32,18 @@ class Mandatory_attributes_content(Basiccheck):
 
             for i, j in cfattrs:
                 try:
-                    possiblevalues = [str(val) for val in mac.get(i)]
+                    possiblevalues = []
+                    for val in mac.get(i):
+
+                        try:
+                             possiblevalues.append(float(val))
+                        except:
+                             possiblevalues.append(val)
+
+
                     if not (j in possiblevalues):
                         self.status = 0
-                        self.logger.error("[%s]-Attribute [%s] value is not allowed - Variable [%s] - Should be one of %s ", str(self.ref), str(i), str(k), str(possiblevalues))
+                        self.logger.error("[%s]-Attribute [%s] [%s] value is not allowed - Variable [%s] - Should be one of %s ", str(self.ref), str(i), str(j), str(k), str(possiblevalues))
 
                 except Exception as e:
                     pass

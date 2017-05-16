@@ -60,7 +60,7 @@ class Basiccheck:
 
     def cf_isdimensionless_vertical_coordinates(self, v):
 
-        if v.standard_name and v.standard_name in self.cfref.cf_dimensionless_vertical_coordinates().keys():
+        if v.standard_name and v.standard_name in self.cfref.cf_dimensionless_vertical_coordinates():
             return True
         return False
 

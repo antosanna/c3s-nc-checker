@@ -113,20 +113,15 @@ def cf_standard_names_modifiers():
 
 def cf_dimensionless_vertical_coordinates():
     return {
-        "atmosphere_ln_pressure_coordinate": "(p0): ([A-Za-z][A-Za-z0-9_]*) (lev): ([A-Za-z][A-Za-z0-9_]*)",  # "p0: var1 lev: var2"
-        "atmosphere_sigma_coordinate": "(sigma): ([A-Za-z][A-Za-z0-9_]*) (ps): ([A-Za-z][A-Za-z0-9_]*) (ptop): ([A-Za-z][A-Za-z0-9_]*)",  # "sigma: var1 ps: var2 ptop: var3"
-        # "a: var1 b: var2 ps: var3 p0: var4"
-        "atmosphere_hybrid_sigma_pressure_coordinate": "(a): ([A-Za-z][A-Za-z0-9_]*) (b): ([A-Za-z][A-Za-z0-9_]*) (ps): ([A-Za-z][A-Za-z0-9_]*) (p0): ([A-Za-z][A-Za-z0-9_]*)",
-        "atmosphere_hybrid_height_coordinate": "(a): ([A-Za-z][A-Za-z0-9_]*) (b): ([A-Za-z][A-Za-z0-9_]*) (orog): ([A-Za-z][A-Za-z0-9_]*)",  # "a: var1 b: var2 orog: var3"
-        # "a: var1 b1: var2 b2: var3 ztop: var4 zsurf1: var5 zsurf2: var6"
-        "atmosphere_sleve_coordinate": "(a): ([A-Za-z][A-Za-z0-9_]*) (b1): ([A-Za-z][A-Za-z0-9_]*) (b2): ([A-Za-z][A-Za-z0-9_]*) (ztop): ([A-Za-z][A-Za-z0-9_]*) (zsurf1): ([A-Za-z][A-Za-z0-9_]*) (zsurf2): ([A-Za-z][A-Za-z0-9_]*)",
-        "ocean_sigma_coordinate": "(sigma): ([A-Za-z][A-Za-z0-9_]*) (eta): ([A-Za-z][A-Za-z0-9_]*) (depth): ([A-Za-z][A-Za-z0-9_]*)",    # "sigma: var1 eta: var2 depth: var3"
-        # "s: var1 eta: var2 depth: var3 a: var4 b: var5 depth_c: var6"
-        "ocean_s_coordinate": "(s): ([A-Za-z][A-Za-z0-9_]*) (eta): ([A-Za-z][A-Za-z0-9_]*) (depth): ([A-Za-z][A-Za-z0-9_]*) (a): ([A-Za-z][A-Za-z0-9_]*) (b): ([A-Za-z][A-Za-z0-9_]*) (depth_c): ([A-Za-z][A-Za-z0-9_]*)",
-        # "sigma: var1 eta: var2 depth: var3 depth_c: var4 nsigma: var5 zlev: var6"
-        "ocean_sigma_z_coordinate": "(sigma): ([A-Za-z][A-Za-z0-9_]*) (eta): ([A-Za-z][A-Za-z0-9_]*) (depth): ([A-Za-z][A-Za-z0-9_]*) (depth_c): ([A-Za-z][A-Za-z0-9_]*) (nsigma): ([A-Za-z][A-Za-z0-9_]*) (zlev): ([A-Za-z][A-Za-z0-9_]*)",
-        # "sigma: var1 depth: var2 z1: var3 z2: var4 a: var5 href: var6 k_c: var7"
-        "ocean_double_sigma_coordinate": "(sigma): ([A-Za-z][A-Za-z0-9_]*) (depth): ([A-Za-z][A-Za-z0-9_]*) (z1): ([A-Za-z][A-Za-z0-9_]*) (z2): ([A-Za-z][A-Za-z0-9_]*) (a): ([A-Za-z][A-Za-z0-9_]*) (href): ([A-Za-z][A-Za-z0-9_]*) (k_c): ([A-Za-z][A-Za-z0-9_]*)"
+        "atmosphere_ln_pressure_coordinate",
+        "atmosphere_sigma_coordinate", 
+        "atmosphere_hybrid_sigma_pressure_coordinate",
+        "atmosphere_hybrid_height_coordinate", 
+        "atmosphere_sleve_coordinate",
+        "ocean_sigma_coordinate",
+        "ocean_s_coordinate",
+        "ocean_sigma_z_coordinate",
+        "ocean_double_sigma_coordinate"
     }
 
 

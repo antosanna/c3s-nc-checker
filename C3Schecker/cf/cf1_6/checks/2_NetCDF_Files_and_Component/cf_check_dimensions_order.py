@@ -51,7 +51,7 @@ class cf_check_dimensions_order(Basiccheck):
                             self.status = 0
                             self.check_msgs_logger.error("[%s]- Dimension [%s] is not identifiable for variable [%s]", str(ref), str(d), str(k))
                         else:
-                            self.check_msgs_logger.warning("[%s]- Variable [%s] is recommended to be defined", str(ref2), str(d))
+                            self.check_msgs_logger.warning("[%s]- Variable [%s] is recommended to be defined", str(ref), str(d))
                         dim_identify = None
 
                     dims_type.append(dim_identify)

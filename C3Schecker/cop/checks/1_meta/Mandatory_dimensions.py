@@ -25,8 +25,14 @@ class Mandatory_dimensions(Basiccheck):
 
     def apply(self):
 
-        md = [str(d) for d in self.consmeta.get("mandatory_dimensions", [])]
         collectdims = [str(d) for d in self.cfcollection.dimensions.keys()]
+
+        md = [str(d) for d in self.consmeta.get("mandatory_dimensions", [])]
         if not set(md).issubset(set(collectdims)) and len(md) > 0:
             self.status = 0
-            self.logger.error("[%s]-NetCDF Dimensions should be %s  - currently %s ", str(self.ref), str(md), str(collectdims))
+            self.logger.error("[%s]-NetCDF Dimensions must contain %s  - currently %s ", str(self.ref), str(md), str(collectdims))
+ 
+        ad = [str(d) for d in self.consmeta.get("authorized_dimensions", [])]
+        if not set(collectdims).issubset(set(ad)) and len(ad) > 0:
+            self.status = 0
+            self.logger.error("[%s]-NetCDF Dimensions should be a subset of %s  - currently %s ", str(self.ref), str(ad), str(collectdims))
