@@ -25,6 +25,8 @@ class Mandatory_gribconsistency(Basiccheck):
 
     def apply(self):
 
+        self.addinfo = "MetadataCheck"
+
         # loop sur les datavars si paramid on test
         for k, v in self.cfcollection.data_variables.iteritems():
             if v.mars_paramid:
@@ -35,4 +37,4 @@ class Mandatory_gribconsistency(Basiccheck):
                             assert v.__getattr__(info) ==  cfinfo and cfinfo is not None
                         except:
                             self.status = 0
-                            self.logger.error("[%s]-  Non consistency between mars_paramid [%s] [%s=%s] and  variable [%s] [%s=%s]", str(self.ref),  str(v.mars_paramid), info, cfinfo, str(k), info, v.__getattr__(info) )
+                            self.logger.error("[%s]-  Non consistency between mars_paramid [%s] [%s=%s] and  variable [%s] [%s=%s]", str(self.getcheckname(self.addinfo)),  str(v.mars_paramid), info, cfinfo, str(k), info, v.__getattr__(info) )

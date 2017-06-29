@@ -27,6 +27,8 @@ class Mandatory_data_values(Basiccheck):
 
     def apply(self):
 
+        self.addinfo = "DataCheck"
+
         for k, v in self.cfcollection.data_variables.iteritems():
 
             datavariables_checks = self.consdata.get("default", {})
@@ -63,9 +65,9 @@ class Mandatory_data_values(Basiccheck):
 
                         if errorvalue:
                             self.status = 0
-                            self.logger.error("[%s]- [%s] values must be in %s  - Some other values has been found - First: %s  ", str(self.ref), str(x), str(y), str(len(values)))
+                            self.logger.error("[%s]- [%s] values must be in %s  - Some other values has been found - First: %s  ", str(self.getcheckname(self.addinfo)), str(x), str(y), str(len(values)))
 
                     except Exception as e:
                         self.status = 0
-                        self.logger.error("[%s]- [%s] intervals must be %s  - Problem in the check (Could be: no variable [%s] found) %s ", str(self.ref), str(x), str(y), str(x), str(e))
+                        self.logger.error("[%s]- [%s] intervals must be %s  - Problem in the check (Could be: no variable [%s] found) %s ", str(self.getcheckname(self.addinfo)), str(x), str(y), str(x), str(e))
                         continue

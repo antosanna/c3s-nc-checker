@@ -25,6 +25,8 @@ class Mandatory_data_intervals(Basiccheck):
 
     def apply(self):
 
+        self.addinfo = "DataCheck"
+
         for k, v in self.cfcollection.data_variables.iteritems():
 
             datavariables_checks = self.consdata.get("default", {})
@@ -48,10 +50,10 @@ class Mandatory_data_intervals(Basiccheck):
 
                         if len(valuesintervals) > 0:
                             self.status = 0
-                            self.logger.error("[%s]- [%s] intervals must be %s  - Some other intervals has been found - First: %s  ", str(self.ref),
+                            self.logger.error("[%s]- [%s] intervals must be %s  - Some other intervals has been found - First: %s  ", str(self.getcheckname(self.addinfo)),
                                               str(l), str(m), str(str(valuesintervals[0][0:2]) + "=interval " + str(valuesintervals[0][2])))
 
                     except:
                         self.status = 0
-                        self.logger.error("[%s]- [%s] intervals must be %s  - Problem in the check (Could be: no variable [%s] found) ", str(self.ref), str(l), str(m), str(l))
+                        self.logger.error("[%s]- [%s] intervals must be %s  - Problem in the check (Could be: no variable [%s] found) ", str(self.getcheckname(self.addinfo)), str(l), str(m), str(l))
                         continue

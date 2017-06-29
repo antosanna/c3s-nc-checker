@@ -25,6 +25,8 @@ class Mandatory_attributes_per_variablename(Basiccheck):
 
     def apply(self):
 
+        self.addinfo = "MetadataCheck"
+
         mapv = self.consmeta.get("mandatory_attributes_per_variablename", {})
         for k, v in self.cfcollection:
 
@@ -35,4 +37,4 @@ class Mandatory_attributes_per_variablename(Basiccheck):
                 for attr in mandatoryattributes:
                     if attr not in cfattrs:
                         self.status = 0
-                        self.logger.error("[%s]-Attribute [%s] is mandatory - Variable [%s] ", str(self.ref), str(attr), str(k))
+                        self.logger.error("[%s]-Attribute [%s] is mandatory - Variable [%s] ", str(self.getcheckname(self.addinfo)), str(attr), str(k))

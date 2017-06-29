@@ -28,7 +28,7 @@ class cf_check_stdnames(Basiccheck):
 
         for k, v in self.cfcollection:
 
-            if (not v.standard_name) and (not v.long_name) and (v.cftype not in ['Cfboundaryvar']):
+            if (not v.standard_name) and (not v.long_name) and (v.cftype not in ['Cfboundaryvar','Cflabelvar']):
                 self.check_msgs_logger.warning("[%s]- Variable description with long_name or standard_name attribute is highly recommended for variable [%s]", str(ref), str(k))
                 continue
 

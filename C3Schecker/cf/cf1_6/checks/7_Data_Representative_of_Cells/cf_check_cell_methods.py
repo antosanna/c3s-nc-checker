@@ -38,9 +38,10 @@ class cf_check_cell_methods(Basiccheck):
 
                     names = cfc.get_names
                     for n in names:
-                        if v.dimensions and (n not in v.dimensions) and (n not in ["area"]):
+
+                        if (v.dimensions and n not in v.dimensions) and (n not in self.cfcollection.coordinate_variables.keys()) and (n not in ["area"]):
                             self.status = 0
-                            self.check_msgs_logger.error('[%s]- Error in Cell_methods attribute for variable %s. Name [%s] not referenced in variable dimensions', str(ref), str(k), str(n))
+                            self.check_msgs_logger.error('[%s]- Error in Cell_methods attribute for variable %s. Name [%s] not referenced in variable dimensions|coordinate', str(ref), str(k), str(n))
                         if not v.dimensions and (n not in ["area"] or self.std_names):
                             self.status = 0
                             self.check_msgs_logger.error('[%s]- Error in Cell_methods attribute for variable %s. Name [%s] not referenced in Std names and not [area]', str(ref), str(k), str(n))

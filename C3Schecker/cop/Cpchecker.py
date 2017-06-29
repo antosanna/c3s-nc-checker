@@ -43,7 +43,7 @@ class Cpchecker:
     """ A class to Check the netCDF input file  Copernicus compliancy
     """
 
-    def __init__(self, cfcollection, c3stype="", infolevel="INFO", stop=False, checks=[], ignorechecks=[], confdir=None):
+    def __init__(self, cfcollection, c3stype="", infolevel="INFO", stop=False, checks=[], ignorechecks=[], confdir=None, passedcheckinfo=False):
 
         __REF__ = "C3S"
 
@@ -52,6 +52,8 @@ class Cpchecker:
         self.status = 1
 
         self.stop = stop
+
+        self.passedcheckinfo = passedcheckinfo
 
         self.check_msgs_logger, self.check_msgs = fct.loggers(infolevel).get_logger()
 
@@ -154,7 +156,17 @@ class Cpchecker:
         module = importlib.import_module("C3Schecker.cop.checks." + modulepath)
         checkclass = getattr(module, classname)(self.check_msgs_logger, self.status, self.ref, self.cfvariablescollection, self.cp_consmeta, self.cp_consdata, self.cp_grib2cf)
         checkclass.status = 1
+
+        if self.passedcheckinfo:
+            self.check_msgs_logger.checkinfo( str(classname) + ":")
+
         checkclass.apply()
         self.status = checkclass.status
+
+
         if not checkclass.status:
             self.status = checkclass.status
+
+
+        if self.passedcheckinfo:
+            self.check_msgs_logger.checkinfo( "       Status:" + str(self.status).replace("0","Failed").replace("1","passed") )

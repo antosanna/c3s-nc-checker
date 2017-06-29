@@ -25,10 +25,12 @@ class Mandatory_standardnames(Basiccheck):
 
     def apply(self):
 
+        self.addinfo = "MetadataCheck"
+
         mvn = self.consmeta.get("mandatory_standardnames", {})
         for cftype, mvnvars in mvn.iteritems():
 
             for mvnvar in mvnvars:
                 if mvnvar not in str(self.cfcollection.onevartypestdnames(cftype)):
                     self.status = 0
-                    self.logger.error("[%s]-Variable [%s] is missing", str(self.ref), str(mvnvar))
+                    self.logger.error("[%s]-Variable [%s] is missing", str(self.getcheckname(self.addinfo)), str(mvnvar))

@@ -108,11 +108,12 @@ class Cfreader():
         self.cfvariablescollection.addvar(coordsvarcollected)
 
         variablesset = self.dataset.variables.copy()  # Clone without identified coordinates
+
         for k in list(self.cfvariablescollection.coordinate_variables.keys()):
             variablesset.pop(k, None)
 
         # Define non-Data and non-coordinate variables
-        self.cfvariablescollection.addvar(Cfauxiliarycoordinatevar.define(self.dataset.variables, self.logger))
+        self.cfvariablescollection.addvar(Cfauxiliarycoordinatevar.define(variablesset, self.logger))
         self.cfvariablescollection.addvar(Cfancillaryvar.define(variablesset, self.logger))
         self.cfvariablescollection.addvar(Cfboundaryvar.define(self.dataset.variables, self.logger))
         self.cfvariablescollection.addvar(Cfclimatologyvar.define(variablesset, self.logger))

@@ -78,8 +78,8 @@ class cf_check_coordinatesvariable(Basiccheck):
 
 			else:
 				if v.axis:
-						self.status = 0
+						self.status = 1
 						self.check_msgs_logger.warning("[%s]- Axis attribute may not be allowed for variable [%s] because it is not identified as a coordinate",str(ref), str( k ) )
 				if v.positive:
-						self.status = 0
+						self.status = 1
 						self.check_msgs_logger.warning("[%s]- Positive attribute may not be allowed for variable [%s] because it is not identified as a coordinate",str(ref), str( k ) )

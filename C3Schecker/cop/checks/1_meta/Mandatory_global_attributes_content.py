@@ -25,6 +25,8 @@ class Mandatory_global_attributes_content(Basiccheck):
 
     def apply(self):
 
+        self.addinfo = "MetadataCheck"
+
         mgac = self.consmeta.get("mandatory_global_attributes_values", {})
 
         for k, v in self.cfcollection.global_attributes.iteritems():
@@ -32,4 +34,4 @@ class Mandatory_global_attributes_content(Basiccheck):
 
             if v not in mgac_possiblevalues and len(mgac_possiblevalues) > 0:
                 self.status = 0
-                self.logger.error("[%s]-Global Attribute [%s] value is not allowed - Should be one of %s - currently [%s]", str(self.ref), str(k), str(mgac_possiblevalues), str(v))
+                self.logger.error("[%s]-Global Attribute [%s] value is not allowed - Should be one of %s - currently [%s]", str(self.getcheckname(self.addinfo)), str(k), str(mgac_possiblevalues), str(v))

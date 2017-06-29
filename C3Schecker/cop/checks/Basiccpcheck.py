@@ -22,7 +22,10 @@ class Basiccheck:
         self.name = self.__class__.__name__
         self.logger = logger
         self.status = status
-        self.ref = ref + "-" + self.name
+
+        self.addinfo = "" #can be used to add information to the check reference
+        self.ref = ref
+
 
         self.cfcollection = cfcollection
         self.consmeta = consmeta
@@ -34,3 +37,6 @@ class Basiccheck:
 
     def apply(self,):
         pass
+
+    def getcheckname(self,addinfo):
+        return self.ref + "-" + self.addinfo + "-" + self.name

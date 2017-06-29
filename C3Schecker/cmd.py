@@ -73,7 +73,11 @@ def main():
 
     parser.add_argument('-s', '--stop',
                         action="store_true",
-                        help="stop on error")
+                        help="Stop on error")
+
+    parser.add_argument('-p', '--passed',
+                        action="store_true",
+                        help="Display all the checks status")
 
     parser.add_argument('-d', '--confdir',
                         action="store",
@@ -113,7 +117,8 @@ def run(args):
             f,
             __CFVERSION__[0],
             args.infolevel,
-            args.stop)
+            args.stop,
+            args.passed)
 
         try:
             cfstatus = cfcheckings.status
@@ -135,7 +140,8 @@ def run(args):
                 args.stop,
                 args.checks,
                 args.ignorechecks,
-                args.confdir)
+                args.confdir,
+                args.passed)
 
             copstatus = copcheckings.status
             copmessgs = copcheckings.messages

@@ -39,7 +39,7 @@ class loggers():
                   'ERROR': logging.ERROR,
                   'WARNING': logging.WARNING,
                   'INFO': logging.INFO,
-                  'DEBUG': logging.DEBUG
+                  'DEBUG': logging.DEBUG,
                   }
         return levels
 
@@ -58,6 +58,26 @@ class loggers():
             self.removeHandler(self.blank_handler)
             self.addHandler(self.console_handler)
 
+        def log_checkinfo(self, msg=""):
+
+            self.removeHandler(self.console_handler)
+            self.addHandler(self.console_handler2)
+
+            self.info(msg)
+
+            self.removeHandler(self.console_handler2)
+            self.addHandler(self.console_handler)
+
+            # self.removeHandler(self.console_handler)
+            # self.addHandler(self.blank_handler)
+   
+
+
+            # self.removeHandler(self.blank_handler)
+            # self.addHandler(self.console_handler)
+
+
+
         levels = self.levels
 
         try:
@@ -68,17 +88,26 @@ class loggers():
         console_handler = logging.StreamHandler(self.log_stream)
         console_handler.setFormatter(
             logging.Formatter(
-                "%(asctime)s.%(msecs)03d  - %(levelname)10s - %(message)s",
+                "%(asctime)s %(levelname)8s - %(message)s",
                 datefmt="%H:%M:%S"))
 
         blank_handler = logging.StreamHandler(self.log_stream)
         blank_handler.setFormatter(logging.Formatter("%(message)s"))
 
+        console_handler2 = logging.StreamHandler(self.log_stream)
+        console_handler2.setFormatter(
+            logging.Formatter(
+                "%(asctime)s   %(message)s",
+                datefmt="%H:%M:%S"))
+
         self.logger.addHandler(console_handler)
 
         self.logger.console_handler = console_handler
         self.logger.blank_handler = blank_handler
+        self.logger.console_handler2 = console_handler2
         self.logger.staticinfo = types.MethodType(log_staticinfo, self.logger)
+
+        self.logger.checkinfo = types.MethodType(log_checkinfo, self.logger)
 
 
 def get_immediate_subdirectories(a_dir):

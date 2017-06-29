@@ -49,7 +49,7 @@ class Cfchecker:
     """ A class to Check the netCDF input file and its CF compliancy
     """
 
-    def __init__(self, cffilename, cfversion, infolevel="INFO", stop=False):
+    def __init__(self, cffilename, cfversion, infolevel="INFO", stop=False, passedcheckinfo=False):
 
         self.cfreader = Cfreader
 
@@ -60,6 +60,8 @@ class Cfchecker:
         self.status = 1
 
         self.stop = stop
+
+        self.passedcheckinfo = passedcheckinfo
 
         self.cfcollection = None
 
@@ -230,8 +232,17 @@ class Cfchecker:
         classname = modulepath.split(".")[-1]
         module = importlib.import_module('C3Schecker.cf.cf1_6.checks.' + modulepath)
         checkclass = getattr(module, classname)(self.check_msgs_logger, self.status, self.cfref, self.cfcollection, self.cfuni, self.std_names)
+
+        if self.passedcheckinfo:
+            self.check_msgs_logger.checkinfo( str(classname) + ":")
+
         checkclass.status = 1
         checkclass.apply()
         if not checkclass.status:
             self.status = checkclass.status
-        # self.check_msgs_logger.error( str(classname)  + ":" + str(checkclass.status))
+
+        if self.passedcheckinfo:
+            self.check_msgs_logger.checkinfo( "       Status:" + str(self.status).replace("0","Failed").replace("1","passed") )
+
+
+

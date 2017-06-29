@@ -33,6 +33,7 @@ class Basiccheck:
         return "C3S Check Class: %s" % (self.__class__.__name__)
 
     def apply(self):
+
         pass
 
     def cf_get_stdname(self, stdname, var):

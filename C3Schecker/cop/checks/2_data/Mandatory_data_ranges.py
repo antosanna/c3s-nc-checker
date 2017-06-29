@@ -27,6 +27,8 @@ class Mandatory_data_ranges(Basiccheck):
 
     def apply(self):
 
+        self.addinfo = "DataCheck"
+
         for k, v in self.cfcollection.data_variables.iteritems():
 
             datavariables_checks = self.consdata.get("default", {})
@@ -58,9 +60,9 @@ class Mandatory_data_ranges(Basiccheck):
 
                         if valuesoutofrange[0].size > 0:
                             self.status = 0
-                            self.logger.error("[%s]- [%s] range must be %s  - First %s", str(self.ref), str(x), str(y), str(valuesoutofrange[0][0]))
+                            self.logger.error("[%s]- [%s] range must be %s  - First %s", str(self.getcheckname(self.addinfo)), str(x), str(y), str(valuesoutofrange[0][0]))
 
                     except:
                         self.status = 0
-                        self.logger.error("[%s]- [%s] intervals must be %s  - Problem in the check (Could be: no variable [%s] found) ", str(self.ref), str(x), str(y), str(x))
+                        self.logger.error("[%s]- [%s] intervals must be %s  - Problem in the check (Could be: no variable [%s] found) ", str(self.getcheckname(self.addinfo)), str(x), str(y), str(x))
                         continue

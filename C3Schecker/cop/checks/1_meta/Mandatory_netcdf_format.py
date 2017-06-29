@@ -25,8 +25,10 @@ class Mandatory_netcdf_format(Basiccheck):
 
     def apply(self):
 
+        self.addinfo = "MetadataCheck"
+
         mnf = self.consmeta.get("mandatory_netcdf_format", None)
 
         if self.cfcollection.fileformat != mnf and mnf:
             self.status = 0
-            self.logger.error("[%s]-File Format [%s] is mandatory - currently [%s]", str(self.ref), str(mnf), str(self.cfcollection.fileformat))
+            self.logger.error("[%s]-File Format [%s] is mandatory - currently [%s]", str(self.getcheckname(self.addinfo)), str(mnf), str(self.cfcollection.fileformat))

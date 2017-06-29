@@ -25,6 +25,8 @@ class Mandatory_attributes_content(Basiccheck):
 
     def apply(self):
 
+        self.addinfo = "MetadataCheck"
+
         mac = self.consmeta.get("mandatory_attributes_values", {})
 
         for k, v in self.cfcollection:
@@ -43,7 +45,7 @@ class Mandatory_attributes_content(Basiccheck):
 
                     if not (j in possiblevalues):
                         self.status = 0
-                        self.logger.error("[%s]-Attribute [%s] [%s] value is not allowed - Variable [%s] - Should be one of %s ", str(self.ref), str(i), str(j), str(k), str(possiblevalues))
+                        self.logger.error("[%s]-Attribute [%s] [%s] value is not allowed - Variable [%s] - Should be one of %s ", str(self.getcheckname(self.addinfo)), str(i), str(j), str(k), str(possiblevalues))
 
                 except Exception as e:
                     pass

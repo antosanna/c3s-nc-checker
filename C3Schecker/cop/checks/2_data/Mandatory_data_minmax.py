@@ -25,6 +25,8 @@ class Mandatory_data_minmax(Basiccheck):
 
     def apply(self):
 
+        self.addinfo = "DataCheck"
+
         for k, v in self.cfcollection.data_variables.iteritems():
 
             datavariables_checks = self.consdata.get("default", {})
@@ -51,10 +53,10 @@ class Mandatory_data_minmax(Basiccheck):
 
                         if len(res) > 0:
                             self.status = 0
-                            self.logger.error("[%s]- [%s] minimum and maximum values must be %s  - Currently %s", str(self.ref), str(x), str(y), str(valuesminmax))
+                            self.logger.error("[%s]- [%s] minimum and maximum values must be %s  - Currently %s", str(self.getcheckname(self.addinfo)), str(x), str(y), str(valuesminmax))
 
                     except Exception as e:
 
                         self.status = 0
-                        self.logger.error("[%s]- [%s] minimum and maximum values must be %s  - Problem in the check (Could be: no variable [%s] found) %s", str(self.ref), str(x), str(y), str(x), str(e))
+                        self.logger.error("[%s]- [%s] minimum and maximum values must be %s  - Problem in the check (Could be: no variable [%s] found) %s", str(self.getcheckname(self.addinfo)), str(x), str(y), str(x), str(e))
                         continue
