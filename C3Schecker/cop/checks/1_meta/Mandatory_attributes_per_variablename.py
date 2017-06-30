@@ -28,6 +28,9 @@ class Mandatory_attributes_per_variablename(Basiccheck):
         self.addinfo = "MetadataCheck"
 
         mapv = self.consmeta.get("mandatory_attributes_per_variablename", {})
+
+
+
         for k, v in self.cfcollection:
 
             mandatoryattributes = mapv.get(k, [])
