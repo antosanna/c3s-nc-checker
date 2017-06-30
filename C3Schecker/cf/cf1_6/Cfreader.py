@@ -113,7 +113,6 @@ class Cfreader():
             variablesset.pop(k, None)
 
         # Define non-Data and non-coordinate variables
-        self.cfvariablescollection.addvar(Cfauxiliarycoordinatevar.define(variablesset, self.logger))
         self.cfvariablescollection.addvar(Cfancillaryvar.define(variablesset, self.logger))
         self.cfvariablescollection.addvar(Cfboundaryvar.define(self.dataset.variables, self.logger))
         self.cfvariablescollection.addvar(Cfclimatologyvar.define(variablesset, self.logger))
@@ -121,6 +120,7 @@ class Cfreader():
         self.cfvariablescollection.addvar(Cfmeasurevar.define(variablesset, self.logger))
 
         self.cfvariablescollection.addvar(Cflabelvar.define(self.dataset.variables, self.cfvariablescollection, self.logger))
+        self.cfvariablescollection.addvar(Cfauxiliarycoordinatevar.define(variablesset, self.logger))
 
         # Define the remained variables as Data
         self.cfvariablescollection.addvar(Cfdatavar.define(self.dataset.variables, self.cfvariablescollection, self.logger))
