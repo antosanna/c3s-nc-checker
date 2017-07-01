@@ -39,12 +39,12 @@ class Cfauxiliarycoordinatevar(Cfbasicvar):
                 for name in attr.split():
 
                     try:
-                        if fct.is_string(variables[name]):
-                            comment = "This is a CF Label Variable"
-                            klass = Cflabelvar(str(name), variables[str(name)])
-                            klass.comment = comment
-                            identifiedvars[name] = klass
-                        else:
+                        # if fct.is_string(variables[name]):
+                        #     comment = "This is a CF Label Variable"
+                        #     klass = Cflabelvar(str(name), variables[str(name)])
+                        #     klass.comment = comment
+                        #     identifiedvars[name] = klass
+                        # else:
                             comment = "This is a CF Auxiliary Variable"
                             klass = Cfauxiliarycoordinatevar(str(name), variables[str(name)])
                             klass.comment = comment
