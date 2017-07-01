@@ -32,12 +32,8 @@ class Mandatory_data_values(Basiccheck):
         for k, v in self.cfcollection.data_variables.iteritems():
 
             datavariables_checks = self.consdata.get("default", {})
+            datavariables_tocheck = (self.consdata.get(k, {})) 
 
-            try:
-                datavariables_tocheck = (self.consdata.get(k, {})) 
-
-            except:
-                datavariables_tocheck = ""
 
             if bool(datavariables_tocheck):
                 datavariables_checks = datavariables_tocheck
