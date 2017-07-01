@@ -47,7 +47,6 @@ class Mandatory_data_values(Basiccheck):
 
                 for x, y in mandatorylov.iteritems():
 
-                    try:
                         errorvalue = ""
                         vv = self.cfcollection[x]
                         values = vv.netcdfinit[:]
@@ -67,7 +66,4 @@ class Mandatory_data_values(Basiccheck):
                             self.status = 0
                             self.logger.error("[%s]- [%s] values must be in %s  - Some other values has been found - First: %s  ", str(self.getcheckname(self.addinfo)), str(x), str(y), str(len(values)))
 
-                    except Exception as e:
-                        self.status = 0
-                        self.logger.error("[%s]- [%s] intervals must be %s  - Problem in the check (Could be: no variable [%s] found) %s ", str(self.getcheckname(self.addinfo)), str(x), str(y), str(x), str(e))
-                        continue
+

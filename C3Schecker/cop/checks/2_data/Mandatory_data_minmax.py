@@ -30,10 +30,8 @@ class Mandatory_data_minmax(Basiccheck):
         for k, v in self.cfcollection.data_variables.iteritems():
 
             datavariables_checks = self.consdata.get("default", {})
-            try:
-                datavariables_tocheck = (self.consdata.get(k, {})) 
-            except:
-                datavariables_tocheck = ""
+            datavariables_tocheck = (self.consdata.get(k, {})) 
+
 
             if bool(datavariables_tocheck):
                 datavariables_checks = datavariables_tocheck
@@ -45,18 +43,12 @@ class Mandatory_data_minmax(Basiccheck):
                 for x, y in mandatoryminmax.iteritems():
                     res = []
 
-                    try:
-                        vv = self.cfcollection[x]
-                        values = vv.netcdfinit[:]
-                        valuesminmax = [values.min(), values.max()]
-                        res = [i for i, j in zip(valuesminmax, y) if i != j]
+                    vv = self.cfcollection[x]
+                    values = vv.netcdfinit[:]
+                    valuesminmax = [values.min(), values.max()]
+                    res = [i for i, j in zip(valuesminmax, y) if i != j]
 
-                        if len(res) > 0:
-                            self.status = 0
-                            self.logger.error("[%s]- [%s] minimum and maximum values must be %s  - Currently %s", str(self.getcheckname(self.addinfo)), str(x), str(y), str(valuesminmax))
-
-                    except Exception as e:
-
+                    if len(res) > 0:
                         self.status = 0
-                        self.logger.error("[%s]- [%s] minimum and maximum values must be %s  - Problem in the check (Could be: no variable [%s] found) %s", str(self.getcheckname(self.addinfo)), str(x), str(y), str(x), str(e))
-                        continue
+                        self.logger.error("[%s]- [%s] minimum and maximum values must be %s  - Currently %s", str(self.getcheckname(self.addinfo)), str(x), str(y), str(valuesminmax))
+

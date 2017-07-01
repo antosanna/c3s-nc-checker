@@ -86,6 +86,7 @@ class Cpchecker:
 
         return self.check_msgs.getvalue().split("\n")
 
+    @manage_status
     def cp_get_cons(self, category):
 
 
@@ -102,7 +103,9 @@ class Cpchecker:
             return cp_cons
         except Exception as e:
 
-            self.check_msgs_logger.error("Checking Stopped - Cannot read JSON %s %s constraints file, %s,  ", str(cp_cons_json), str(category), str(e))
+            self.check_msgs_logger.critical("Checking Stopped - Cannot read JSON %s %s constraints file, %s,  ", str(cp_cons_json), str(category), str(e))
+            self.status = 0
+            self.stop = True
             return {}
 
     def cp_get_gribcf(self):

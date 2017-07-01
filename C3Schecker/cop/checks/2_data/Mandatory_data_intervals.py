@@ -30,30 +30,27 @@ class Mandatory_data_intervals(Basiccheck):
         for k, v in self.cfcollection.data_variables.iteritems():
 
             datavariables_checks = self.consdata.get("default", {})
-            try:
-                datavariables_tocheck = (self.consdata.get(k, {})) 
-            except:
-                datavariables_tocheck = ""
+            datavariables_tocheck = (self.consdata.get(k, {})) 
+
+
 
             if bool(datavariables_tocheck):
                 datavariables_checks = datavariables_tocheck
+
+            self.logger.error(datavariables_tocheck)
+
 
             mandatoryintervals = datavariables_checks.get("mandatory_intervals", {})
 
             if bool(mandatoryintervals):
                 for l, m in mandatoryintervals.iteritems():
 
-                    try:
-                        vv = self.cfcollection[l]
-                        values = vv.netcdfinit[:]
-                        valuesintervals = [(values[i - 1], x, x - values[i - 1]) for i, x in enumerate(values) if x - values[i - 1] != int(m)][1:]
+                    vv = self.cfcollection[l]
+                    values = vv.netcdfinit[:]
+                    valuesintervals = [(values[i - 1], x, x - values[i - 1]) for i, x in enumerate(values) if x - values[i - 1] != int(m)][1:]
 
-                        if len(valuesintervals) > 0:
-                            self.status = 0
-                            self.logger.error("[%s]- [%s] intervals must be %s  - Some other intervals has been found - First: %s  ", str(self.getcheckname(self.addinfo)),
-                                              str(l), str(m), str(str(valuesintervals[0][0:2]) + "=interval " + str(valuesintervals[0][2])))
-
-                    except:
+                    if len(valuesintervals) > 0:
                         self.status = 0
-                        self.logger.error("[%s]- [%s] intervals must be %s  - Problem in the check (Could be: no variable [%s] found) ", str(self.getcheckname(self.addinfo)), str(l), str(m), str(l))
-                        continue
+                        self.logger.error("[%s]- [%s] intervals must be %s  - Some other intervals has been found - First: %s  ", str(self.getcheckname(self.addinfo)),
+                                          str(l), str(m), str(str(valuesintervals[0][0:2]) + "=interval " + str(valuesintervals[0][2])))
+

@@ -47,7 +47,7 @@ class Mandatory_data_ranges(Basiccheck):
 
                 for x, y in mandatoryrange.iteritems():
 
-                    try:
+                    # try:
                         vv = self.cfcollection[x]
                         values = vv.netcdfinit[:]
 
@@ -62,7 +62,7 @@ class Mandatory_data_ranges(Basiccheck):
                             self.status = 0
                             self.logger.error("[%s]- [%s] range must be %s  - First %s", str(self.getcheckname(self.addinfo)), str(x), str(y), str(valuesoutofrange[0][0]))
 
-                    except:
-                        self.status = 0
-                        self.logger.error("[%s]- [%s] intervals must be %s  - Problem in the check (Could be: no variable [%s] found) ", str(self.getcheckname(self.addinfo)), str(x), str(y), str(x))
-                        continue
+                    # except:
+                    #     self.status = 0
+                    #     self.logger.error("[%s]- [%s] intervals must be %s  - Problem in the check (Could be: no variable [%s] found) ", str(self.getcheckname(self.addinfo)), str(x), str(y), str(x))
+                    #     continue
