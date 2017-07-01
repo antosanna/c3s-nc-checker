@@ -41,12 +41,7 @@ class Mandatory_dimensions(Basiccheck):
             self.logger.error("[%s]-NetCDF Dimensions should be a subset of %s  - currently %s ", str(self.getcheckname(self.addinfo)), str(ad), str(collectdims))
 
 
-        mavpv = self.consmeta.get("mandatory_attributes_values_per_variablename", {})
 
-        for k, v in self.cfcollection:
-                mandatorydimensions = mapv.get(k, []).get("dimensions", [])
-
-                self.logger.error(mandatorydimensions)
 
 
 
