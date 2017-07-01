@@ -23,7 +23,7 @@ from Cflabelvar import Cflabelvar
 
 class Cfauxiliarycoordinatevar(Cfbasicvar):
     """ Inheritated from parent Cfbasicvar
-        Define a CF variable as an auxiliary coordinate variable
+        Define a CF variable as an auxiliary coordinate variable 
     """
 
     @staticmethod
