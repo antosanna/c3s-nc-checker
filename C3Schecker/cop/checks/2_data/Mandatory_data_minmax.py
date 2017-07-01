@@ -31,7 +31,7 @@ class Mandatory_data_minmax(Basiccheck):
 
             datavariables_checks = self.consdata.get("default", {})
             try:
-                datavariables_tocheck = (self.consdata.get(v.standard_name, {})).get(''.join(v.cell_methods.split()), {})
+                datavariables_tocheck = (self.consdata.get(k, {})) 
             except:
                 datavariables_tocheck = ""
 
