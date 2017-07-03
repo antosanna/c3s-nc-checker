@@ -31,7 +31,7 @@ class Mandatory_global_attributes_content_list(Basiccheck):
 
         for k, v in self.cfcollection.global_attributes.iteritems():
             mgavl_possiblevalues = [str(a) for a in mgavl.get(k, [])]
-            self.logger.error(mgavl_possiblevalues)
+            # self.logger.error(mgavl_possiblevalues)
 
             # if v not in mgac_possiblevalues and len(mgac_possiblevalues) > 0:
             #     self.status = 0

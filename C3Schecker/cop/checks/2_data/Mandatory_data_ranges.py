@@ -31,15 +31,14 @@ class Mandatory_data_ranges(Basiccheck):
 
         for k, v in self.cfcollection.data_variables.iteritems():
 
+            default = True
             datavariables_checks = self.consdata.get("default", {})
+            datavariables_tocheck = (self.consdata.get(k, {})) 
 
-            try:
-                datavariables_tocheck = (self.consdata.get(k, {})) 
-            except:
-                datavariables_tocheck = ""
 
             if bool(datavariables_tocheck):
                 datavariables_checks = datavariables_tocheck
+                default = False
 
             mandatoryrange = datavariables_checks.get("mandatory_ranges", {})
 
@@ -47,7 +46,7 @@ class Mandatory_data_ranges(Basiccheck):
 
                 for x, y in mandatoryrange.iteritems():
 
-                    # try:
+                    try:
                         vv = self.cfcollection[x]
                         values = vv.netcdfinit[:]
 
@@ -62,7 +61,11 @@ class Mandatory_data_ranges(Basiccheck):
                             self.status = 0
                             self.logger.error("[%s]- [%s] range must be %s  - First %s", str(self.getcheckname(self.addinfo)), str(x), str(y), str(valuesoutofrange[0][0]))
 
-                    # except:
-                    #     self.status = 0
-                    #     self.logger.error("[%s]- [%s] intervals must be %s  - Problem in the check (Could be: no variable [%s] found) ", str(self.getcheckname(self.addinfo)), str(x), str(y), str(x))
-                    #     continue
+                    except:
+                        if default:
+                            pass
+                        else:
+                            self.status = 0
+                            self.logger.error("[%s]-  no variable [%s] found", str(self.getcheckname(self.addinfo)), str(x))
+                            continue
+ 

@@ -31,18 +31,22 @@ class Mandatory_data_values(Basiccheck):
 
         for k, v in self.cfcollection.data_variables.iteritems():
 
+            default = True
             datavariables_checks = self.consdata.get("default", {})
             datavariables_tocheck = (self.consdata.get(k, {})) 
 
 
             if bool(datavariables_tocheck):
                 datavariables_checks = datavariables_tocheck
+                default = False
 
             mandatorylov = datavariables_checks.get("mandatory_values", {})
             if bool(mandatorylov):
 
                 for x, y in mandatorylov.iteritems():
 
+
+                    try:
                         errorvalue = ""
                         vv = self.cfcollection[x]
                         values = vv.netcdfinit[:]
@@ -62,4 +66,11 @@ class Mandatory_data_values(Basiccheck):
                             self.status = 0
                             self.logger.error("[%s]- [%s] values must be in %s  - Some other values has been found - First: %s  ", str(self.getcheckname(self.addinfo)), str(x), str(y), str(len(values)))
 
+                    except:
+                        if default:
+                            pass
+                        else:
+                            self.status = 0
+                            self.logger.error("[%s]-  no variable [%s] found", str(self.getcheckname(self.addinfo)), str(x))
+                            continue
 

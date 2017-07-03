@@ -33,7 +33,8 @@ class Cfcoordinatevar(Cfbasicvar):
 
         for varname, varclass in variables.iteritems():
 
-            if ((varclass.ndim == 0) or (varclass.ndim == 1 and varname in varclass.dimensions)):
+            # if ((varclass.ndim == 0) or (varclass.ndim == 1 and varname in varclass.dimensions)):
+            if (varclass.ndim == 1 and varname in varclass.dimensions):
 
                 klass = Cfcoordinatevar(varname, varclass)
                 klass.comment = comment

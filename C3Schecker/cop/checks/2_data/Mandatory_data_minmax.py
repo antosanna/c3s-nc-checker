@@ -29,26 +29,37 @@ class Mandatory_data_minmax(Basiccheck):
 
         for k, v in self.cfcollection.data_variables.iteritems():
 
+            default = True
             datavariables_checks = self.consdata.get("default", {})
             datavariables_tocheck = (self.consdata.get(k, {})) 
 
 
             if bool(datavariables_tocheck):
                 datavariables_checks = datavariables_tocheck
+                default = False
+
 
             mandatoryminmax = datavariables_checks.get("mandatory_min_max", "")
 
             if bool(mandatoryminmax):
 
                 for x, y in mandatoryminmax.iteritems():
-                    res = []
+                    try:
+                        res = []
 
-                    vv = self.cfcollection[x]
-                    values = vv.netcdfinit[:]
-                    valuesminmax = [values.min(), values.max()]
-                    res = [i for i, j in zip(valuesminmax, y) if i != j]
+                        vv = self.cfcollection[x]
+                        values = vv.netcdfinit[:]
+                        valuesminmax = [values.min(), values.max()]
+                        res = [i for i, j in zip(valuesminmax, y) if i != j]
 
-                    if len(res) > 0:
-                        self.status = 0
-                        self.logger.error("[%s]- [%s] minimum and maximum values must be %s  - Currently %s", str(self.getcheckname(self.addinfo)), str(x), str(y), str(valuesminmax))
+                        if len(res) > 0:
+                            self.status = 0
+                            self.logger.error("[%s]- [%s] minimum and maximum values must be %s  - Currently %s", str(self.getcheckname(self.addinfo)), str(x), str(y), str(valuesminmax))
 
+                    except:
+                        if default:
+                            pass
+                        else:
+                            self.status = 0
+                            self.logger.error("[%s]-  no variable [%s] found", str(self.getcheckname(self.addinfo)), str(x))
+                            continue
