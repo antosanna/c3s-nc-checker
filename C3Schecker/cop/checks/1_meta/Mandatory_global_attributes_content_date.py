@@ -16,9 +16,9 @@
 #
 
 from C3Schecker.cop.checks.Basiccpcheck import Basiccheck
+import datetime
 
-
-class Mandatory_global_attributes_content_list(Basiccheck):
+class Mandatory_global_attributes_content_date(Basiccheck):
     """ Inheritated from parent Basiccheck
         Apply checks on global attribute content list
     """
@@ -27,16 +27,14 @@ class Mandatory_global_attributes_content_list(Basiccheck):
 
         self.addinfo = "MetadataCheck"
 
-        mgavl = self.consmeta.get("mandatory_global_attributes_values_list", {})
+        mgavd = self.consmeta.get("mandatory_global_attributes_values_date", {})
 
         for k, v in self.cfcollection.global_attributes.iteritems():
+            mgavd_dateformat =  mgavd.get(k, "")
 
-
-            mgavl_possiblevalues = [str(a) for a in mgavl.get(k, [])]
-            if len(mgavl_possiblevalues) > 0:
-                #Each item of the List Of Values must exit
-                for i in mgavl_possiblevalues:
-                    if i not in v:
-                        self.logger.error("[%s]-Global Attribute [%s] does not contain [%s]", str(self.getcheckname(self.addinfo)), str(k), str(i))
-                        self.status = 0
- 
+            if len(mgavd_dateformat) > 0:
+                try:
+                    datetime.datetime.strptime(v, mgavd_dateformat)
+                except ValueError:
+                    self.status = 0
+                    self.logger.error("[%s]-Global Attribute [%s] value is not allowed - Incorrect data format [%s] - It should be [%s]", str(self.getcheckname(self.addinfo)), str(k), str(v), str(mgavd_dateformat) )
