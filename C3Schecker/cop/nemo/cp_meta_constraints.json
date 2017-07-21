@@ -1,0 +1,1191 @@
+{
+    "_comment": "This JSON file contains mandatory structure|information to be contained in NEMO Monthly mean NetCDF files",
+    "_author": "",
+    "_source": "",
+
+    "mandatory_dimensions": {
+    "j" :{
+     "size": 292 
+     },
+    "i" :{
+     "size":362
+     },
+    "t":{
+    "size":1 
+    },
+    "bnd2":{
+    "size": 2
+    },
+    "str31":{
+    "size": 31
+    }    		
+},	
+
+
+    "mandatory_attributes_values_per_variablename": {
+
+    
+    "time_bnds": {
+    	"dimensions":["t","bnd2"],	
+	"type": "double"
+	},	
+    
+    "forecast_reference_time_bnds": {
+    	"dimensions":["t","bnd2"],	
+	"type": "double"
+	},
+    
+    "leadtime_bnds": {
+    	"dimensions":["t","bnd2"],	
+	"type": "double"
+	},
+    
+    "d300_bnds": {
+        "dimensions": ["bnd2"] ,
+	    "type": "float",
+        "output_short_name":"d300_bnds",
+        "value":"0.0 300.0"
+    },
+
+    "d700_bnds": {
+        "dimensions": ["bnd2"] ,
+	    "type": "float",
+        "output_short_name":"d700_bnds",
+        "value":"0.0 700.0"
+    },
+    
+     "dbtm_bnds": {
+        "dimensions":["bnd2"] ,
+	    "type": "float",
+        "output_short_name":"dbtm_bnds",
+        "value":"0.0 999999.9"
+    },
+        
+    "time" : {
+        "units" : "months since 1900-01-01 00:00:00" ,
+        "standard_name" :"time" ,
+        "calendar" : "gregorian" ,
+        "axis" : "T" ,
+        "bounds" : "time_bnds",
+        "long_name" : "time" ,
+	"dimensions": ["t"],	
+	"type": "double"
+	},	
+    
+    "forecast_reference_time" : {
+        "units" : "months since 1900-01-01 00:00:00" ,
+        "standard_name" :"forecast_reference_time" ,
+        "calendar" : "gregorian" ,
+        "long_name" : "Forecast reference time" ,
+        "bounds" : "forecast_reference_time_bnds",
+	"dimensions":["t"],	
+	"type": "double"
+	},	
+        
+    "leadtime" : {
+        "units" : "hours" ,
+        "standard_name" :"forecast_period" ,
+        "long_name" : "Time elasped since the start of the forecast" ,
+        "bounds" : "leadtime_bnds",
+	"dimensions":["t"],	
+	"type": "double"
+	},	    
+    
+	
+    "longitude_t": { 
+        "standard_name" : "longitude" ,
+        "units" : "degrees_east" ,
+        "valid_min" : -180.0 ,
+        "valid_max" : 180.0 ,
+        "long_name" : "longitude" ,
+        "axis" : "X" ,
+        "bounds" : "longitude_t_bnds",
+	    "dimensions":["j","i"],	
+	    "type": "float",
+        "grid":"T"        	
+	},
+	
+    "latitude_t": {
+        "standard_name" : "latitude" ,
+        "units" : "degrees_north" ,
+        "valid_min" : -90.0 ,
+        "valid_max" : 90.0 ,
+        "long_name" : "latitude" ,
+        "axis" : "Y" ,
+        "bounds" : "latitude_t_bnds",
+	    "dimensions":["j","i"],	
+	    "type": "float",
+        "grid":"T"
+	},
+    
+    "longitude_u": { 
+        "standard_name" : "longitude" ,
+        "units" : "degrees_east" ,
+        "valid_min" : -180.0 ,
+        "valid_max" : 180.0 ,
+        "long_name" : "longitude" ,
+        "axis" : "X" ,
+        "bounds" : "longitude_u_bnds",
+	    "dimensions":["j","i"],	
+	    "type": "float",
+        "grid":"U"        	
+	},
+	
+    "latitude_u": {
+        "standard_name" : "latitude" ,
+        "units" : "degrees_north" ,
+        "valid_min" : -90.0 ,
+        "valid_max" : 90.0 ,
+        "long_name" : "latitude" ,
+        "axis" : "Y" ,
+        "bounds" : "latitude_u_bnds",
+	    "dimensions":["j","i"],	
+	    "type": "float",
+        "grid":"U"
+	},
+    
+    "longitude_v": { 
+        "standard_name" : "longitude" ,
+        "units" : "degrees_east" ,
+        "valid_min" : -180.0 ,
+        "valid_max" : 180.0 ,
+        "long_name" : "longitude" ,
+        "axis" : "X" ,
+        "bounds" : "longitude_v_bnds",
+	    "dimensions":["j","i"],	
+	    "type": "float",
+        "grid":"V"        	
+	},
+	
+    "latitude_v": {
+        "standard_name" : "latitude" ,
+        "units" : "degrees_north" ,
+        "valid_min" : -90.0 ,
+        "valid_max" : 90.0 ,
+        "long_name" : "latitude" ,
+        "axis" : "Y" ,
+        "bounds" : "latitude_v_bnds",
+	    "dimensions":["j","i"],	
+	    "type": "float",
+        "grid":"V"
+	},        
+    "longitude_w": { 
+        "standard_name" : "longitude" ,
+        "units" : "degrees_east" ,
+        "valid_min" : -180.0 ,
+        "valid_max" : 180.0 ,
+        "long_name" : "longitude" ,
+        "axis" : "X" ,
+        "bounds" : "longitude_w_bnds",
+	    "dimensions":["j","i"],	
+	    "type": "float",
+        "grid":"W"        	
+	},
+	
+    "latitude_w": {
+        "standard_name" : "latitude" ,
+        "units" : "degrees_north" ,
+        "valid_min" : -90.0 ,
+        "valid_max" : 90.0 ,
+        "long_name" : "latitude" ,
+        "axis" : "Y" ,
+        "bounds" : "latitude_w_bnds",
+	    "dimensions":["j","i"],	
+	    "type": "float",
+        "grid":"W"
+	},    
+        
+      "depth_t":{
+        "axis" : "Z" ,
+        "standard_name": "depth_below_geoid" ,
+        "units" :"m" ,
+        "positive" : "down" ,
+        "long_name" : "Depth levels",
+	    "dimensions": ["depth_t"],
+	    "type": "float"	
+	},	
+
+      "depth_u":{
+        "axis" : "Z" ,
+        "standard_name": "depth_below_geoid" ,
+        "units" :"m" ,
+        "positive" : "down" ,
+        "long_name" : "Depth levels",
+	    "dimensions": ["depth_u"],
+	    "type": "float"	
+	},
+    
+      "depth_v":{
+        "axis" : "Z" ,
+        "standard_name": "depth_below_geoid" ,
+        "units" :"m" ,
+        "positive" : "down" ,
+        "long_name" : "Depth levels",
+	    "dimensions": ["depth_v"],
+	    "type": "float"	
+	},
+      "depth_w":{
+        "axis" : "Z" ,
+        "standard_name": "depth_below_geoid" ,
+        "units" :"m" ,
+        "positive" : "down" ,
+        "long_name" : "Depth levels",
+	    "dimensions": ["depth_w"],
+	    "type": "float"	
+	},
+	
+    "realization" : {
+        "axis" : "E" ,
+        "units" : "1" ,
+        "standard_name" : "realization" ,
+        "long_name" : "realization" ,
+	    "dimensions":["str31"],	
+	    "type": "int"	
+	},
+	
+    "iicethic": {
+        "units": "m" ,
+        "standard_name" : "sea_ice_thickness" ,
+        "long_name": "Ice thickness" ,
+        "coordinates" :"time realization latitude_t longitude_t" ,
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+	    "dimensions":["j","i"],	
+	    "type": "float",
+	    "short_name":"iicethic",
+        "output_short_name":"iicethic",
+        "grid":"T"
+	},
+
+    "isnowthi": {
+        "units": "m" ,
+        "standard_name" : "surface_snow_thickness" ,
+        "long_name": "Surface snow thickness" ,
+        "coordinates" :"time realization latitude_t longitude_t" ,
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+	    "dimensions":["j","i"],	
+	    "type": "float",
+	    "short_name":"isnowthi",
+        "output_short_name":"isnowthi",
+        "grid":"T"
+	},
+    
+    "iicevelu": {
+        "units": "m/s" ,
+        "standard_name" : "sea_ice_x_velocity" ,
+        "long_name": "Sea ice velocity along x" ,
+        "coordinates" :"time realization latitude_t longitude_t",
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+	    "dimensions":["j","i"],	
+	    "type": "float",
+	    "short_name":"iicevelu",
+        "output_short_name":"iicevelu",
+        "grid":"T"
+	},
+    
+    "iicevelv": {
+        "units": "m/s" ,
+        "standard_name" : "sea_ice_y_velocity" ,
+        "long_name": "Sea ice velocity along y" ,
+        "coordinates" :"time realization latitude_t longitude_t" ,
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+	    "dimensions":["j","i"],	
+	    "type": "float",
+	    "short_name":"iicevelv",
+        "output_short_name":"iicevelv",
+        "grid":"T"
+	},
+
+    "sobarstf": {
+        "units": "m3/s" ,
+        "standard_name" : "ocean_barotropic_streamfunction" ,
+        "long_name": "Ocean barotropic streamfunction" ,
+        "coordinates" :"time realization depth_u latitude_t longitude_t" ,
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+	    "dimensions":["depth_u", "j", "i"],	
+	    "type": "float",
+	    "short_name":"sobarstf",
+        "output_short_name":"sobarstf",
+        "grid":"T"
+	},
+
+    "d5": {
+        "units": "m" ,
+        "standard_name" : "depth_below_geoid" ,
+        "long_name": "Depth below geoid" ,
+	    "type": "float",
+	    "short_name":"d5",
+        "output_short_name":"d5",
+        "grid":"T",
+        "positive" :"down",        
+        "axis":"Z"    
+   	}, 
+
+    
+    "sobpheig": {
+        "units": "m" ,
+        "standard_name" : "sea-water_mass_per_unit_area_expressed_as_thickness" ,
+        "long_name": "Sea-water_mass_per_unit_area_expressed_as_thickness" ,
+        "coordinates" :"time realization latitude_t longitude_t" ,
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+	    "dimensions":["j","i"],	
+	    "type": "float",
+	    "short_name":"sobpheig",
+        "output_short_name":"sobpheig",
+        "grid":"T"
+	},
+
+
+    "sohefldo": {
+        "units": "W/m2" ,
+        "standard_name" : "surface_downward_heat_flux_in_sea_water" ,
+        "long_name": "Surface downward heat flux in sea water" ,
+        "coordinates" :"time realization latitude_t longitude_t" ,
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+	    "dimensions":["j","i"],	
+	    "type": "float",
+	    "short_name":"sohefldo",
+        "output_short_name":"sohefldo",
+        "grid":"T"
+	},
+
+    "sohefldp": {
+        "units": "W/m2" ,
+        "standard_name" : "heat_flux_correction" ,
+        "long_name": "Heat flux correction" ,
+        "coordinates" :"time realization latitude_t longitude_t" ,
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+	    "dimensions":["j","i"],	
+	    "type": "float",
+	    "short_name":"sohefldp",
+        "output_short_name":"sohefldp",
+        "grid":"T"
+	},
+    
+    "hc300": {
+        "units": "J/m2" ,
+        "standard_name" : "integral_of_sea_water_potential_temperature_wrt_depth_expressed_as_heat_content" ,
+        "long_name": "Integral of sea water potential temperature wrt depth expressed as heat content" ,
+        "coordinates" :"d300 time realization latitude_t longitude_t" ,
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+	    "dimensions":["j","i"],	
+	    "type": "float",
+	    "short_name":"sohtc300",
+        "output_short_name":"hc300",
+        "grid":"T"
+	},        
+    
+
+    "sa300": {
+        "units": "0.001" ,
+        "standard_name" : "integral_of_sea_water_practical_salinity_wrt_depth" ,
+        "long_name": "Integral of sea water practical salinity wrt depth" ,
+        "coordinates" :"d300 time realization latitude_t longitude_t" ,
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+	    "dimensions":["j","i"],	
+	    "type": "float",
+	    "short_name":"sosal300",
+        "output_short_name":"sa300",
+        "grid":"T"
+	},    
+
+    
+    "d300": {
+        "units": "m" ,
+        "standard_name" : "depth_below_geoid" ,
+        "long_name": "Depth below geoid" ,
+	    "type": "float",
+	    "short_name":"",
+        "output_short_name":"d300",
+        "grid":"T",
+        "axis":"Z",
+        "positive":"down",
+        "value":"300.0",
+        "bounds": "d300_bnds"        
+   	},     
+
+
+    "sohtc700": {
+        "units": "J/m2" ,
+        "standard_name" : "integral_of_sea_water_potential_temperature_wrt_depth_expressed_as_heat_content" ,
+        "long_name": "Integral of sea water potential temperature wrt depth expressed as heat content" ,
+        "coordinates" :"d700 time realization latitude_t longitude_t" ,
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+	    "dimensions":["j","i"],	
+	    "type": "float",
+	    "short_name":"sohtc700",
+        "output_short_name":"sohtc700",
+        "grid":"T"
+	},    
+
+    "sosal700": {
+        "units": "0.001" ,
+        "standard_name" : "integral_of_sea_water_practical_salinity_wrt_depth" ,
+        "long_name": "Integral of sea water practical salinity wrt depth" ,
+        "coordinates" :"d700 time realization latitude_t longitude_t" ,
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+	    "dimensions":["j","i"],	
+	    "type": "float",
+	    "short_name":"sosal700",
+        "output_short_name":"sosal700",
+        "grid":"T"
+	},    
+
+    
+    "d700": {
+        "units": "m" ,
+        "standard_name" : "depth_below_geoid" ,
+        "long_name": "Depth below geoid" ,
+	    "type": "float",
+	    "short_name":"",
+        "output_short_name":"d700",
+        "grid":"T",
+        "axis":"Z",
+        "positive":"down",
+        "value":"700.0",
+        "bounds": "d700_bnds"
+   	},     
+
+    "sohtcbtm": {
+        "units": "J/m2" ,
+        "standard_name" : "integral_of_sea_water_potential_temperature_wrt_depth_expressed_as_heat_content" ,
+        "long_name": "Integral of sea water potential temperature wrt depth expressed as heat content" ,
+        "coordinates" :"dbtm time realization latitude_t longitude_t" ,
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+	    "dimensions":["j","i"],	
+	    "type": "float",
+	    "short_name":"sohtcbtm",
+        "output_short_name":"sohtcbtm",
+        "grid":"T"
+	},  
+
+    "sosalbtm": {
+        "units": "0.001" ,
+        "standard_name" : "integral_of_sea_water_practical_salinity_wrt_depth" ,
+        "long_name": "Integral of sea water practical salinity wrt depth" ,
+        "coordinates" :"dbtm time realization latitude_t longitude_t" ,
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+	    "dimensions":["j","i"],	
+	    "type": "float",
+	    "short_name":"sosalbtm",
+        "output_short_name":"sosalbtm",
+        "grid":"T"
+	},    
+  
+    
+    "dbtm": {
+        "units": "m" ,
+        "standard_name" : "sea_floor_depth_below_geoid" ,
+        "long_name": "Depth below geoid" ,
+	    "type": "float",
+	    "short_name":"dbtm",
+        "output_short_name":"dbtm",
+        "grid":"T",
+        "axis":"Z",
+        "positive":"down",
+        "value":"999999.9",
+        "bounds": "dbtm_bnds"
+   	},     
+
+
+
+    "soicealb": {
+        "units": "1" ,
+        "standard_name" : "sea_ice_albedo" ,
+        "long_name": "Sea ice albedo" ,
+        "coordinates" :"time realization latitude_t longitude_t" ,
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+	    "dimensions":["j","i"],	
+	    "type": "float",
+	    "short_name":"soicealb",
+        "output_short_name":"soicealb",
+        "grid":"T"
+	},
+
+
+    "ileadfra": {
+        "units": "1" ,
+        "standard_name" : "sea_ice_area_fraction" ,
+        "long_name": "Sea ice area fraction" ,
+        "coordinates" :"time realization latitude_t longitude_t" ,
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+	    "dimensions":["j","i"],	
+	    "type": "float",
+	    "short_name":"ileadfra",
+        "output_short_name":"ileadfra",
+        "grid":"T"
+	},
+
+    "soicecov": {
+        "units": "1" ,
+        "standard_name" : "sea_ice_cover_fraction" ,
+        "long_name": "Sea ice cover fraction" ,
+        "coordinates" :"time realization latitude_t longitude_t" ,
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+	    "dimensions":["j","i"], 
+	    "type": "float",
+	    "short_name":"soicecov",
+        "output_short_name":"soicecov",
+        "grid":"T"
+	},
+
+    "soicetem": {
+        "units": "degC" ,
+        "standard_name" : "sea_ice_surface_temperature" ,
+        "long_name": "Sea ice surface temperature" ,
+        "coordinates" :"time realization latitude_t longitude_t" ,
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+	    "dimensions":["j","i"],	
+	    "type": "float",
+	    "short_name":"soicetem",
+        "output_short_name":"soicetem",
+        "grid":"T"
+	},
+
+
+    "sometaun": {
+        "units": "N/m2" ,
+        "standard_name" : "surface_downward_northward_stress" ,
+        "long_name": "Surface downward northward stress" ,
+        "coordinates" :"time realization latitude_t longitude_t" ,
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+	    "dimensions":["j","i"],	
+	    "type": "float",
+	    "short_name":"sometaun",
+        "output_short_name":"sometaun",
+        "grid":"T"
+	},
+
+    "sometauy": {
+        "units": "N/m2" ,
+        "standard_name" : "surface_downward_y_stress" ,
+        "long_name": "Surface downward stress" ,
+        "coordinates" :"time realization latitude_v longitude_v" ,
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+	    "dimensions":["j","i"],	
+	    "type": "float",
+	    "short_name":"sometauy",
+        "output_short_name":"sometauy",
+        "grid":"V"
+	},
+
+    "somixhgt": {
+        "units": "m" ,
+        "standard_name" : "ocean_mixed_layer_thickness_defined_by_vertical_tracer_diffusivity_threshold" ,
+        "long_name": "Ocean mixed layer thickness defined by vertical tracer diffusivity threshold" ,
+        "coordinates" :"time realization latitude_t longitude_t" ,
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+	    "dimensions":["j","i"],	
+	    "type": "float",
+	    "short_name":"somixhgt",
+        "output_short_name":"somixhgt",
+        "grid":"T"
+	},
+
+    "somxl010": {
+        "units": "m" ,
+        "standard_name" : "ocean_mixed_layer_thickness_defined_by_sigma_theta" ,
+        "long_name": "Ocean mixed layer thickness defined by sigma theta 0.01 kg/m3" ,
+        "coordinates" :"swst010 time realization latitude_t longitude_t" ,
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+	    "dimensions":["j","i"],	
+	    "type": "float",
+	    "short_name":"somxl010",
+        "output_short_name":"somxl010",
+        "grid":"T"
+	},    
+    
+    "swst010": {
+        "units": "kg/m3" ,
+        "standard_name" : "sea_water_sigma_theta" ,
+        "long_name": "Sea water sigma theta" ,
+	    "type": "float",
+	    "short_name":"swst010",
+        "output_short_name":"swst010",
+        "grid":"T",
+        "axis":"Z",
+        "positive" :"down"
+   	}, 
+
+    "somxl030": {
+        "units": "m" ,
+        "standard_name" : "ocean_mixed_layer_thickness_defined_by_sigma_theta" ,
+        "long_name": "ocean mixed layer thickness defined by sigma theta 0.03 kg/m3" ,
+        "coordinates" :"swst030 time realization latitude_t longitude_t" ,
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+	    "dimensions":["j","i"],	
+	    "type": "float",
+	    "short_name":"somxl030",
+        "output_short_name":"somxl030",
+        "grid":"T"
+	},    
+    
+    "swst030": {
+        "units": "kg/m3" ,
+        "standard_name" : "sea_water_sigma_theta" ,
+        "long_name": "Sea water sigma theta" ,
+	    "type": "float",
+        "output_short_name":"swst030",
+        "grid":"T",
+        "axis":"Z",
+        "positive" :"down"
+   	},     
+
+    "somxl125": {
+        "units": "m" ,
+        "standard_name" : "ocean_mixed_layer_thickness_defined_by_sigma_theta" ,
+        "long_name": "ocean mixed layer thickness defined by sigma theta 0.125 kg/m3" ,
+        "coordinates" :"swst125 time realization latitude_t longitude_t" ,
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+	    "dimensions":["j","i"],	
+	    "type": "float",
+	    "short_name":"somxl125",
+        "output_short_name":"somxl125",
+        "grid":"T"
+	},    
+    
+    "swst125": {
+        "units": "kg/m3" ,
+        "standard_name" : "sea_water_sigma_theta" ,
+        "long_name": "Sea water sigma theta" ,
+	    "type": "float",
+        "output_short_name":"swst125",
+        "grid":"T",
+        "axis":"Z",
+        "positive" :"down"
+   	},  
+
+    "somxlt02": {
+        "units": "m" ,
+        "standard_name" : "ocean_mixed_layer_thickness_defined_by_temperature" ,
+        "long_name": "Ocean mixed layer thickness defined by temperature 0.2C" ,
+        "coordinates" :"swpt02 time realization latitude_t longitude_t" ,
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+	    "dimensions":["j","i"],	
+	    "type": "float",
+	    "short_name":"somxlt02",
+        "output_short_name":"somxlt02",
+        "grid":"T"
+	},    
+    
+    "swpt02": {
+        "units": "degC" ,
+        "standard_name" : "sea_water_potential_temperature" ,
+        "long_name": "Sea water potential temperature" ,
+	    "type": "float",
+        "output_short_name":"swpt02",
+        "grid":"T",
+        "axis":"Z",
+        "positive" :"down"
+   	},         
+
+    "somxlt05": {
+        "units": "m" ,
+        "standard_name" : "ocean_mixed_layer_thickness_defined_by_temperature" ,
+        "long_name": "Ocean mixed layer thickness defined by temperature 0.5C" ,
+        "coordinates" :"swpt05 time realization latitude_t longitude_t" ,
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+	    "dimensions":["j","i"],	
+	    "type": "float",
+	    "short_name":"somxlt05",
+        "output_short_name":"somxlt05",
+        "grid":"T"
+	},    
+    
+    "swpt05": {
+        "units": "degC" ,
+        "standard_name" : "sea_water_potential_temperature" ,
+        "long_name": "Sea water potential temperature" ,
+	    "type": "float",
+        "output_short_name":"swpt05",
+        "grid":"T",
+        "axis":"Z",
+        "positive" :"down"
+   	},   
+
+    "sosafldp": {
+        "units": "kg/m2/s" ,
+        "standard_name" : "virtual_salt_flux_correction" ,
+        "long_name": "Virtual salt flux correction" ,
+        "coordinates" :"time realization latitude_t longitude_t" ,
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+	    "dimensions":["j","i"],	
+	    "type": "float",
+	    "short_name":"sosafldp",
+        "output_short_name":"sosafldp",
+        "grid":"T"
+	},
+
+    "sosalflx": {
+        "units": "kg/m2/s" ,
+        "standard_name" : "virtual_salt_flux_into_sea_water" ,
+        "long_name": "Virtual salt flux into sea water" ,
+        "coordinates" :"time realization latitude_t longitude_t" ,
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+	    "dimensions":["j","i"],	
+	    "type": "float",
+	    "short_name":"sosalflx",
+        "output_short_name":"sosalflx",
+        "grid":"T"
+	},
+
+    "soaline" : {
+        "units" : "0.001" ,
+        "standard_name" : "sea_surface_salinity" ,
+        "long_name" : "Sea surface salinity" ,
+        "coordinates" : "time realization latitude_t longitude_t" ,
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+
+	    "dimensions":["j","i"],	
+	    "type": "float",
+	    "short_name": "sosaline",
+        "output_short_name":"sosaline",
+        "grid":"T"    
+        },
+        
+    "soshfldo": {
+        "units": "W/m2" ,
+        "standard_name" : "surface_net_downward_shortwave_flux",
+        "long_name": "Surface net downward shortwave flux" ,
+        "coordinates" :"time realization latitude_t longitude_t" ,
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+	    "dimensions":["j","i"],	
+	    "type": "float",
+	    "short_name":"soshfldo",
+        "output_short_name":"soshfldo",
+        "grid":"T"
+	},       
+    
+    "sostheig" : {
+        "units" : "m" ,
+        "standard_name" : "steric_change_in_sea_surface_height" ,
+        "long_name" : "Steric change in sea surface height" ,
+        "coordinates" : "time realization latitude_t longitude_t" ,
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+	    "dimensions":["j","i"],	
+	    "type": "float",
+	    "short_name": "sostheig",
+        "output_short_name":"sostheig",
+        "grid":"T"    
+        }, 
+        
+    "sossheig": {
+        "units": "m" ,
+        "standard_name" : "sea_surface_height_above_geoid",
+        "long_name": "Sea surface height above geoid" ,
+        "coordinates" :"time realization latitude_t longitude_t" ,
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+	    "dimensions":["j","i"],	
+	    "type": "float",
+	    "short_name":"sossheig",
+        "output_short_name":"sossheig",
+        "grid":"T"
+	},        
+
+    "sosstsst" : {
+        "units" : "degC" ,
+        "standard_name" : "sea_surface_temperature" ,
+        "_FillValue" : "0.f" ,
+        "long_name" : "Sea surface temperature" ,
+        "coordinates" : "time realization latitude_t longitude_t" ,
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+
+	    "dimensions":["j","i"],	
+	    "type": "float",
+	    "short_name": "sosstsst",
+        "output_short_name":"sosstsst",
+        "grid":"T"    
+        },
+
+    "so14chgt": {
+        "units": "m" ,
+        "standard_name" : "depth_of_isosurface_of_sea_water_potential_temperature" ,
+        "long_name": "Depth of 14C isotherm" ,
+        "coordinates" :"swpt14 time realization latitude_t longitude_t" ,
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+	    "dimensions":["j","i"],	
+	    "type": "float",
+	    "short_name":"so14chgt",
+        "output_short_name":"so14chgt",
+        "grid":"T"
+	},    
+        
+    "swpt14": {
+        "units": "degC" ,
+        "standard_name" : "sea_water_potential_temperature" ,
+        "long_name": "Sea water potential temperature" ,
+	    "type": "float",
+	    "short_name":"",
+        "output_short_name":"swpt14",
+        "grid":"T",
+        "axis":"Z",
+        "positive" :"up",
+        "value":"14.0"
+   	},     
+
+    "so17chgt": {
+        "units": "m" ,
+        "standard_name" : "depth_of_isosurface_of_sea_water_potential_temperature" ,
+        "long_name": "Depth of 17C isotherm" ,
+        "coordinates" :"swpt17 time realization latitude_t longitude_t" ,
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+	    "dimensions":["j","i"],	
+	    "type": "float",
+	    "short_name":"so17chgt",
+        "output_short_name":"so17chgt",
+        "grid":"T"
+	},    
+    
+    "swpt17": {
+        "units": "degC" ,
+        "standard_name" : "sea_water_potential_temperature" ,
+        "long_name": "Sea water potential temperature" ,
+	    "type": "float",
+	    "short_name":"",
+        "output_short_name":"swpt17",
+        "grid":"T",
+        "axis":"Z",
+        "positive" :"up",        
+        "value":"17.0"
+   	},         
+
+
+
+    "so20chgt": {
+        "units": "m" ,
+        "standard_name" : "depth_of_isosurface_of_sea_water_potential_temperature" ,
+        "long_name": "Depth of 20C isotherm" ,
+        "coordinates" :"swpt20 time realization latitude_t longitude_t" ,
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+	    "dimensions":["j","i"],	
+	    "type": "float",
+	    "short_name":"so20chgt",
+        "output_short_name":"so20chgt",
+        "grid":"T"
+	},    
+    
+    "swpt20": {
+        "units": "degC" ,
+        "standard_name" : "sea_water_potential_temperature" ,
+        "long_name": "Sea water potential temperature" ,
+	    "type": "float",
+	    "short_name":"",
+        "output_short_name":"swpt20",
+        "grid":"T",
+        "axis":"Z",
+        "positive" :"up",        
+        "value":"20.0"
+   	},     
+    
+    "so26chg": {
+        "units": "m" ,
+        "standard_name" : "depth_of_isosurface_of_sea_water_potential_temperature" ,
+        "long_name": "Depth of 26C isotherm" ,
+        "coordinates" :"swpt26 time realization latitude_t longitude_t" ,
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+	    "dimensions":["j","i"],	
+	    "type": "float",
+	    "short_name":"so26chgt",
+        "output_short_name":"so26chg",
+        "grid":"T"
+	},    
+    
+    "swpt26": {
+        "units": "degC" ,
+        "standard_name" : "sea_water_potential_temperature" ,
+        "long_name": "Sea water potential temperature" ,
+	    "type": "float",
+	    "short_name":"swpt26",
+        "output_short_name":"swpt26",
+        "grid":"T",
+        "axis":"Z",
+        "positive" :"up",
+        "value":"26.0"
+   	},     
+
+    "so28chgt": {
+        "units": "m" ,
+        "standard_name" : "depth_of_isosurface_of_sea_water_potential_temperature" ,
+        "long_name": "Depth of 28C isotherm" ,
+        "coordinates" :"swpt28 time realization latitude_t longitude_t" ,
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+	    "dimensions":["j","i"],	
+	    "type": "float",
+	    "short_name":"so28chgt",
+        "output_short_name":"so28chgt",
+        "grid":"T"
+	},    
+    
+    "swpt28": {
+        "units": "degC" ,
+        "standard_name" : "sea_water_potential_temperature" ,
+        "long_name": "Sea water potential temperature" ,
+	    "type": "float",
+	    "short_name":"swpt28",
+        "output_short_name":"swpt28",
+        "grid":"T",
+        "axis":"Z",
+        "positive" :"up",
+        "value":"28.0"
+   	},     
+
+
+    "sothedep" : {
+        "units" : "m" ,
+        "standard_name" : "depth_at_maximum_upward_derivative_of_sea_water_potential_temperature" ,
+        "long_name" : "Thermocline depth" ,
+        "coordinates" : "time realization latitude_t longitude_t" ,
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+
+	    "dimensions":["j","i"],	
+	    "type": "float",
+	    "short_name": "sothedep",
+        "output_short_name":"sothedep",
+        "grid":"T"    
+        },
+
+    "sowafldp" : {
+        "units" : "kg/m2/s" ,
+        "standard_name" : "water_flux_correction" ,
+        "long_name" : "Water flux correction" ,
+        "coordinates" : "time realization latitude_t longitude_t" ,
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+
+	    "dimensions":["j","i"],	
+	    "type": "float",
+	    "short_name": "sowafldp",
+        "output_short_name":"sowafldp",
+        "grid":"T"    
+        },
+
+    "sowaflup" : {
+        "units" : "kg/m2/s" ,
+        "standard_name" : "surface_upward_water_flux" ,
+        "long_name" : "Water flux correction" ,
+        "coordinates" : "time realization latitude_t longitude_t" ,
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+
+	    "dimensions":["j","i"],	
+	    "type": "float",
+	    "short_name": "sowaflup",
+        "output_short_name":"sowaflup",
+        "grid":"T"    
+        },
+
+   "sowindsp" : {
+        "units" : "m/s" ,
+        "standard_name" : "wind_speed" ,
+        "long_name" : "10 meters wind speed" ,
+        "coordinates" : "h10 time realization latitude_t longitude_t" ,
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+	    "dimensions":["j","i"],	
+	    "type": "float",
+	    "short_name": "sowindsp",
+        "output_short_name":"sowindsp",
+        "grid":"T"    
+        },
+
+    "h10": {
+        "units": "m" ,
+        "standard_name" : "height" ,
+        "long_name": "Height" ,
+	    "type": "float",
+	    "short_name":"h10",
+        "output_short_name":"h10",
+        "grid":"T",
+        "axis":"Z",
+        "positive":"up",
+        "value":"10.0"
+   	},    
+
+   "sozotaue" : {
+        "units" : "N/m2" ,
+        "standard_name" : "surface_downward_eastward_stress" ,
+        "long_name" : "Surface downward eastward stress" ,
+        "coordinates" : "time realization latitude_t longitude_t" ,
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+
+	    "dimensions":["j","i"],	
+	    "type": "float",
+	    "short_name": "sozotaue",
+        "output_short_name":"sozotaue",
+        "grid":"T"    
+        },
+
+   "sozotaux" : {
+        "units" : "N/m2" ,
+        "standard_name" : "surface_downward_x_stress" ,
+        "long_name" : "Surface downward x stress" ,
+        "coordinates" : "time realization latitude_u longitude_u" ,
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+
+	    "dimensions":["j","i"],	
+	    "type": "float",
+	    "short_name": "sozotaux",
+        "output_short_name":"sozotaux",
+        "grid":"U"    
+        },
+
+
+
+	
+    "vosaline" : {
+        "units" : "0.001" ,
+        "standard_name" : "sea_water_practical_salinity" ,
+        "long_name" : "Sea water practical salinity" ,
+        "coordinates" : "time realization depth_t latitude_t longitude_t" ,
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+	    "dimensions":["depth_t", "j", "i"],	
+	    "type": "float",
+	    "short_name": "vosaline",
+        "output_short_name":"vosaline",
+        "grid":"T"       
+ 
+	},
+    "votemper" : {
+        "units" : "degC" ,
+        "standard_name" : "sea_water_potential_temperature" ,
+        "long_name" : "Sea water potential temperature" ,
+        "coordinates" : "time realization depth_t latitude_t longitude_t" ,
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+	    "dimensions": ["depth_t","j","i"],	
+	    "type": "float",
+	    "short_name": "votemper",
+        "output_short_name":"votemper",
+        "grid":"T"
+ 
+	},
+    
+        "vosigmat" : {
+        "units" : "kg/m3" ,
+        "standard_name" : "sea_water_sigma_theta" ,
+        "long_name" : "Sea water sigma theta" ,
+        "coordinates" : "time realization depth_t latitude_t longitude_t" ,
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+	    "dimensions": ["depth_t","j","i"],	
+	    "type": "float",
+	    "short_name": "vosigmat",
+        "output_short_name":"vosigmat",
+        "grid":"T"
+ 
+	},
+    "vottrdmp" : {
+        "units" : "K/s" ,
+        "standard_name" : "ratio_of_sea_water_potential_temperature_anomaly_to_relaxation_timescale" ,
+        "long_name" : "ratio of sea water potential temperature anomaly to relaxation timescale" ,
+        "coordinates" : "time realization depth_t latitude_t longitude_t" ,
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+	    "dimensions": ["depth_t","j","i"],	
+	    "type": "float",
+	    "short_name": "vottrdmp",
+        "output_short_name":"vottrdmp",
+        "grid":"T"
+ 
+	},      
+     
+    "vostrdmp" : {
+        "units" : "0.001/s" ,
+        "standard_name" : "ratio_of_sea_water_practical_salinity_anomaly_to_relaxation_timescale" ,
+        "long_name" : "ratio of sea water practical salinity anomaly to relaxation timescale" ,
+        "coordinates" : "time realization depth_t latitude_t longitude_t" ,
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+	    "dimensions": ["depth_t","j","i"],	
+	    "type": "float",
+	    "short_name": "vostrdmp",
+        "output_short_name":"vostrdmp",
+        "grid":"T"
+ 
+	},
+    "vomecrty" : {
+        "units" : "m/s" ,
+        "standard_name" : "sea_water_y_velocity" ,
+        "long_name" : "Sea water y velocity" ,
+        "coordinates" : "time realization depth_v latitude_v longitude_v" ,
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+	    "dimensions": ["depth_t","j","i"],	
+	    "type": "float",
+	    "short_name": "vomecrty",
+        "output_short_name":"vomecrty",
+        "grid":"V"
+ 
+	},
+    
+    "vozocrtx" : {
+        "units" : "m/s" ,
+        "standard_name" : "sea_water_x_velocity" ,
+        "long_name" : "Sea water x velocity" ,
+        "coordinates" : "time realization depth_u latitude_u longitude_u" ,
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+	    "dimensions": ["depth_t","j","i"],	
+	    "type": "float",
+	    "short_name": "vozocrtx",
+        "output_short_name":"vozocrtx",
+        "grid":"U"
+ 
+	}, 
+    
+    "vomecrtn" : {
+        "units" : "m/s" ,
+        "standard_name" : "northward_sea_water_velocity" ,
+        "long_name" : "Northward sea water velocity" ,
+        "coordinates" : "time realization depth_t latitude_t longitude_t" ,
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+	    "dimensions": ["depth_t","j","i"],	
+	    "type": "float",
+	    "short_name": "vomecrtn",
+        "output_short_name":"vomecrtn",
+        "grid":"T"
+ 
+	} ,   
+          
+    "vomecrte" : {
+        "units" : "m/s" ,
+        "standard_name" : "eastward_sea_water_velocity" ,
+        "long_name" : "Eastward sea water velocity" ,
+        "coordinates" : "time realization depth_u latitude_u longitude_u" ,
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+	    "dimensions": ["depth_t","j","i"],	
+	    "type": "float",
+	    "short_name": "vomecrte",
+        "output_short_name":"vomecrte",
+        "grid":"T"
+ 
+	},
+    "vovecrtz" : {
+        "units" : "m/s" ,
+        "standard_name" : "upward_sea_water_velocity" ,
+        "long_name" : "Upward sea water velocity" ,
+        "coordinates" : "time realization depth_w latitude_w longitude_w" ,
+        "cell_methods" : "leadtime: mean within days (interval: 1 hour comment: from 21:00UTC day before to 21:00UTC same day) forecast_reference_time: mean over days" ,
+	    "dimensions": ["depth_t","j","i"],	
+	    "type": "float",
+	    "short_name": "vovecrtz",
+        "output_short_name":"vovecrtz",
+        "grid":"W"
+ 
+	}          
+            
+    },
+
+
+    "mandatory_global_attributes": ["Conventions", "title", "references", "source", "institution", "history", "comment"
+        
+    ],
+
+    "mandatory_global_attributes_values": {
+
+
+        "Conventions": ["CF-1.6"],
+        "comment": ["CERA 20C Produced at ECMWF"],
+        "title": ["NEMO model output"],
+	"source": ["NEMO V3.4"],
+        "references": ["Madec G. 2008: NEMO ocean engine Note du Pole de modelisation, Institut Pierre-Simon Laplace (IPSL), France, No 27 ISSN No 1288-1619. \\nhttp://www.nemo-ocean.eu/content/download/21612/97924/file/NEMO_book_3_4.pdf" ],
+        "institution": ["ECMWF"],
+        "history": [""]
+
+    }
+
+}
+
+
+
+
