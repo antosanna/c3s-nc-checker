@@ -1,75 +1,755 @@
 {
-    "_comment": "This JSON file contains mandatory structure|information to be contained in  C3S NetCDF files - Seasonal",
-    "_author": "C.Bergeron",
-    "_source": "",
+	"_comment": "This JSON file contains mandatory structure|information to be contained in  C3S NetCDF files - Seasonal",
+	"_author": "C.Bergeron",
+	"_source": "",
 
 
-    "mandatory_cf_convention"		: "CF-1.6",
-    "mandatory_netcdf_format"		: "NETCDF4_CLASSIC",
-    "mandatory_number_datavariable_per_netcdf": 1,
-    "mandatory_dimensions" 			: ["lat", "lon", "time", "height", "realization_dim", "str_length"],
-    "authorized_other_dimensions" 			: ["bounds"],
+	"mandatory_cf_convention": "CF-1.6 C3S-0.1",
+	"mandatory_netcdf_format": "NETCDF4_CLASSIC",
+	"mandatory_number_datavariable_per_netcdf": 1,
+	"mandatory_dimensions": ["lat", "lon"],
+	"authorized_other_dimensions": ["plev", "depth", "height", "realization", "time", "time_bnds", "leadtime_bnds", "lat_bnds", 
+    "lon_bnds", "depth_bnds", "str31", "leadtime"],
 
 
-    "mandatory_variablenames": {
-        "Cfcoordinatevar"	: ["lon", "lat", "time"],
-        "Cfauxiliarycoordinatevar"	: ["height"]
+	"mandatory_variablenames": {
+		"Cfcoordinatevar": ["lon", "lat", "leadtime"],
+		"Cfauxiliarycoordinatevar": ["reftime", "time","realization"]
 
-    },
+	},
 
-    "mandatory_standardnames": {
-        "Cfcoordinatevar"	: ["time", "latitude", "longitude"],
-        "Cfauxiliarycoordinatevar"	: ["height"]
-    },
-
+	"mandatory_standardnames": {
+		"Cfcoordinatevar": [ "forecast_period","lat", "lon" ]
+	},
 
 
 
-    "mandatory_attributes_per_standardname": {
-        "time"	: ["axis", "units", "calendar", "long_name"],
-        "latitude"	: ["axis", "units", "long_name", "valid_min", "valid_max"],
-        "longitude"	: ["axis", "units", "long_name", "valid_min", "valid_max"],
-        "height"	: ["axis", "units", "long_name", "valid_min", "valid_max", "positive"],
-        "realization"	: ["units", "long_name"]
-    },
+
+	"mandatory_attributes_per_standardname": {
+		"time": ["units", "calendar", "long_name", "standard_name"],
+		"reftime": ["units", "calendar", "long_name", "standard_name"],
+		"leadtime": ["units", "long_name", "bounds", "standard_name"],
+		"latitude": ["axis", "units", "long_name", "valid_min", "valid_max", "bounds", "standard_name"],
+		"longitude": ["axis", "units", "long_name", "valid_min", "valid_max", "bounds", "standard_name"],
+		"air_pressure": ["axis", "units", "long_name", "positive", "standard_name"],
+		"depth": ["axis", "units", "long_name", "positive", "bounds", "standard_name"],
+		"height": ["axis ", "units ", "long_name ", "positive ", "valid_min ", "valid_max ", "standard_name "],
+		"realization": ["units", "axis", "standard_name", "long_name"]
+	},
 
 
-    "mandatory_attributes_per_variabletype": {
-        "Cfdatavar"			: {
-            "All": ["standard_name", "units", "long_name", "valid_min", "valid_max", "mars_paramid", "coordinates", "cell_methods"]
-        }
-    },
+	"mandatory_attributes_per_variabletype": {
+		"Cfdatavar": {
+			"All": ["standard_name", "units", "long_name", "coordinates", "cell_methods", "grid_mapping", "_FillValue"]
+		}
+	},
 
 
-    "mandatory_attributes_values": {
-        "calendar" 	: ["gregorian"]
-    },
+	"mandatory_attributes_values": {
+		"calendar": ["gregorian"]
 
-    "mandatory_attributes_values_per_standardname": {
-        "height"	: {
-            "units": "m",
-            "positive": "up",
-            "axis": "Z",
-            "valid_min": 1.0,
-            "valid_max": 10.0
+	},
 
+	"mandatory_attributes_values_per_variablename": {
+
+		"lat": {
+			"units": "degrees_north",
+			"long_name": "latitude",
+            "standard_name" : "latitude",
+			"dimensions": ["lat"],
+			"Axis": "Y",
+			"valid_min": -90.0,
+			"valid_max": 90.0,
+			"bounds": "lat_bnds"
+		},
+        
+		"lon": {
+			"units": "degrees_east",
+			"long_name": "longitude",
+            "standard_name" : "longitude",
+			"dimensions": ["lon"],
+			"Axis": "X",
+			"valid_min": 0.0,
+			"valid_max": 360.0,
+			"bounds": "lon_bnds"
+		},
+
+		"plev": {
+			"units": "Pa",
+			"long_name": "pressure",
+            "standard_name" : "air_pressure",
+			"dimensions": ["plev"],
+			"Axis": "Z",
+			"positive": "down"
+		},
+
+		"depth": {
+			"units": "m",
+			"long_name": "depth",
+			"dimensions": ["depth"],
+			"Axis": "Z",
+			"positive": "down"
+		},
+
+		"height": {
+			"units": "m",
+			"long_name": "height",
+			"Axis": "Z",
+			"positive": "up"
+		},
+
+		"realization": {
+			"units": "1",
+			"long_name": "realization",
+			"axis": "E",
+            "standard_name" : "realization",
+			"dimensions": ["str31"]
+		},
+
+		"reftime": {
+			"units": "hours since YYYY-MM-DDThh:mm:ss+TZhh:TZmm",
+			"long_name": "Start date of the forecast",
+            "standard_name": "forecast_reference_time",
+			"calendar": "gregorian"
+		},
+
+		"leadtime": {
+			"units": "hours",
+			"long_name": "Time elapsed since the start of the forecast",
+            "standard_name": "forecast_period",
+			"dimensions": ["leadtime"],
+			"bounds": "leadtime_bnds"
+		},
+
+		"time": {
+			"units": "hours since YYYY-MM-DD hh:mm:ss TZhh:TZmm",
+			"long_name": "Verification time of the forecast",
+			"dimensions": ["leadtime"],
+			"calendar": "gregorian",
+			"bounds": "time_bnds"
+		},
+        
+        "hcrs": {
+               "grid_mapping_name" : "latitude_longitude" 
         },
-        "air_temperature"	: {
-            "units": "K"
+        
+		"sftlf": {
+			"units": "1",
+			"grid_mapping": "hcrs",
+			"long_name": "Land Area Fraction",
+			"coordinates": "lat lon",
+			"valid_min": 0,
+			"valid_max": 1,
+			"dimensions": ["lat","lon"],
+            "frequency":"fix",
+            "level_type": "surface",
+            "modeling_realm":"atmos" 
+		},
+
+		"orog": {
+			"units": "m",
+			"grid_mapping": "hcrs",
+			"long_name": "Surface Altitude",
+			"coordinates": "lat lon",
+			"dimensions": ["lat","lon"],
+            "frequency":"fix",
+            "level_type": "surface",
+            "modeling_realm":"atmos"             
+		},
+
+		"tas": {
+			"long_name": "Near-Surface Air Temperature",
+			"units": "K",
+			"coordinates": "reftime realization time leadtime height lat lon",
+            "standard_name": "air_temperature",
+			"cell_methods": "leadtime: point",
+			"grid_mapping": "hcrs",
+			"dimensions": ["leadtime","lat","lon"],
+            "frequency":"6hr",
+            "level_type": "surface",
+            "modeling_realm":"atmos"            
+		},
+
+		"tasmax": {
+			"long_name": "Daily Maximum Near-Surface Air Temperature",
+			"units": "K",
+			"coordinates": "reftime realization time leadtime height lat lon",
+            "standard_name": "air_temperature",
+			"cell_methods": "leadtime: maximum (interval 1 hour)",
+			"grid_mapping": "hcrs",
+			"dimensions": ["leadtime","lat","lon"],
+            "frequency":"day",
+            "level_type": "surface",
+            "modeling_realm":"atmos"              
+		},
+
+		"tasmin": {
+			"long_name": "Daily Minimum Near-Surface Air Temperature",
+			"units": "K",
+			"coordinates": "reftime realization time leadtime height lat lon",
+            "standard_name": "air_temperature",
+			"cell_methods": "leadtime: minimum (interval 1 hour)",
+			"grid_mapping": "hcrs",
+			"dimensions": ["leadtime","lat","lon"],
+            "frequency":"day",
+            "level_type": "surface",
+            "modeling_realm":"atmos"              
+		},
+
+		"tdps": {
+			"long_name": "2m dewpoint temperature",
+			"units": "K",
+			"coordinates": "reftime realization time leadtime height lat lon",
+            "standard_name": "dew_point_temperature",
+			"cell_methods": "leadtime: point",
+			"grid_mapping": "hcrs",
+			"dimensions": ["leadtime","lat","lon"],
+            "frequency":"6hr",
+            "level_type": "surface",
+            "modeling_realm":"atmos"              
+		},
+
+		"uas": {
+			"long_name": "Eastward Near-Surface Wind",
+			"units": "m s-1",
+			"coordinates": "reftime realization time leadtime height lat lon",
+            "standard_name":"x_wind",
+			"cell_methods": "leadtime: point",
+			"grid_mapping": "hcrs",
+			"dimensions": ["leadtime","lat","lon"],
+            "frequency":"6hr",
+            "level_type": "surface",
+            "modeling_realm":"atmos"              
+		},
+
+		"vas": {
+			"long_name": "Northward Near-Surface Wind",
+			"units": "m s-1",
+			"coordinates": "reftime realization time leadtime height lat lon",
+            "standard_name":"y_wind",
+			"cell_methods": "leadtime: point",
+			"grid_mapping": "hcrs",
+			"dimensions": ["leadtime","lat","lon"],
+            "frequency":"6hr",
+            "level_type": "surface",
+            "modeling_realm":"atmos"              
+		},
+
+		"wsgmax": {
+			"long_name": "Maximum Wind Speed of Gust",
+			"units": "m s-1",
+			"coordinates": "reftime realization time leadtime height lat lon",
+            "standard_name":"wind_speed_of_gust",
+			"cell_methods": "leadtime: maximum (interval 1 hour)",
+			"grid_mapping": "hcrs",
+			"dimensions": ["leadtime","lat","lon"],
+            "frequency":"6hr",
+            "level_type": "surface",
+            "modeling_realm":"atmos"              
+		},
+
+		"psl": {
+			"long_name": "Sea Level Pressure",
+			"units": "Pa",
+			"coordinates": "reftime realization time leadtime lat lon",
+            "standard_name": "air_pressure_at_sea_level",
+			"cell_methods": "leadtime: point",
+			"grid_mapping": "hcrs",
+			"dimensions": ["leadtime","lat","lon"],
+            "frequency":"6hr",
+            "level_type": "surface",
+            "modeling_realm":"atmos"            
+		},
+
+		"clt": {
+			"long_name": "Total Cloud Fraction",
+			"units": "1",
+			"coordinates": "reftime realization time leadtime lat lon",
+            "standard_name": "cloud_area_fraction",
+			"cell_methods": "leadtime: point",
+			"grid_mapping": "hcrs",
+			"dimensions": ["leadtime","lat","lon"],
+            "frequency":"6hr",
+            "level_type": "surface",
+            "modeling_realm":"atmos"            
+		},
+
+		"tsl": {
+			"long_name": "Temperature of Soil",
+			"units": "K",
+			"coordinates": "reftime realization time leadtime lat lon",
+            "standard_name": "soil_temperature",
+			"cell_methods": "leadtime: point",
+			"grid_mapping": "hcrs",
+			"dimensions": ["leadtime","lat","lon"],
+            "frequency":"6hr",
+            "level_type": "surface",
+            "modeling_realm":"land"             
+            
+		},
+
+		"tso": {
+			"long_name": "Sea Surface Temperature",
+			"units": "K",
+			"coordinates": "reftime realization time leadtime lat lon",
+            "standard_name":"sea_surface_temperature",
+			"cell_methods": "leadtime: point",
+			"grid_mapping": "hcrs",
+			"dimensions": ["leadtime","lat","lon"],
+            "frequency":"6hr",
+            "level_type": "surface",
+            "modeling_realm":"ocean" 
+		},
+        
+		"sitemptop": {
+			"long_name": "Surface Temperature of sea ice",
+			"units": "K",
+			"coordinates": "reftime realization time leadtime lat lon",
+            "standard_name":"sea_ice_temperature", 
+			"cell_methods": "leadtime: point",
+			"grid_mapping": "hcrs",
+			"dimensions": ["leadtime","lat","lon"],
+            "frequency":"6hr",
+            "level_type": "surface",
+            "modeling_realm":"seaIce"             
+		},
+
+		"sic": {
+			"long_name": "Sea Ice Area Fraction",
+			"units": "1",
+			"coordinates": "reftime realization time leadtime lat lon",
+            "standard_name":"sea_ice_area_fraction",
+			"cell_methods": "leadtime: point",
+			"grid_mapping": "hcrs",
+			"dimensions": ["leadtime","lat","lon"],
+            "frequency":"day",
+            "level_type": "surface",
+            "modeling_realm":"seaIce"            
+		},
+
+		"mrlsl": {
+			"long_name": "Water Content per Unit Area of Soil Layers",
+			"units": "kg m-2",
+			"coordinates": "reftime realization time leadtime depth lat lon",
+            "standard_name":"moisture_content_soil_layer",
+			"cell_methods": "leadtime: point",
+			"grid_mapping": "hcrs",
+			"dimensions": ["leadtime", "depth", "lat", "lon"],
+            "frequency":"day",
+            "level_type": "soil",
+            "modeling_realm":"land"            
+		},
+
+		"lwesnw": {
+			"long_name": "Liquid Water Equivalent Thickness of Surface Snow Amount",
+			"units": "m",
+			"coordinates": "reftime realization time leadtime lat lon",
+            "standard_name":"lwe_thickness_of_surface_snow_amount",
+			"cell_methods": "leadtime: point",
+			"grid_mapping": "hcrs",
+			"dimensions": ["leadtime","lat","lon"],
+            "frequency":"day",
+            "level_type": "surface",
+            "modeling_realm":"land"     
+		},
+
+		"rhosn": {
+			"long_name": "Snow Density",
+			"units": "kg m-3",
+			"coordinates": "reftime realization time leadtime lat lon",
+            "standard_name":"snow_density",
+			"cell_methods": "leadtime: point",
+			"grid_mapping": "hcrs",
+			"dimensions": ["leadtime","lat","lon"],
+            "frequency":"day",
+            "level_type": "surface",
+            "modeling_realm":"land"             
+		},
+
+		"lweprs": {
+			"long_name": "Liquid Water Equivalent Thickness of Stratiform Precipitation Amount",
+			"units": "m",
+			"coordinates": "reftime realization time leadtime lat lon",
+            "standard_name":"lwe_thickness_of_stratiform_precipitation_amount",
+			"cell_methods": "leadtime: sum",
+			"grid_mapping": "hcrs",
+			"dimensions": ["leadtime","lat","lon"],
+            "frequency":"day",
+            "level_type": "surface",
+            "modeling_realm":"atmos"             
+		},
+
+		"lweprc": {
+			"long_name": "Liquid Water Equivalent Thickness of Convective Precipitation Amount",
+			"units": "m",
+			"coordinates": "reftime realization time leadtime lat lon",
+            "standard_name":"lwe_thickness_of_convective_precipitation_amount",
+			"cell_methods": "leadtime: sum",
+			"grid_mapping": "hcrs",
+			"dimensions": ["leadtime","lat","lon"],
+            "frequency":"day",
+            "level_type": "surface",
+            "modeling_realm":"atmos"             
+		},
+
+		"lwepr": {
+			"long_name": "Liquid Water Equivalent Thickness of Total Precipitation Amount",
+			"units": "m",
+			"coordinates": "reftime realization time leadtime lat lon",
+            "standard_name":"lwe_thickness_of_precipitation_amount",
+			"cell_methods": "leadtime: sum",
+			"grid_mapping": "hcrs",
+			"dimensions": ["leadtime","lat","lon"],
+            "frequency":"day",
+            "level_type": "surface",
+            "modeling_realm":"atmos"
+		},
+
+		"lweprsn": {
+			"long_name": "Liquid Water Equivalent Thickness of Snowfall Amount",
+			"units": "m",
+			"coordinates": "reftime realization time leadtime lat lon",
+            "standard_name":"lwe_thickness_of_snowfall_amount",
+			"cell_methods": "leadtime: sum",
+			"grid_mapping": "hcrs",
+			"dimensions": ["leadtime","lat","lon"],
+            "frequency":"day",
+            "level_type": "surface",
+            "modeling_realm":"atmos"
+		},
+
+		"hfss": {
+			"long_name": "Surface Upward Sensible Heat Flux",
+			"units": "W m-2",
+			"coordinates": "reftime leadtime time lat lon",
+            "standard_name":"surface_upward_sensible_heat_flux",
+			"cell_methods": "leadtime: mean (interval = 1 hour)",
+			"grid_mapping": "hcrs",
+			"dimensions": ["leadtime","lat","lon"],
+            "frequency":"day",
+            "level_type": "surface",
+            "modeling_realm":"atmos"            
+		},
+
+		"hfls": {
+			"long_name": "Surface Upward Latent Heat Flux",
+			"units": "W m-2",
+			"coordinates": "reftime realization time leadtime lat lon",
+            "standard_name":"surface_upward_latent_heat_flux",
+			"cell_methods": "leadtime: mean (interval = 1 hour)",
+			"grid_mapping": "hcrs",
+			"dimensions": ["leadtime","lat","lon"],
+            "frequency":"day",
+            "level_type": "surface",
+            "modeling_realm":"atmos"             
+		},
+        
+		"rsds": {
+			"long_name": "Surface Downwelling Shortwave Radiation",
+			"units": "W m-2",
+			"coordinates": "reftime realization time leadtime lat lon",
+            "standard_name":"surface_downwelling_shortwave_flux_in_air",
+			"cell_methods": "leadtime: mean (interval = 1 hour)",
+			"grid_mapping": "hcrs",
+			"dimensions": ["leadtime","lat","lon"],
+            "frequency":"day",
+            "level_type": "surface",
+            "modeling_realm":"atmos" 
+		},
+        
+		"rlds": {
+			"long_name": "Surface Downwelling Longwave Radiation",
+			"units": "W m-2",
+			"coordinates": "reftime realization time leadtime lat lon",
+            "standard_name":"surface_downwelling_longwave_flux_in_air",
+			"cell_methods": "leadtime: mean (interval = 1 hour)",
+			"grid_mapping": "hcrs",
+			"dimensions": ["leadtime","lat","lon"],
+            "frequency":"day",
+            "level_type": "surface",
+            "modeling_realm":"atmos" 
+		},
+
+		"rss": {
+			"long_name": "Net Shortwave Surface Radiation",
+			"units": "W m-2",
+			"coordinates": "reftime realization time leadtime lat lon",
+            "standard_name":"surface_net_downward_shortwave_flux",
+			"cell_methods": "leadtime: mean (interval = 1 hour)",
+			"grid_mapping": "hcrs",
+			"dimensions": ["leadtime","lat","lon"],
+            "frequency":"day",
+            "level_type": "surface",
+            "modeling_realm":"atmos"             
+		},
+
+		"rls": {
+			"long_name": "Net Longwave Surface Radiation",
+			"units": "W m-2",
+			"coordinates": "reftime realization time leadtime lat lon",
+            "standard_name":"surface_net_downward_longwave_flux",
+			"cell_methods": "leadtime: mean (interval = 1 hour)",
+			"grid_mapping": "hcrs",
+			"dimensions": ["leadtime","lat","lon"],
+            "frequency":"day",
+            "level_type": "surface",
+            "modeling_realm":"atmos"             
+		},
+
+		"rst": {
+			"long_name": "TOA Net Shortwave Radiation",
+			"units": "W m-2",
+			"coordinates": "reftime realization time leadtime lat lon",
+            "standard_name":"toa_net_downward_shortwave_flux",
+			"cell_methods": "leadtime: mean (interval = 1 hour)",
+			"grid_mapping": "hcrs",
+			"dimensions": ["leadtime","lat","lon"],
+            "frequency":"day",
+            "level_type": "surface",
+            "modeling_realm":"atmos"             
+		},
+
+		"rlt": {
+			"long_name": "TOA Net Longwave Radiation",
+			"units": "W m-2",
+			"coordinates": "reftime realization time leadtime lat lon",
+            "standard_name":"toa_net_downward_longwave_flux",
+			"cell_methods": "leadtime: mean (interval = 1 hour)",
+			"grid_mapping": "hcrs",
+			"dimensions": ["leadtime","lat","lon"],
+            "frequency":"day",
+            "level_type": "surface",
+            "modeling_realm":"atmos"             
+		},
+
+		"rsdt": {
+			"long_name": "TOA Incident Shortwave Radiation",
+			"units": "W m-2",
+			"coordinates": "reftime realization time leadtime lat lon",
+            "standard_name":"toa_incoming_shortwave_flux",
+			"cell_methods": "leadtime: mean (interval = 1 hour)",
+			"grid_mapping": "hcrs",
+			"dimensions": ["leadtime","lat","lon"],
+            "frequency":"day",
+            "level_type": "surface",
+            "modeling_realm":"atmos"             
+		},
+        
+		"tauu": {
+			"long_name": "Surface Downward Eastward Wind Stress",
+			"units": "Pa",
+			"coordinates": "reftime realization time leadtime lat lon",
+            "standard_name":"surface_downward_eastward_stress",
+			"cell_methods": "leadtime: mean (interval = 1 hour)",
+			"grid_mapping": "hcrs",
+			"dimensions": ["leadtime","lat","lon"],
+            "frequency":"day",
+            "level_type": "surface",
+            "modeling_realm":"atmos"             
+		},
+        
+		"tauv": {
+			"long_name": "Surface Downward Northward Wind Stress",
+			"units": "Pa",
+			"coordinates": "reftime realization time leadtime lat lon",
+            "standard_name": "surface_downward_northward_stress",
+			"cell_methods": "leadtime: mean (interval = 1 hour)",
+			"grid_mapping": "hcrs",
+			"dimensions": ["leadtime","lat","lon"],            
+            "frequency":"day",
+            "level_type": "surface",
+            "modeling_realm":"atmos" 
+		},
+
+		"lwee": {
+			"long_name": "Liquid Water Equivalent of Evaporation Amount",
+			"units": "m",
+			"coordinates": "reftime realization time leadtime lat lon",
+            "standard_name": "lwe_thickness_of_water_evaporation_amount",
+			"cell_methods": "time: sum",
+			"grid_mapping": "hcrs",
+			"dimensions": ["leadtime","lat","lon"],
+            "frequency":"day",
+            "level_type": "surface",
+            "modeling_realm":"land"             
+		},
+
+		"mrroa": {
+			"long_name": "Total Run-off Amount",
+			"units": "kg m-2",
+			"coordinates": "reftime realization time leadtime lat lon",
+            "standard_name": "runoff_amount",
+			"cell_methods": "leadtime: sum",
+			"grid_mapping": "hcrs",
+			"dimensions": ["leadtime","lat","lon"],
+            "frequency":"day",
+            "level_type": "surface",
+            "modeling_realm":"land"               
+		},
+        
+		"mrroas": {
+			"long_name": "Surface Run-off Amount",
+			"units": "kg m-2",
+			"coordinates": "reftime realization time leadtime lat lon",
+            "standard_name":"surface_runoff_amount",
+			"cell_methods": "leadtime: sum",
+			"grid_mapping": "hcrs",
+			"dimensions": ["leadtime","lat","lon"],
+            "frequency":"day",
+            "level_type": "surface",
+            "modeling_realm":"land"               
+		},
+
+		"mrroab": {
+			"long_name": "Subsurface Run-off Amount",
+			"units": "kg m-2",
+			"coordinates": "reftime realization time leadtime lat lon",
+            "standard_name":"subsurface_runoff_amount",
+			"cell_methods": "leadtime: sum",
+			"grid_mapping": "hcrs",
+			"dimensions": ["leadtime","lat","lon"],
+            "frequency":"day",
+            "level_type": "surface",
+            "modeling_realm":"land"               
+		},
+
+		"zg": {
+			"long_name": "Geopotential Height",
+			"units": "m",
+			"coordinates": "reftime realization time leadtime plev lat lon",
+            "standard_name":"geopotential_height",
+			"cell_methods": "leadtime: point",
+			"grid_mapping": "hcrs",
+			"dimensions": ["leadtime", "plev", "lat", "lon"],
+            "frequency":"12hr",
+            "level_type": "pressure",
+            "modeling_realm":"atmos"               
+		},
+        
+		"ta": {
+			"long_name": "Air Temperature",
+			"units": "K",
+			"coordinates": "reftime realization time leadtime plev lat lon",
+            "standard_name": "air_temperature",
+			"cell_methods": "leadtime: point",
+			"grid_mapping": "hcrs",
+			"dimensions": ["leadtime", "plev", "lat", "lon"],
+            "frequency":"12hr",
+            "level_type": "pressure",
+            "modeling_realm":"atmos"             
+		},
+
+		"hus": {
+			"long_name": "Specific Humidity",
+			"units": "1",
+			"coordinates": "reftime realization time leadtime plev lat lon",
+            "standard_name": "specific_humidity",
+			"cell_methods": "leadtime: point",
+			"grid_mapping": "hcrs",
+			"dimensions": ["leadtime", "plev", "lat", "lon"],
+            "frequency":"12hr",
+            "level_type": "pressure",
+            "modeling_realm":"atmos"             
+		},
+
+		"rv": {
+			"long_name": "Relative Vorticity",
+			"units": "s-1",
+			"coordinates": "reftime realization time leadtime plev lat lon",
+            "standard_name": "atmospheric_relative_vorticity",
+			"cell_methods": "leadtime: point",
+			"grid_mapping": "hcrs",
+			"dimensions": ["leadtime", "plev", "lat", "lon"],
+            "frequency":"12hr",
+            "level_type": "pressure",
+            "modeling_realm":"atmos"             
+		},
+
+		"wnddiv": {
+			"long_name": "Divergence of Wind",
+			"units": "s-1",
+			"coordinates": "reftime realization time leadtime plev lat lon",
+            "standard_name": "divergence_of_wind",
+			"cell_methods": "leadtime: point",
+			"grid_mapping": "hcrs",
+			"dimensions": ["leadtime", "plev", "lat", "lon"],
+            "frequency":"12hr",
+            "level_type": "pressure",
+            "modeling_realm":"atmos"             
+		},
+
+		"ua": {
+			"long_name": "Eastward Wind",
+			"units": "m s-1",
+			"coordinates": "reftime realization time leadtime plev lat lon",
+            "standard_name": "x_wind",
+			"cell_methods": "leadtime: point",
+			"grid_mapping": "hcrs",
+			"dimensions": ["leadtime", "plev", "lat", "lon"],
+            "frequency":"12hr",
+            "level_type": "pressure",
+            "modeling_realm":"atmos"             		
+        },
+        
+		"va": {
+			"long_name": "Northward Wind",
+			"units": "m s-1",
+			"coordinates": "reftime realization time leadtime plev lat lon",
+            "standard_name": "y_wind",
+			"cell_methods": "leadtime: point",
+			"grid_mapping": "hcrs",
+			"dimensions": ["leadtime", "plev", "lat", "lon"],
+            "frequency":"12hr",
+            "level_type": "pressure",
+            "modeling_realm":"atmos"             
+		}
+
+
+	},
+
+
+	"mandatory_global_attributes": ["Conventions", "comment", "summary", 
+		"title", "forecast_type", "institute_id", "project", "source", "contact", "references", "forecast_reference_time", "keywords",
+		"creation_date", "institution", "history", "modeling_realm", "frequency", "level_type", "commit"
+	],
+
+	"mandatory_global_attributes_values": {
+
+
+		"Conventions": ["CF-1.6 C3S-0.1"],
+		"summary": ["Seasonal Forecast data produced by ECMWF as its contribution to the seasonal forecast activity of the Copernicus Climate Change Service (C3S). The data has global coverage with a 1-degree horizontal resolution and spans for around 6 months since the start date",
+			"Seasonal Forecast data produced by the Met Office as its contribution to the seasonal forecast activity of the Copernicus Climate Change Service (C3S). The data has global coverage with a 1-degree horizontal resolution and spans for around 6 months since the start date",
+			"Seasonal Forecast data produced by Meteo-France as its contribution to the seasonal forecast activity of the Copernicus Climate Change Service (C3S). The data has global coverage with a 1-degree horizontal resolution and spans for around 6 months since the start date",
+			"Seasonal Forecast data produced by DWD as its contribution to the seasonal forecast activity of the Copernicus Climate Change Service (C3S). The data has global coverage with a 1-degree horizontal resolution and spans for around 6 months since the start date",
+			"Seasonal Forecast data produced by CMCC as its contribution to the seasonal forecast activity of the Copernicus Climate Change Service (C3S). The data has global coverage with a 1-degree horizontal resolution and spans for around 6 months since the start date"
+		],
+		"title": ["ECMWF seasonal forecast model output prepared for C3S", "Met Office seasonal forecast model output prepared for C3S",
+			"Meteo-France seasonal forecast model output prepared for C3S", "DWD seasonal forecast model output prepared for C3S",
+			"CMCC seasonal forecast model output prepared for C3S"
+		],
+		"forecast_type": ["forecast", "hindcast"],
+		"institute_id": ["ecmf", "egrr", "lfpw", "edzw", "cmcc"],
+		"project": ["C3S Seasonal Forecast"],
+
+		"contact": ["http://copernicus-support.ecmwf.int"],
+      
+		"keywords": ["Seasonal Forecasts", "C3S", "ECMWF", "Copernicus", "Climate Change", "Climate Services", "Earth Science Services", "Environmental Advisories", "Climate Advisories"],
+		"institution": ["ECMWF, European Centre for Medium-Range Weather Forecasts, Reading, United Kingdom",
+			"Met Office, Exeter, United Kingdom",
+			"Meteo-France, Toulouse, France",
+			"DWD, Deutscher Wetterdienst, Offenbach, Germany",
+			"CMCC, Centro Euro-Mediterraneo sui Cambiamenti Climatici, Bologna, Italy"
+		],
+		"history": [""],
+		"modeling_realm": ["atmos", "ocean", "land", "landIce", "seaIce", "aerosol", "atmosChem", "ocnBgchem"],
+		"frequency": ["mon", "day", "12hr", "6hr", "fix"],
+		"level_type": ["surface", "pressure", "soil"],
+		"commit": ["2017-04-01T13:48:25Z https://software.ecmwf.int/stash/projects/C3SS/repos/ecmf/System4_v20111101"]
+	},
+                "mandatory_global_attributes_values_list": {
+                        "keywords": ["Seasonal Forecasts", "C3S", "ECMWF", "Copernicus", "Climate Change", "Climate Services", "Earth Science Services", "Environmental Advisories", "Climate Advisories"]
+
         }
-    },
-
-
-    "mandatory_global_attributes": ["Conventions", "title", "references", "source", "institution", "contact",
-                                    "project", "creation_date", "forecast_type", "summary", "keywords",
-                                    "forecast_reference_time", "history"],
-
-    "mandatory_global_attributes_values": {
-        "conventions" 	: ["C3S-1.0 CF-1.6"],
-        "title" 	: ["Seasonal forecast data for C3S"],
-        "contact" 	: ["http://copernicus-support.ecmwf.int"],
-        "project" 	: ["C3S Seasonal Forecast"],
-        "keywords" 	: ["C3S", "seasonal", "C3S,seasonal"]
-    }
+                
 
 }
