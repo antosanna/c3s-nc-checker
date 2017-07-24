@@ -33,7 +33,7 @@
 		"longitude": ["axis", "units", "long_name", "valid_min", "valid_max", "bounds", "standard_name"],
 		"air_pressure": ["axis", "units", "long_name", "positive", "standard_name"],
 		"depth": ["axis", "units", "long_name", "positive", "bounds", "standard_name"],
-		"height": ["axis ", "units ", "long_name ", "positive ", "valid_min ", "valid_max ", "standard_name "],
+		"height": ["axis", "units", "long_name", "positive", "valid_min", "valid_max", "standard_name"],
 		"realization": ["units", "axis", "standard_name", "long_name"]
 	},
 
