@@ -51,7 +51,7 @@ setup(
         'Programming Language :: Python :: 2.7',
         'Operating System :: OS Independent',
         'License :: Apache 2.0',
-        'Topic :: Scientific/Engineering :: Copernicus Climage Change Service',
+        'Topic :: Scientific/Engineering :: Copernicus Climate Change Service',
     ],
     scripts=['bin/C3S_checker'],
     keywords='',

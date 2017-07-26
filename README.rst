@@ -4,40 +4,98 @@ C3S NetCDF Compliancy Checker
 *****************************
 
 
-
 System setup
 ------------
-C3S_Checker makes use of Numpy, netCDF4-python, and Unidata udunits2.
-You have to make sure these dependencies are properly installed.
+C3S_Checker makes use of Numpy, netCDF4-python, and Unidata udunits2 (> 2.2.17 ).
 
-Python:
-
-pip install --upgrade pip
-pip install -r requirements.txt
+You need to make sure these dependencies are properly installed.
 
 C:
 
 http://www.unidata.ucar.edu/software/udunits/udunits-current/doc/udunits/udunits2.html#Binary
 
-Deploy
-------
+
+If you do not wish to install to the system Python, you can create a virtualenv 
+environment and install the checker and associated packages there:
+
+
+Option 1: Install directly to your system
+---------------------------------------
+
+Update pip::
+ pip install --upgrade pip
+
+Create directory for checker::
+
+ mkdir <code_dir>
+ cd <code_dir>
 
 To deploy the 'master' branch from the GIT repository::
 
-    git clone https://software.ecmwf.int/stash/scm/cds/checker.git
+ git clone https://software.ecmwf.int/stash/scm/cds/checker.git
+
+Switch to checker directory::
+
+ cd checker
+ 
+Switch to master branch::
+
+ git checkout master
+
+Install dependencies if needed::
+
+ pip install -r requirements.txt
+ 
+Install Checker:: 
+  
+ python setup.py install
+ 
+ 
+
+Option 2: Install to a virtualenv on your system
+------------------------------------------------
 
 
+Create Virtualenv and installation directory::
 
-Install package
----------------
+ virtualenv <install_dir>
+ cd <install_dir>
+ source bin/activate
 
-Install with::
+Update pip::
+ pip install --upgrade pip
 
-    python setup.py install
-    pip install 
+Create directory for checker::
+
+ mkdir <code_dir>
+ cd <code_dir>
+
+To deploy the 'master' branch from the GIT repository::
+
+ git clone https://software.ecmwf.int/stash/scm/cds/checker.git
+
+Switch to checker directory::
+
+ cd checker
+ 
+Switch to master branch::
+
+ git checkout master
+
+Install dependencies if needed::
+
+ pip install -r requirements.txt
+ 
+Install Checker:: 
+  
+ python setup.py install
+
+
 
 Initial Test
 ------------
+
+NOT YET IMPLEMENTED
 
 Install Unidata NetCDF utilities -  ncgen should be properly installed and available.
 
@@ -52,7 +110,7 @@ Basic Command Line Usage
 ========================
 
 ::
- ./C3S_checker.py [-h] [-V] [-v] [-d {info,warning,error}] -t{seasonal,nemo,...} [-c] [-k C3SCHECK] [-i C3SCHECK] [-s] inputfiles [inputfiles ...]
+ C3Schecker [-h] [-V] [-v] [-d {info,warning,error}] -t{seasonal,nemo,...} [-c] [-k C3SCHECK] [-i C3SCHECK] [-s] inputfiles [inputfiles ...]
 
 Positional arguments::
 ----------------------
