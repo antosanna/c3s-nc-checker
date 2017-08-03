@@ -444,7 +444,7 @@
 		},
 
 	"lwee": {
-            "time: sum":{
+            "leadtime: sum":{
                 "mandatory_intervals":
                 {
                 "leadtime": 24

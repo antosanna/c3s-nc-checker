@@ -40,7 +40,7 @@
 
 	"mandatory_attributes_per_variabletype": {
 		"Cfdatavar": {
-			"All": ["standard_name", "units", "long_name", "coordinates", "cell_methods", "grid_mapping", "_FillValue"]
+			"All": ["standard_name", "units", "long_name", "coordinates", "cell_methods", "grid_mapping"]
 		}
 	},
 
@@ -197,7 +197,7 @@
 		},
 
 		"tdps": {
-			"long_name": "2m dewpoint temperature",
+			"long_name": "2m Dewpoint Temperature",
 			"units": "K",
 			"coordinates": "reftime realization time leadtime height lat lon",
             "standard_name": "dew_point_temperature",
@@ -302,7 +302,7 @@
 		},
         
 		"sitemptop": {
-			"long_name": "Surface Temperature of sea ice",
+			"long_name": "Surface Temperature of Sea Ice",
 			"units": "K",
 			"coordinates": "reftime realization time leadtime lat lon",
             "standard_name":"sea_ice_temperature", 
@@ -421,7 +421,7 @@
 		"hfss": {
 			"long_name": "Surface Upward Sensible Heat Flux",
 			"units": "W m-2",
-			"coordinates": "reftime leadtime time lat lon",
+			"coordinates": "reftime realization leadtime time lat lon",
             "standard_name":"surface_upward_sensible_heat_flux",
 			"cell_methods": "leadtime: mean (interval = 1 hour)",
 			"grid_mapping": "hcrs",
@@ -566,7 +566,7 @@
 			"units": "m",
 			"coordinates": "reftime realization time leadtime lat lon",
             "standard_name": "lwe_thickness_of_water_evaporation_amount",
-			"cell_methods": "time: sum",
+			"cell_methods": "leadtime: sum",
 			"grid_mapping": "hcrs",
 			"dimensions": ["leadtime","lat","lon"],
             "frequency":"day",
