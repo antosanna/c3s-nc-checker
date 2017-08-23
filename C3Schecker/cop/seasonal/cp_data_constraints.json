@@ -344,7 +344,7 @@
 		},
 
 	"hfss": {
-			"leadtime: mean (interval = 1 hour)":{
+			"leadtime: mean (interval: 1 hour)":{
                 "mandatory_intervals":
                 {
                 "leadtime": 24
@@ -354,7 +354,7 @@
 		},
 
 	"hfls": {
-           "leadtime: mean (interval = 1 hour)":{
+           "leadtime: mean (interval: 1 hour)":{
                 "mandatory_intervals":
                 {
                 "leadtime": 24
@@ -363,7 +363,7 @@
 		},
         
 	"rsds": {
-           "leadtime: mean (interval = 1 hour)":{
+           "leadtime: mean (interval: 1 hour)":{
                 "mandatory_intervals":
                 {
                 "leadtime": 24
@@ -372,7 +372,7 @@
 		},
         
 	"rlds": {
-            "leadtime: mean (interval = 1 hour)":{
+            "leadtime: mean (interval: 1 hour)":{
                 "mandatory_intervals":
                 {
                 "leadtime": 24
@@ -381,7 +381,7 @@
 		},
 
 	"rss": {
-           "leadtime: mean (interval = 1 hour)":{
+           "leadtime: mean (interval: 1 hour)":{
                 "mandatory_intervals":
                 {
                 "leadtime": 24
@@ -390,7 +390,7 @@
 		},
 
 	"rls": {
-            "leadtime: mean (interval = 1 hour)":{
+            "leadtime: mean (interval: 1 hour)":{
                 "mandatory_intervals":
                 {
                 "leadtime": 24
@@ -399,7 +399,7 @@
 		},
 
 	"rst": {
-          "leadtime: mean (interval = 1 hour)":{
+          "leadtime: mean (interval: 1 hour)":{
                 "mandatory_intervals":
                 {
                 "leadtime": 24
@@ -408,7 +408,7 @@
 		},
 
 	"rlt": {
-           "leadtime: mean (interval = 1 hour)":{
+           "leadtime: mean (interval: 1 hour)":{
                 "mandatory_intervals":
                 {
                 "leadtime": 24
@@ -417,7 +417,7 @@
 		},
 
 	"rsdt": {
-            "leadtime: mean (interval = 1 hour)":{
+            "leadtime: mean (interval: 1 hour)":{
                 "mandatory_intervals":
                 {
                 "leadtime": 24
@@ -426,7 +426,7 @@
 		},
         
 	"tauu": {
-            "leadtime: mean (interval = 1 hour)":{
+            "leadtime: mean (interval: 1 hour)":{
                 "mandatory_intervals":
                 {
                 "leadtime": 24
@@ -435,7 +435,7 @@
 		},
         
 	"tauv": {
-            "leadtime: mean (interval = 1 hour)":{
+            "leadtime: mean (interval: 1 hour)":{
                 "mandatory_intervals":
                 {
                 "leadtime": 24
