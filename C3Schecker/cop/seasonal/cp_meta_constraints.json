@@ -107,14 +107,12 @@
 		},
 
 		"reftime": {
-			"units": "hours since YYYY-MM-DDThh:mm:ss+TZhh:TZmm",
 			"long_name": "Start date of the forecast",
             "standard_name": "forecast_reference_time",
 			"calendar": "gregorian"
 		},
 
 		"leadtime": {
-			"units": "hours",
 			"long_name": "Time elapsed since the start of the forecast",
             "standard_name": "forecast_period",
 			"dimensions": ["leadtime"],
@@ -122,7 +120,6 @@
 		},
 
 		"time": {
-			"units": "hours since YYYY-MM-DD hh:mm:ss TZhh:TZmm",
 			"long_name": "Verification time of the forecast",
 			"dimensions": ["leadtime"],
 			"calendar": "gregorian",
@@ -746,8 +743,21 @@
 		"level_type": ["surface", "pressure", "soil"],
 		"commit": ["2017-04-01T13:48:25Z https://software.ecmwf.int/stash/projects/C3SS/repos/ecmf/System4_v20111101"]
 	},
-                "mandatory_global_attributes_values_list": {
+    
+        "mandatory_global_attributes_values_list": {
                         "keywords": ["Seasonal Forecasts", "C3S", "ECMWF", "Copernicus", "Climate Change", "Climate Services", "Earth Science Services", "Environmental Advisories", "Climate Advisories"]
+
+        },
+                "mandatory_global_attributes_values_date": {
+                        "creation_date": "%Y-%m-%dT%H:%M:%SZ",
+                        "forecast_reference_time": "%Y-%m-%dT%H:%M:%SZ"
+
+        },
+                "mandatory_global_attributes_values_pattern": {
+                         "creation_date": "\\d\\d\\d\\d-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\dZ",
+                        "forecast_reference_time": "\\d\\d\\d\\d-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\dZ"
+
+
 
         }
                 
