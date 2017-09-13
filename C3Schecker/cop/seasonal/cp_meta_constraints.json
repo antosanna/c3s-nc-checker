@@ -328,7 +328,7 @@
 			"long_name": "Water Content per Unit Area of Soil Layers",
 			"units": "kg m-2",
 			"coordinates": "reftime realization time leadtime depth lat lon",
-            "standard_name":"moisture_content_soil_layer",
+            "standard_name":"moisture_content_of_soil_layer",
 			"cell_methods": "leadtime: point",
 			"grid_mapping": "hcrs",
 			"dimensions": ["leadtime", "depth", "lat", "lon"],
