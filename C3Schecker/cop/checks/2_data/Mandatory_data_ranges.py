@@ -42,6 +42,7 @@ class Mandatory_data_ranges(Basiccheck):
 
             mandatoryrange = datavariables_checks.get("mandatory_ranges", {})
 
+
             if bool(mandatoryrange):
 
                 for x, y in mandatoryrange.iteritems():

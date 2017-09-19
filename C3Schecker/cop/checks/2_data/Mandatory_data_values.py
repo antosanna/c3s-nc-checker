@@ -57,8 +57,7 @@ class Mandatory_data_values(Basiccheck):
                             values = values.compressed()
 
                         for l in values:
-
-                            if str(l) not in [str(i) for i in y]:  # dirty
+                            if l not in [i for i in y]:  # dirty -changed from string comparison
                                 errorvalue = str(l)
                                 break
 

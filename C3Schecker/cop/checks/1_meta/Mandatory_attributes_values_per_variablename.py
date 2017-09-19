@@ -40,6 +40,16 @@ class Mandatory_attributes_values_per_variablename(Basiccheck):
                 for attr in mandatoryattributes:
 
                     if attr in cfattrs:
-                        if v.getncattr(attr) != mandatoryattributes[attr]:
+                        err_flag = False
+                        if isinstance(mandatoryattributes[attr],float):
+                            if float(v.getncattr(attr)) != mandatoryattributes[attr]:
+                                err_flag = True
+                        elif isinstance(mandatoryattributes[attr],int):
+                            if int(v.getncattr(attr)) != mandatoryattributes[attr]:
+                                err_flag = True
+                        elif v.getncattr(attr) != mandatoryattributes[attr]:                            
+                            err_flag = True
+                        
+                        if err_flag == True:    
                             self.status = 0
-                            self.logger.error("[%s]-Wrong [%s] value - Variable [%s]; [%s] excepted but [%s] found ", str(self.getcheckname(self.addinfo)), str(attr), str(k), str(mandatoryattributes[attr]), str(v.getncattr(attr)))
+                            self.logger.error("[%s]-Wrong [%s] value - Variable [%s]; [%s] expected but [%s] found ", str(self.getcheckname(self.addinfo)), str(attr), str(k), str(mandatoryattributes[attr]), str(v.getncattr(attr)))

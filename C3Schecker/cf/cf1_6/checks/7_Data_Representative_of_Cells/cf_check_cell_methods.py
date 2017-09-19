@@ -35,7 +35,7 @@ class cf_check_cell_methods(Basiccheck):
                     cfc = Cfcellmethods.CFcellmethod()
                     cfc.parse_cellmethods(cmstr)
                     v.cmdict = cfc
-
+                    
                     names = cfc.get_names
                     for n in names:
 
