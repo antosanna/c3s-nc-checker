@@ -30,11 +30,11 @@ class Mandatory_dimensions_per_variablename(Basiccheck):
 
         collectdims = [str(d) for d in self.cfcollection.dimensions.keys()]
 
-
         mavpv = self.consmeta.get("mandatory_attributes_values_per_variablename", {})
+
         for k, v in self.cfcollection:
                 mandatorydimensions = mavpv.get(k, {}).get("dimensions", [])
-
-                for d in mandatorydimensions:
-                    if d not in collectdims:
-                        self.logger.error("[%s]-NetCDF Dimensions must contain %s  used for variable %s - currently %s ", str(self.getcheckname(self.addinfo)), str(d), str(k),str(collectdims))
+                if len(mandatorydimensions) > 0:
+                    for d in mandatorydimensions:
+                        if d not in collectdims:
+                            self.logger.error("[%s]-NetCDF Dimensions must contain %s  used for variable %s - currently %s ", str(self.getcheckname(self.addinfo)), str(d), str(k),str(collectdims))

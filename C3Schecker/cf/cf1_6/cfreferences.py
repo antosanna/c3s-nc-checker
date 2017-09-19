@@ -134,53 +134,6 @@ def cf_positive_values():
     return ['up', 'down']
 
 
-def cf_attributes():
-    """S(tring)  N(umeric) D(ata variable type/non-coordinate) C(oordinate) G(lobal) variable"""
-
-    cf_attrs = {}
-    cf_attrs['add_offset'] = ['N', 'D']
-    cf_attrs['ancillary_variables'] = ['S', 'D']
-    cf_attrs['axis'] = ['S', 'C']
-    cf_attrs['bounds'] = ['S', 'C']
-    cf_attrs['calendar'] = ['S', 'C']
-    cf_attrs['cell_measures'] = ['S', 'D']
-    cf_attrs['cell_methods'] = ['S', 'D']
-    cf_attrs['climatology'] = ['S', 'C']
-    cf_attrs['comment'] = ['S', ('G', 'D')]
-    cf_attrs['compress'] = ['S', 'C']
-    cf_attrs['Conventions'] = ['S', 'G']
-    cf_attrs['coordinates'] = ['S', 'D']
-    cf_attrs['_FillValue'] = ['D', 'D']
-    cf_attrs['flag_meanings'] = ['S', 'D']
-    cf_attrs['flag_values'] = ['D', 'D']
-    cf_attrs['formula_terms'] = ['S', 'C']
-    cf_attrs['grid_mapping'] = ['S', 'D']
-    cf_attrs['history'] = ['S', 'G']
-    cf_attrs['institution'] = ['S', ('G', 'D')]
-    cf_attrs['leap_month'] = ['N', 'C']
-    cf_attrs['leap_year'] = ['N', 'C']
-    cf_attrs['long_name'] = ['S', ('C', 'D')]
-    cf_attrs['missing_value'] = ['D', 'D']
-    cf_attrs['month_lengths'] = ['N', 'C']
-    cf_attrs['positive'] = ['S', 'C']
-    cf_attrs['references'] = ['S', ('G', 'D')]
-    cf_attrs['scale_factor'] = ['N', 'D']
-    cf_attrs['source'] = ['S', ('G', 'D')]
-    cf_attrs['standard_error_multiplier'] = ['N', 'D']
-    cf_attrs['standard_name'] = ['S', ('C', 'D')]
-    cf_attrs['title'] = ['S', 'G']
-    cf_attrs['units'] = ['S', ('C', 'D')]
-    cf_attrs['valid_max'] = ['N', ('C', 'D')]
-    cf_attrs['valid_min'] = ['N', ('C', 'D')]
-    cf_attrs['valid_range'] = ['N', ('C', 'D')]
-    cf_attrs['flag_masks'] = ['D', 'D']
-    cf_attrs['cf_role'] = ['S', 'C']
-    cf_attrs['featureType'] = ['S', 'G']
-    cf_attrs['instance_dimension'] = ['S', 'D']
-    cf_attrs['sample_dimension'] = ['S', 'D']
-
-    return cf_attrs
-
 
 def cf_formulaterm_measure_pattern():
     return re.compile(r'''

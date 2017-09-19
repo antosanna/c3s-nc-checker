@@ -36,7 +36,7 @@ class Mandatory_global_attributes_content_list(Basiccheck):
             if len(mgavl_possiblevalues) > 0:
                 #Each item of the List Of Values must exit
                 for i in mgavl_possiblevalues:
-                    if i not in v:
+                    if i not in [str(a).strip() for a in v.split(",")]:
                         self.logger.error("[%s]-Global Attribute [%s] does not contain [%s]", str(self.getcheckname(self.addinfo)), str(k), str(i))
                         self.status = 0
  
