@@ -148,8 +148,7 @@
 			"dimensions": ["leadtime","lat","lon"],
             "frequency":"6hr",
             "level_type": "surface",
-            "modeling_realm":"atmos",
-			"cellmethods": "leadtime: point",            
+            "modeling_realm":"atmos",            
             "bounds": ["lat_bnds","lon_bnds"]            
 		},
 
@@ -158,12 +157,12 @@
 			"units": "K",
 			"coordinates": "reftime realization time leadtime height lat lon",
             "standard_name": "air_temperature",
+            "cell_methods": "(leadtime: maximum$|(leadtime: maximum \\(interval: ?[0-9]*?.?[0-9]?[0-9] ?[a-z]*?\\)))",            
 			"grid_mapping": "hcrs",
 			"dimensions": ["leadtime","lat","lon"],
             "frequency":"day",
             "level_type": "surface",
-            "modeling_realm":"atmos",
-			"cellmethods": "leadtime: maximum (interval: )" ,           
+            "modeling_realm":"atmos",          
             "bounds": ["lat_bnds","lon_bnds","time_bnds","leadtime_bnds"]              
 		},
 
@@ -172,12 +171,12 @@
 			"units": "K",
 			"coordinates": "reftime realization time leadtime height lat lon",
             "standard_name": "air_temperature",
-			"grid_mapping": "hcrs",
+            "cell_methods": "(leadtime: minimum$|(leadtime: minimum \\(interval: ?[0-9]*?.?[0-9]?[0-9] ?[a-z]*?\\)))",
+   			"grid_mapping": "hcrs",
 			"dimensions": ["leadtime","lat","lon"],
             "frequency":"day",
             "level_type": "surface",
-            "modeling_realm":"atmos",
-			"cellmethods": "leadtime: maximum (interval: )",            
+            "modeling_realm":"atmos",           
             "bounds": ["lat_bnds","lon_bnds","time_bnds","leadtime_bnds"]              
 		},
 
@@ -205,8 +204,7 @@
 			"grid_mapping": "hcrs",
 			"dimensions": ["leadtime","lat","lon"],
             "frequency":"6hr",
-            "level_type": "surface",
-			"cellmethods": "leadtime: point",            
+            "level_type": "surface",           
             "modeling_realm":"atmos"              
 		},
 
@@ -220,8 +218,7 @@
 			"dimensions": ["leadtime","lat","lon"],
             "frequency":"6hr",
             "level_type": "surface",
-            "modeling_realm":"atmos",
-			"cellmethods": "leadtime: point",            
+            "modeling_realm":"atmos",            
             "bounds": ["lat_bnds","lon_bnds"]              
 		},
 
@@ -230,12 +227,12 @@
 			"units": "m s-1",
 			"coordinates": "reftime realization time leadtime height lat lon",
             "standard_name":"wind_speed_of_gust",
+            "cell_methods": "(leadtime: maximum$|(leadtime: maximum \\(interval: ?[0-9]*?.?[0-9]?[0-9] ?[a-z]*?\\)))",            
 			"grid_mapping": "hcrs",
 			"dimensions": ["leadtime","lat","lon"],
             "frequency":"6hr",
             "level_type": "surface",
-            "modeling_realm":"atmos",
-			"cellmethods": "leadtime: maximum (interval: )",            
+            "modeling_realm":"atmos",          
             "bounds": ["lat_bnds","lon_bnds","time_bnds","leadtime_bnds"]              
 		},
 
@@ -249,8 +246,7 @@
 			"dimensions": ["leadtime","lat","lon"],
             "frequency":"6hr",
             "level_type": "surface",
-            "modeling_realm":"atmos",
-			"cellmethods": "leadtime: point",            
+            "modeling_realm":"atmos",           
             "bounds": ["lat_bnds","lon_bnds"]            
 		},
 
@@ -264,8 +260,7 @@
 			"dimensions": ["leadtime","lat","lon"],
             "frequency":"6hr",
             "level_type": "surface",
-            "modeling_realm":"atmos",
-			"cellmethods": "leadtime: point",            
+            "modeling_realm":"atmos",           
             "bounds": ["lat_bnds","lon_bnds","time_bnds"]            
 		},
 
@@ -279,8 +274,7 @@
 			"dimensions": ["leadtime","lat","lon"],
             "frequency":"6hr",
             "level_type": "surface",
-            "modeling_realm":"land",
-			"cellmethods": "leadtime: point",            
+            "modeling_realm":"land",           
             "bounds": ["lat_bnds","lon_bnds"]             
             
 		},
@@ -295,8 +289,7 @@
 			"dimensions": ["leadtime","lat","lon"],
             "frequency":"6hr",
             "level_type": "surface",
-            "modeling_realm":"ocean",
-			"cellmethods": "leadtime: point",             
+            "modeling_realm":"ocean",             
             "bounds": ["lat_bnds","lon_bnds"] 
 		},
         
@@ -310,8 +303,7 @@
 			"dimensions": ["leadtime","lat","lon"],
             "frequency":"6hr",
             "level_type": "surface",
-            "modeling_realm":"seaIce",
-			"cellmethods": "leadtime: point",             
+            "modeling_realm":"seaIce",             
             "bounds": ["lat_bnds","lon_bnds"]             
 		},
 
@@ -325,8 +317,7 @@
 			"dimensions": ["leadtime","lat","lon"],
             "frequency":"day",
             "level_type": "surface",
-            "modeling_realm":"seaIce",
-			"cellmethods": "leadtime: point",             
+            "modeling_realm":"seaIce",             
             "bounds": ["lat_bnds","lon_bnds"]            
 		},
 
@@ -340,8 +331,7 @@
 			"dimensions": ["leadtime", "depth", "lat", "lon"],
             "frequency":"day",
             "level_type": "soil",
-            "modeling_realm":"land",
-			"cellmethods": "leadtime: point",             
+            "modeling_realm":"land",            
             "bounds": ["lat_bnds","lon_bnds"]           
 		},
 
@@ -355,8 +345,7 @@
 			"dimensions": ["leadtime","lat","lon"],
             "frequency":"day",
             "level_type": "surface",
-            "modeling_realm":"land",
-			"cellmethods": "leadtime: point",             
+            "modeling_realm":"land",            
             "bounds": ["lat_bnds","lon_bnds"]     
 		},
 
@@ -370,8 +359,7 @@
 			"dimensions": ["leadtime","lat","lon"],
             "frequency":"day",
             "level_type": "surface",
-            "modeling_realm":"land",
-			"cellmethods": "leadtime: point",             
+            "modeling_realm":"land",             
             "bounds": ["lat_bnds","lon_bnds"]                         
 		},
 
@@ -385,8 +373,7 @@
 			"dimensions": ["leadtime","lat","lon"],
             "frequency":"day",
             "level_type": "surface",
-            "modeling_realm":"atmos",
-			"cellmethods": "leadtime: sum",            
+            "modeling_realm":"atmos",           
             "bounds": ["lat_bnds","lon_bnds","time_bnds","leadtime_bnds"]
                          
 		},
@@ -401,8 +388,7 @@
 			"dimensions": ["leadtime","lat","lon"],
             "frequency":"day",
             "level_type": "surface",
-            "modeling_realm":"atmos",
-			"cellmethods": "leadtime: sum",            
+            "modeling_realm":"atmos",            
             "bounds": ["lat_bnds","lon_bnds","time_bnds","leadtime_bnds"]             
 		},
 
@@ -416,8 +402,7 @@
 			"dimensions": ["leadtime","lat","lon"],
             "frequency":"day",
             "level_type": "surface",
-            "modeling_realm":"atmos",
-			"cellmethods": "leadtime: sum",            
+            "modeling_realm":"atmos",           
             "bounds": ["lat_bnds","lon_bnds","time_bnds","leadtime_bnds"]
 		},
 
@@ -431,8 +416,7 @@
 			"dimensions": ["leadtime","lat","lon"],
             "frequency":"day",
             "level_type": "surface",
-            "modeling_realm":"atmos",
-			"cellmethods": "leadtime: sum",            
+            "modeling_realm":"atmos",           
             "bounds": ["lat_bnds","lon_bnds","time_bnds","leadtime_bnds"]
 		},
 
@@ -441,6 +425,7 @@
 			"units": "W m-2",
 			"coordinates": "reftime realization time leadtime lat lon",
             "standard_name":"surface_upward_sensible_heat_flux",
+            "cell_methods": "(leadtime: mean$|(leadtime: mean \\(interval: ?[0-9]*?.?[0-9]?[0-9] ?[a-z]*?\\)))",            
 			"grid_mapping": "hcrs",
 			"dimensions": ["leadtime","lat","lon"],
             "frequency":"day",
@@ -455,12 +440,12 @@
 			"units": "W m-2",
 			"coordinates": "reftime realization time leadtime lat lon",
             "standard_name":"surface_upward_latent_heat_flux",
+            "cell_methods": "(leadtime: mean$|(leadtime: mean \\(interval: ?[0-9]*?.?[0-9]?[0-9] ?[a-z]*?\\)))",
 			"grid_mapping": "hcrs",
 			"dimensions": ["leadtime","lat","lon"],
             "frequency":"day",
             "level_type": "surface",
-            "modeling_realm":"atmos",
-			"cellmethods": "leadtime: mean (interval: )",  
+            "modeling_realm":"atmos", 
             "bounds": ["lat_bnds","lon_bnds","time_bnds","leadtime_bnds"]             
 		},
         
@@ -469,12 +454,12 @@
 			"units": "W m-2",
 			"coordinates": "reftime realization time leadtime lat lon",
             "standard_name":"surface_downwelling_shortwave_flux_in_air",
+            "cell_methods": "(leadtime: mean$|(leadtime: mean \\(interval: ?[0-9]*?.?[0-9]?[0-9] ?[a-z]*?\\)))",            
 			"grid_mapping": "hcrs",
 			"dimensions": ["leadtime","lat","lon"],
             "frequency":"day",
             "level_type": "surface",
-            "modeling_realm":"atmos",
-			"cellmethods": "leadtime: mean (interval: )",             
+            "modeling_realm":"atmos",             
             "bounds": ["lat_bnds","lon_bnds","time_bnds","leadtime_bnds"] 
 		},
         
@@ -483,12 +468,12 @@
 			"units": "W m-2",
 			"coordinates": "reftime realization time leadtime lat lon",
             "standard_name":"surface_downwelling_longwave_flux_in_air",
+            "cell_methods": "(leadtime: mean$|(leadtime: mean \\(interval: ?[0-9]*?.?[0-9]?[0-9] ?[a-z]*?\\)))",            
 			"grid_mapping": "hcrs",
 			"dimensions": ["leadtime","lat","lon"],
             "frequency":"day",
             "level_type": "surface",
-            "modeling_realm":"atmos",
-			"cellmethods": "leadtime: mean (interval: )",                         
+            "modeling_realm":"atmos",                        
             "bounds": ["lat_bnds","lon_bnds","time_bnds","leadtime_bnds"] 
 		},
 
@@ -496,13 +481,13 @@
 			"long_name": "Net Shortwave Surface Radiation",
 			"units": "W m-2",
 			"coordinates": "reftime realization time leadtime lat lon",
+            "cell_methods": "(leadtime: mean$|(leadtime: mean \\(interval: ?[0-9]*?.?[0-9]?[0-9] ?[a-z]*?\\)))",
             "standard_name":"surface_net_downward_shortwave_flux",
 			"grid_mapping": "hcrs",
 			"dimensions": ["leadtime","lat","lon"],
             "frequency":"day",
             "level_type": "surface",
-            "modeling_realm":"atmos",
-			"cellmethods": "leadtime: mean (interval: )",              
+            "modeling_realm":"atmos",              
             "bounds": ["lat_bnds","lon_bnds","time_bnds","leadtime_bnds"]             
 		},
 
@@ -511,12 +496,12 @@
 			"units": "W m-2",
 			"coordinates": "reftime realization time leadtime lat lon",
             "standard_name":"surface_net_downward_longwave_flux",
+            "cell_methods": "(leadtime: mean$|(leadtime: mean \\(interval: ?[0-9]*?.?[0-9]?[0-9] ?[a-z]*?\\)))",            
 			"grid_mapping": "hcrs",
 			"dimensions": ["leadtime","lat","lon"],
             "frequency":"day",
             "level_type": "surface",
-            "modeling_realm":"atmos",
-			"cellmethods": "leadtime: mean (interval: )",              
+            "modeling_realm":"atmos",            
             "bounds": ["lat_bnds","lon_bnds","time_bnds","leadtime_bnds"]             
 		},
 
@@ -525,12 +510,12 @@
 			"units": "W m-2",
 			"coordinates": "reftime realization time leadtime lat lon",
             "standard_name":"toa_net_downward_shortwave_flux",
+            "cell_methods": "(leadtime: mean$|(leadtime: mean \\(interval: ?[0-9]*?.?[0-9]?[0-9] ?[a-z]*?\\)))",            
 			"grid_mapping": "hcrs",
 			"dimensions": ["leadtime","lat","lon"],
             "frequency":"day",
             "level_type": "surface",
-            "modeling_realm":"atmos",
-			"cellmethods": "leadtime: mean (interval: )",              
+            "modeling_realm":"atmos",             
             "bounds": ["lat_bnds","lon_bnds","time_bnds","leadtime_bnds"]             
 		},
 
@@ -539,12 +524,12 @@
 			"units": "W m-2",
 			"coordinates": "reftime realization time leadtime lat lon",
             "standard_name":"toa_net_downward_longwave_flux",
+            "cell_methods": "(leadtime: mean$|(leadtime: mean \\(interval: ?[0-9]*?.?[0-9]?[0-9] ?[a-z]*?\\)))",            
 			"grid_mapping": "hcrs",
 			"dimensions": ["leadtime","lat","lon"],
             "frequency":"day",
             "level_type": "surface",
-            "modeling_realm":"atmos",
-			"cellmethods": "leadtime: mean (interval: )",              
+            "modeling_realm":"atmos",              
             "bounds": ["lat_bnds","lon_bnds","time_bnds","leadtime_bnds"]             
 		},
 
@@ -553,12 +538,12 @@
 			"units": "W m-2",
 			"coordinates": "reftime realization time leadtime lat lon",
             "standard_name":"toa_incoming_shortwave_flux",
+            "cell_methods": "(leadtime: mean$|(leadtime: mean \\(interval: ?[0-9]*?.?[0-9]?[0-9] ?[a-z]*?\\)))",            
 			"grid_mapping": "hcrs",
 			"dimensions": ["leadtime","lat","lon"],
             "frequency":"day",
             "level_type": "surface",
-            "modeling_realm":"atmos",
-			"cellmethods": "leadtime: mean (interval: )",              
+            "modeling_realm":"atmos",              
             "bounds": ["lat_bnds","lon_bnds","time_bnds","leadtime_bnds"]             
 		},
         
@@ -567,12 +552,12 @@
 			"units": "Pa",
 			"coordinates": "reftime realization time leadtime lat lon",
             "standard_name":"surface_downward_eastward_stress",
+            "cell_methods": "(leadtime: mean$|(leadtime: mean \\(interval: ?[0-9]*?.?[0-9]?[0-9] ?[a-z]*?\\)))",            
 			"grid_mapping": "hcrs",
 			"dimensions": ["leadtime","lat","lon"],
             "frequency":"day",
             "level_type": "surface",
-            "modeling_realm":"atmos",
-			"cellmethods": "leadtime: mean (interval: )",              
+            "modeling_realm":"atmos",              
             "bounds": ["lat_bnds","lon_bnds","time_bnds","leadtime_bnds"]             
 		},
         
@@ -581,17 +566,17 @@
 			"units": "Pa",
 			"coordinates": "reftime realization time leadtime lat lon",
             "standard_name": "surface_downward_northward_stress",
+            "cell_methods": "(leadtime: mean$|(leadtime: mean \\(interval: ?[0-9]*?.?[0-9]?[0-9] ?[a-z]*?\\)))",            
 			"grid_mapping": "hcrs",
 			"dimensions": ["leadtime","lat","lon"],            
             "frequency":"day",
             "level_type": "surface",
-            "modeling_realm":"atmos",
-			"cellmethods": "leadtime: mean (interval: )",              
+            "modeling_realm":"atmos",             
             "bounds": ["lat_bnds","lon_bnds","time_bnds","leadtime_bnds"] 
 		},
 
 		"lwee": {
-			"long_name": "Liquid Water Equivalent of Evaporation Amount",
+			"long_name": "Liquid Water Equivalent Thickness of Evaporation Amount",
 			"units": "m",
 			"coordinates": "reftime realization time leadtime lat lon",
             "standard_name": "lwe_thickness_of_water_evaporation_amount",
@@ -600,8 +585,7 @@
 			"dimensions": ["leadtime","lat","lon"],
             "frequency":"day",
             "level_type": "surface",
-            "modeling_realm":"land" ,
-			"cellmethods": "leadtime: sum",            
+            "modeling_realm":"land" ,          
             "bounds": ["lat_bnds","lon_bnds","time_bnds","leadtime_bnds"]            
 		},
 
@@ -615,8 +599,7 @@
 			"dimensions": ["leadtime","lat","lon"],
             "frequency":"day",
             "level_type": "surface",
-            "modeling_realm":"land",
-			"cellmethods": "leadtime: sum",             
+            "modeling_realm":"land",           
             "bounds": ["lat_bnds","lon_bnds","time_bnds","leadtime_bnds"]               
 		},
         
@@ -630,8 +613,7 @@
 			"dimensions": ["leadtime","lat","lon"],
             "frequency":"day",
             "level_type": "surface",
-            "modeling_realm":"land",
-			"cellmethods": "leadtime: sum",            
+            "modeling_realm":"land",            
             "bounds": ["lat_bnds","lon_bnds","time_bnds","leadtime_bnds"]               
 		},
 
@@ -645,8 +627,7 @@
 			"dimensions": ["leadtime","lat","lon"],
             "frequency":"day",
             "level_type": "surface",
-            "modeling_realm":"land",
-			"cellmethods": "leadtime: sum",            
+            "modeling_realm":"land",            
             "bounds": ["lat_bnds","lon_bnds","time_bnds","leadtime_bnds"]               
 		},
 
@@ -660,8 +641,7 @@
 			"dimensions": ["leadtime", "plev", "lat", "lon"],
             "frequency":"12hr",
             "level_type": "pressure",
-            "modeling_realm":"atmos",
-			"cellmethods": "leadtime: point",            
+            "modeling_realm":"atmos",            
             "bounds": ["lat_bnds","lon_bnds"]               
 		},
         
@@ -675,8 +655,7 @@
 			"dimensions": ["leadtime", "plev", "lat", "lon"],
             "frequency":"12hr",
             "level_type": "pressure",
-            "modeling_realm":"atmos",
-			"cellmethods": "leadtime: point",            
+            "modeling_realm":"atmos",           
             "bounds": ["lat_bnds","lon_bnds"]             
 		},
 
@@ -690,8 +669,7 @@
 			"dimensions": ["leadtime", "plev", "lat", "lon"],
             "frequency":"12hr",
             "level_type": "pressure",
-            "modeling_realm":"atmos",
-			"cellmethods": "leadtime: point",            
+            "modeling_realm":"atmos",            
             "bounds": ["lat_bnds","lon_bnds"]             
 		},
 
@@ -705,8 +683,7 @@
 			"dimensions": ["leadtime", "plev", "lat", "lon"],
             "frequency":"12hr",
             "level_type": "pressure",
-            "modeling_realm":"atmos",
-			"cellmethods": "leadtime: point",            
+            "modeling_realm":"atmos",            
             "bounds": ["lat_bnds","lon_bnds"]             
 		},
 
@@ -720,8 +697,7 @@
 			"dimensions": ["leadtime", "plev", "lat", "lon"],
             "frequency":"12hr",
             "level_type": "pressure",
-            "modeling_realm":"atmos",
-			"cellmethods": "leadtime: point",            
+            "modeling_realm":"atmos",           
             "bounds": ["lat_bnds","lon_bnds"]             
 		},
 
@@ -735,8 +711,7 @@
 			"dimensions": ["leadtime", "plev", "lat", "lon"],
             "frequency":"12hr",
             "level_type": "pressure",
-            "modeling_realm":"atmos",
-			"cellmethods": "leadtime: point",            
+            "modeling_realm":"atmos",            
             "bounds": ["lat_bnds","lon_bnds"]             		
         },
         
@@ -750,8 +725,7 @@
 			"dimensions": ["leadtime", "plev", "lat", "lon"],
             "frequency":"12hr",
             "level_type": "pressure",
-            "modeling_realm":"atmos",
-			"cellmethods": "leadtime: point",            
+            "modeling_realm":"atmos",            
             "bounds": ["lat_bnds","lon_bnds"]             
 		}
 
