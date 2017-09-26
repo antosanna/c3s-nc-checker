@@ -743,7 +743,7 @@
 
 		"Conventions": ["CF-1.6 C3S-0.1"],
 		"summary": ["Seasonal Forecast data produced by ECMWF as its contribution to the seasonal forecast activity of the Copernicus Climate Change Service (C3S). The data has global coverage with a 1-degree horizontal resolution and spans for around 6 months since the start date",
-			"Seasonal Forecast data produced by the Met Office as its contribution to the seasonal forecast activity of the Copernicus Climate Change Service (C3S). The data has global coverage with a 1-degree horizontal resolution and spans for around 6 months since the start date",
+			"Seasonal Forecast data produced by Met Office as its contribution to the seasonal forecast activity of the Copernicus Climate Change Service (C3S). The data has global coverage with a 1-degree horizontal resolution and spans for around 6 months since the start date",
 			"Seasonal Forecast data produced by Meteo-France as its contribution to the seasonal forecast activity of the Copernicus Climate Change Service (C3S). The data has global coverage with a 1-degree horizontal resolution and spans for around 6 months since the start date",
 			"Seasonal Forecast data produced by DWD as its contribution to the seasonal forecast activity of the Copernicus Climate Change Service (C3S). The data has global coverage with a 1-degree horizontal resolution and spans for around 6 months since the start date",
 			"Seasonal Forecast data produced by CMCC as its contribution to the seasonal forecast activity of the Copernicus Climate Change Service (C3S). The data has global coverage with a 1-degree horizontal resolution and spans for around 6 months since the start date"
