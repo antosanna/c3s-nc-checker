@@ -430,8 +430,7 @@
 			"dimensions": ["leadtime","lat","lon"],
             "frequency":"day",
             "level_type": "surface",
-            "modeling_realm":"atmos",
-			"cell_methods": "leadtime: mean \\(interval: ?[0-9]*\\.?[0-9]+(?:[eE][-+]?[0-9]+)? hour\\)",            
+            "modeling_realm":"atmos",           
             "bounds": ["lat_bnds","lon_bnds","time_bnds","leadtime_bnds"]            
 		},
 
