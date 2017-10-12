@@ -42,7 +42,7 @@ setup(
     install_requires=[
         'netCDF4==1.2.4',
         'cfunits',
-        'numpy==1.10.2'
+        'numpy>=1.10.2'
     ],
     classifiers=[
         'Development Status :: Alpha',
