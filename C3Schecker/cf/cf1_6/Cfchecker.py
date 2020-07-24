@@ -66,10 +66,6 @@ class Cfchecker:
         self.check_cfcompliance()
 
     @property
-    def status(self):
-        return self.status
-
-    @property
     def messages(self):
         return self.check_msgs.getvalue().split("\n")
 
