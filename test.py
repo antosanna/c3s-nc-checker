@@ -21,7 +21,7 @@ import shutil
 import sys
 import tempfile
 
-from C3Schecker import C3S_checker, utils
+from C3Schecker import C3S_checker
 from C3Schecker.utils import functions as fct
 
 

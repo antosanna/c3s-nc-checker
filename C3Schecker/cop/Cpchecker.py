@@ -14,13 +14,8 @@
 
 import importlib
 import json
-import logging
 import os
-import re
-import sys
-import types
 
-import numpy as np
 
 from C3Schecker.utils import functions as fct
 

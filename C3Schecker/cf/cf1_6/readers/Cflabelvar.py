@@ -16,7 +16,6 @@
 #
 import numpy as np
 
-from C3Schecker.utils import functions as fct
 
 from .Cfbasicvar import Cfbasicvar
 

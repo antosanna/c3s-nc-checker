@@ -18,17 +18,13 @@
 #
 
 
-import os
 
 import netCDF4
-import numpy as np
 
-from C3Schecker.utils import functions as fct
 
 from . import cfreferences as cfref
 from .readers.Cfancillaryvar import Cfancillaryvar
 from .readers.Cfauxiliarycoordinatevar import Cfauxiliarycoordinatevar
-from .readers.Cfbasicvar import Cfbasicvar
 from .readers.Cfboundaryvar import Cfboundaryvar
 from .readers.Cfclimatologyvar import Cfclimatologyvar
 from .readers.Cfcoordinatevar import Cfcoordinatevar

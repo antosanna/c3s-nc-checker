@@ -15,7 +15,6 @@
 # does it submit to any jurisdiction.
 #
 
-from .Cfbasicvar import Cfbasicvar
 from .Cfcoordinatevar import Cfcoordinatevar
 from .Cfdatavar import Cfdatavar
 

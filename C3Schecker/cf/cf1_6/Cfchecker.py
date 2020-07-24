@@ -18,10 +18,7 @@
 import importlib
 import logging
 import os
-import re
-import sys
 
-import numpy as np
 
 from C3Schecker.utils import functions as fct
 

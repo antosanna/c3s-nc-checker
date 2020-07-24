@@ -15,7 +15,6 @@
 # does it submit to any jurisdiction.
 #
 
-from C3Schecker.utils import functions as fct
 
 from .Cfbasicvar import Cfbasicvar
 

@@ -25,7 +25,6 @@ class cf_check_latitude(Basiccheck):
     def apply(self):
 
         ref = "CFREF-ch4.1"
-        pass
 
         # for k,v in self.cfcollection.coordinate_variables.iteritems():
         # 	if v.cfcate == "Y"  and v.units not in self.cfref.cf_latitude_units() :

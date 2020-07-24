@@ -18,8 +18,6 @@
 
 # TODO
 
-import os
-import sys
 
 from . import cfreferences
 
