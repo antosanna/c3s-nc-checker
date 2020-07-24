@@ -4,7 +4,7 @@ import tempfile
 
 import pytest
 
-from C3Schecker import C3S_checker
+from C3Schecker.cmd import main
 from C3Schecker.utils.functions import get_immediate_fullpathfiles
 
 
@@ -16,8 +16,6 @@ def cdl_files(dname):
 @pytest.yield_fixture(params=cdl_files("compliant"))
 def compliant_file(request):
     dname = tempfile.mkdtemp()
-    print(request.param)
-    print(dir(C3S_checker))
     fname, _ = os.path.splitext(request.param)
     fname += ".nc"
     fname = fname.replace("/", "-")
@@ -33,5 +31,5 @@ def compliant_file(request):
 
 
 def test_foo(compliant_file):
-    check = C3S_checker.check(["-t", "seasonal", compliant_file])
+    check = main(["-t", "seasonal", compliant_file])
     assert check == 0

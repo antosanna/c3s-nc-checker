@@ -21,8 +21,8 @@ import shutil
 import sys
 import tempfile
 
-from C3Schecker import C3S_checker
-from C3Schecker.utils import functions as fct
+from cmd import main
+from utils import functions as fct
 
 
 class Checker_test:
@@ -79,7 +79,7 @@ class Checker_test:
 
             for ncfile in listnc:
 
-                status = C3S_checker.check(["-t", subdir, ncfile])
+                status = main(["-t", subdir, ncfile])
                 fct.prBlack(
                     "Check " + ncfile + " with configuration [" + subdir.upper() + "]"
                 )
@@ -108,7 +108,7 @@ class Checker_test:
             print()
             for ncfile in listnc:
 
-                status = C3S_checker.check(["-t", subdir, ncfile])
+                status = main(["-t", subdir, ncfile])
                 print(
                     ("Check " + ncfile + " with configuration [" + subdir.upper() + "]")
                 )

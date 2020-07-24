@@ -30,7 +30,7 @@ __FAILURECODE__ = 1
 __SUCCESSCODE__ = 0
 
 
-def main():
+def main(args=None):
     parser = argparse.ArgumentParser(
         description="C3S NetCDF Compliancy Checker", epilog=" "
     )
@@ -98,7 +98,10 @@ def main():
         help="NetCDF files list separated by blank",
     )
 
-    args = parser.parse_args()
+    if args is not None:
+        args = parser.parse_args(args)
+    else:
+        args = parser.parse_args()
 
     if not (args.type or args.confdir):
         parser.error("No configuration fileset requested, add --type or --confdir")
