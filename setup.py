@@ -48,12 +48,11 @@ setup(
         'Development Status :: Alpha',
         'Intended Audience :: Data Analysts',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
         'Operating System :: OS Independent',
         'License :: Apache 2.0',
         'Topic :: Scientific/Engineering :: Copernicus Climate Change Service',
     ],
-    scripts=['bin/C3S_checker'],
     keywords='',
     entry_points={
         'console_scripts': [
