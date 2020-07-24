@@ -28,7 +28,7 @@ class Mandatory_gribconsistency(Basiccheck):
         self.addinfo = "MetadataCheck"
 
         # loop sur les datavars si paramid on test
-        for k, v in self.cfcollection.data_variables.iteritems():
+        for k, v in list(self.cfcollection.data_variables.items()):
             if v.mars_paramid:
                 for info in ["units", "standard_name"]:
                     if v.__getattr__(info):

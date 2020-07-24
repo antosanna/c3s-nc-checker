@@ -44,8 +44,8 @@ class Getgribinfo:
 		
     def get_info(self, paramid, cfinfo):
         try:
-			return self.gribinfo.get(str(paramid)).get("cf").get(cfinfo)
+            return self.gribinfo.get(str(paramid)).get("cf").get(cfinfo)
         except:
-			return None
+            return None
 
 

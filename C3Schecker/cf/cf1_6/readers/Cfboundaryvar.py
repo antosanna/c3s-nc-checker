@@ -17,7 +17,7 @@
 
 from C3Schecker.utils import functions as fct
 
-from Cfbasicvar import Cfbasicvar
+from .Cfbasicvar import Cfbasicvar
 
 
 class Cfboundaryvar(Cfbasicvar):
@@ -30,7 +30,7 @@ class Cfboundaryvar(Cfbasicvar):
         identifiedvars = {}
         comment = "This is a CF Boundary variable"
 
-        for varname, varclass in variables.iteritems():
+        for varname, varclass in list(variables.items()):
 
             attr = getattr(varclass, 'bounds', None)
 

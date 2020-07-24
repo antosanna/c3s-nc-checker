@@ -17,7 +17,7 @@
 
 from C3Schecker.utils import functions as fct
 
-from Cfbasicvar import Cfbasicvar
+from .Cfbasicvar import Cfbasicvar
 
 
 class Cfcoordinatevar(Cfbasicvar):
@@ -31,7 +31,7 @@ class Cfcoordinatevar(Cfbasicvar):
         identifiedvars = {}
         comment = "This is a CF Coordinate Variable"
 
-        for varname, varclass in variables.iteritems():
+        for varname, varclass in list(variables.items()):
 
             # if ((varclass.ndim == 0) or (varclass.ndim == 1 and varname in varclass.dimensions)):
             if (varclass.ndim == 1 and varname in varclass.dimensions):

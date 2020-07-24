@@ -29,7 +29,7 @@ class Mandatory_global_attributes_content_pattern(Basiccheck):
 
         mgavp = self.consmeta.get("mandatory_global_attributes_values_pattern", {})
 
-        for k, v in self.cfcollection.global_attributes.iteritems():
+        for k, v in list(self.cfcollection.global_attributes.items()):
             mgavp_pattern =  mgavp.get(k, "")
 
             if len(mgavp_pattern) > 0 and not re.match(mgavp_pattern,v):

@@ -29,7 +29,7 @@ class Mandatory_global_attributes_content_date(Basiccheck):
 
         mgavd = self.consmeta.get("mandatory_global_attributes_values_date", {})
 
-        for k, v in self.cfcollection.global_attributes.iteritems():
+        for k, v in list(self.cfcollection.global_attributes.items()):
             mgavd_dateformat =  mgavd.get(k, "")
 
             if len(mgavd_dateformat) > 0:

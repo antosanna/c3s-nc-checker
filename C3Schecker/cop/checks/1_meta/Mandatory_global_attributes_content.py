@@ -29,7 +29,7 @@ class Mandatory_global_attributes_content(Basiccheck):
 
         mgac = self.consmeta.get("mandatory_global_attributes_values", {})
 
-        for k, v in self.cfcollection.global_attributes.iteritems():
+        for k, v in list(self.cfcollection.global_attributes.items()):
             mgac_possiblevalues = [str(a) for a in mgac.get(k, [])]
 
             if v not in mgac_possiblevalues and len(mgac_possiblevalues) > 0:

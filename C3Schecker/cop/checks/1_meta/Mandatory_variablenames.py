@@ -28,7 +28,7 @@ class Mandatory_variablenames(Basiccheck):
         self.addinfo = "MetadataCheck"
 
         mvn = self.consmeta.get("mandatory_variablenames", {})
-        for cftype, mvnvars in mvn.iteritems():
+        for cftype, mvnvars in list(mvn.items()):
 
             for mvnvar in mvnvars:            
                 if str(mvnvar) not in [str(c) for c in self.cfcollection.onevartypenames(cftype)]:

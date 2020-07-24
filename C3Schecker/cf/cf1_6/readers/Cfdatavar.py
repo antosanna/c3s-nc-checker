@@ -17,7 +17,7 @@
 
 from C3Schecker.utils import functions as fct
 
-from Cfbasicvar import Cfbasicvar
+from .Cfbasicvar import Cfbasicvar
 
 
 class Cfdatavar(Cfbasicvar):
@@ -31,7 +31,7 @@ class Cfdatavar(Cfbasicvar):
         identifiedvars = {}
         comment = "This is a CF Data Variable"
 
-        for varname, varclass in variables.iteritems():
+        for varname, varclass in list(variables.items()):
 
             if varname not in collections.allvarnames:
 

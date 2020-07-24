@@ -26,7 +26,7 @@ class cf_check_dimensionless_vertical(Basiccheck):
 
 		ref = "CFREF-ch4.3"
 
-		for k,v in self.cfcollection.coordinate_variables.iteritems():
+		for k,v in list(self.cfcollection.coordinate_variables.items()):
 			if  self.cf_isdimensionless_vertical_coordinates(v):
 
 				if re.match( self.cfref.cf_dimensionless_vertical_coordinates()[v.standard_name], str(v.formula_terms) ) :

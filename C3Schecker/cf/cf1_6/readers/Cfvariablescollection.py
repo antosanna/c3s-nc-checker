@@ -15,9 +15,9 @@
 # does it submit to any jurisdiction.
 #
 
-from Cfbasicvar import Cfbasicvar
-from Cfdatavar import Cfdatavar
-from Cfcoordinatevar import Cfcoordinatevar
+from .Cfbasicvar import Cfbasicvar
+from .Cfdatavar import Cfdatavar
+from .Cfcoordinatevar import Cfcoordinatevar
 
 
 class Cfvariablescollection:
@@ -33,7 +33,7 @@ class Cfvariablescollection:
         self.cfvariables = {}
 
     def __iter__(self):
-        return self.cfvariables.iteritems()
+        return iter(list(self.cfvariables.items()))
 
     def __getitem__(self, value):
         return self.cfvariables[value]
@@ -67,4 +67,4 @@ class Cfvariablescollection:
 
     @property
     def alldimensions(self):
-        return [str(d) for d in self.dimensions.keys()]
+        return [str(d) for d in list(self.dimensions.keys())]

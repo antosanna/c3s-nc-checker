@@ -29,6 +29,6 @@ class Mandatory_global_attributes(Basiccheck):
 
         mga = self.consmeta.get("mandatory_global_attributes", {})
         for i in mga:
-            if i not in self.cfcollection.global_attributes.keys():
+            if i not in list(self.cfcollection.global_attributes.keys()):
                 self.status = 0
                 self.logger.error("[%s]-Global Attribute [%s] is missing", str(self.getcheckname(self.addinfo)), str(i))

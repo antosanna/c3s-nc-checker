@@ -56,7 +56,7 @@ class cf_check_dimensions_order(Basiccheck):
 
                     dims_type.append(dim_identify)
 
-                dims_type_pos = map(lambda x: recommended_dims_order.index(x) if x in recommended_dims_order else -1, dims_type)
+                dims_type_pos = [recommended_dims_order.index(x) if x in recommended_dims_order else -1 for x in dims_type]
 
                 if not list(set(dims_type_pos) - set([-1])) == sorted(list(set(dims_type_pos) - set([-1]))):
                     self.check_msgs_logger.warning("[%s]- Space/time dimensions appear in T Z Y X order for variable [%s]: dimensions [%s] -- identified as: [%s], [%s]",

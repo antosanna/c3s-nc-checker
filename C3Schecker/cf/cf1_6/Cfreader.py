@@ -23,11 +23,11 @@ import os
 import netCDF4
 import numpy as np
 
-import cfreferences as cfref
+from . import cfreferences as cfref
 
 from C3Schecker.utils import functions as fct
 
-from readers.Cfvariablescollection import Cfvariablescollection
+from .readers.Cfvariablescollection import Cfvariablescollection
 
 from .readers.Cfbasicvar import Cfbasicvar
 from .readers.Cfcoordinatevar import Cfcoordinatevar
@@ -59,7 +59,7 @@ class Cfreader():
             self.cfuni = Units
 
         except Exception as e:
-            from Units import Units
+            from .Units import Units
             self.cfuni = Units
             self.logger.error("A problem occured with Udunits2 library. Error: " + str(e))
 

@@ -20,7 +20,7 @@
 
 import sys
 import os
-import cfreferences
+from . import cfreferences
 
 
 class Units():

@@ -28,7 +28,7 @@ class Mandatory_dimensions_per_variablename(Basiccheck):
 
         self.addinfo = "MetadataCheck"
 
-        collectdims = [str(d) for d in self.cfcollection.dimensions.keys()]
+        collectdims = [str(d) for d in list(self.cfcollection.dimensions.keys())]
 
         mavpv = self.consmeta.get("mandatory_attributes_values_per_variablename", {})
 

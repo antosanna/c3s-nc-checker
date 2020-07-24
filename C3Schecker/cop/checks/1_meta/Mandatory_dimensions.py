@@ -28,7 +28,7 @@ class Mandatory_dimensions(Basiccheck):
 
         self.addinfo = "MetadataCheck"
 
-        collectdims = [str(d) for d in self.cfcollection.dimensions.keys()]
+        collectdims = [str(d) for d in list(self.cfcollection.dimensions.keys())]
 
         md = [str(d) for d in self.consmeta.get("mandatory_dimensions", [])]
         if not set(md).issubset(set(collectdims)) and len(md) > 0:

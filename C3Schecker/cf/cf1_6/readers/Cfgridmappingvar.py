@@ -17,7 +17,7 @@
 
 from C3Schecker.utils import functions as fct
 
-from Cfbasicvar import Cfbasicvar
+from .Cfbasicvar import Cfbasicvar
 
 
 class Cfgridmappingvar(Cfbasicvar):
@@ -28,7 +28,7 @@ class Cfgridmappingvar(Cfbasicvar):
         identifiedvars = {}
         comment = "This is a CF grid mapping variable"
 
-        for varname, varclass in variables.iteritems():
+        for varname, varclass in list(variables.items()):
 
             attr = getattr(varclass, 'grid_mapping', None)
 

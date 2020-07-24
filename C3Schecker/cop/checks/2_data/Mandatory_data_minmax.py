@@ -27,7 +27,7 @@ class Mandatory_data_minmax(Basiccheck):
 
         self.addinfo = "DataCheck"
 
-        for k, v in self.cfcollection.data_variables.iteritems():
+        for k, v in list(self.cfcollection.data_variables.items()):
 
             default = True
             datavariables_checks = self.consdata.get("default", {})
@@ -43,7 +43,7 @@ class Mandatory_data_minmax(Basiccheck):
 
             if bool(mandatoryminmax):
 
-                for x, y in mandatoryminmax.iteritems():
+                for x, y in list(mandatoryminmax.items()):
                     try:
                         res = []
 

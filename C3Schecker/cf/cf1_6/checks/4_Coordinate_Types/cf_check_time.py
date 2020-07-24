@@ -26,7 +26,7 @@ class cf_check_time(Basiccheck):
 
 		ref = "CFREF-ch3.4"
 
-		for k,v in self.cfcollection.coordinate_variables.iteritems():
+		for k,v in list(self.cfcollection.coordinate_variables.items()):
 			if v.cfcate == "T":
 
 

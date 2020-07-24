@@ -17,7 +17,7 @@
 import numpy as np
 from C3Schecker.utils import functions as fct
 
-from Cfbasicvar import Cfbasicvar
+from .Cfbasicvar import Cfbasicvar
 
 
 class Cflabelvar(Cfbasicvar):
@@ -31,7 +31,7 @@ class Cflabelvar(Cfbasicvar):
         identifiedvars = {}
         comment = "This is a CF label variable"
 
-        for varname, varclass in variables.iteritems():
+        for varname, varclass in list(variables.items()):
 
             if np.issubdtype(varclass.dtype, np.str):
 

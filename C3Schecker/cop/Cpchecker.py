@@ -21,11 +21,11 @@ import types
 import numpy as np
 
 from C3Schecker.utils import functions as fct
-from Getgribinfo import Getgribinfo
+from .Getgribinfo import Getgribinfo
 
 import json
 
-reload(sys)
+importlib.reload(sys)
 sys.setdefaultencoding('utf-8')
 
 

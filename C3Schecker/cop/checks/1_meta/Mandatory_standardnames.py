@@ -28,7 +28,7 @@ class Mandatory_standardnames(Basiccheck):
         self.addinfo = "MetadataCheck"
 
         mvn = self.consmeta.get("mandatory_standardnames", {})
-        for cftype, mvnvars in mvn.iteritems():
+        for cftype, mvnvars in list(mvn.items()):
 
             for mvnvar in mvnvars:
                 if mvnvar not in str(self.cfcollection.onevartypestdnames(cftype)):

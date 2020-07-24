@@ -29,7 +29,7 @@ class cf_check_coordinates(Basiccheck):
         for k, v in self.cfcollection:
 
             if v.coordinates:
-                coords = map(unicode.strip, v.coordinates.split())
+                coords = list(map(str.strip, v.coordinates.split()))
 
                 for v_coord_name in coords:
                     try:

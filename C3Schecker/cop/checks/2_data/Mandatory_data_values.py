@@ -29,7 +29,7 @@ class Mandatory_data_values(Basiccheck):
 
         self.addinfo = "DataCheck"
 
-        for k, v in self.cfcollection.data_variables.iteritems():
+        for k, v in list(self.cfcollection.data_variables.items()):
 
             default = True
             datavariables_checks = self.consdata.get("default", {})
@@ -43,7 +43,7 @@ class Mandatory_data_values(Basiccheck):
             mandatorylov = datavariables_checks.get("mandatory_values", {})
             if bool(mandatorylov):
 
-                for x, y in mandatorylov.iteritems():
+                for x, y in list(mandatorylov.items()):
 
 
                     try:

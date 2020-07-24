@@ -17,7 +17,7 @@
 
 from C3Schecker.utils import functions as fct
 
-from Cfbasicvar import Cfbasicvar
+from .Cfbasicvar import Cfbasicvar
 
 
 class Cfancillaryvar(Cfbasicvar):
@@ -31,7 +31,7 @@ class Cfancillaryvar(Cfbasicvar):
         identifiedvars = {}
         comment = "This is a CF Ancillary Variable"
 
-        for varname, varclass in variables.iteritems():
+        for varname, varclass in list(variables.items()):
 
             attr = getattr(varclass, 'ancillary_variables', None)
             if attr:

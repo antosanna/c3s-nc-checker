@@ -42,13 +42,13 @@ class Basiccheck:
         std_name_modifier = None
 
         # test it is a string
-        if not (isinstance(std_name, basestring)):
+        if not (isinstance(std_name, str)):
             self.check_msgs_logger.error("[%s]- Standard name attribute [%s] must be a string for variable [%s]", str(ref), str(std_name), str(var))
             self.status = 0
             return (None, None)
 
         if ' ' in std_name:
-            std_name, std_name_modifier = map(str.strip, stdname.split(' ', 1))
+            std_name, std_name_modifier = list(map(str.strip, stdname.split(' ', 1)))
 
             if std_name_modifier in self.cfref.cf_standard_names_modifiers():
                 return (std_name, std_name_modifier)
@@ -68,7 +68,7 @@ class Basiccheck:
     def cf_is_dimension_reference_multidimentional(self, v, dim):
         # Test if a dimension reference a multi dimensional coordinate
         if v.coordinates:
-            coords = map(unicode.strip, v.coordinates.split())
+            coords = list(map(str.strip, v.coordinates.split()))
             exist = 0
             for v_coord_name in coords:
                 try:

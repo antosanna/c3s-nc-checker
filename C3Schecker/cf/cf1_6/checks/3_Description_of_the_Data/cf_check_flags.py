@@ -50,7 +50,7 @@ class cf_check_flags(Basiccheck):
 
             if v.standard_name:
                 std_name, stn_name_modifier = self.cf_get_stdname(v.standard_name, k)
-                if stn_name_modifier in [ i  for i in self.cfref.cf_standard_names_modifiers().keys() if 'flag' in i] \
+                if stn_name_modifier in [ i  for i in list(self.cfref.cf_standard_names_modifiers().keys()) if 'flag' in i] \
                         and fm is None:
                     self.check_msgs_logger.error("S[%s]- tandard Name modified to a flag but flag_meanings does not exist for variable [%s]", str(ref), str(k))
                     self.status = 0
@@ -62,7 +62,7 @@ class cf_check_flags(Basiccheck):
         # check flag_meanings
 
             # check datatype
-            if not (isinstance(fm, basestring)):
+            if not (isinstance(fm, str)):
                 self.status = 0
                 self.check_msgs_logger.error("[%s]- Flag_meanings attribute [%s] must be a string for variable [%s]", str(ref), str(type(fm)), str(k))
                 continue
@@ -79,8 +79,8 @@ class cf_check_flags(Basiccheck):
                 # check datatype
                 if (isinstance(fv, np.ndarray)):
                     pass
-                elif (isinstance(fv, basestring)):  # not sure fully necessary- considering blank as separator
-                    fv = map(str.strip, fv.split(' '))
+                elif (isinstance(fv, str)):  # not sure fully necessary- considering blank as separator
+                    fv = list(map(str.strip, fv.split(' ')))
                 else:
                     self.status = 0
                     self.check_msgs_logger.error("[%s]- Flag_values must be a list for variable [%s]", str(ref), str(k))
@@ -136,7 +136,7 @@ class cf_check_flags(Basiccheck):
                     continue
 
             if fma is not None and fv is not None:
-                bitwiseAND = all(map(lambda x, y: x & y == a, zip(fv, fma)))
+                bitwiseAND = all(map(lambda x, y: x & y == a, list(zip(fv, fma))))
                 if not bitwiseAND:
                     self.status = 0
                     self.check_msgs_logger.error("[%s]- Bitwise AND of flag_values and flag_masks not equal to flag_value for variable [%s]", str(ref), str(k))

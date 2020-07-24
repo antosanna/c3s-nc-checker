@@ -55,7 +55,7 @@ class CFcellmethod():
                 continue
 
             if not cm[0] .endswith(":"):
-                print "The cell_methods must begin with the pattern [name:]"
+                print("The cell_methods must begin with the pattern [name:]")
                 break
 
             try:
@@ -176,7 +176,7 @@ if __name__ == "__main__":
     ccm = CFcellmethod()
     ccm.parse_cellmethods(cm_str)
 
-    print ccm
+    print(ccm)
 
     # print ccm.get_cm_dict
     # print ccm.get_names

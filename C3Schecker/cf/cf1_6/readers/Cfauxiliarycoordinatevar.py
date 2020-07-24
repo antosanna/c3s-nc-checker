@@ -17,8 +17,8 @@
 
 from C3Schecker.utils import functions as fct
 
-from Cfbasicvar import Cfbasicvar
-from Cflabelvar import Cflabelvar
+from .Cfbasicvar import Cfbasicvar
+from .Cflabelvar import Cflabelvar
 
 
 class Cfauxiliarycoordinatevar(Cfbasicvar):
@@ -31,7 +31,7 @@ class Cfauxiliarycoordinatevar(Cfbasicvar):
 
         identifiedvars = {}
 
-        for varname, varclass in variables.iteritems():
+        for varname, varclass in list(variables.items()):
 
             attr = getattr(varclass, 'coordinates', None)
 

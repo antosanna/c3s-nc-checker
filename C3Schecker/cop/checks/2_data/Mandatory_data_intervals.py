@@ -27,7 +27,7 @@ class Mandatory_data_intervals(Basiccheck):
 
         self.addinfo = "DataCheck"
 
-        for k, v in self.cfcollection.data_variables.iteritems():
+        for k, v in list(self.cfcollection.data_variables.items()):
 
             default = True
             datavariables_checks = self.consdata.get("default", {})
@@ -40,7 +40,7 @@ class Mandatory_data_intervals(Basiccheck):
             mandatoryintervals = datavariables_checks.get("mandatory_intervals", {})
 
             if bool(mandatoryintervals):
-                for l, m in mandatoryintervals.iteritems():
+                for l, m in list(mandatoryintervals.items()):
 
                     try:
                         vv = self.cfcollection[l]

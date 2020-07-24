@@ -31,7 +31,7 @@ class cf_check_ancillarydata(Basiccheck):
 
         for k, v in self.cfcollection:
             if v.ancillary_variables:
-                if not (isinstance(v.ancillary_variables, basestring)):
+                if not (isinstance(v.ancillary_variables, str)):
                     self.check_msgs_logger.error("[%s]- Ancillary_variables attribute [%s] must be a string for variable [%s]", str(ref), str(v.ancillary_variables), str(var))
                     self.status = 0
                 else:

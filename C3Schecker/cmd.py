@@ -159,7 +159,7 @@ def display_messages(verbose, msgs):
 
     all_msg_c = [m for m in msgs if str.find(m, "CRITICAL") != -1]
     for m in all_msg_c:
-        print str(m)
+        print((str(m)))
 
     if verbose:
         all_msg = sorted(
@@ -172,7 +172,7 @@ def display_messages(verbose, msgs):
             1,
             reverse=True)
         for m in all_msg:
-            print str(m)
+            print((str(m)))
 
 
 if __name__ == "__main__":

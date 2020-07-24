@@ -29,10 +29,10 @@ class cf_check_global_attributes(Basiccheck):
         missing_gbls = []
         for g in self.cfref.cf_recommended_globals():
             missing = 1
-            for k, v in self.cfcollection.global_attributes.iteritems():
+            for k, v in list(self.cfcollection.global_attributes.items()):
                 if k == g:
                     missing = 0
-                    if not (isinstance(v, basestring)):
+                    if not (isinstance(v, str)):
                         self.check_msgs_logger.error("[%s]- Global attribute [%s] type is not a String Type", str(ref), type(k))
             if missing:
                 missing_gbls.append(g)

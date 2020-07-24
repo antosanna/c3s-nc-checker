@@ -42,7 +42,7 @@ class cf_check_units(Basiccheck):
             if v.units:
 
                 # MUST be string
-                if not (isinstance(v.units, basestring)):
+                if not (isinstance(v.units, str)):
                     self.check_msgs_logger.error("[%s]- Units attribute [%s] must be a string for variable [%s]", str(ref), str(v.units), str(k))
                     self.status = 0
                     continue

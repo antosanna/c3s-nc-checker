@@ -25,11 +25,11 @@ import numpy as np
 from C3Schecker.utils import functions as fct
 
 
-import Cfreader
-import cfreferences
+from . import Cfreader
+from . import cfreferences
 
 
-reload(sys)
+importlib.reload(sys)
 sys.setdefaultencoding('utf-8')
 
 
@@ -100,7 +100,7 @@ class Cfchecker:
             self.cfuni = Units
 
         except Exception as e:
-            from Units import Units
+            from .Units import Units
             self.cfuni = Units
             self.check_msgs_logger.error("A problem occured with Udunits2 library. Error: " + str(e))
 
@@ -176,7 +176,7 @@ class Cfchecker:
     def cf_is_dimension_reference_multidimentional(self, v, dim):
         # Test if a dimension reference a multi dimensional coordinate
         if v.coordinates:
-            coords = map(unicode.strip, v.coordinates.split())
+            coords = list(map(str.strip, v.coordinates.split()))
             exist = 0
             for v_coord_name in coords:
                 try:
@@ -218,7 +218,7 @@ class Cfchecker:
                 self.check_msgs_logger.staticinfo(1, " ")
             self.check_msgs_logger.info("Global Attribute List ---------------------")
 
-            for k, v in self.cfcollection.global_attributes.iteritems():
+            for k, v in list(self.cfcollection.global_attributes.items()):
                 self.check_msgs_logger.info("  %s   : [%s]", "{:<20}".format("[" + k + "]"), fct.truncate(''.join(str(str(v).encode('utf-8')).splitlines()), 50))
 
             self.check_msgs_logger.staticinfo(1, " ")

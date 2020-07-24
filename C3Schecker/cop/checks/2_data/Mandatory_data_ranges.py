@@ -29,7 +29,7 @@ class Mandatory_data_ranges(Basiccheck):
 
         self.addinfo = "DataCheck"
 
-        for k, v in self.cfcollection.data_variables.iteritems():
+        for k, v in list(self.cfcollection.data_variables.items()):
 
             default = True
             datavariables_checks = self.consdata.get("default", {})
@@ -45,7 +45,7 @@ class Mandatory_data_ranges(Basiccheck):
 
             if bool(mandatoryrange):
 
-                for x, y in mandatoryrange.iteritems():
+                for x, y in list(mandatoryrange.items()):
 
                     try:
                         vv = self.cfcollection[x]
