@@ -29,7 +29,7 @@ def cf_reference():
 def cf_allowed_datatypes():
 
     cf_allowed_datatypes = [
-        np.character,
+        np.dtype("S1"),
         np.dtype("c"),
         np.dtype("b"),
         np.dtype("i4"),
