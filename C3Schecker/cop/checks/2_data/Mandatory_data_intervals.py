@@ -31,7 +31,7 @@ class Mandatory_data_intervals(Basiccheck):
 
             default = True
             datavariables_checks = self.consdata.get("default", {})
-            datavariables_tocheck = (self.consdata.get(k, {})) 
+            datavariables_tocheck = self.consdata.get(k, {})
 
             if bool(datavariables_tocheck):
                 datavariables_checks = datavariables_tocheck
@@ -45,17 +45,34 @@ class Mandatory_data_intervals(Basiccheck):
                     try:
                         vv = self.cfcollection[l]
                         values = vv.netcdfinit[:]
-                        valuesintervals = [(values[i - 1], x, x - values[i - 1]) for i, x in enumerate(values) if x - values[i - 1] != int(m)][1:]
+                        valuesintervals = [
+                            (values[i - 1], x, x - values[i - 1])
+                            for i, x in enumerate(values)
+                            if x - values[i - 1] != int(m)
+                        ][1:]
 
                         if len(valuesintervals) > 0:
                             self.status = 0
-                            self.logger.error("[%s]- [%s] intervals must be %s  - Some other intervals has been found - First: %s  ", str(self.getcheckname(self.addinfo)),
-                                              str(l), str(m), str(str(valuesintervals[0][0:2]) + "=interval " + str(valuesintervals[0][2])))
+                            self.logger.error(
+                                "[%s]- [%s] intervals must be %s  - Some other intervals has been found - First: %s  ",
+                                str(self.getcheckname(self.addinfo)),
+                                str(l),
+                                str(m),
+                                str(
+                                    str(valuesintervals[0][0:2])
+                                    + "=interval "
+                                    + str(valuesintervals[0][2])
+                                ),
+                            )
 
                     except:
                         if default:
                             pass
                         else:
                             self.status = 0
-                            self.logger.error("[%s]-  no variable [%s] found", str(self.getcheckname(self.addinfo)), str(l))
+                            self.logger.error(
+                                "[%s]-  no variable [%s] found",
+                                str(self.getcheckname(self.addinfo)),
+                                str(l),
+                            )
                             continue

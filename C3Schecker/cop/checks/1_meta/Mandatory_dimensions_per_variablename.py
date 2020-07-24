@@ -23,7 +23,6 @@ class Mandatory_dimensions_per_variablename(Basiccheck):
         Apply checks on dimensions . Test is mandatory_dimensions exist
     """
 
-
     def apply(self):
 
         self.addinfo = "MetadataCheck"
@@ -33,8 +32,14 @@ class Mandatory_dimensions_per_variablename(Basiccheck):
         mavpv = self.consmeta.get("mandatory_attributes_values_per_variablename", {})
 
         for k, v in self.cfcollection:
-                mandatorydimensions = mavpv.get(k, {}).get("dimensions", [])
-                if len(mandatorydimensions) > 0:
-                    for d in mandatorydimensions:
-                        if d not in collectdims:
-                            self.logger.error("[%s]-NetCDF Dimensions must contain %s  used for variable %s - currently %s ", str(self.getcheckname(self.addinfo)), str(d), str(k),str(collectdims))
+            mandatorydimensions = mavpv.get(k, {}).get("dimensions", [])
+            if len(mandatorydimensions) > 0:
+                for d in mandatorydimensions:
+                    if d not in collectdims:
+                        self.logger.error(
+                            "[%s]-NetCDF Dimensions must contain %s  used for variable %s - currently %s ",
+                            str(self.getcheckname(self.addinfo)),
+                            str(d),
+                            str(k),
+                            str(collectdims),
+                        )

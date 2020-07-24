@@ -17,7 +17,6 @@
 
 
 class Basiccheck:
-
     def __init__(self, logger, status, cfref, collection, cfuni, std_names):
         self.name = self.__class__.__name__
 
@@ -43,17 +42,28 @@ class Basiccheck:
 
         # test it is a string
         if not (isinstance(std_name, str)):
-            self.check_msgs_logger.error("[%s]- Standard name attribute [%s] must be a string for variable [%s]", str(ref), str(std_name), str(var))
+            self.check_msgs_logger.error(
+                "[%s]- Standard name attribute [%s] must be a string for variable [%s]",
+                str(ref),
+                str(std_name),
+                str(var),
+            )
             self.status = 0
             return (None, None)
 
-        if ' ' in std_name:
-            std_name, std_name_modifier = list(map(str.strip, stdname.split(' ', 1)))
+        if " " in std_name:
+            std_name, std_name_modifier = list(map(str.strip, stdname.split(" ", 1)))
 
             if std_name_modifier in self.cfref.cf_standard_names_modifiers():
                 return (std_name, std_name_modifier)
             else:
-                self.check_msgs_logger.error("[%s]- Standard name attribute [%s] contains a invalid modifier [%s] for variable [%s]", str(ref), str(std_name), str(std_name_modifier), str(var))
+                self.check_msgs_logger.error(
+                    "[%s]- Standard name attribute [%s] contains a invalid modifier [%s] for variable [%s]",
+                    str(ref),
+                    str(std_name),
+                    str(std_name_modifier),
+                    str(var),
+                )
                 self.status = 0
                 return (None, None)
 
@@ -61,7 +71,10 @@ class Basiccheck:
 
     def cf_isdimensionless_vertical_coordinates(self, v):
 
-        if v.standard_name and v.standard_name in self.cfref.cf_dimensionless_vertical_coordinates():
+        if (
+            v.standard_name
+            and v.standard_name in self.cfref.cf_dimensionless_vertical_coordinates()
+        ):
             return True
         return False
 

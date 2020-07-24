@@ -21,7 +21,6 @@ from .Cfbasicvar import Cfbasicvar
 
 
 class Cfclimatologyvar(Cfbasicvar):
-
     @staticmethod
     def define(variables, logger):
 
@@ -30,7 +29,7 @@ class Cfclimatologyvar(Cfbasicvar):
 
         for varname, varclass in list(variables.items()):
 
-            attr = getattr(varclass, 'climatology', None)
+            attr = getattr(varclass, "climatology", None)
 
             if attr:
 

@@ -21,7 +21,6 @@ from .Cfbasicvar import Cfbasicvar
 
 
 class Cfmeasurevar(Cfbasicvar):
-
     @staticmethod
     def define(variables, logger):
 

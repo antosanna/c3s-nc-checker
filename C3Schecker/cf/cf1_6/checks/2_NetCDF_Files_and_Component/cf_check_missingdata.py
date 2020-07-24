@@ -32,7 +32,11 @@ class cf_check_missingdata(Basiccheck):
 
             if (v.valid_min or v.valid_max) and v.valid_range:
                 self.status = 0
-                self.check_msgs_logger.error("[%s]- Valid_range and valid_min/valid_max are both specified for variable [%s]", str(ref), str(k))
+                self.check_msgs_logger.error(
+                    "[%s]- Valid_range and valid_min/valid_max are both specified for variable [%s]",
+                    str(ref),
+                    str(k),
+                )
             else:
                 try:
                     rangemin, rangemax = v.valid_range
@@ -42,23 +46,52 @@ class cf_check_missingdata(Basiccheck):
                     if v.valid_max:
                         rangemax = v.valid_max
 
-        # Check that fill value is not in the possible values range - if so: error
-        # I consider that attribute valid_min or valid_max can not be present at the same time
+            # Check that fill value is not in the possible values range - if so: error
+            # I consider that attribute valid_min or valid_max can not be present at the same time
             try:
                 if v.fillvalue:
                     fillvalue = v.dtype(v.fillvalue)
                     if rangemin is not None and rangemax is not None:
-                        if (fillvalue >= v.dtype(rangemin) and fillvalue <= v.dtype(rangemax)):
+                        if fillvalue >= v.dtype(rangemin) and fillvalue <= v.dtype(
+                            rangemax
+                        ):
                             self.status = 0
-                            self.check_msgs_logger.error("[%s]- Fillvalue [%s] in the range of possible values ([%s] - [%s]) for variable [%s]", str(ref), str(fillvalue), str(rangemin), str(rangemax), str(k))
+                            self.check_msgs_logger.error(
+                                "[%s]- Fillvalue [%s] in the range of possible values ([%s] - [%s]) for variable [%s]",
+                                str(ref),
+                                str(fillvalue),
+                                str(rangemin),
+                                str(rangemax),
+                                str(k),
+                            )
                     elif rangemin is not None:
-                        if (fillvalue >= v.dtype(rangemin)):
+                        if fillvalue >= v.dtype(rangemin):
                             self.status = 0
-                            self.check_msgs_logger.error("[%s]- Fillvalue [%s] in the range of possible values ([%s] - [%s]) for variable [%s]", str(ref), str(fillvalue), str(rangemin), str(rangemax), str(k))
+                            self.check_msgs_logger.error(
+                                "[%s]- Fillvalue [%s] in the range of possible values ([%s] - [%s]) for variable [%s]",
+                                str(ref),
+                                str(fillvalue),
+                                str(rangemin),
+                                str(rangemax),
+                                str(k),
+                            )
                     elif rangemax is not None:
-                        if (fillvalue <= v.dtype(rangemax)):
+                        if fillvalue <= v.dtype(rangemax):
                             self.status = 0
-                            self.check_msgs_logger.error("[%s]- Fillvalue [%s] in the range of possible values ([%s] - [%s]) for variable [%s]", str(ref), str(fillvalue), str(rangemin), str(rangemax), str(k))
+                            self.check_msgs_logger.error(
+                                "[%s]- Fillvalue [%s] in the range of possible values ([%s] - [%s]) for variable [%s]",
+                                str(ref),
+                                str(fillvalue),
+                                str(rangemin),
+                                str(rangemax),
+                                str(k),
+                            )
             except:
                 self.status = 0
-                self.check_msgs_logger.error("[%s]- Fillvalue, Valid_min or Valid_max [%s] could be declared but not from the same variable datatype for variable [%s]", str(ref), str(fillvalue), str(rangemin), str(rangemax))
+                self.check_msgs_logger.error(
+                    "[%s]- Fillvalue, Valid_min or Valid_max [%s] could be declared but not from the same variable datatype for variable [%s]",
+                    str(ref),
+                    str(fillvalue),
+                    str(rangemin),
+                    str(rangemax),
+                )

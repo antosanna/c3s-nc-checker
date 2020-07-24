@@ -19,22 +19,26 @@ from C3Schecker.cf.cf1_6.checks.Basiccheck import Basiccheck
 
 
 class cf_check_dimensionless_vertical(Basiccheck):
-	""" Inheritated from parent Basiccheck
+    """ Inheritated from parent Basiccheck
 	"""
 
-	def apply(self):
+    def apply(self):
 
-		ref = "CFREF-ch4.3"
+        ref = "CFREF-ch4.3"
 
-		for k,v in list(self.cfcollection.coordinate_variables.items()):
-			if  self.cf_isdimensionless_vertical_coordinates(v):
+        for k, v in list(self.cfcollection.coordinate_variables.items()):
+            if self.cf_isdimensionless_vertical_coordinates(v):
 
-				if re.match( self.cfref.cf_dimensionless_vertical_coordinates()[v.standard_name], str(v.formula_terms) ) :
-					pass
-				else:
-					self.status = 0
-					self.check_msgs_logger.error("[%s]- Formula_term attribute not compliant with  dimensionless vertical variable [%s] definition",str(ref), str( k ) )
-					continue
-
-
-
+                if re.match(
+                    self.cfref.cf_dimensionless_vertical_coordinates()[v.standard_name],
+                    str(v.formula_terms),
+                ):
+                    pass
+                else:
+                    self.status = 0
+                    self.check_msgs_logger.error(
+                        "[%s]- Formula_term attribute not compliant with  dimensionless vertical variable [%s] definition",
+                        str(ref),
+                        str(k),
+                    )
+                    continue

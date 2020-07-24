@@ -33,15 +33,13 @@ class Mandatory_data_ranges(Basiccheck):
 
             default = True
             datavariables_checks = self.consdata.get("default", {})
-            datavariables_tocheck = (self.consdata.get(k, {})) 
-
+            datavariables_tocheck = self.consdata.get(k, {})
 
             if bool(datavariables_tocheck):
                 datavariables_checks = datavariables_tocheck
                 default = False
 
             mandatoryrange = datavariables_checks.get("mandatory_ranges", {})
-
 
             if bool(mandatoryrange):
 
@@ -53,20 +51,31 @@ class Mandatory_data_ranges(Basiccheck):
 
                         if values.ndim == 0:
                             values = np.array([values])
-                        valuesoutofrange = np.where(np.logical_or(values > y[1], values < y[0]))
+                        valuesoutofrange = np.where(
+                            np.logical_or(values > y[1], values < y[0])
+                        )
 
                         # if values a des NaN -> traiter le cas
                         # print str(y)
 
                         if valuesoutofrange[0].size > 0:
                             self.status = 0
-                            self.logger.error("[%s]- [%s] range must be %s  - First %s", str(self.getcheckname(self.addinfo)), str(x), str(y), str(valuesoutofrange[0][0]))
+                            self.logger.error(
+                                "[%s]- [%s] range must be %s  - First %s",
+                                str(self.getcheckname(self.addinfo)),
+                                str(x),
+                                str(y),
+                                str(valuesoutofrange[0][0]),
+                            )
 
                     except:
                         if default:
                             pass
                         else:
                             self.status = 0
-                            self.logger.error("[%s]-  no variable [%s] found", str(self.getcheckname(self.addinfo)), str(x))
+                            self.logger.error(
+                                "[%s]-  no variable [%s] found",
+                                str(self.getcheckname(self.addinfo)),
+                                str(x),
+                            )
                             continue
- 

@@ -6,7 +6,7 @@
 # Note: None
 #
 #
-#(C) Copyright 1996-2016 ECMWF.
+# (C) Copyright 1996-2016 ECMWF.
 #
 # This software is licensed under the terms of the Apache Licence Version 2.0
 # which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
@@ -18,7 +18,7 @@
 import sys
 
 
-class CFcellmethod():
+class CFcellmethod:
     """
             This class should generate the following dict from a cell_methods string:
             {
@@ -54,7 +54,7 @@ class CFcellmethod():
                 skip = skip - 1
                 continue
 
-            if not cm[0] .endswith(":"):
+            if not cm[0].endswith(":"):
                 print("The cell_methods must begin with the pattern [name:]")
                 break
 
@@ -102,7 +102,9 @@ class CFcellmethod():
                 while cm[j] != ")":
                     try:
                         assert cm[j] == "interval:"
-                        tmpstmt["intervals"].append({"value": cm[j + 1], "unit": cm[j + 2]})
+                        tmpstmt["intervals"].append(
+                            {"value": cm[j + 1], "unit": cm[j + 2]}
+                        )
                         j += 3
                         skip = skip + 3
                         continue

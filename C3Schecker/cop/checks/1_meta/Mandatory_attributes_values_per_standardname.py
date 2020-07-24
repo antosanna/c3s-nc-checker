@@ -26,7 +26,7 @@ class Mandatory_attributes_values_per_standardname(Basiccheck):
     def apply(self):
 
         self.addinfo = "MetadataCheck"
-      
+
         mapv = self.consmeta.get("mandatory_attributes_values_per_standardname", {})
 
         for k, v in self.cfcollection:
@@ -42,4 +42,11 @@ class Mandatory_attributes_values_per_standardname(Basiccheck):
                     if attr in cfattrs:
                         if v.getncattr(attr) != mandatoryattributes[attr]:
                             self.status = 0
-                            self.logger.error("[%s]-Wrong [%s] value - Variable [%s]; [%s] excepted but [%s] found ", str(self.getcheckname(self.addinfo)), str(attr), str(stdname), str(mandatoryattributes[attr]), str(v.getncattr(attr)))
+                            self.logger.error(
+                                "[%s]-Wrong [%s] value - Variable [%s]; [%s] excepted but [%s] found ",
+                                str(self.getcheckname(self.addinfo)),
+                                str(attr),
+                                str(stdname),
+                                str(mandatoryattributes[attr]),
+                                str(v.getncattr(attr)),
+                            )

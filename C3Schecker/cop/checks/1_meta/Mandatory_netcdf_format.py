@@ -31,4 +31,9 @@ class Mandatory_netcdf_format(Basiccheck):
 
         if self.cfcollection.fileformat != mnf and mnf:
             self.status = 0
-            self.logger.error("[%s]-File Format [%s] is mandatory - currently [%s]", str(self.getcheckname(self.addinfo)), str(mnf), str(self.cfcollection.fileformat))
+            self.logger.error(
+                "[%s]-File Format [%s] is mandatory - currently [%s]",
+                str(self.getcheckname(self.addinfo)),
+                str(mnf),
+                str(self.cfcollection.fileformat),
+            )

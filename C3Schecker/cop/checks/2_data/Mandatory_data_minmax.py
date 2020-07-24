@@ -31,13 +31,11 @@ class Mandatory_data_minmax(Basiccheck):
 
             default = True
             datavariables_checks = self.consdata.get("default", {})
-            datavariables_tocheck = (self.consdata.get(k, {})) 
-
+            datavariables_tocheck = self.consdata.get(k, {})
 
             if bool(datavariables_tocheck):
                 datavariables_checks = datavariables_tocheck
                 default = False
-
 
             mandatoryminmax = datavariables_checks.get("mandatory_min_max", "")
 
@@ -54,12 +52,22 @@ class Mandatory_data_minmax(Basiccheck):
 
                         if len(res) > 0:
                             self.status = 0
-                            self.logger.error("[%s]- [%s] minimum and maximum values must be %s  - Currently %s", str(self.getcheckname(self.addinfo)), str(x), str(y), str(valuesminmax))
+                            self.logger.error(
+                                "[%s]- [%s] minimum and maximum values must be %s  - Currently %s",
+                                str(self.getcheckname(self.addinfo)),
+                                str(x),
+                                str(y),
+                                str(valuesminmax),
+                            )
 
                     except:
                         if default:
                             pass
                         else:
                             self.status = 0
-                            self.logger.error("[%s]-  no variable [%s] found", str(self.getcheckname(self.addinfo)), str(x))
+                            self.logger.error(
+                                "[%s]-  no variable [%s] found",
+                                str(self.getcheckname(self.addinfo)),
+                                str(x),
+                            )
                             continue

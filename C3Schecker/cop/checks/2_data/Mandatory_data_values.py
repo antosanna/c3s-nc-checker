@@ -33,8 +33,7 @@ class Mandatory_data_values(Basiccheck):
 
             default = True
             datavariables_checks = self.consdata.get("default", {})
-            datavariables_tocheck = (self.consdata.get(k, {})) 
-
+            datavariables_tocheck = self.consdata.get(k, {})
 
             if bool(datavariables_tocheck):
                 datavariables_checks = datavariables_tocheck
@@ -45,7 +44,6 @@ class Mandatory_data_values(Basiccheck):
 
                 for x, y in list(mandatorylov.items()):
 
-
                     try:
                         errorvalue = ""
                         vv = self.cfcollection[x]
@@ -53,23 +51,36 @@ class Mandatory_data_values(Basiccheck):
                         if values.ndim == 0:
                             values = [values]
 
-                        if isinstance(values, np.ma.core.MaskedArray):  # work around when Netcdf4 var is a MaskedArray (get only unmasked values)
+                        if isinstance(
+                            values, np.ma.core.MaskedArray
+                        ):  # work around when Netcdf4 var is a MaskedArray (get only unmasked values)
                             values = values.compressed()
 
                         for l in values:
-                            if l not in [i for i in y]:  # dirty -changed from string comparison
+                            if l not in [
+                                i for i in y
+                            ]:  # dirty -changed from string comparison
                                 errorvalue = str(l)
                                 break
 
                         if errorvalue:
                             self.status = 0
-                            self.logger.error("[%s]- [%s] values must be in %s  - Some other values has been found - First: %s  ", str(self.getcheckname(self.addinfo)), str(x), str(y), str(len(values)))
+                            self.logger.error(
+                                "[%s]- [%s] values must be in %s  - Some other values has been found - First: %s  ",
+                                str(self.getcheckname(self.addinfo)),
+                                str(x),
+                                str(y),
+                                str(len(values)),
+                            )
 
                     except:
                         if default:
                             pass
                         else:
                             self.status = 0
-                            self.logger.error("[%s]-  no variable [%s] found", str(self.getcheckname(self.addinfo)), str(x))
+                            self.logger.error(
+                                "[%s]-  no variable [%s] found",
+                                str(self.getcheckname(self.addinfo)),
+                                str(x),
+                            )
                             continue
-

@@ -38,4 +38,9 @@ class cf_check_dimensions_unicity(Basiccheck):
                     continue
                 if occurence_dimname[str(d).lower()] > 1:
                     self.status = 0
-                    self.check_msgs_logger.error('[%s]- Variable [%s] has duplicated dimensions [%s]', str(ref), str(k), str(d))
+                    self.check_msgs_logger.error(
+                        "[%s]- Variable [%s] has duplicated dimensions [%s]",
+                        str(ref),
+                        str(k),
+                        str(d),
+                    )

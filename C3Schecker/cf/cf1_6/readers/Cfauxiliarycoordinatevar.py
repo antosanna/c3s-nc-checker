@@ -33,7 +33,7 @@ class Cfauxiliarycoordinatevar(Cfbasicvar):
 
         for varname, varclass in list(variables.items()):
 
-            attr = getattr(varclass, 'coordinates', None)
+            attr = getattr(varclass, "coordinates", None)
 
             if attr:
                 for name in attr.split():
@@ -45,10 +45,12 @@ class Cfauxiliarycoordinatevar(Cfbasicvar):
                         #     klass.comment = comment
                         #     identifiedvars[name] = klass
                         # else:
-                            comment = "This is a CF Auxiliary Variable"
-                            klass = Cfauxiliarycoordinatevar(str(name), variables[str(name)])
-                            klass.comment = comment
-                            identifiedvars[name] = klass
+                        comment = "This is a CF Auxiliary Variable"
+                        klass = Cfauxiliarycoordinatevar(
+                            str(name), variables[str(name)]
+                        )
+                        klass.comment = comment
+                        identifiedvars[name] = klass
                     except:
                         pass
 

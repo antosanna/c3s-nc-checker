@@ -19,7 +19,6 @@ from .. import cfreferences as cfref
 
 
 class Cfbasicvar:
-
     def __init__(self, variablename, variable):
 
         self.name = variablename
@@ -33,11 +32,13 @@ class Cfbasicvar:
 
         self.ncattrs = self.netcdfinit.ncattrs()
 
-    def __getattr__(self, name):  # add netcdf4 attributes (data object) to Cfbasicvar attributes
+    def __getattr__(
+        self, name
+    ):  # add netcdf4 attributes (data object) to Cfbasicvar attributes
         return getattr(self.netcdfinit, name, None)
 
     def __repr__(self):
-        return '%s([%r], [%r])' % (self.__class__.__name__, self.name, self.netcdfinit)
+        return "%s([%r], [%r])" % (self.__class__.__name__, self.name, self.netcdfinit)
 
     @property
     def attributes(self):
@@ -49,4 +50,7 @@ class Cfbasicvar:
 
     @property
     def attributes_notexcluded(self):
-        return ((attr, self.netcdfinit.getncattr(attr)) for attr in (set(self.ncattrs) - set(cfref.cf_excluded_attributes())))
+        return (
+            (attr, self.netcdfinit.getncattr(attr))
+            for attr in (set(self.ncattrs) - set(cfref.cf_excluded_attributes()))
+        )

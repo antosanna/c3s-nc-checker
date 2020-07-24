@@ -32,7 +32,12 @@ class cf_check_units(Basiccheck):
             v.cfudunit = unit
 
             # Apply except for CF Boundary Variables and CF Climatological Variables
-            if v.cftype in ['Cfboundaryvar', 'Cfclimatologyvar', 'Cflabelvar', 'Cfgridmappingvar']:
+            if v.cftype in [
+                "Cfboundaryvar",
+                "Cfclimatologyvar",
+                "Cflabelvar",
+                "Cfgridmappingvar",
+            ]:
                 continue
 
             # Apply except Flags
@@ -43,13 +48,23 @@ class cf_check_units(Basiccheck):
 
                 # MUST be string
                 if not (isinstance(v.units, str)):
-                    self.check_msgs_logger.error("[%s]- Units attribute [%s] must be a string for variable [%s]", str(ref), str(v.units), str(k))
+                    self.check_msgs_logger.error(
+                        "[%s]- Units attribute [%s] must be a string for variable [%s]",
+                        str(ref),
+                        str(v.units),
+                        str(k),
+                    )
                     self.status = 0
                     continue
 
                 # Deprecated Units - just warning but may be rejected by udunits2ß
                 if v.units in self.cfref.cf_deprecated_units():
-                    self.check_msgs_logger.warning("[%s]- Units  attribute [%s] is deprecated for variable [%s]", str(ref), str(v.units), str(k))
+                    self.check_msgs_logger.warning(
+                        "[%s]- Units  attribute [%s] is deprecated for variable [%s]",
+                        str(ref),
+                        str(v.units),
+                        str(k),
+                    )
                     continue
                 # MUST be recognized by udunits
                 try:
@@ -57,18 +72,29 @@ class cf_check_units(Basiccheck):
                     v.cfudunit = unit
                 except:
                     self.status = 0
-                    self.check_msgs_logger.error("[%s]- Units  [%s] is not recognized by UDUNITS2 library for variable [%s]", str(ref), str(v.units), str(k))
+                    self.check_msgs_logger.error(
+                        "[%s]- Units  [%s] is not recognized by UDUNITS2 library for variable [%s]",
+                        str(ref),
+                        str(v.units),
+                        str(k),
+                    )
                     continue
 
                 # MUST be consistent with canonical unit from standard name (if exists)
                 if v.standard_name:
 
                     try:
-                        std_name, stn_name_modifier = self.cf_get_stdname(v.standard_name, k)
+                        std_name, stn_name_modifier = self.cf_get_stdname(
+                            v.standard_name, k
+                        )
 
                         if stn_name_modifier:
-                            if not self.cfref.cf_standard_names_modifiers[stn_name_modifier]:  # if a unit is specified for modification
-                                std_unit = self.cfref.cf_standard_names_modifiers[stn_name_modifier]
+                            if not self.cfref.cf_standard_names_modifiers[
+                                stn_name_modifier
+                            ]:  # if a unit is specified for modification
+                                std_unit = self.cfref.cf_standard_names_modifiers[
+                                    stn_name_modifier
+                                ]
                                 std_unit_unit = self.cfuni(std_unit)
                         else:
                             std_unit = self.std_names[std_name]
@@ -76,7 +102,11 @@ class cf_check_units(Basiccheck):
 
                     except Exception as e:
                         self.status = 0
-                        self.check_msgs_logger.warning("[%s]- Units cannot be compared with standard name canonical unit - Std name does not exist or canonical unit invalid [%s]", str(ref), str(e))
+                        self.check_msgs_logger.warning(
+                            "[%s]- Units cannot be compared with standard name canonical unit - Std name does not exist or canonical unit invalid [%s]",
+                            str(ref),
+                            str(e),
+                        )
                         continue
 
                     if unit.isreftime:  # Reference Time remove
@@ -85,7 +115,17 @@ class cf_check_units(Basiccheck):
 
                     if not (unit.equivalent(std_unit_unit)):
                         self.status = 0
-                        self.check_msgs_logger.error("[%s]- Units [%s] not consistent with standard name canonical unit [%s] for variable [%s]", str(ref), unit, std_unit_unit, str(k))
+                        self.check_msgs_logger.error(
+                            "[%s]- Units [%s] not consistent with standard name canonical unit [%s] for variable [%s]",
+                            str(ref),
+                            unit,
+                            std_unit_unit,
+                            str(k),
+                        )
 
             else:
-                self.check_msgs_logger.warning("[%s]- Units attribute is required for variable [%s] unless the variable is dimensionless", str(ref), str(k))
+                self.check_msgs_logger.warning(
+                    "[%s]- Units attribute is required for variable [%s] unless the variable is dimensionless",
+                    str(ref),
+                    str(k),
+                )

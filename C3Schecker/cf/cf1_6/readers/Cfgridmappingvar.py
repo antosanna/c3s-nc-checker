@@ -21,7 +21,6 @@ from .Cfbasicvar import Cfbasicvar
 
 
 class Cfgridmappingvar(Cfbasicvar):
-
     @staticmethod
     def define(variables, logger):
 
@@ -30,7 +29,7 @@ class Cfgridmappingvar(Cfbasicvar):
 
         for varname, varclass in list(variables.items()):
 
-            attr = getattr(varclass, 'grid_mapping', None)
+            attr = getattr(varclass, "grid_mapping", None)
 
             if attr:
 

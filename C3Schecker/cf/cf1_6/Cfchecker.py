@@ -43,7 +43,9 @@ class Cfchecker:
     """ A class to Check the netCDF input file and its CF compliancy
     """
 
-    def __init__(self, cffilename, cfversion, infolevel="INFO", stop=False, passedcheckinfo=False):
+    def __init__(
+        self, cffilename, cfversion, infolevel="INFO", stop=False, passedcheckinfo=False
+    ):
 
         self.cfreader = Cfreader
 
@@ -79,35 +81,43 @@ class Cfchecker:
         self.check_msgs_logger.staticinfo(1, " -------------")
         self.check_msgs_logger.staticinfo(1, " ")
 
+        # [CFREF] REFERENCES FILES
 
-# [CFREF] REFERENCES FILES
+        # References
 
-    # References
-
-    # Udunits2
+        # Udunits2
         try:
             from cfunits import Units
+
             self.cfuni = Units
 
         except Exception as e:
             from .Units import Units
-            self.cfuni = Units
-            self.check_msgs_logger.error("A problem occured with Udunits2 library. Error: " + str(e))
 
-    # Standard_name
+            self.cfuni = Units
+            self.check_msgs_logger.error(
+                "A problem occured with Udunits2 library. Error: " + str(e)
+            )
+
+        # Standard_name
         try:
             self.std_names = self.cfref.cf_standard_names()
         except Exception as e:
-            self.check_msgs_logger.critical("A problem occured with the standard names loading [%s]", str(e))
+            self.check_msgs_logger.critical(
+                "A problem occured with the standard names loading [%s]", str(e)
+            )
             return
 
-    # Area_Type
+        # Area_Type
 
-        self.check_msgs_logger.staticinfo(1, "INFO: NetCDF read against CF Version:" + str(self.cfversion))
-        self.check_msgs_logger.staticinfo(1, "INFO:                   CF Reference:" + str(self.cfref.cf_reference()))
+        self.check_msgs_logger.staticinfo(
+            1, "INFO: NetCDF read against CF Version:" + str(self.cfversion)
+        )
+        self.check_msgs_logger.staticinfo(
+            1, "INFO:                   CF Reference:" + str(self.cfref.cf_reference())
+        )
 
-
-# [CFREF] Chapter 2 : NetCDF Files and Components
+        # [CFREF] Chapter 2 : NetCDF Files and Components
         self.check_msgs_logger.staticinfo(1, " ")
         self.check_msgs_logger.info("Start Checking filename [%s]", self.cffilename)
         self.check_msgs_logger.staticinfo(1, " ")
@@ -118,11 +128,20 @@ class Cfchecker:
                 return
         except Exception as e:
             self.cf_describe()
-            self.check_msgs_logger.critical("Checking stopped during file reading: %s", str(e))
+            self.check_msgs_logger.critical(
+                "Checking stopped during file reading: %s", str(e)
+            )
 
         # LOOP on all tests in
         processed_checks = []
-        available_checks = [str(f) for f in fct.get_immediate_filenames(os.path.join(os.path.dirname(__file__) + "/checks/"), ["Basiccheck.py", "__init__.py"], "py")]
+        available_checks = [
+            str(f)
+            for f in fct.get_immediate_filenames(
+                os.path.join(os.path.dirname(__file__) + "/checks/"),
+                ["Basiccheck.py", "__init__.py"],
+                "py",
+            )
+        ]
 
         try:  # exception will be triggered by the decorator to stop on error with option -s
 
@@ -130,7 +149,9 @@ class Cfchecker:
                 self.runcheck(pc)
 
         except Exception as e:
-            self.check_msgs_logger.critical("Checker stopped - [%s] because of check [%s]", str(e), str(pc))
+            self.check_msgs_logger.critical(
+                "Checker stopped - [%s] because of check [%s]", str(e), str(pc)
+            )
 
         try:
             self.cf_describe()
@@ -144,12 +165,18 @@ class Cfchecker:
 
         if not os.path.exists(self.cffilename):
             self.status = 0
-            self.check_msgs_logger.error("[%s]- File [%s] not found", str(ref), self.cffilename)
+            self.check_msgs_logger.error(
+                "[%s]- File [%s] not found", str(ref), self.cffilename
+            )
             return None
         else:
-            if not self.cffilename.endswith('.nc'):
+            if not self.cffilename.endswith(".nc"):
                 self.status = 0
-                self.check_msgs_logger.error("[%s]- File [%s] does not have the extension .nc", str(ref), self.cffilename)
+                self.check_msgs_logger.error(
+                    "[%s]- File [%s] does not have the extension .nc",
+                    str(ref),
+                    self.cffilename,
+                )
                 return None
 
         # Read Netcdf File
@@ -184,8 +211,12 @@ class Cfchecker:
 
         # Log netCDF Interpreted Information
         try:
-            self.check_msgs_logger.info("File Format     : [%s]", self.cfcollection.fileformat)
-            self.check_msgs_logger.info("     Convention : [%s]", self.cfcollection.convention)
+            self.check_msgs_logger.info(
+                "File Format     : [%s]", self.cfcollection.fileformat
+            )
+            self.check_msgs_logger.info(
+                "     Convention : [%s]", self.cfcollection.convention
+            )
 
             if self.check_msgs_logger.getEffectiveLevel() == logging.INFO:
                 self.check_msgs_logger.staticinfo(1, " ")
@@ -196,20 +227,39 @@ class Cfchecker:
                     self.check_msgs_logger.staticinfo(1, " ")
 
                 self.check_msgs_logger.info("  Variable Name   : [%s]", k)
-                self.check_msgs_logger.info("           Dimensions            : [%s] ", (",").join(map(str, v.dimensions)))
-                self.check_msgs_logger.info("           CF variable type      : [%s]", v.cftype)
-                self.check_msgs_logger.info("           Checker comments      : [%s]", v.comment)
-                self.check_msgs_logger.info("           Category              : [%s]", v.cfcate)
-                self.check_msgs_logger.info("           Data Type             : [%s]", v.dtype)
+                self.check_msgs_logger.info(
+                    "           Dimensions            : [%s] ",
+                    (",").join(map(str, v.dimensions)),
+                )
+                self.check_msgs_logger.info(
+                    "           CF variable type      : [%s]", v.cftype
+                )
+                self.check_msgs_logger.info(
+                    "           Checker comments      : [%s]", v.comment
+                )
+                self.check_msgs_logger.info(
+                    "           Category              : [%s]", v.cfcate
+                )
+                self.check_msgs_logger.info(
+                    "           Data Type             : [%s]", v.dtype
+                )
                 for a, b in v.attributes:
-                    self.check_msgs_logger.info("              Attr   %s : [%s]", "{:<20}".format("[" + a + "]"), ''.join(str(b).splitlines()))
+                    self.check_msgs_logger.info(
+                        "              Attr   %s : [%s]",
+                        "{:<20}".format("[" + a + "]"),
+                        "".join(str(b).splitlines()),
+                    )
 
             if self.check_msgs_logger.getEffectiveLevel() == logging.INFO:
                 self.check_msgs_logger.staticinfo(1, " ")
             self.check_msgs_logger.info("Global Attribute List ---------------------")
 
             for k, v in list(self.cfcollection.global_attributes.items()):
-                self.check_msgs_logger.info("  %s   : [%s]", "{:<20}".format("[" + k + "]"), fct.truncate(''.join(str(str(v).encode('utf-8')).splitlines()), 50))
+                self.check_msgs_logger.info(
+                    "  %s   : [%s]",
+                    "{:<20}".format("[" + k + "]"),
+                    fct.truncate("".join(str(str(v).encode("utf-8")).splitlines()), 50),
+                )
 
             self.check_msgs_logger.staticinfo(1, " ")
 
@@ -220,11 +270,18 @@ class Cfchecker:
     @manage_status
     def runcheck(self, modulepath):
         classname = modulepath.split(".")[-1]
-        module = importlib.import_module('C3Schecker.cf.cf1_6.checks.' + modulepath)
-        checkclass = getattr(module, classname)(self.check_msgs_logger, self.status, self.cfref, self.cfcollection, self.cfuni, self.std_names)
+        module = importlib.import_module("C3Schecker.cf.cf1_6.checks." + modulepath)
+        checkclass = getattr(module, classname)(
+            self.check_msgs_logger,
+            self.status,
+            self.cfref,
+            self.cfcollection,
+            self.cfuni,
+            self.std_names,
+        )
 
         if self.passedcheckinfo:
-            self.check_msgs_logger.checkinfo( str(classname) + ":")
+            self.check_msgs_logger.checkinfo(str(classname) + ":")
 
         checkclass.status = 1
         checkclass.apply()
@@ -232,7 +289,7 @@ class Cfchecker:
             self.status = checkclass.status
 
         if self.passedcheckinfo:
-            self.check_msgs_logger.checkinfo( "       Status:" + str(self.status).replace("0","Failed").replace("1","passed") )
-
-
-
+            self.check_msgs_logger.checkinfo(
+                "       Status:"
+                + str(self.status).replace("0", "Failed").replace("1", "passed")
+            )

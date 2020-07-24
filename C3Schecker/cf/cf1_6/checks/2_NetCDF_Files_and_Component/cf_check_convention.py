@@ -27,5 +27,9 @@ class cf_check_convention(Basiccheck):
         ref = "CFREF-ch2.6.1"
 
         if "CF-1.6" not in self.cfcollection.convention.split(" "):
-            self.check_msgs_logger.error("[%s]- Convention identified as [%s] - CF-1.6 Excepted", str(ref), str(self.cfcollection.convention))
+            self.check_msgs_logger.error(
+                "[%s]- Convention identified as [%s] - CF-1.6 Excepted",
+                str(ref),
+                str(self.cfcollection.convention),
+            )
             self.status = 0

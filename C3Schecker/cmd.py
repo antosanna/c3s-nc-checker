@@ -34,65 +34,76 @@ __SUCCESSCODE__ = 0
 
 def main():
     parser = argparse.ArgumentParser(
-        description='C3S NetCDF Compliancy Checker', epilog=" ")
-    parser.add_argument('-V', '--version',
-                        action="version",
-                        version="%(prog)s " + str(__VERSION__),
-                        help="checker Version")
+        description="C3S NetCDF Compliancy Checker", epilog=" "
+    )
+    parser.add_argument(
+        "-V",
+        "--version",
+        action="version",
+        version="%(prog)s " + str(__VERSION__),
+        help="checker Version",
+    )
 
-    parser.add_argument('-v', '--verbose',
-                        action="store_true",
-                        help="verbose")
-
-    parser.add_argument('-m', '--infolevel',
-                        default="info",
-                        action="store",
-                        choices=["info", "warning", "error"],
-                        help="information level output")
-
-    l = set(fct.get_immediate_subdirectories(os.path.join(os.path.dirname(__file__), "cop"))) - set(["checks"])
-    parser.add_argument('-t', '--type',
-                        required=False,
-                        action="store",
-                        choices=l,
-                        help="Type of dataset" + str(l))
-
-    parser.add_argument('-c', '--cf',
-                        action="store_true",
-                        help="CF checkings ONLY")
-
-    parser.add_argument('-k', '--checks',
-                        action="store",
-                        help="Optional list of checks - default [All]")
+    parser.add_argument("-v", "--verbose", action="store_true", help="verbose")
 
     parser.add_argument(
-        '-i',
-        '--ignorechecks',
+        "-m",
+        "--infolevel",
+        default="info",
         action="store",
-        help="Optional list of checks to ignore - default [None]")
+        choices=["info", "warning", "error"],
+        help="information level output",
+    )
 
-    parser.add_argument('-s', '--stop',
-                        action="store_true",
-                        help="Stop on error")
+    l = set(
+        fct.get_immediate_subdirectories(os.path.join(os.path.dirname(__file__), "cop"))
+    ) - set(["checks"])
+    parser.add_argument(
+        "-t",
+        "--type",
+        required=False,
+        action="store",
+        choices=l,
+        help="Type of dataset" + str(l),
+    )
 
-    parser.add_argument('-p', '--passed',
-                        action="store_true",
-                        help="Display all the checks status")
+    parser.add_argument("-c", "--cf", action="store_true", help="CF checkings ONLY")
 
-    parser.add_argument('-d', '--confdir',
-                        action="store",
-                        help="Directory containing the configuration files. It overrides the -t option")
+    parser.add_argument(
+        "-k", "--checks", action="store", help="Optional list of checks - default [All]"
+    )
 
+    parser.add_argument(
+        "-i",
+        "--ignorechecks",
+        action="store",
+        help="Optional list of checks to ignore - default [None]",
+    )
 
-    parser.add_argument('inputfiles',
-                        nargs="+",
-                        action="store",
-                        help="NetCDF files list separated by blank")
+    parser.add_argument("-s", "--stop", action="store_true", help="Stop on error")
+
+    parser.add_argument(
+        "-p", "--passed", action="store_true", help="Display all the checks status"
+    )
+
+    parser.add_argument(
+        "-d",
+        "--confdir",
+        action="store",
+        help="Directory containing the configuration files. It overrides the -t option",
+    )
+
+    parser.add_argument(
+        "inputfiles",
+        nargs="+",
+        action="store",
+        help="NetCDF files list separated by blank",
+    )
 
     args = parser.parse_args()
 
     if not (args.type or args.confdir):
-       parser.error('No configuration fileset requested, add --type or --confdir')
+        parser.error("No configuration fileset requested, add --type or --confdir")
 
     return run(args)
 
@@ -110,15 +121,11 @@ def run(args):
         # Dynamic import, depending on the CF convention version
 
         module = importlib.import_module(
-            "C3Schecker.cf." + __CFVERSION__[1] + ".Cfchecker")
-        cfcheckings = getattr(
-            module,
-            "Cfchecker")(
-            f,
-            __CFVERSION__[0],
-            args.infolevel,
-            args.stop,
-            args.passed)
+            "C3Schecker.cf." + __CFVERSION__[1] + ".Cfchecker"
+        )
+        cfcheckings = getattr(module, "Cfchecker")(
+            f, __CFVERSION__[0], args.infolevel, args.stop, args.passed
+        )
 
         try:
             cfstatus = cfcheckings.status
@@ -141,7 +148,8 @@ def run(args):
                 args.checks,
                 args.ignorechecks,
                 args.confdir,
-                args.passed)
+                args.passed,
+            )
 
             copstatus = copcheckings.status
             copmessgs = copcheckings.messages
@@ -164,13 +172,9 @@ def display_messages(verbose, msgs):
     if verbose:
         all_msg = sorted(
             msgs,
-            key=lambda x: 1 if str.find(
-                x,
-                "INFO") != -
-            1 or len(
-                x.strip()) == 0 else -
-            1,
-            reverse=True)
+            key=lambda x: 1 if str.find(x, "INFO") != -1 or len(x.strip()) == 0 else -1,
+            reverse=True,
+        )
         for m in all_msg:
             print((str(m)))
 

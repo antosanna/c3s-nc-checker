@@ -26,11 +26,11 @@ class cf_check_dimensions_order(Basiccheck):
 
         ref = "CFREF-ch2.4"
 
-        recommended_dims_order = ['T', 'Z', 'Y', 'X']
+        recommended_dims_order = ["T", "Z", "Y", "X"]
 
         for k, v in self.cfcollection:
 
-            if v.cftype in ['Cfboundaryvar', 'Cfauxiliarycoordinatevar', 'Cflabelvar']:
+            if v.cftype in ["Cfboundaryvar", "Cfauxiliarycoordinatevar", "Cflabelvar"]:
                 continue
 
             if len(v.dimensions) > 1:
@@ -43,24 +43,52 @@ class cf_check_dimensions_order(Basiccheck):
 
                         dim_identify = vd.cfcate
                         if dim_identify not in recommended_dims_order:
-                            self.check_msgs_logger.warning("[%s]- Dimension [%s] is not a space/time dimension for variable [%s] - [%s]", str(ref), str(d), str(k), str(vd.cate))
+                            self.check_msgs_logger.warning(
+                                "[%s]- Dimension [%s] is not a space/time dimension for variable [%s] - [%s]",
+                                str(ref),
+                                str(d),
+                                str(k),
+                                str(vd.cate),
+                            )
 
                     except Exception as e:
                         # self.check_msgs_logger.error("[%s]",str(e) )
                         if not self.cf_is_dimension_reference_multidimentional(v, d):
                             self.status = 0
-                            self.check_msgs_logger.error("[%s]- Dimension [%s] is not identifiable for variable [%s]", str(ref), str(d), str(k))
+                            self.check_msgs_logger.error(
+                                "[%s]- Dimension [%s] is not identifiable for variable [%s]",
+                                str(ref),
+                                str(d),
+                                str(k),
+                            )
                         else:
-                            self.check_msgs_logger.warning("[%s]- Variable [%s] is recommended to be defined", str(ref), str(d))
+                            self.check_msgs_logger.warning(
+                                "[%s]- Variable [%s] is recommended to be defined",
+                                str(ref),
+                                str(d),
+                            )
                         dim_identify = None
 
                     dims_type.append(dim_identify)
 
-                dims_type_pos = [recommended_dims_order.index(x) if x in recommended_dims_order else -1 for x in dims_type]
+                dims_type_pos = [
+                    recommended_dims_order.index(x)
+                    if x in recommended_dims_order
+                    else -1
+                    for x in dims_type
+                ]
 
-                if not list(set(dims_type_pos) - set([-1])) == sorted(list(set(dims_type_pos) - set([-1]))):
-                    self.check_msgs_logger.warning("[%s]- Space/time dimensions appear in T Z Y X order for variable [%s]: dimensions [%s] -- identified as: [%s], [%s]",
-                                                   str(ref), str(k), str(v.dimensions), str(dims_type), str(dims_type_pos))
+                if not list(set(dims_type_pos) - set([-1])) == sorted(
+                    list(set(dims_type_pos) - set([-1]))
+                ):
+                    self.check_msgs_logger.warning(
+                        "[%s]- Space/time dimensions appear in T Z Y X order for variable [%s]: dimensions [%s] -- identified as: [%s], [%s]",
+                        str(ref),
+                        str(k),
+                        str(v.dimensions),
+                        str(dims_type),
+                        str(dims_type_pos),
+                    )
 
                 # Check if non space/time dimensions are not the left
                 if not len(set(dims_type_pos)) <= 1:
@@ -69,7 +97,14 @@ class cf_check_dimensions_order(Basiccheck):
                             x = i
                             break
 
-                    if len(dims_type_pos[x:]) != len(list(set(dims_type_pos) - set([-1]))):
-                        self.check_msgs_logger.warning("[%s]- Some possible non space/time dimensions [%s]  are not on the left of Space/time dimensions for var [%s]", str(ref), str(d), str(k))
+                    if len(dims_type_pos[x:]) != len(
+                        list(set(dims_type_pos) - set([-1]))
+                    ):
+                        self.check_msgs_logger.warning(
+                            "[%s]- Some possible non space/time dimensions [%s]  are not on the left of Space/time dimensions for var [%s]",
+                            str(ref),
+                            str(d),
+                            str(k),
+                        )
 
                 # todo: check trailing dimensions

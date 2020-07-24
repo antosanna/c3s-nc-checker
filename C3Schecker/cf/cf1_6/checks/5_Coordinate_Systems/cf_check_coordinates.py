@@ -38,7 +38,12 @@ class cf_check_coordinates(Basiccheck):
 
                     except:
                         self.status = 0
-                        self.check_msgs_logger.error("[%s]- Auxilliary Coordinate [%s] declared for variable [%s] does not exist  ", str(ref), str(v_coord_name), str(k))
+                        self.check_msgs_logger.error(
+                            "[%s]- Auxilliary Coordinate [%s] declared for variable [%s] does not exist  ",
+                            str(ref),
+                            str(v_coord_name),
+                            str(k),
+                        )
                         continue
 
                     if v_coord.cfcate == "X":
@@ -49,7 +54,12 @@ class cf_check_coordinates(Basiccheck):
 
                         if not set(v_coord.dimensions).issubset(set(v.dimensions)):
                             self.status = 0
-                            self.check_msgs_logger.error("[%s]- 2-dimensional Auxilliary Coordinate [%s] dimensions not part of coordinate variable [%s] dimensions", str(ref), str(v_coord_name), str(k))
+                            self.check_msgs_logger.error(
+                                "[%s]- 2-dimensional Auxilliary Coordinate [%s] dimensions not part of coordinate variable [%s] dimensions",
+                                str(ref),
+                                str(v_coord_name),
+                                str(k),
+                            )
 
                     if v_coord.cfcate == "Y":
                         # if not len(v_coord.dimensions) == 2:
@@ -57,4 +67,9 @@ class cf_check_coordinates(Basiccheck):
 
                         if not set(v_coord.dimensions).issubset(set(v.dimensions)):
                             self.status = 0
-                            self.check_msgs_logger.error("[%s]- 2-dimensional Auxilliary Coordinate [%s] dimensions not part of coordinate variable [%s] dimensions", str(ref), str(v_coord_name), str(k))
+                            self.check_msgs_logger.error(
+                                "[%s]- 2-dimensional Auxilliary Coordinate [%s] dimensions not part of coordinate variable [%s] dimensions",
+                                str(ref),
+                                str(v_coord_name),
+                                str(k),
+                            )

@@ -35,22 +35,46 @@ class cf_check_cell_methods(Basiccheck):
                     cfc = Cfcellmethods.CFcellmethod()
                     cfc.parse_cellmethods(cmstr)
                     v.cmdict = cfc
-                    
+
                     names = cfc.get_names
                     for n in names:
 
-                        if (v.dimensions and n not in v.dimensions) and (n not in list(self.cfcollection.coordinate_variables.keys())) and (n not in ["area"]):
+                        if (
+                            (v.dimensions and n not in v.dimensions)
+                            and (
+                                n
+                                not in list(
+                                    self.cfcollection.coordinate_variables.keys()
+                                )
+                            )
+                            and (n not in ["area"])
+                        ):
                             self.status = 0
-                            self.check_msgs_logger.error('[%s]- Error in Cell_methods attribute for variable %s. Name [%s] not referenced in variable dimensions|coordinate', str(ref), str(k), str(n))
+                            self.check_msgs_logger.error(
+                                "[%s]- Error in Cell_methods attribute for variable %s. Name [%s] not referenced in variable dimensions|coordinate",
+                                str(ref),
+                                str(k),
+                                str(n),
+                            )
                         if not v.dimensions and (n not in ["area"] or self.std_names):
                             self.status = 0
-                            self.check_msgs_logger.error('[%s]- Error in Cell_methods attribute for variable %s. Name [%s] not referenced in Std names and not [area]', str(ref), str(k), str(n))
+                            self.check_msgs_logger.error(
+                                "[%s]- Error in Cell_methods attribute for variable %s. Name [%s] not referenced in Std names and not [area]",
+                                str(ref),
+                                str(k),
+                                str(n),
+                            )
 
                     methods = cfc.get_methods
                     for m in methods:
                         if m not in self.cfref.cf_cell_methods():
                             self.status = 0
-                            self.check_msgs_logger.error('[%s]- Error in Cell_methods attribute for variable %s. Method [%s] not referenced', str(ref), str(k), str(m))
+                            self.check_msgs_logger.error(
+                                "[%s]- Error in Cell_methods attribute for variable %s. Method [%s] not referenced",
+                                str(ref),
+                                str(k),
+                                str(m),
+                            )
 
                     units = cfc.get_intervals_units
                     for u in units:
@@ -58,7 +82,12 @@ class cf_check_cell_methods(Basiccheck):
                             unit = self.cfuni(u)
                         except:
                             self.status = 0
-                            self.check_msgs_logger.error("[%s]- Error in Cell_methods attribute for variable %s. Interval unit [%s] is not recognized by UDUNITS2 library", str(ref), str(k), str(u))
+                            self.check_msgs_logger.error(
+                                "[%s]- Error in Cell_methods attribute for variable %s. Interval unit [%s] is not recognized by UDUNITS2 library",
+                                str(ref),
+                                str(k),
+                                str(u),
+                            )
                             continue
 
                     units = cfc.get_intervals_values
@@ -67,9 +96,20 @@ class cf_check_cell_methods(Basiccheck):
                             float(l)
                         except:
                             self.status = 0
-                            self.check_msgs_logger.error("[%s]- Error in Cell_methods attribute for variable %s. Interval value [%s] is a not Number", str(ref), str(k), str(l))
+                            self.check_msgs_logger.error(
+                                "[%s]- Error in Cell_methods attribute for variable %s. Interval value [%s] is a not Number",
+                                str(ref),
+                                str(k),
+                                str(l),
+                            )
                             continue
 
                 except Exception as e:
                     self.status = 0
-                    self.check_msgs_logger.error('[%s]- Error in Parsing Cell_methods attribute: %s for variable %s - (%s)', str(ref), str(cmstr), str(k), str(e))
+                    self.check_msgs_logger.error(
+                        "[%s]- Error in Parsing Cell_methods attribute: %s for variable %s - (%s)",
+                        str(ref),
+                        str(cmstr),
+                        str(k),
+                        str(e),
+                    )

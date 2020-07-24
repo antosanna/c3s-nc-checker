@@ -23,8 +23,7 @@ import os
 from . import cfreferences
 
 
-class Units():
-
+class Units:
     def __init__(self, u=None):
         self.u = u
         self.isudunits()

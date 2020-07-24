@@ -38,14 +38,20 @@ class Mandatory_attributes_content(Basiccheck):
                     for val in mac.get(i):
 
                         try:
-                             possiblevalues.append(float(val))
+                            possiblevalues.append(float(val))
                         except:
-                             possiblevalues.append(val)
-
+                            possiblevalues.append(val)
 
                     if not (j in possiblevalues):
                         self.status = 0
-                        self.logger.error("[%s]-Attribute [%s] [%s] value is not allowed - Variable [%s] - Should be one of %s ", str(self.getcheckname(self.addinfo)), str(i), str(j), str(k), str(possiblevalues))
+                        self.logger.error(
+                            "[%s]-Attribute [%s] [%s] value is not allowed - Variable [%s] - Should be one of %s ",
+                            str(self.getcheckname(self.addinfo)),
+                            str(i),
+                            str(j),
+                            str(k),
+                            str(possiblevalues),
+                        )
 
                 except Exception as e:
                     pass

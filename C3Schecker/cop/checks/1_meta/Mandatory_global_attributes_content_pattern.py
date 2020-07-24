@@ -18,6 +18,7 @@
 from C3Schecker.cop.checks.Basiccpcheck import Basiccheck
 import re
 
+
 class Mandatory_global_attributes_content_pattern(Basiccheck):
     """ Inheritated from parent Basiccheck
         Apply checks on global attribute content list
@@ -30,8 +31,14 @@ class Mandatory_global_attributes_content_pattern(Basiccheck):
         mgavp = self.consmeta.get("mandatory_global_attributes_values_pattern", {})
 
         for k, v in list(self.cfcollection.global_attributes.items()):
-            mgavp_pattern =  mgavp.get(k, "")
+            mgavp_pattern = mgavp.get(k, "")
 
-            if len(mgavp_pattern) > 0 and not re.match(mgavp_pattern,v):
-                    self.status = 0
-                    self.logger.error("[%s]-Global Attribute [%s] value is not allowed - Incorrect string pattern [%s] - It should be [%s]", str(self.getcheckname(self.addinfo)), str(k), str(v), str(mgavp_pattern) )
+            if len(mgavp_pattern) > 0 and not re.match(mgavp_pattern, v):
+                self.status = 0
+                self.logger.error(
+                    "[%s]-Global Attribute [%s] value is not allowed - Incorrect string pattern [%s] - It should be [%s]",
+                    str(self.getcheckname(self.addinfo)),
+                    str(k),
+                    str(v),
+                    str(mgavp_pattern),
+                )

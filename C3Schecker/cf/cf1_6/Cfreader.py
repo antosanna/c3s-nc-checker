@@ -42,7 +42,7 @@ from .readers.Cfmeasurevar import Cfmeasurevar
 from .readers.Cfdatavar import Cfdatavar
 
 
-class Cfreader():
+class Cfreader:
     """Read and classify the netCDF variables against given CF Convention"""
 
     def __init__(self, filename, logger):
@@ -56,12 +56,16 @@ class Cfreader():
 
         try:
             from cfunits import Units
+
             self.cfuni = Units
 
         except Exception as e:
             from .Units import Units
+
             self.cfuni = Units
-            self.logger.error("A problem occured with Udunits2 library. Error: " + str(e))
+            self.logger.error(
+                "A problem occured with Udunits2 library. Error: " + str(e)
+            )
 
         try:
 
@@ -69,7 +73,10 @@ class Cfreader():
             self.variablesset = self.dataset.variables
 
         except Exception as e:
-            self.logger.error("For an unexpected reason, the file cannot be interpreted as a NetCDF dataset: " + str(e))
+            self.logger.error(
+                "For an unexpected reason, the file cannot be interpreted as a NetCDF dataset: "
+                + str(e)
+            )
 
         try:
             self.cfvariablescollection.fileformat = self.fileformat
@@ -79,7 +86,10 @@ class Cfreader():
             self.interpret_cfcoordinates()
 
         except Exception as e:
-            raise Exception("Netcdf Variable Classification - For an unexpected reason, the NetCDF file cannot be interpreted - Message: " + str(e))
+            raise Exception(
+                "Netcdf Variable Classification - For an unexpected reason, the NetCDF file cannot be interpreted - Message: "
+                + str(e)
+            )
 
     @property
     def fileformat(self):
@@ -100,30 +110,54 @@ class Cfreader():
     def collect_cfvariables(self):
 
         # Read Global attributes
-        globalattributes = {attr: self.dataset.getncattr(attr) for attr in self.dataset.ncattrs()}
+        globalattributes = {
+            attr: self.dataset.getncattr(attr) for attr in self.dataset.ncattrs()
+        }
         self.cfvariablescollection.addglobal(globalattributes)
 
         # Get Coordinates Variables
         coordsvarcollected = Cfcoordinatevar.define(self.dataset.variables, self.logger)
         self.cfvariablescollection.addvar(coordsvarcollected)
 
-        variablesset = self.dataset.variables.copy()  # Clone without identified coordinates
+        variablesset = (
+            self.dataset.variables.copy()
+        )  # Clone without identified coordinates
 
         for k in list(self.cfvariablescollection.coordinate_variables.keys()):
             variablesset.pop(k, None)
 
         # Define non-Data and non-coordinate variables
-        self.cfvariablescollection.addvar(Cfancillaryvar.define(variablesset, self.logger))
-        self.cfvariablescollection.addvar(Cfboundaryvar.define(self.dataset.variables, self.logger))
-        self.cfvariablescollection.addvar(Cfclimatologyvar.define(variablesset, self.logger))
-        self.cfvariablescollection.addvar(Cfgridmappingvar.define(variablesset, self.logger))
-        self.cfvariablescollection.addvar(Cfmeasurevar.define(variablesset, self.logger))
+        self.cfvariablescollection.addvar(
+            Cfancillaryvar.define(variablesset, self.logger)
+        )
+        self.cfvariablescollection.addvar(
+            Cfboundaryvar.define(self.dataset.variables, self.logger)
+        )
+        self.cfvariablescollection.addvar(
+            Cfclimatologyvar.define(variablesset, self.logger)
+        )
+        self.cfvariablescollection.addvar(
+            Cfgridmappingvar.define(variablesset, self.logger)
+        )
+        self.cfvariablescollection.addvar(
+            Cfmeasurevar.define(variablesset, self.logger)
+        )
 
-        self.cfvariablescollection.addvar(Cflabelvar.define(self.dataset.variables, self.cfvariablescollection, self.logger))
-        self.cfvariablescollection.addvar(Cfauxiliarycoordinatevar.define(variablesset, self.logger))
+        self.cfvariablescollection.addvar(
+            Cflabelvar.define(
+                self.dataset.variables, self.cfvariablescollection, self.logger
+            )
+        )
+        self.cfvariablescollection.addvar(
+            Cfauxiliarycoordinatevar.define(variablesset, self.logger)
+        )
 
         # Define the remained variables as Data
-        self.cfvariablescollection.addvar(Cfdatavar.define(self.dataset.variables, self.cfvariablescollection, self.logger))
+        self.cfvariablescollection.addvar(
+            Cfdatavar.define(
+                self.dataset.variables, self.cfvariablescollection, self.logger
+            )
+        )
 
     def interpret_cfcoordinates(self):
         for k, v in self.cfvariablescollection:
@@ -134,17 +168,16 @@ class Cfreader():
                 v.cfcate = "Scalar"
 
     def cf_identify_dimension_type(self, d):
-
         def X(a, s, d):
             # return X if and only if the coordinate is a CF X axis coordinate.
 
             dim_type = None
-            if a == 'X':
+            if a == "X":
                 dim_type = a
             else:
                 possible_standard_name = cfref.cf_Xaxis_standard_names()
                 if d.cfudunit.islongitude or (s in possible_standard_name):
-                    dim_type = 'X'
+                    dim_type = "X"
 
             return dim_type
 
@@ -153,12 +186,12 @@ class Cfreader():
 
             dim_type = None
 
-            if a == 'Y':
+            if a == "Y":
                 dim_type = a
             else:
                 possible_standard_name = cfref.cf_Yaxis_standard_names()
                 if d.cfudunit.islatitude or (s in possible_standard_name):
-                    dim_type = 'Y'
+                    dim_type = "Y"
 
             return dim_type
 
@@ -167,12 +200,17 @@ class Cfreader():
 
             dim_type = None
 
-            if a == 'Z':
+            if a == "Z":
                 dim_type = a
             else:
                 possible_standard_name = cfref.cf_Zaxis_standard_names()
                 possible_specialunits = cfref.cf_Zaxis_units()
-                if (d.cfudunit.ispressure) or (str(p).lower() in ['up', 'down']) or (s in possible_standard_name) or (u in possible_specialunits):
+                if (
+                    (d.cfudunit.ispressure)
+                    or (str(p).lower() in ["up", "down"])
+                    or (s in possible_standard_name)
+                    or (u in possible_specialunits)
+                ):
                     dim_type = "Z"
 
             return dim_type
@@ -182,12 +220,14 @@ class Cfreader():
 
             dim_type = None
 
-            if a == 'T':
+            if a == "T":
                 dim_type = a
             else:
                 possible_standard_name = cfref.cf_Taxis_standard_names()
-                if (d.cfudunit.isreftime or d.cfudunit.istime) or (s in possible_standard_name):
-                    dim_type = 'T'
+                if (d.cfudunit.isreftime or d.cfudunit.istime) or (
+                    s in possible_standard_name
+                ):
+                    dim_type = "T"
 
             return dim_type
 
@@ -203,7 +243,11 @@ class Cfreader():
 
         d.cfudunit = unit
 
-        dim_types = [i for i in [X(a, s, d), Y(a, s, d), Z(a, u, s, p, d), T(a, s, d)] if i is not None]
+        dim_types = [
+            i
+            for i in [X(a, s, d), Y(a, s, d), Z(a, u, s, p, d), T(a, s, d)]
+            if i is not None
+        ]
 
         d.cfcate = next(iter(dim_types), None)
         return d.cfcate

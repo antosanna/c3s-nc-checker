@@ -34,10 +34,20 @@ class Mandatory_attributes_per_variabletype(Basiccheck):
             cfattrs = v.attributesnames
             cfcate = v.cfcate
 
-            mandatoryattributes = list(set(mapvt.get(cftype, {}).get(cfcate, [])).union(mapvt.get(cftype, {}).get("All", [])))
+            mandatoryattributes = list(
+                set(mapvt.get(cftype, {}).get(cfcate, [])).union(
+                    mapvt.get(cftype, {}).get("All", [])
+                )
+            )
 
             if len(mandatoryattributes) > 0:
                 for attr in mandatoryattributes:
                     if attr not in cfattrs:
                         self.status = 0
-                        self.logger.error("[%s]-Attribute [%s] is mandatory - Variable [%s] - Type [%s]", str(self.getcheckname(self.addinfo)), str(attr), str(k), str(cftype))
+                        self.logger.error(
+                            "[%s]-Attribute [%s] is mandatory - Variable [%s] - Type [%s]",
+                            str(self.getcheckname(self.addinfo)),
+                            str(attr),
+                            str(k),
+                            str(cftype),
+                        )

@@ -17,15 +17,13 @@
 
 
 class Basiccheck:
-
     def __init__(self, logger, status, ref, cfcollection, consmeta, consdata, consgrib):
         self.name = self.__class__.__name__
         self.logger = logger
         self.status = status
 
-        self.addinfo = "" #can be used to add information to the check reference
+        self.addinfo = ""  # can be used to add information to the check reference
         self.ref = ref
-
 
         self.cfcollection = cfcollection
         self.consmeta = consmeta
@@ -38,5 +36,5 @@ class Basiccheck:
     def apply(self,):
         pass
 
-    def getcheckname(self,addinfo):
+    def getcheckname(self, addinfo):
         return self.ref + "-" + self.addinfo + "-" + self.name

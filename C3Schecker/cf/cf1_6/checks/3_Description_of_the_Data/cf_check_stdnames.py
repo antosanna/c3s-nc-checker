@@ -28,8 +28,16 @@ class cf_check_stdnames(Basiccheck):
 
         for k, v in self.cfcollection:
 
-            if (not v.standard_name) and (not v.long_name) and (v.cftype not in ['Cfboundaryvar','Cflabelvar']):
-                self.check_msgs_logger.warning("[%s]- Variable description with long_name or standard_name attribute is highly recommended for variable [%s]", str(ref), str(k))
+            if (
+                (not v.standard_name)
+                and (not v.long_name)
+                and (v.cftype not in ["Cfboundaryvar", "Cflabelvar"])
+            ):
+                self.check_msgs_logger.warning(
+                    "[%s]- Variable description with long_name or standard_name attribute is highly recommended for variable [%s]",
+                    str(ref),
+                    str(k),
+                )
                 continue
 
             if v.standard_name:
@@ -38,4 +46,9 @@ class cf_check_stdnames(Basiccheck):
                 try:
                     self.std_names[std_name] is not None
                 except:
-                    self.check_msgs_logger.warning("[%s]- Standard_name attribute [%s] not CF compliant for variable [%s]", str(ref), str(v.standard_name), str(k))
+                    self.check_msgs_logger.warning(
+                        "[%s]- Standard_name attribute [%s] not CF compliant for variable [%s]",
+                        str(ref),
+                        str(v.standard_name),
+                        str(k),
+                    )

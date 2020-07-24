@@ -19,20 +19,19 @@ from C3Schecker.cf.cf1_6.checks.Basiccheck import Basiccheck
 
 
 class cf_check_latitude(Basiccheck):
-	""" Inheritated from parent Basiccheck
+    """ Inheritated from parent Basiccheck
 	"""
 
-	def apply(self):
+    def apply(self):
 
-		ref = "CFREF-ch4.1"
-		pass
+        ref = "CFREF-ch4.1"
+        pass
 
-		# for k,v in self.cfcollection.coordinate_variables.iteritems():
-		# 	if v.cfcate == "Y"  and v.units not in self.cfref.cf_latitude_units() :
-		# 				self.status = 0
-		# 				self.check_msgs_logger.error("[%s]- Latitude unit [%s] is not allowed for variable [%s]",str(ref), str( v.unit ), str( k ) )
-		# 				continue
+        # for k,v in self.cfcollection.coordinate_variables.iteritems():
+        # 	if v.cfcate == "Y"  and v.units not in self.cfref.cf_latitude_units() :
+        # 				self.status = 0
+        # 				self.check_msgs_logger.error("[%s]- Latitude unit [%s] is not allowed for variable [%s]",str(ref), str( v.unit ), str( k ) )
+        # 				continue
 
-
-		# 	if v.cfcate == "Y"  and v.units != self.cfref.cf_latitude_units()[0]:
-		# 				self.check_msgs_logger.error("[%s]- Latitude unit is highly recommended for variable [%s]",str(ref), str(self.cfref.cf_recommended_latitude_units()[0]), str( k ) )
+        # 	if v.cfcate == "Y"  and v.units != self.cfref.cf_latitude_units()[0]:
+        # 				self.check_msgs_logger.error("[%s]- Latitude unit is highly recommended for variable [%s]",str(ref), str(self.cfref.cf_recommended_latitude_units()[0]), str( k ) )

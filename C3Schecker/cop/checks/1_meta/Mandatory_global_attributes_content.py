@@ -34,4 +34,10 @@ class Mandatory_global_attributes_content(Basiccheck):
 
             if v not in mgac_possiblevalues and len(mgac_possiblevalues) > 0:
                 self.status = 0
-                self.logger.error("[%s]-Global Attribute [%s] value is not allowed - Should be one of %s - currently [%s]", str(self.getcheckname(self.addinfo)), str(k), str(mgac_possiblevalues), str(v))
+                self.logger.error(
+                    "[%s]-Global Attribute [%s] value is not allowed - Should be one of %s - currently [%s]",
+                    str(self.getcheckname(self.addinfo)),
+                    str(k),
+                    str(mgac_possiblevalues),
+                    str(v),
+                )

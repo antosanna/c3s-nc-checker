@@ -33,8 +33,16 @@ class cf_check_global_attributes(Basiccheck):
                 if k == g:
                     missing = 0
                     if not (isinstance(v, str)):
-                        self.check_msgs_logger.error("[%s]- Global attribute [%s] type is not a String Type", str(ref), type(k))
+                        self.check_msgs_logger.error(
+                            "[%s]- Global attribute [%s] type is not a String Type",
+                            str(ref),
+                            type(k),
+                        )
             if missing:
                 missing_gbls.append(g)
         if len(missing_gbls) > 0:
-            self.check_msgs_logger.warning("[%s]- Missing recommended CF globals: [%s]", str(ref), str(', '.join(missing_gbls)))
+            self.check_msgs_logger.warning(
+                "[%s]- Missing recommended CF globals: [%s]",
+                str(ref),
+                str(", ".join(missing_gbls)),
+            )

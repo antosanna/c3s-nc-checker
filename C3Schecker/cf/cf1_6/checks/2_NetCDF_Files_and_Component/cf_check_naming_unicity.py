@@ -37,4 +37,9 @@ class cf_check_naming_unicity(Basiccheck):
         for k, v in list(occurence_name.items()):
             if v > 1:
                 self.status = 0
-                self.check_msgs_logger.error('[%s]- Variable [%s] name is not unique: %s occurences found', str(ref), str(k), str(v))
+                self.check_msgs_logger.error(
+                    "[%s]- Variable [%s] name is not unique: %s occurences found",
+                    str(ref),
+                    str(k),
+                    str(v),
+                )

@@ -30,8 +30,14 @@ class Mandatory_variablenames(Basiccheck):
         mvn = self.consmeta.get("mandatory_variablenames", {})
         for cftype, mvnvars in list(mvn.items()):
 
-            for mvnvar in mvnvars:            
-                if str(mvnvar) not in [str(c) for c in self.cfcollection.onevartypenames(cftype)]:
+            for mvnvar in mvnvars:
+                if str(mvnvar) not in [
+                    str(c) for c in self.cfcollection.onevartypenames(cftype)
+                ]:
 
                     self.status = 0
-                    self.logger.error("[%s]-Variable [%s] is missing", str(self.getcheckname(self.addinfo)), str(mvnvar))
+                    self.logger.error(
+                        "[%s]-Variable [%s] is missing",
+                        str(self.getcheckname(self.addinfo)),
+                        str(mvnvar),
+                    )

@@ -33,7 +33,7 @@ class Cfancillaryvar(Cfbasicvar):
 
         for varname, varclass in list(variables.items()):
 
-            attr = getattr(varclass, 'ancillary_variables', None)
+            attr = getattr(varclass, "ancillary_variables", None)
             if attr:
 
                 klass = Cfancillaryvar(varname, varclass)

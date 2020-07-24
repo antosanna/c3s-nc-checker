@@ -33,8 +33,17 @@ class Mandatory_gribconsistency(Basiccheck):
                 for info in ["units", "standard_name"]:
                     if v.__getattr__(info):
                         try:
-                            cfinfo = self.consgrib.get_info(v.mars_paramid,info)
-                            assert v.__getattr__(info) ==  cfinfo and cfinfo is not None
+                            cfinfo = self.consgrib.get_info(v.mars_paramid, info)
+                            assert v.__getattr__(info) == cfinfo and cfinfo is not None
                         except:
                             self.status = 0
-                            self.logger.error("[%s]-  Non consistency between mars_paramid [%s] [%s=%s] and  variable [%s] [%s=%s]", str(self.getcheckname(self.addinfo)),  str(v.mars_paramid), info, cfinfo, str(k), info, v.__getattr__(info) )
+                            self.logger.error(
+                                "[%s]-  Non consistency between mars_paramid [%s] [%s=%s] and  variable [%s] [%s=%s]",
+                                str(self.getcheckname(self.addinfo)),
+                                str(v.mars_paramid),
+                                info,
+                                cfinfo,
+                                str(k),
+                                info,
+                                v.__getattr__(info),
+                            )

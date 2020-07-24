@@ -18,7 +18,6 @@ import json
 
 
 class Getgribinfo:
-
     def __init__(self, c3stype, confdir):
 
         self.c3stype = c3stype
@@ -26,10 +25,9 @@ class Getgribinfo:
 
         self.gribinfo = self.get_gribcf()
 
-
     def get_gribcf(self):
 
-        dirc = str( os.path.dirname(__file__) + "/" + str(self.c3stype))
+        dirc = str(os.path.dirname(__file__) + "/" + str(self.c3stype))
 
         if self.confdir != None:
             if os.path.isdir(self.confdir):
@@ -37,15 +35,12 @@ class Getgribinfo:
 
         cp_cons_json = os.path.join(dirc, "grib_to_cf.json")
 
-
         cp_cons = json.loads(open(cp_cons_json).read())
 
         return cp_cons
-		
+
     def get_info(self, paramid, cfinfo):
         try:
             return self.gribinfo.get(str(paramid)).get("cf").get(cfinfo)
         except:
             return None
-
-

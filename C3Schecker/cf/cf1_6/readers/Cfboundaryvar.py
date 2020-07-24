@@ -24,6 +24,7 @@ class Cfboundaryvar(Cfbasicvar):
     """ Inheritated from parent Cfbasicvar
         Define a CF variable as a Boundary variable
     """
+
     @staticmethod
     def define(variables, logger):
 
@@ -32,7 +33,7 @@ class Cfboundaryvar(Cfbasicvar):
 
         for varname, varclass in list(variables.items()):
 
-            attr = getattr(varclass, 'bounds', None)
+            attr = getattr(varclass, "bounds", None)
 
             if attr:
 

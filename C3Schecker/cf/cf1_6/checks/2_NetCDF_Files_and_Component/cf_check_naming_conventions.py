@@ -33,11 +33,14 @@ class cf_check_naming_conventions(Basiccheck):
             # For variable Names
             if not rname.match(k):
                 self.status = 0
-                self.check_msgs_logger.error('[%s]- Variable [%s] has a wrong name syntax', str(ref), v.name)
+                self.check_msgs_logger.error(
+                    "[%s]- Variable [%s] has a wrong name syntax", str(ref), v.name
+                )
 
             # For attribute Names
             for a, b in v.attributes_notexcluded:
                 if not rname.match(a):
                     self.status = 0
-                    self.check_msgs_logger.error('[%s]- Attribute [%s] has a wrong name syntax', str(ref), a)
-
+                    self.check_msgs_logger.error(
+                        "[%s]- Attribute [%s] has a wrong name syntax", str(ref), a
+                    )

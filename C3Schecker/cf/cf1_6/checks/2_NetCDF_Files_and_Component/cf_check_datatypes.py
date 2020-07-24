@@ -30,4 +30,8 @@ class cf_check_datatypes(Basiccheck):
             if v.dtype not in self.cfref.cf_allowed_datatypes():
                 self.status = 0
                 self.check_msgs_logger.error(
-                    '[%s]- Variable [%s] has a wrong CF datatype [%s]', str(ref), v.name, str(v.dtype))
+                    "[%s]- Variable [%s] has a wrong CF datatype [%s]",
+                    str(ref),
+                    v.name,
+                    str(v.dtype),
+                )

@@ -31,12 +31,15 @@ class Mandatory_global_attributes_content_list(Basiccheck):
 
         for k, v in list(self.cfcollection.global_attributes.items()):
 
-
             mgavl_possiblevalues = [str(a) for a in mgavl.get(k, [])]
             if len(mgavl_possiblevalues) > 0:
-                #Each item of the List Of Values must exit
+                # Each item of the List Of Values must exit
                 for i in mgavl_possiblevalues:
                     if i not in [str(a).strip() for a in v.split(",")]:
-                        self.logger.error("[%s]-Global Attribute [%s] does not contain [%s]", str(self.getcheckname(self.addinfo)), str(k), str(i))
+                        self.logger.error(
+                            "[%s]-Global Attribute [%s] does not contain [%s]",
+                            str(self.getcheckname(self.addinfo)),
+                            str(k),
+                            str(i),
+                        )
                         self.status = 0
- 

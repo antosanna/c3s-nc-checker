@@ -45,13 +45,17 @@ class Cfvariablescollection:
         self.global_attributes.update(cfglobal)
 
     def onevartype(self, cfvarclass):
-        return {str(name): klass for name, klass in self if isinstance(klass, cfvarclass)}
+        return {
+            str(name): klass for name, klass in self if isinstance(klass, cfvarclass)
+        }
 
     def onevartypenames(self, cftype):
         return [str(name) for name, klass in self if klass.cftype == cftype]
 
     def onevartypestdnames(self, cftype):
-        return [str(klass.standard_name) for name, klass in self if klass.cftype == cftype]
+        return [
+            str(klass.standard_name) for name, klass in self if klass.cftype == cftype
+        ]
 
     @property
     def allvarnames(self):

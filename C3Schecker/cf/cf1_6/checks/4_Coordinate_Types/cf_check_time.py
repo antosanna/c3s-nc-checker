@@ -19,28 +19,41 @@ from C3Schecker.cf.cf1_6.checks.Basiccheck import Basiccheck
 
 
 class cf_check_time(Basiccheck):
-	""" Inheritated from parent Basiccheck
+    """ Inheritated from parent Basiccheck
 	"""
 
-	def apply(self):
+    def apply(self):
 
-		ref = "CFREF-ch3.4"
+        ref = "CFREF-ch3.4"
 
-		for k,v in list(self.cfcollection.coordinate_variables.items()):
-			if v.cfcate == "T":
+        for k, v in list(self.cfcollection.coordinate_variables.items()):
+            if v.cfcate == "T":
 
+                if not v.calendar:
+                    self.check_msgs_logger.warning(
+                        "[%s]- Calendar is recommended for the time coordinate variable [%s]",
+                        str(ref),
+                        str(k),
+                    )
+                    if not v.month_length:
+                        self.check_msgs_logger.warning(
+                            "[%s]- Month_length attribute is recommended when the calendar is not declared for the time coordinate variable [%s]",
+                            str(ref),
+                            str(k),
+                        )
 
-				if not v.calendar:
-					self.check_msgs_logger.warning("[%s]- Calendar is recommended for the time coordinate variable [%s]",str(ref), str( k ) )
-					if not v.month_length:
-						self.check_msgs_logger.warning("[%s]- Month_length attribute is recommended when the calendar is not declared for the time coordinate variable [%s]",str(ref), str( k ) )
-
-					continue
-				else:
-					if not ( str(v.calendar) in self.cfref.cf_calendars() ):
-						self.check_msgs_logger.warning("[%s]-Non standard calendar [%s] is  declared for the time coordinate variable [%s]",str(ref), str(v.calendar), str( k ) )
-						if not v.month_length:
-							self.check_msgs_logger.warning("[%s]- Month_length attribute is recommended when the calendar is not standard for the time coordinate variable [%s]",str(ref), str( k ) )
-
-
-
+                    continue
+                else:
+                    if not (str(v.calendar) in self.cfref.cf_calendars()):
+                        self.check_msgs_logger.warning(
+                            "[%s]-Non standard calendar [%s] is  declared for the time coordinate variable [%s]",
+                            str(ref),
+                            str(v.calendar),
+                            str(k),
+                        )
+                        if not v.month_length:
+                            self.check_msgs_logger.warning(
+                                "[%s]- Month_length attribute is recommended when the calendar is not standard for the time coordinate variable [%s]",
+                                str(ref),
+                                str(k),
+                            )

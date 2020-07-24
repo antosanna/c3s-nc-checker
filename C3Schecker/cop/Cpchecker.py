@@ -40,7 +40,17 @@ class Cpchecker:
     """ A class to Check the netCDF input file  Copernicus compliancy
     """
 
-    def __init__(self, cfcollection, c3stype="", infolevel="INFO", stop=False, checks=[], ignorechecks=[], confdir=None, passedcheckinfo=False):
+    def __init__(
+        self,
+        cfcollection,
+        c3stype="",
+        infolevel="INFO",
+        stop=False,
+        checks=[],
+        ignorechecks=[],
+        confdir=None,
+        passedcheckinfo=False,
+    ):
 
         __REF__ = "C3S"
 
@@ -82,21 +92,26 @@ class Cpchecker:
     @manage_status
     def cp_get_cons(self, category):
 
-
-        dirc = str( os.path.dirname(__file__) + "/" + str(self.c3stype))
+        dirc = str(os.path.dirname(__file__) + "/" + str(self.c3stype))
 
         if self.confdir != None:
             if os.path.isdir(self.confdir):
                 dirc = self.confdir
 
-
         try:
-            cp_cons_json = os.path.join( str(dirc), "cp_" + category + "_constraints.json")
+            cp_cons_json = os.path.join(
+                str(dirc), "cp_" + category + "_constraints.json"
+            )
             cp_cons = json.loads(open(cp_cons_json).read())
             return cp_cons
         except Exception as e:
 
-            self.check_msgs_logger.critical("Checking Stopped - Cannot read JSON %s %s constraints file, %s,  ", str(cp_cons_json), str(category), str(e))
+            self.check_msgs_logger.critical(
+                "Checking Stopped - Cannot read JSON %s %s constraints file, %s,  ",
+                str(cp_cons_json),
+                str(category),
+                str(e),
+            )
             self.status = 0
             self.stop = True
             return {}
@@ -104,9 +119,11 @@ class Cpchecker:
     def cp_get_gribcf(self):
 
         try:
-            return Getgribinfo(self.c3stype,self.confdir)
+            return Getgribinfo(self.c3stype, self.confdir)
         except Exception as e:
-            self.check_msgs_logger.error("Checking Stopped - Problem with JSON grib to CF file, %s,  ", str(e))
+            self.check_msgs_logger.error(
+                "Checking Stopped - Problem with JSON grib to CF file, %s,  ", str(e)
+            )
             return {}
 
     @manage_status
@@ -122,7 +139,14 @@ class Cpchecker:
         self.cp_grib2cf = self.cp_get_gribcf()
 
         processed_checks = []
-        available_checks = [str(f) for f in fct.get_immediate_filenames(os.path.join(os.path.dirname(__file__) + "/checks/"), ["__init__.py", "Basiccpcheck.py", "TemplateCheck.py"], "py")]
+        available_checks = [
+            str(f)
+            for f in fct.get_immediate_filenames(
+                os.path.join(os.path.dirname(__file__) + "/checks/"),
+                ["__init__.py", "Basiccpcheck.py", "TemplateCheck.py"],
+                "py",
+            )
+        ]
 
         if self.checks and len(self.checks) > 0:
             for c in self.checks.split(","):
@@ -138,7 +162,9 @@ class Cpchecker:
                 if c in available_checks:
                     processed_checks = list(set(processed_checks) - set([c]))
                 else:
-                    self.check_msgs_logger.error("Check [%s] is not existing, so it cannot be ignored ", str(c))
+                    self.check_msgs_logger.error(
+                        "Check [%s] is not existing, so it cannot be ignored ", str(c)
+                    )
 
         try:  # exception will be triggered by the decorator to stop on error with option -s
             for pc in processed_checks:
@@ -150,19 +176,28 @@ class Cpchecker:
     def runcheck(self, modulepath):
         classname = modulepath.split(".")[-1]
         module = importlib.import_module("C3Schecker.cop.checks." + modulepath)
-        checkclass = getattr(module, classname)(self.check_msgs_logger, self.status, self.ref, self.cfvariablescollection, self.cp_consmeta, self.cp_consdata, self.cp_grib2cf)
+        checkclass = getattr(module, classname)(
+            self.check_msgs_logger,
+            self.status,
+            self.ref,
+            self.cfvariablescollection,
+            self.cp_consmeta,
+            self.cp_consdata,
+            self.cp_grib2cf,
+        )
         checkclass.status = 1
 
         if self.passedcheckinfo:
-            self.check_msgs_logger.checkinfo( str(classname) + ":")
+            self.check_msgs_logger.checkinfo(str(classname) + ":")
 
         checkclass.apply()
         self.status = checkclass.status
 
-
         if not checkclass.status:
             self.status = checkclass.status
 
-
         if self.passedcheckinfo:
-            self.check_msgs_logger.checkinfo( "       Status:" + str(self.status).replace("0","Failed").replace("1","passed") )
+            self.check_msgs_logger.checkinfo(
+                "       Status:"
+                + str(self.status).replace("0", "Failed").replace("1", "passed")
+            )

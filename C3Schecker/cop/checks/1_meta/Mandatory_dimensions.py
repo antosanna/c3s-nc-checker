@@ -23,7 +23,6 @@ class Mandatory_dimensions(Basiccheck):
         Apply checks on dimensions . Test is mandatory_dimensions exist
     """
 
-
     def apply(self):
 
         self.addinfo = "MetadataCheck"
@@ -33,15 +32,19 @@ class Mandatory_dimensions(Basiccheck):
         md = [str(d) for d in self.consmeta.get("mandatory_dimensions", [])]
         if not set(md).issubset(set(collectdims)) and len(md) > 0:
             self.status = 0
-            self.logger.error("[%s]-NetCDF Dimensions must contain %s  - currently %s ", str(self.getcheckname(self.addinfo)), str(md), str(collectdims))
- 
+            self.logger.error(
+                "[%s]-NetCDF Dimensions must contain %s  - currently %s ",
+                str(self.getcheckname(self.addinfo)),
+                str(md),
+                str(collectdims),
+            )
+
         ad = [str(d) for d in self.consmeta.get("authorized_dimensions", [])]
         if not set(collectdims).issubset(set(ad)) and len(ad) > 0:
             self.status = 0
-            self.logger.error("[%s]-NetCDF Dimensions should be a subset of %s  - currently %s ", str(self.getcheckname(self.addinfo)), str(ad), str(collectdims))
-
-
-
-
-
-
+            self.logger.error(
+                "[%s]-NetCDF Dimensions should be a subset of %s  - currently %s ",
+                str(self.getcheckname(self.addinfo)),
+                str(ad),
+                str(collectdims),
+            )

@@ -19,22 +19,20 @@ from C3Schecker.cf.cf1_6.checks.Basiccheck import Basiccheck
 
 
 class cf_check_longitude(Basiccheck):
-	""" Inheritated from parent Basiccheck
+    """ Inheritated from parent Basiccheck
 	"""
 
-	def apply(self):
+    def apply(self):
 
-		ref = "CFREF-ch4.2"
+        ref = "CFREF-ch4.2"
 
-		pass
+        pass
 
-		# for k,v in self.cfcollection.coordinate_variables.iteritems():
-		# 	if v.cfcate == "X"  and v.units not in self.cfref.cf_longitude_units():
-		# 				self.status = 0
-		# 				self.check_msgs_logger.error("[%s]- Longitude unit [%s] is not allowed for variable [%s]",str(ref), str( v.unit ), str( k ) )
-		# 				continue
+        # for k,v in self.cfcollection.coordinate_variables.iteritems():
+        # 	if v.cfcate == "X"  and v.units not in self.cfref.cf_longitude_units():
+        # 				self.status = 0
+        # 				self.check_msgs_logger.error("[%s]- Longitude unit [%s] is not allowed for variable [%s]",str(ref), str( v.unit ), str( k ) )
+        # 				continue
 
-
-
-		# 	if v.cfcate == "X"  and v.units != self.cfref.cf_longitude_units()[0]:
-		# 				self.check_msgs_logger.error("[%s]- Longitude unit [%s] is highly recommended for variable [%s]", str(ref), str(self.cfref.cf_recommended_longitude_units()[0]), str( k ) )
+        # 	if v.cfcate == "X"  and v.units != self.cfref.cf_longitude_units()[0]:
+        # 				self.check_msgs_logger.error("[%s]- Longitude unit [%s] is highly recommended for variable [%s]", str(ref), str(self.cfref.cf_recommended_longitude_units()[0]), str( k ) )
