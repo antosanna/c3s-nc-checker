@@ -40,9 +40,9 @@ setup(
     package_dir={'C3Schecker': 'C3Schecker'},
     include_package_data=True,
     install_requires=[
-        'netCDF4==1.2.4',
+        'netCDF4',
         'cfunits',
-        'numpy>=1.10.2'
+        'numpy'
     ],
     classifiers=[
         'Development Status :: Alpha',
