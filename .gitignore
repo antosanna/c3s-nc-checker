@@ -3,4 +3,7 @@
 build
 dist
 compliance_checker.egg-info
-
+*.egg-info
+*.coverage
+htmlcov
+*.log
