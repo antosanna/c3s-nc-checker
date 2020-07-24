@@ -25,9 +25,6 @@ from .Getgribinfo import Getgribinfo
 
 import json
 
-importlib.reload(sys)
-sys.setdefaultencoding('utf-8')
-
 
 def manage_status(f):
     # decorator - stop checkings option

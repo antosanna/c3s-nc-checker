@@ -29,12 +29,6 @@ from . import Cfreader
 from . import cfreferences
 
 
-importlib.reload(sys)
-sys.setdefaultencoding('utf-8')
-
-
-# sys.path.append("cf/cf-1_6/cfreferences")
-
 def manage_status(f):
     # decorator - stop checkings option
     def wrapper(self, *args, **kwargs):
