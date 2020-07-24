@@ -18,8 +18,9 @@
 
 # TODO
 
-import sys
 import os
+import sys
+
 from . import cfreferences
 
 

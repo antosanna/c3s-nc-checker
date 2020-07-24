@@ -12,18 +12,19 @@
 # granted to it by virtue of its status as an intergovernmental organisation nor
 # does it submit to any jurisdiction.
 
-import os
-import sys
 import importlib
+import json
 import logging
+import os
 import re
+import sys
 import types
+
 import numpy as np
 
 from C3Schecker.utils import functions as fct
-from .Getgribinfo import Getgribinfo
 
-import json
+from .Getgribinfo import Getgribinfo
 
 
 def manage_status(f):

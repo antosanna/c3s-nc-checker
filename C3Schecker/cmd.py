@@ -14,15 +14,13 @@
 #
 
 
-import sys
-import os
 import argparse
 import importlib
+import os
+import sys
 
 from C3Schecker.cop.Cpchecker import Cpchecker
-
 from C3Schecker.utils import functions as fct
-
 
 __CFVERSION__ = ("CF-1.6", "cf1_6")  # (CF version code, files directory)
 

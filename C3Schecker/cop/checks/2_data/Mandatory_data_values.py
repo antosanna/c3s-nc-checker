@@ -15,9 +15,9 @@
 # does it submit to any jurisdiction.
 #
 
-from C3Schecker.cop.checks.Basiccpcheck import Basiccheck
-
 import numpy as np
+
+from C3Schecker.cop.checks.Basiccpcheck import Basiccheck
 
 
 class Mandatory_data_values(Basiccheck):

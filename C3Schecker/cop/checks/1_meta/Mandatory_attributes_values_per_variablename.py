@@ -15,8 +15,9 @@
 # does it submit to any jurisdiction.
 #
 
-from C3Schecker.cop.checks.Basiccpcheck import Basiccheck
 import re
+
+from C3Schecker.cop.checks.Basiccpcheck import Basiccheck
 
 
 class Mandatory_attributes_values_per_variablename(Basiccheck):

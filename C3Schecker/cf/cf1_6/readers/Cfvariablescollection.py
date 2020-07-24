@@ -16,8 +16,8 @@
 #
 
 from .Cfbasicvar import Cfbasicvar
-from .Cfdatavar import Cfdatavar
 from .Cfcoordinatevar import Cfcoordinatevar
+from .Cfdatavar import Cfdatavar
 
 
 class Cfvariablescollection:

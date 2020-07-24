@@ -15,8 +15,9 @@
 # does it submit to any jurisdiction.
 #
 
-from C3Schecker.cop.checks.Basiccpcheck import Basiccheck
 import datetime
+
+from C3Schecker.cop.checks.Basiccpcheck import Basiccheck
 
 
 class Mandatory_global_attributes_content_date(Basiccheck):

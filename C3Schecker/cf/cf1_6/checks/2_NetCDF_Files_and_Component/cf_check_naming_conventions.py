@@ -15,8 +15,9 @@
 # does it submit to any jurisdiction.
 #
 
-from C3Schecker.cf.cf1_6.checks.Basiccheck import Basiccheck
 import re
+
+from C3Schecker.cf.cf1_6.checks.Basiccheck import Basiccheck
 
 
 class cf_check_naming_conventions(Basiccheck):

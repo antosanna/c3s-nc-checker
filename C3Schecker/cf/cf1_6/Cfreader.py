@@ -23,23 +23,20 @@ import os
 import netCDF4
 import numpy as np
 
-from . import cfreferences as cfref
-
 from C3Schecker.utils import functions as fct
 
-from .readers.Cfvariablescollection import Cfvariablescollection
-
-from .readers.Cfbasicvar import Cfbasicvar
-from .readers.Cfcoordinatevar import Cfcoordinatevar
-from .readers.Cfboundaryvar import Cfboundaryvar
+from . import cfreferences as cfref
 from .readers.Cfancillaryvar import Cfancillaryvar
 from .readers.Cfauxiliarycoordinatevar import Cfauxiliarycoordinatevar
+from .readers.Cfbasicvar import Cfbasicvar
+from .readers.Cfboundaryvar import Cfboundaryvar
 from .readers.Cfclimatologyvar import Cfclimatologyvar
-from .readers.Cfgridmappingvar import Cfgridmappingvar
+from .readers.Cfcoordinatevar import Cfcoordinatevar
+from .readers.Cfdatavar import Cfdatavar
 from .readers.Cfgridmappingvar import Cfgridmappingvar
 from .readers.Cflabelvar import Cflabelvar
 from .readers.Cfmeasurevar import Cfmeasurevar
-from .readers.Cfdatavar import Cfdatavar
+from .readers.Cfvariablescollection import Cfvariablescollection
 
 
 class Cfreader:

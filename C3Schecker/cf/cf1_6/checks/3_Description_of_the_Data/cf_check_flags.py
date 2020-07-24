@@ -16,6 +16,7 @@
 #
 
 import re
+
 import numpy as np
 
 from C3Schecker.cf.cf1_6.checks.Basiccheck import Basiccheck

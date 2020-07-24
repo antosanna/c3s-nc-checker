@@ -15,18 +15,17 @@
 # does it submit to any jurisdiction.
 #
 
-import os
-import sys
-import logging
 import importlib
+import logging
+import os
 import re
+import sys
+
 import numpy as np
 
 from C3Schecker.utils import functions as fct
 
-
-from . import Cfreader
-from . import cfreferences
+from . import Cfreader, cfreferences
 
 
 def manage_status(f):

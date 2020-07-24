@@ -17,8 +17,9 @@
 
 import os
 import re
-import numpy as np
 import xml.etree.ElementTree as ElementTree
+
+import numpy as np
 
 
 def cf_reference():

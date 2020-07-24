@@ -13,22 +13,15 @@
 # does it submit to any jurisdiction.
 #
 
-import sys
+import argparse
+import datetime
 import os
 import platform
-
-# sys.path.append(  os.path.dirname(   os.path.abspath(os.path.join(os.path.realpath(__file__), os.pardir))   )    )
-
-
-import datetime
-import tempfile
 import shutil
-import argparse
+import sys
+import tempfile
 
-
-from C3Schecker import C3S_checker
-from C3Schecker import utils
-
+from C3Schecker import C3S_checker, utils
 from C3Schecker.utils import functions as fct
 
 

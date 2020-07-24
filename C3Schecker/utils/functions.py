@@ -13,11 +13,12 @@
 #
 
 
+import logging
 import os
 import sys
-import logging
-from io import StringIO
 import types
+from io import StringIO
+
 import numpy as np
 
 
