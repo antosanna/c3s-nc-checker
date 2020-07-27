@@ -21,8 +21,8 @@ import shutil
 import sys
 import tempfile
 
-from cmd import main
-from utils import functions as fct
+from c3schecker.cmd import main
+from c3schecker.utils import functions as fct
 
 
 class Checker_test:
@@ -67,7 +67,7 @@ class Checker_test:
 
     def test_compliantfiles(self):
 
-        cdldirmain = "/tests/data/compliant/"
+        cdldirmain = "/data/compliant/"
         listsubdir = fct.get_immediate_subdirectories(
             os.path.join(os.path.dirname(os.path.realpath(__file__))) + cdldirmain
         )
@@ -96,7 +96,7 @@ class Checker_test:
                 print("Temporary files deleted")
 
     def test_noncompliantfiles(self):
-        cdldirmain = "/tests/data/non_compliant/"
+        cdldirmain = "/data/non_compliant/"
         listsubdir = fct.get_immediate_subdirectories(
             os.path.join(os.path.dirname(os.path.realpath(__file__))) + cdldirmain
         )
