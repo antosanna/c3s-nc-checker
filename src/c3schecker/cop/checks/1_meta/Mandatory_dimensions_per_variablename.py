@@ -1,0 +1,45 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#
+# Author: C. BERGERON -
+#
+# Note: None
+#
+#
+# (C) Copyright 1996-2016 ECMWF.
+#
+# This software is licensed under the terms of the Apache Licence Version 2.0
+# which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
+# In applying this licence, ECMWF does not waive the privileges and immunities
+# granted to it by virtue of its status as an intergovernmental organisation nor
+# does it submit to any jurisdiction.
+#
+
+from ..Basiccpcheck import Basiccheck
+
+
+class Mandatory_dimensions_per_variablename(Basiccheck):
+    """ Inheritated from parent Basiccheck
+        Apply checks on dimensions . Test is mandatory_dimensions exist
+    """
+
+    def apply(self):
+
+        self.addinfo = "MetadataCheck"
+
+        collectdims = [str(d) for d in list(self.cfcollection.dimensions.keys())]
+
+        mavpv = self.consmeta.get("mandatory_attributes_values_per_variablename", {})
+
+        for k, v in self.cfcollection:
+            mandatorydimensions = mavpv.get(k, {}).get("dimensions", [])
+            if len(mandatorydimensions) > 0:
+                for d in mandatorydimensions:
+                    if d not in collectdims:
+                        self.logger.error(
+                            "[%s]-NetCDF Dimensions must contain %s  used for variable %s - currently %s ",
+                            str(self.getcheckname(self.addinfo)),
+                            str(d),
+                            str(k),
+                            str(collectdims),
+                        )

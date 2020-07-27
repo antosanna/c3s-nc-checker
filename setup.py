@@ -28,16 +28,16 @@ version = '0.1.3'
 
 
 setup(
-    name='C3Schecker',
+    name='c3schecker',
     version=version,
     author='ECMWF',
     author_email='cedric.bergeron@ecmwf.int',
     license='Apache2.0',
-    url='https://software.ecmwf.int/stash/projects/CDS/repos/checkers/browse/C3SChecker',
+    url='https://git.ecmwf.int/projects/CDS/repos/checker/browse',
     description="Checker for C3S NetCDF files",
     long_description=read('README.rst'),
-    packages=find_packages(),
-    package_dir={'C3Schecker': 'C3Schecker'},
+    packages=find_packages('src'),
+    package_dir={'': 'src'},
     include_package_data=True,
     install_requires=[
         'netCDF4',
@@ -56,7 +56,7 @@ setup(
     keywords='',
     entry_points={
         'console_scripts': [
-            'C3Schecker = C3Schecker.cmd:main'
+            'c3s-checker = c3schecker.cmd:main'
         ],
     },
 )

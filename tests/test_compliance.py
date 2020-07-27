@@ -4,8 +4,8 @@ import tempfile
 
 import pytest
 
-from C3Schecker.cmd import main
-from C3Schecker.utils.functions import get_immediate_fullpathfiles
+from src.C3Schecker import main
+from src.C3Schecker import get_immediate_fullpathfiles
 
 
 def cdl_files(dname):
@@ -25,9 +25,7 @@ def compliant_file(request):
     subprocess.check_call(cmdline, shell=True)
 
     yield fname
-
-    if False:
-        os.unlink(fname)
+    os.unlink(fname)
 
 
 def test_foo(compliant_file):

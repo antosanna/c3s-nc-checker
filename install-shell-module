@@ -15,4 +15,4 @@ pip install --quiet --upgrade pip
 echo "Installing ncchecker to $ncchecker_home ..."
 pip install --quiet --upgrade $here
 mkdir -p "${ncchecker_home}/bin"
-(cd ${ncchecker_home}/bin && ln -sf ${virtualenv_home}/bin/C3Schecker .)
+(cd ${ncchecker_home}/bin && ln -sf ${virtualenv_home}/bin/c3s-checker .)
