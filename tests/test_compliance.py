@@ -13,7 +13,7 @@ def cdl_files(dname):
     return get_immediate_fullpathfiles(cdl_dir, [], "cdl")
 
 
-@pytest.yield_fixture(params=cdl_files("compliant"))
+@pytest.fixture(params=cdl_files("compliant"))
 def compliant_file(request):
     dname = tempfile.mkdtemp()
     fname, _ = os.path.splitext(request.param)

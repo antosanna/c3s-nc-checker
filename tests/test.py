@@ -96,16 +96,12 @@ class Checker_test:
                 print("Temporary files deleted")
 
     def test_noncompliantfiles(self):
-
         cdldirmain = "/tests/data/non_compliant/"
         listsubdir = fct.get_immediate_subdirectories(
             os.path.join(os.path.dirname(os.path.realpath(__file__))) + cdldirmain
         )
-
         for subdir in listsubdir:
-
             listnc, tmpdir = self.create_netcdffile(cdldirmain + subdir)
-            print()
             for ncfile in listnc:
 
                 status = main(["-t", subdir, ncfile])
@@ -115,7 +111,6 @@ class Checker_test:
                 try:
                     assert status == 0
                     fct.prGreen(" PASSED - Checker status is 1 (Unsuccessful)")
-
                 except:
                     self.failed += 1
                     fct.prRed(" FAILED - Checker status should be 0 (Unsuccessful)")
@@ -124,9 +119,7 @@ class Checker_test:
 
 
 if __name__ == "__main__":
-
     parser = argparse.ArgumentParser(description="", epilog=" ")
-
     parser.add_argument(
         "-k", "--keep", action="store_true", help="Do not remove temporary files"
     )
