@@ -20,7 +20,7 @@ import os
 import sys
 
 from .cop.Cpchecker import Cpchecker
-from .utils import functions as fct
+from .utils import get_immediate_subdirectories
 
 __CFVERSION__ = ("CF-1.6", "cf1_6")  # (CF version code, files directory)
 
@@ -54,7 +54,7 @@ def main(args=None):
     )
 
     l = set(
-        fct.get_immediate_subdirectories(os.path.join(os.path.dirname(__file__), "cop"))
+        get_immediate_subdirectories(os.path.join(os.path.dirname(__file__), "cop"))
     ) - set(["checks"])
     parser.add_argument(
         "-t",

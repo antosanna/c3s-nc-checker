@@ -16,7 +16,7 @@ import importlib
 import json
 import os
 
-from ..utils import functions as fct
+from ..utils import loggers, get_immediate_filenames
 
 from .Getgribinfo import Getgribinfo
 
@@ -57,7 +57,7 @@ class Cpchecker:
 
         self.passedcheckinfo = passedcheckinfo
 
-        self.check_msgs_logger, self.check_msgs = fct.loggers(infolevel).get_logger()
+        self.check_msgs_logger, self.check_msgs = loggers(infolevel).get_logger()
 
         self.ref = __REF__
 
@@ -136,7 +136,7 @@ class Cpchecker:
         processed_checks = []
         available_checks = [
             str(f)
-            for f in fct.get_immediate_filenames(
+            for f in get_immediate_filenames(
                 os.path.join(os.path.dirname(__file__) + "/checks/"),
                 ["__init__.py", "Basiccpcheck.py", "TemplateCheck.py"],
                 "py",

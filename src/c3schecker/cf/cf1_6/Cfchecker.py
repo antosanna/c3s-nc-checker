@@ -19,7 +19,7 @@ import importlib
 import logging
 import os
 
-from ...utils import functions as fct
+from ...utils import get_immediate_filenames, loggers, truncate
 
 from . import Cfreader, cfreferences
 
@@ -58,7 +58,7 @@ class Cfchecker:
 
         self.cfref = cfreferences
 
-        self.check_msgs_logger, self.check_msgs = fct.loggers(infolevel).get_logger()
+        self.check_msgs_logger, self.check_msgs = loggers(infolevel).get_logger()
 
         self.check_cfcompliance()
 
@@ -131,7 +131,7 @@ class Cfchecker:
         processed_checks = []
         available_checks = [
             str(f)
-            for f in fct.get_immediate_filenames(
+            for f in get_immediate_filenames(
                 os.path.join(os.path.dirname(__file__) + "/checks/"),
                 ["Basiccheck.py", "__init__.py"],
                 "py",
@@ -253,7 +253,7 @@ class Cfchecker:
                 self.check_msgs_logger.info(
                     "  %s   : [%s]",
                     "{:<20}".format("[" + k + "]"),
-                    fct.truncate("".join(str(str(v).encode("utf-8")).splitlines()), 50),
+                    truncate("".join(str(str(v).encode("utf-8")).splitlines()), 50),
                 )
 
             self.check_msgs_logger.staticinfo(1, " ")
