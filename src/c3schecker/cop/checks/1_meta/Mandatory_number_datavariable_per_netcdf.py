@@ -24,17 +24,16 @@ class Mandatory_number_datavariable_per_netcdf(Basiccheck):
     """
 
     def apply(self):
-
         self.addinfo = "MetadataCheck"
-
-        ndpn = self.consmeta.get("mandatory_number_datavariable_per_netcdf", None)
-        datavars = list(self.cfcollection.data_variables.keys())
-        if len(datavars) != ndpn and ndpn:
+        expected_nb_datavar = self.consmeta["mandatory_number_datavariable_per_netcdf"]
+        actual_datavars = list(self.cfcollection.variables.keys())
+        if len(actual_datavars) != expected_nb_datavar:
             self.status = 0
             self.logger.error(
-                "[%s]-Only [%s] Data Variable should be contained in a file - currently [%s] identified: %s ",
+                "[%s]-Only [%s] Data Variable should be contained in a file - "
+                "currently [%s] identified: %s ",
                 str(self.getcheckname(self.addinfo)),
-                str(ndpn),
-                str(len(datavars)),
-                str(datavars),
+                str(expected_nb_datavar),
+                str(len(actual_datavars)),
+                str(actual_datavars),
             )
