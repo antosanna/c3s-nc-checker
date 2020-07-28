@@ -65,3 +65,19 @@ class TestC3S01:
         # Check fails
         cp_check.cp_check_compliance()
         assert cp_check.status == 0
+
+    def test_mandatory_netcdf_format_ok(self, dataset_with_valid_file_format):
+        cp_check = self._get_checker(
+            dataset_with_valid_file_format, "1_meta.Mandatory_netcdf_format"
+        )
+        # Check succeeds
+        cp_check.cp_check_compliance()
+        assert cp_check.status == 1
+
+    def test_mandatory_netcdf_format_ko(self, dataset_with_invalid_file_format):
+        cp_check = self._get_checker(
+            dataset_with_invalid_file_format, "1_meta.Mandatory_netcdf_format"
+        )
+        # Check fails
+        cp_check.cp_check_compliance()
+        assert cp_check.status == 0
