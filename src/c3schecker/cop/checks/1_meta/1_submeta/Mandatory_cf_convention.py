@@ -14,7 +14,6 @@
 # granted to it by virtue of its status as an intergovernmental organisation nor
 # does it submit to any jurisdiction.
 #
-
 from ...Basiccpcheck import Basiccheck
 
 
@@ -24,13 +23,12 @@ class Mandatory_cf_convention(Basiccheck):
     """
 
     def apply(self):
-
-        mcc = self.consmeta.get("Mandatory_cf_convention", None)
-        if self.cfcollection.convention != mcc and mcc:
+        expected_convention = self.consmeta["mandatory_cf_convention"]
+        if self.cfcollection.convention != expected_convention:
             self.status = 0
             self.logger.error(
                 "[%s]-CF Convention [%s] is mandatory - currently [%s]",
                 str(self.ref),
-                str(mcc),
+                str(expected_convention),
                 str(self.cfcollection.convention),
             )
