@@ -24,27 +24,37 @@ class Mandatory_dimensions(Basiccheck):
     """
 
     def apply(self):
-
         self.addinfo = "MetadataCheck"
+        actual_dimensions = [str(d) for d in list(self.cfcollection.dimensions.keys())]
+        expected_dimensions = [str(d) for d in self.consmeta["mandatory_dimensions"]]
 
-        collectdims = [str(d) for d in list(self.cfcollection.dimensions.keys())]
+        for mandatory_dim in expected_dimensions:
+            if actual_dimensions.count(mandatory_dim) == 0:
+                self.status = 0
+                self.logger.error(
+                    "[%s]-NetCDF Dimensions must contain %s  - currently %s ",
+                    str(self.getcheckname(self.addinfo)),
+                    str(expected_dimensions),
+                    str(actual_dimensions),
+                )
+                break
 
-        md = [str(d) for d in self.consmeta.get("mandatory_dimensions", [])]
-        if not set(md).issubset(set(collectdims)) and len(md) > 0:
-            self.status = 0
-            self.logger.error(
-                "[%s]-NetCDF Dimensions must contain %s  - currently %s ",
-                str(self.getcheckname(self.addinfo)),
-                str(md),
-                str(collectdims),
+        # Only test for authorized dimensions if the actual count of dimensions exceeds
+        # the count of expected mandatory dimensions
+        if len(actual_dimensions) > len(expected_dimensions):
+            expected_authorized_dims = self.consmeta.get(
+                "authorized_other_dimensions", []
             )
-
-        ad = [str(d) for d in self.consmeta.get("authorized_dimensions", [])]
-        if not set(collectdims).issubset(set(ad)) and len(ad) > 0:
-            self.status = 0
-            self.logger.error(
-                "[%s]-NetCDF Dimensions should be a subset of %s  - currently %s ",
-                str(self.getcheckname(self.addinfo)),
-                str(ad),
-                str(collectdims),
-            )
+            if expected_authorized_dims:
+                if all(
+                    actual_dimensions.count(auth_dim) == 0
+                    for auth_dim in expected_authorized_dims
+                ):
+                    self.status = 0
+                    self.logger.error(
+                        "[%s]-NetCDF Dimensions should be a subset of %s  - "
+                        "currently %s ",
+                        str(self.getcheckname(self.addinfo)),
+                        str(expected_authorized_dims),
+                        str(actual_dimensions),
+                    )
