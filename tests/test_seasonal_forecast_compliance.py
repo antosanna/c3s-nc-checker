@@ -76,6 +76,126 @@ def ds_with_unauth_dims(ds_lat_lon_dims):
     yield ds_lat_lon_dims
 
 
+@pytest.fixture
+def ds_all_dimensions(ds_lat_lon_dims):
+    ds_lat_lon_dims.createDimension("leadtime")
+    ds_lat_lon_dims.createDimension("str31", 31)
+    ds_lat_lon_dims.createDimension("bnds", 2)
+    ds_lat_lon_dims.createDimension("plev", 11)
+    ds_lat_lon_dims.createDimension("depth", 1)
+    yield ds_lat_lon_dims
+
+
+@pytest.fixture
+def ds_with_mandatory_attrs_per_std_name(ds_all_dimensions):
+    variables = {
+        "time": {
+            "_dim": ("leadtime",),
+            "_type": np.float,
+            "units": "hours since 2020-01-01 00:00:00",
+            "calendar": "gregorian",
+            "long_name": "Verification time of the forecast",
+            "standard_name": "time",
+        },
+        "reftime": {
+            "_dim": (),
+            "_type": np.float,
+            "units": "hours since 2020-01-01T00:00:00Z",
+            "calendar": "gregorian",
+            "long_name": "Start date of the forecast",
+            "standard_name": "forecast_reference_time",
+        },
+        "leadtime": {
+            "_dim": ("leadtime",),
+            "_type": np.float,
+            "units": "hours",
+            "long_name": "Time elapsed since the start of the forecast",
+            "standard_name": "forecast_period",
+        },
+        "latitude": {
+            "_dim": ("lat",),
+            "_type": np.float,
+            "axis": "Y",
+            "units": "degrees_north",
+            "long_name": "latitude",
+            "valid_min": -90.0,
+            "valid_max": 90.0,
+            "bounds": "lat_bnds",
+            "standard_name": "latitude",
+        },
+        "longitude": {
+            "_dim": ("lon",),
+            "_type": np.float,
+            "axis": "X",
+            "units": "degrees_east",
+            "long_name": "longitude",
+            "valid_min": 0.0,
+            "valid_max": 360.0,
+            "bounds": "lon_bnds",
+            "standard_name": "longitude",
+        },
+        "air_pressure": {
+            "_dim": ("plev",),
+            "_type": np.float,
+            "axis": "Z",
+            "units": "Pa",
+            "long_name": "pressure",
+            "positive": "down",
+            "standard_name": "air_pressure",
+        },
+        "depth": {
+            "_dim": ("depth",),
+            "_type": np.float,
+            "units": "m",
+            "long_name": "depth",
+            "axis": "Z",
+            "positive": "down",
+            "standard_name": "depth",
+            "bounds": "depth_bounds",
+        },
+        "height": {
+            "_dim": (),
+            "_type": np.float,
+            "units": "m",
+            "long_name": "height",
+            "axis": "Z",
+            "positive": "up",
+            "standard_name": "height",
+            "valid_min": 0,
+            "valid_max": 0,
+        },
+        "realization": {
+            "_dim": ("str31",),
+            "_type": np.dtype("|S1"),
+            "units": "1",
+            "axis": "E",
+            "standard_name": "realization",
+            "long_name": "realization",
+        },
+    }
+    for var, props in variables.items():
+        nc_var = ds_all_dimensions.createVariable(
+            var, props.pop("_type"), props.pop("_dim")
+        )
+        nc_var.setncatts(props)
+    yield ds_all_dimensions
+
+
+@pytest.fixture
+def ds_lat_var_without_bounds_attr(ds_all_dimensions):
+    lat_var_attrs_without_bounds = {
+        "axis": "Y",
+        "units": "degrees_north",
+        "long_name": "latitude",
+        "valid_min": -90.0,
+        "valid_max": 90.0,
+        "standard_name": "latitude",
+    }
+    lat_var = ds_all_dimensions.createVariable("lat", np.float, ("lat",))
+    lat_var.setncatts(lat_var_attrs_without_bounds)
+    yield ds_all_dimensions
+
+
 class TestC3S01:
     CONVENTION = "CF-1.6 C3S-0.1"
 
@@ -128,13 +248,31 @@ class TestC3S01:
     def test_mandatory_dimensions_auth_ko(self, ds_with_unauth_dims):
         self._check_failure(ds_with_unauth_dims, "1_meta.Mandatory_dimensions")
 
+    def test_mandatory_attributes_per_standardname_ok(
+        self, ds_with_mandatory_attrs_per_std_name
+    ):
+        self._check_success(
+            ds_with_mandatory_attrs_per_std_name,
+            "1_meta.Mandatory_attributes_per_standardname",
+        )
+
+    def test_mandatory_attributes_per_standardname_ko(
+        self, ds_lat_var_without_bounds_attr
+    ):
+        self._check_failure(
+            ds_lat_var_without_bounds_attr,
+            "1_meta.Mandatory_attributes_per_standardname",
+        )
+
     def _check_success(self, dataset, check):
         checker = self._get_checker(dataset, check)
         self._check_and_assert_status(checker, 1)
+        assert all("error" not in line.lower() for line in checker.messages)
 
     def _check_failure(self, dataset, check):
         checker = self._get_checker(dataset, check)
         self._check_and_assert_status(checker, 0)
+        assert any("error" in line.lower() for line in checker.messages)
 
     @staticmethod
     def _check_and_assert_status(checker, status):
@@ -143,4 +281,4 @@ class TestC3S01:
 
     @staticmethod
     def _get_checker(ds, check):
-        return Cpchecker(ds, c3stype=CHECK_TYPE, checks=check)
+        return Cpchecker(ds, c3stype=CHECK_TYPE, checks=check, passedcheckinfo=True)

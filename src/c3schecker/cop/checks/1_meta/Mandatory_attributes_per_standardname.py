@@ -24,27 +24,19 @@ class Mandatory_attributes_per_standardname(Basiccheck):
     """
 
     def apply(self):
-
         self.addinfo = "MetadataCheck"
-
-        mapv = self.consmeta.get("mandatory_attributes_per_standardname", {})
-        for k, v in self.cfcollection:
-            try:
-                stdname = v.standard_name
-
-                mandatoryattributes = mapv.get(stdname, [])
-                cfattrs = v.attributesnames
-
-                if len(mandatoryattributes) > 0:
-                    for attr in mandatoryattributes:
-                        if attr not in cfattrs:
-                            self.status = 0
-                            self.logger.error(
-                                "[%s]-Attribute [%s] is mandatory - Variable [%s] ",
-                                str(self.getcheckname(self.addinfo)),
-                                str(attr),
-                                str(k),
-                            )
-
-            except:
-                continue
+        expected = self.consmeta["mandatory_attributes_per_standardname"]
+        for var_name, nc_var in self.cfcollection.variables.items():
+            nc_var_attrs = nc_var.ncattrs()
+            std_name = nc_var.standard_name
+            expected_nc_var_mandatory_attrs = expected.get(std_name, [])
+            if len(expected_nc_var_mandatory_attrs) > 0:
+                for attr in expected_nc_var_mandatory_attrs:
+                    if attr not in nc_var_attrs:
+                        self.status = 0
+                        self.logger.error(
+                            "[%s]-Attribute [%s] is mandatory - Variable [%s] ",
+                            str(self.getcheckname(self.addinfo)),
+                            str(attr),
+                            str(var_name),
+                        )
