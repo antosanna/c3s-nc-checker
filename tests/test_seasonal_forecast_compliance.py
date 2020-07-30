@@ -196,6 +196,26 @@ def ds_lat_var_without_bounds_attr(ds_all_dimensions):
     yield ds_all_dimensions
 
 
+@pytest.fixture(params=[("calendar", "gregorian")])
+def ds_with_mandatory_attr_values(request, ds_with_mandatory_attrs_per_std_name):
+    attr_name, attr_value = request.param
+    for variable in ds_with_mandatory_attrs_per_std_name.variables.values():
+        var_attrs = variable.ncattrs()
+        if attr_name in var_attrs:
+            variable.setncattr(attr_name, attr_value)
+    yield ds_with_mandatory_attrs_per_std_name
+
+
+@pytest.fixture(params=[("calendar", "julian")])
+def ds_with_bad_mandatory_attr_values(request, ds_with_mandatory_attrs_per_std_name):
+    attr_name, attr_value = request.param
+    for variable in ds_with_mandatory_attrs_per_std_name.variables.values():
+        var_attrs = variable.ncattrs()
+        if attr_name in var_attrs:
+            variable.setncattr(attr_name, attr_value)
+    yield ds_with_mandatory_attrs_per_std_name
+
+
 class TestC3S01:
     CONVENTION = "CF-1.6 C3S-0.1"
 
@@ -262,6 +282,16 @@ class TestC3S01:
         self._check_failure(
             ds_lat_var_without_bounds_attr,
             "1_meta.Mandatory_attributes_per_standardname",
+        )
+
+    def test_mandatory_attributes_values_ok(self, ds_with_mandatory_attr_values):
+        self._check_success(
+            ds_with_mandatory_attr_values, "1_meta.Mandatory_attributes_content"
+        )
+
+    def test_mandatory_attributes_values_ko(self, ds_with_bad_mandatory_attr_values):
+        self._check_failure(
+            ds_with_bad_mandatory_attr_values, "1_meta.Mandatory_attributes_content"
         )
 
     def _check_success(self, dataset, check):

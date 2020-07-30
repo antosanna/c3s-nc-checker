@@ -24,34 +24,26 @@ class Mandatory_attributes_content(Basiccheck):
     """
 
     def apply(self):
-
         self.addinfo = "MetadataCheck"
-
-        mac = self.consmeta.get("mandatory_attributes_values", {})
-
-        for k, v in self.cfcollection:
-            cfattrs = v.attributes
-
-            for i, j in cfattrs:
-                try:
-                    possiblevalues = []
-                    for val in mac.get(i):
-
-                        try:
-                            possiblevalues.append(float(val))
-                        except:
-                            possiblevalues.append(val)
-
-                    if not (j in possiblevalues):
+        expected = self.consmeta["mandatory_attributes_values"]
+        for var_name, var in self.cfcollection.variables.items():
+            cf_attrs = var.ncattrs()
+            for attr_name in cf_attrs:
+                possible_values = []
+                for val in expected.get(attr_name, []):
+                    try:
+                        possible_values.append(float(val))
+                    except ValueError:
+                        possible_values.append(val)
+                    actual_value = var.getncattr(attr_name)
+                    if not (actual_value in possible_values):
                         self.status = 0
                         self.logger.error(
-                            "[%s]-Attribute [%s] [%s] value is not allowed - Variable [%s] - Should be one of %s ",
+                            "[%s]-Attribute [%s] [%s] value is not allowed - "
+                            "Variable [%s] - Should be one of %s ",
                             str(self.getcheckname(self.addinfo)),
-                            str(i),
-                            str(j),
-                            str(k),
-                            str(possiblevalues),
+                            str(attr_name),
+                            str(actual_value),
+                            str(var_name),
+                            str(possible_values),
                         )
-
-                except Exception as e:
-                    pass
