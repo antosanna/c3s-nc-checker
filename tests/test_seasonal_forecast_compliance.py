@@ -96,6 +96,7 @@ def ds_with_mandatory_attrs_per_std_name(ds_all_dimensions):
             "calendar": "gregorian",
             "long_name": "Verification time of the forecast",
             "standard_name": "time",
+            "bounds": "time_bnds",
         },
         "reftime": {
             "_dim": (),
@@ -111,6 +112,7 @@ def ds_with_mandatory_attrs_per_std_name(ds_all_dimensions):
             "units": "hours",
             "long_name": "Time elapsed since the start of the forecast",
             "standard_name": "forecast_period",
+            "bounds": "leadtime_bnds",
         },
         "latitude": {
             "_dim": ("lat",),
@@ -216,6 +218,72 @@ def ds_with_bad_mandatory_attr_values(request, ds_with_mandatory_attrs_per_std_n
     yield ds_with_mandatory_attrs_per_std_name
 
 
+@pytest.fixture()
+def ds_with_mandatory_attributes_per_variable_name(
+    ds_with_mandatory_attrs_per_std_name
+):
+    # We explicitly choose a variable that has the cell_methods attributes so that we
+    # can test for the case when a variable has an attribute that must match a regex
+    va = {
+        "long_name": "Northward Wind",
+        "units": "m s-1",
+        "coordinates": "reftime realization time leadtime plev lat lon",
+        "standard_name": "y_wind",
+        "cell_methods": "leadtime: point",
+        "grid_mapping": "hcrs",
+        "dimensions": ["leadtime", "plev", "lat", "lon"],
+        "frequency": "12hr",
+        "level_type": "pressure",
+        "modeling_realm": "atmos",
+    }
+    nc_var = ds_with_mandatory_attrs_per_std_name.createVariable(
+        "va", np.float, va.pop("dimensions")
+    )
+    nc_var.setncatts(va)
+    yield ds_with_mandatory_attrs_per_std_name
+
+
+@pytest.fixture(
+    params=[
+        # First case: missing mandatory attribute cell_methods
+        {
+            "long_name": "Northward Wind",
+            "units": "m s-1",
+            "coordinates": "reftime realization time leadtime plev lat lon",
+            "standard_name": "y_wind",
+            "grid_mapping": "hcrs",
+            "dimensions": ["leadtime", "plev", "lat", "lon"],
+            "frequency": "12hr",
+            "level_type": "pressure",
+            "modeling_realm": "atmos",
+        },
+        # Second case: all mandatory attributes, but cell_methods with wrong expected
+        # regex
+        {
+            "long_name": "Northward Wind",
+            "units": "m s-1",
+            "coordinates": "reftime realization time leadtime plev lat lon",
+            "standard_name": "y_wind",
+            "cell_methods": "garbage",
+            "grid_mapping": "hcrs",
+            "dimensions": ["leadtime", "plev", "lat", "lon"],
+            "frequency": "12hr",
+            "level_type": "pressure",
+            "modeling_realm": "atmos",
+        },
+    ]
+)
+def ds_without_mandatory_attributes_per_variable_name(
+    request, ds_with_mandatory_attrs_per_std_name
+):
+    va = request.param
+    nc_var = ds_with_mandatory_attrs_per_std_name.createVariable(
+        "va", np.float, va.pop("dimensions")
+    )
+    nc_var.setncatts(va)
+    yield ds_with_mandatory_attrs_per_std_name
+
+
 class TestC3S01:
     CONVENTION = "CF-1.6 C3S-0.1"
 
@@ -292,6 +360,22 @@ class TestC3S01:
     def test_mandatory_attributes_values_ko(self, ds_with_bad_mandatory_attr_values):
         self._check_failure(
             ds_with_bad_mandatory_attr_values, "1_meta.Mandatory_attributes_content"
+        )
+
+    def test_mandatory_attributes_values_per_variable_ok(
+        self, ds_with_mandatory_attributes_per_variable_name
+    ):
+        self._check_success(
+            ds_with_mandatory_attributes_per_variable_name,
+            "1_meta.Mandatory_attributes_values_per_variablename",
+        )
+
+    def test_mandatory_attributes_values_per_variable_ko(
+        self, ds_without_mandatory_attributes_per_variable_name
+    ):
+        self._check_failure(
+            ds_without_mandatory_attributes_per_variable_name,
+            "1_meta.Mandatory_attributes_values_per_variablename",
         )
 
     def _check_success(self, dataset, check):

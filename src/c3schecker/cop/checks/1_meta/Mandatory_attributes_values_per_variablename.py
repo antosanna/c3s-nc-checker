@@ -26,58 +26,49 @@ class Mandatory_attributes_values_per_variablename(Basiccheck):
     """
 
     def apply(self):
-
         self.addinfo = "MetadataCheck"
-
-        mapv = self.consmeta.get("mandatory_attributes_values_per_variablename", {})
-
+        expected = self.consmeta["mandatory_attributes_values_per_variablename"]
         # Some of the attribute values should be checked against a regular expression
         regex_special = ["cell_methods"]
-
-        for k, v in self.cfcollection:
-
-            # stdname = v.standard_name
-
-            mandatoryattributes = mapv.get(k, {})
-            cfattrs = v.attributesnames
-
-            if len(mandatoryattributes) > 0:
-
-                for attr in mandatoryattributes:
-                    # self.logger.error( attr )
-                    # self.logger.error( cfattrs )
-
-                    if attr in cfattrs and (str(attr) not in regex_special):
-
-                        err_flag = False
-                        if isinstance(mandatoryattributes[attr], float):
-                            if float(v.getncattr(attr)) != mandatoryattributes[attr]:
-                                err_flag = True
-                        elif isinstance(mandatoryattributes[attr], int):
-                            if int(v.getncattr(attr)) != mandatoryattributes[attr]:
-                                err_flag = True
-                        elif v.getncattr(attr) != mandatoryattributes[attr]:
-                            err_flag = True
-                        if err_flag == True:
-                            self.status = 0
-                            self.logger.error(
-                                "[%s]-Wrong [%s] value - Variable [%s]; [%s] expected but [%s] found ",
-                                str(self.getcheckname(self.addinfo)),
-                                str(attr),
-                                str(k),
-                                str(mandatoryattributes[attr]),
-                                str(v.getncattr(attr)),
-                            )
-
-                    if (attr in cfattrs) and (str(attr) in regex_special):
-                        if not re.match(mandatoryattributes[attr], v.getncattr(attr)):
-
-                            self.status = 0
-                            self.logger.error(
-                                "[%s]-Wrong [%s] value - Variable [%s]; [%s] does not match [%s]",
-                                str(self.getcheckname(self.addinfo)),
-                                str(attr),
-                                str(k),
-                                str(mandatoryattributes[attr]),
-                                str(v.getncattr(attr)),
-                            )
+        for var_name, nc_var in self.cfcollection.variables.items():
+            expected_nc_var_mandatory_attrs = {
+                k: v for k, v in expected.get(var_name, {}).items() if k != "dimensions"
+            }
+            actual_nc_var_attrs = nc_var.ncattrs()
+            if len(expected_nc_var_mandatory_attrs) > 0:
+                for attr in expected_nc_var_mandatory_attrs:
+                    if attr in actual_nc_var_attrs:
+                        expected_attr_value = expected_nc_var_mandatory_attrs[attr]
+                        actual_attr_value = nc_var.getncattr(attr)
+                        if attr in regex_special:
+                            if not re.match(expected_attr_value, actual_attr_value):
+                                self.status = 0
+                                self.logger.error(
+                                    "[%s]-Wrong [%s] value - Variable [%s]; [%s] does "
+                                    "not match [%s]",
+                                    str(self.getcheckname(self.addinfo)),
+                                    str(attr),
+                                    str(var_name),
+                                    str(expected_attr_value),
+                                    str(actual_attr_value),
+                                )
+                        else:
+                            if actual_attr_value != expected_attr_value:
+                                self.status = 0
+                                self.logger.error(
+                                    "[%s]-Wrong [%s] value - Variable [%s]; [%s] "
+                                    "expected but [%s] found ",
+                                    str(self.getcheckname(self.addinfo)),
+                                    str(attr),
+                                    str(var_name),
+                                    str(expected_attr_value),
+                                    str(actual_attr_value),
+                                )
+                    else:
+                        self.status = 0
+                        self.logger.error(
+                            "[%s]-[%s] is missing - Variable [%s];",
+                            str(self.getcheckname(self.addinfo)),
+                            str(attr),
+                            str(var_name),
+                        )
