@@ -24,22 +24,20 @@ class Mandatory_dimensions_per_variablename(Basiccheck):
     """
 
     def apply(self):
-
         self.addinfo = "MetadataCheck"
-
-        collectdims = [str(d) for d in list(self.cfcollection.dimensions.keys())]
-
-        mavpv = self.consmeta.get("mandatory_attributes_values_per_variablename", {})
-
-        for k, v in self.cfcollection:
-            mandatorydimensions = mavpv.get(k, {}).get("dimensions", [])
-            if len(mandatorydimensions) > 0:
-                for d in mandatorydimensions:
-                    if d not in collectdims:
+        expected = self.consmeta["mandatory_attributes_values_per_variablename"]
+        for var_name, nc_var in self.cfcollection.variables.items():
+            expected_dimensions = expected.get(var_name, {}).get("dimensions")
+            if expected_dimensions is not None:
+                actual_dimensions = nc_var.dimensions
+                for mandatory_dim in expected_dimensions:
+                    if mandatory_dim not in actual_dimensions:
+                        self.status = 0
                         self.logger.error(
-                            "[%s]-NetCDF Dimensions must contain %s  used for variable %s - currently %s ",
+                            "[%s]-NetCDF Dimensions must contain %s  used for "
+                            "variable %s - currently %s ",
                             str(self.getcheckname(self.addinfo)),
-                            str(d),
-                            str(k),
-                            str(collectdims),
+                            mandatory_dim,
+                            var_name,
+                            actual_dimensions,
                         )

@@ -284,6 +284,25 @@ def ds_without_mandatory_attributes_per_variable_name(
     yield ds_with_mandatory_attrs_per_std_name
 
 
+@pytest.fixture
+def ds_without_mandatory_dim_for_variable(ds_with_mandatory_attrs_per_std_name):
+    # Create a variable without dimensions
+    va = {
+        "long_name": "Northward Wind",
+        "units": "m s-1",
+        "coordinates": "reftime realization time leadtime plev lat lon",
+        "standard_name": "y_wind",
+        "cell_methods": "leadtime: point",
+        "grid_mapping": "hcrs",
+        "frequency": "12hr",
+        "level_type": "pressure",
+        "modeling_realm": "atmos",
+    }
+    nc_var = ds_with_mandatory_attrs_per_std_name.createVariable("va", np.float)
+    nc_var.setncatts(va)
+    yield ds_with_mandatory_attrs_per_std_name
+
+
 class TestC3S01:
     CONVENTION = "CF-1.6 C3S-0.1"
 
@@ -376,6 +395,22 @@ class TestC3S01:
         self._check_failure(
             ds_without_mandatory_attributes_per_variable_name,
             "1_meta.Mandatory_attributes_values_per_variablename",
+        )
+
+    def test_mandatory_dimensions_per_var_name_ok(
+        self, ds_with_mandatory_attributes_per_variable_name
+    ):
+        self._check_success(
+            ds_with_mandatory_attributes_per_variable_name,
+            "1_meta.Mandatory_dimensions_per_variablename",
+        )
+
+    def test_mandatory_dimensions_per_var_name_ko(
+        self, ds_without_mandatory_dim_for_variable
+    ):
+        self._check_failure(
+            ds_without_mandatory_dim_for_variable,
+            "1_meta.Mandatory_dimensions_per_variablename",
         )
 
     def _check_success(self, dataset, check):
