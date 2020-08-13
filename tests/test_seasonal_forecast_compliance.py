@@ -257,11 +257,10 @@ def ds_with_mandatory_attributes_per_variable_name(
             "level_type": "pressure",
             "modeling_realm": "atmos",
         },
-        # Second case: all mandatory attributes, but cell_methods with wrong expected
-        # regex
+        # Second case: missing mandatory attribute units,
+        # cell_methods with wrong expected regex
         {
             "long_name": "Northward Wind",
-            "units": "m s-1",
             "coordinates": "reftime realization time leadtime plev lat lon",
             "standard_name": "y_wind",
             "cell_methods": "garbage",
@@ -278,9 +277,9 @@ def ds_without_mandatory_attributes_per_variable_name(
 ):
     va = request.param
     nc_var = ds_with_mandatory_attrs_per_std_name.createVariable(
-        "va", np.float, va.pop("dimensions")
+        "va", np.float, va["dimensions"]
     )
-    nc_var.setncatts(va)
+    nc_var.setncatts({k: v for k, v in va.items() if k != "dimensions"})
     yield ds_with_mandatory_attrs_per_std_name
 
 
@@ -411,6 +410,22 @@ class TestC3S01:
         self._check_failure(
             ds_without_mandatory_dim_for_variable,
             "1_meta.Mandatory_dimensions_per_variablename",
+        )
+
+    def test_mandatory_attributes_per_var_name_ok(
+        self, ds_with_mandatory_attributes_per_variable_name
+    ):
+        self._check_success(
+            ds_with_mandatory_attributes_per_variable_name,
+            "1_meta.Mandatory_attributes_per_variablename",
+        )
+
+    def test_mandatory_attributes_per_var_name_ko(
+        self, ds_without_mandatory_attributes_per_variable_name
+    ):
+        self._check_failure(
+            ds_without_mandatory_attributes_per_variable_name,
+            "1_meta.Mandatory_attributes_per_variablename",
         )
 
     def _check_success(self, dataset, check):

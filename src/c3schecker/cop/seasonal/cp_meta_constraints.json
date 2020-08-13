@@ -1000,5 +1000,357 @@
     "mandatory_global_attributes_values_pattern": {
         "creation_date": "\\d\\d\\d\\d-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\dZ",
         "forecast_reference_time": "\\d\\d\\d\\d-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\dZ"
+    },
+    "mandatory_attributes_per_variablename": {
+        "sftlf": [
+            "grid_mapping",
+            "standard_name",
+            "long_name",
+            "units",
+            "coordinates"
+        ],
+        "orog": [
+            "grid_mapping",
+            "standard_name",
+            "long_name",
+            "units",
+            "coordinates"
+        ],
+        "tas": [
+            "grid_mapping",
+            "standard_name",
+            "long_name",
+            "units",
+            "coordinates",
+            "cell_methods"
+        ],
+        "tasmax": [
+            "grid_mapping",
+            "standard_name",
+            "long_name",
+            "units",
+            "coordinates",
+            "cell_methods"
+        ],
+        "tasmin": [
+            "grid_mapping",
+            "standard_name",
+            "long_name",
+            "units",
+            "coordinates",
+            "cell_methods"
+        ],
+        "tdps": [
+            "grid_mapping",
+            "standard_name",
+            "long_name",
+            "units",
+            "coordinates",
+            "cell_methods"
+        ],
+        "uas": [
+            "grid_mapping",
+            "standard_name",
+            "long_name",
+            "units",
+            "coordinates",
+            "cell_methods"
+        ],
+        "vas": [
+            "grid_mapping",
+            "standard_name",
+            "long_name",
+            "units",
+            "coordinates",
+            "cell_methods"
+        ],
+        "wsgmax": [
+            "grid_mapping",
+            "standard_name",
+            "long_name",
+            "units",
+            "coordinates",
+            "cell_methods"
+        ],
+        "psl": [
+            "grid_mapping",
+            "standard_name",
+            "long_name",
+            "units",
+            "coordinates",
+            "cell_methods"
+        ],
+        "clt": [
+            "grid_mapping",
+            "standard_name",
+            "long_name",
+            "units",
+            "coordinates",
+            "cell_methods"
+        ],
+        "tsl": [
+            "grid_mapping",
+            "standard_name",
+            "long_name",
+            "units",
+            "coordinates",
+            "cell_methods"
+        ],
+        "tso": [
+            "grid_mapping",
+            "standard_name",
+            "long_name",
+            "units",
+            "coordinates",
+            "cell_methods"
+        ],
+        "sitemptop": [
+            "grid_mapping",
+            "standard_name",
+            "long_name",
+            "units",
+            "coordinates",
+            "cell_methods"
+        ],
+        "sic": [
+            "grid_mapping",
+            "standard_name",
+            "long_name",
+            "units",
+            "coordinates",
+            "cell_methods"
+        ],
+        "mrlsl": [
+            "grid_mapping",
+            "standard_name",
+            "long_name",
+            "units",
+            "coordinates",
+            "cell_methods"
+        ],
+        "lwesnw": [
+            "grid_mapping",
+            "standard_name",
+            "long_name",
+            "units",
+            "coordinates",
+            "cell_methods"
+        ],
+        "rhosn": [
+            "grid_mapping",
+            "standard_name",
+            "long_name",
+            "units",
+            "coordinates",
+            "cell_methods"
+        ],
+        "lweprs": [
+            "grid_mapping",
+            "standard_name",
+            "long_name",
+            "units",
+            "coordinates",
+            "cell_methods"
+        ],
+        "lweprc": [
+            "grid_mapping",
+            "standard_name",
+            "long_name",
+            "units",
+            "coordinates",
+            "cell_methods"
+        ],
+        "lwepr": [
+            "grid_mapping",
+            "standard_name",
+            "long_name",
+            "units",
+            "coordinates",
+            "cell_methods"
+        ],
+        "lweprsn": [
+            "grid_mapping",
+            "standard_name",
+            "long_name",
+            "units",
+            "coordinates",
+            "cell_methods"
+        ],
+        "hfss": [
+            "grid_mapping",
+            "standard_name",
+            "long_name",
+            "units",
+            "coordinates",
+            "cell_methods"
+        ],
+        "hfls": [
+            "grid_mapping",
+            "standard_name",
+            "long_name",
+            "units",
+            "coordinates",
+            "cell_methods"
+        ],
+        "rsds": [
+            "grid_mapping",
+            "standard_name",
+            "long_name",
+            "units",
+            "coordinates",
+            "cell_methods"
+        ],
+        "rlds": [
+            "grid_mapping",
+            "standard_name",
+            "long_name",
+            "units",
+            "coordinates",
+            "cell_methods"
+        ],
+        "rss": [
+            "grid_mapping",
+            "standard_name",
+            "long_name",
+            "units",
+            "coordinates",
+            "cell_methods"
+        ],
+        "rls": [
+            "grid_mapping",
+            "standard_name",
+            "long_name",
+            "units",
+            "coordinates",
+            "cell_methods"
+        ],
+        "rst": [
+            "grid_mapping",
+            "standard_name",
+            "long_name",
+            "units",
+            "coordinates",
+            "cell_methods"
+        ],
+        "rlt": [
+            "grid_mapping",
+            "standard_name",
+            "long_name",
+            "units",
+            "coordinates",
+            "cell_methods"
+        ],
+        "rsdt": [
+            "grid_mapping",
+            "standard_name",
+            "long_name",
+            "units",
+            "coordinates",
+            "cell_methods"
+        ],
+        "tauu": [
+            "grid_mapping",
+            "standard_name",
+            "long_name",
+            "units",
+            "coordinates",
+            "cell_methods"
+        ],
+        "tauv": [
+            "grid_mapping",
+            "standard_name",
+            "long_name",
+            "units",
+            "coordinates",
+            "cell_methods"
+        ],
+        "lwee": [
+            "grid_mapping",
+            "standard_name",
+            "long_name",
+            "units",
+            "coordinates",
+            "cell_methods"
+        ],
+        "mrroa": [
+            "grid_mapping",
+            "standard_name",
+            "long_name",
+            "units",
+            "coordinates",
+            "cell_methods"
+        ],
+        "mrroas": [
+            "grid_mapping",
+            "standard_name",
+            "long_name",
+            "units",
+            "coordinates",
+            "cell_methods"
+        ],
+        "mrroab": [
+            "grid_mapping",
+            "standard_name",
+            "long_name",
+            "units",
+            "coordinates",
+            "cell_methods"
+        ],
+        "zg": [
+            "grid_mapping",
+            "standard_name",
+            "long_name",
+            "units",
+            "coordinates",
+            "cell_methods"
+        ],
+        "ta": [
+            "grid_mapping",
+            "standard_name",
+            "long_name",
+            "units",
+            "coordinates",
+            "cell_methods"
+        ],
+        "hus": [
+            "grid_mapping",
+            "standard_name",
+            "long_name",
+            "units",
+            "coordinates",
+            "cell_methods"
+        ],
+        "rv": [
+            "grid_mapping",
+            "standard_name",
+            "long_name",
+            "units",
+            "coordinates",
+            "cell_methods"
+        ],
+        "wnddiv": [
+            "grid_mapping",
+            "standard_name",
+            "long_name",
+            "units",
+            "coordinates",
+            "cell_methods"
+        ],
+        "ua": [
+            "grid_mapping",
+            "standard_name",
+            "long_name",
+            "units",
+            "coordinates",
+            "cell_methods"
+        ],
+        "va": [
+            "grid_mapping",
+            "standard_name",
+            "long_name",
+            "units",
+            "coordinates",
+            "cell_methods"
+        ]
     }
 }
