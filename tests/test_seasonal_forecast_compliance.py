@@ -392,6 +392,13 @@ def ds_with_missing_val_in_kw_global_attr(dataset_with_valid_file_format):
     yield dataset_with_valid_file_format
 
 
+@pytest.fixture
+def ds_with_bad_date_content_in_global_attrs(dataset_with_valid_file_format):
+    fc_ref_time = "20200817123200Z"
+    dataset_with_valid_file_format.setncattr("forecast_reference_time", fc_ref_time)
+    yield dataset_with_valid_file_format
+
+
 class TestC3S01:
     CONVENTION = "CF-1.6 C3S-0.1"
 
@@ -559,6 +566,22 @@ class TestC3S01:
         self._check_failure(
             ds_with_missing_val_in_kw_global_attr,
             "1_meta.Mandatory_global_attributes_content_list",
+        )
+
+    def test_mandatory_global_attrs_content_date_ok(
+        self, ds_with_all_global_mandatory_attrs
+    ):
+        self._check_success(
+            ds_with_all_mandatory_global_attr_content,
+            "1_meta.Mandatory_global_attributes_content_date",
+        )
+
+    def test_mandatory_global_attrs_content_date_ko(
+        self, ds_with_bad_date_content_in_global_attrs
+    ):
+        self._check_failure(
+            ds_with_bad_date_content_in_global_attrs,
+            "1_meta.Mandatory_global_attributes_content_date",
         )
 
     def _check_success(self, dataset, check):

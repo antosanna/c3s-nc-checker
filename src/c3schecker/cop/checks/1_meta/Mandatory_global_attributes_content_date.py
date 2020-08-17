@@ -26,23 +26,20 @@ class Mandatory_global_attributes_content_date(Basiccheck):
     """
 
     def apply(self):
-
         self.addinfo = "MetadataCheck"
-
-        mgavd = self.consmeta.get("mandatory_global_attributes_values_date", {})
-
-        for k, v in list(self.cfcollection.global_attributes.items()):
-            mgavd_dateformat = mgavd.get(k, "")
-
-            if len(mgavd_dateformat) > 0:
+        expected = self.consmeta["mandatory_global_attributes_values_date"]
+        for attr_name, attr_value in self.cfcollection.__dict__.items():
+            expected_date_format = expected.get(attr_name)
+            if expected_date_format is not None:
                 try:
-                    datetime.datetime.strptime(v, mgavd_dateformat)
+                    datetime.datetime.strptime(attr_value, expected_date_format)
                 except ValueError:
                     self.status = 0
                     self.logger.error(
-                        "[%s]-Global Attribute [%s] value is not allowed - Incorrect data format [%s] - It should be [%s]",
-                        str(self.getcheckname(self.addinfo)),
-                        str(k),
-                        str(v),
-                        str(mgavd_dateformat),
+                        "[%s]-Global Attribute [%s] value is not allowed - Incorrect "
+                        "date format [%s] - It should be [%s]",
+                        self.getcheckname(self.addinfo),
+                        attr_name,
+                        attr_value,
+                        expected_date_format,
                     )
