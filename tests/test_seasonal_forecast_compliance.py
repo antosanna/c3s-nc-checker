@@ -399,6 +399,33 @@ def ds_with_bad_date_content_in_global_attrs(dataset_with_valid_file_format):
     yield dataset_with_valid_file_format
 
 
+@pytest.fixture
+def ds_with_specific_humidity(dataset_with_valid_file_format):
+    q = {
+        "long_name": "Specific humidity",
+        "units": "1",
+        "standard_name": "specific_humidity",
+        "mars_paramid": "133",
+    }
+    nc_var = dataset_with_valid_file_format.createVariable("q", np.float)
+    nc_var.setncatts(q)
+    yield dataset_with_valid_file_format
+
+
+@pytest.fixture
+def ds_with_specific_humidity_malformed(dataset_with_valid_file_format):
+    # Make a mistake in the specific humidity var (bad unit)
+    q = {
+        "long_name": "Specific humidity",
+        "units": "m",
+        "standard_name": "specific_humidity",
+        "mars_paramid": "133",
+    }
+    nc_var = dataset_with_valid_file_format.createVariable("q", np.float)
+    nc_var.setncatts(q)
+    yield dataset_with_valid_file_format
+
+
 class TestC3S01:
     CONVENTION = "CF-1.6 C3S-0.1"
 
@@ -598,6 +625,16 @@ class TestC3S01:
         self._check_failure(
             ds_with_bad_date_content_in_global_attrs,
             "1_meta.Mandatory_global_attributes_content_pattern",
+        )
+
+    def test_mandatory_grib_consistency_ok(self, ds_with_specific_humidity):
+        self._check_success(
+            ds_with_specific_humidity, "1_meta.Mandatory_gribconsistency"
+        )
+
+    def test_mandatory_grib_consistency_ko(self, ds_with_specific_humidity_malformed):
+        self._check_failure(
+            ds_with_specific_humidity_malformed, "1_meta.Mandatory_gribconsistency"
         )
 
     def _check_success(self, dataset, check):

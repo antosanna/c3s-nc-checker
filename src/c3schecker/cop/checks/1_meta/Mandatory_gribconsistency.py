@@ -24,26 +24,25 @@ class Mandatory_gribconsistency(Basiccheck):
     """
 
     def apply(self):
-
         self.addinfo = "MetadataCheck"
-
         # loop sur les datavars si paramid on test
-        for k, v in list(self.cfcollection.data_variables.items()):
-            if v.mars_paramid:
-                for info in ["units", "standard_name"]:
-                    if v.__getattr__(info):
-                        try:
-                            cfinfo = self.consgrib.get_info(v.mars_paramid, info)
-                            assert v.__getattr__(info) == cfinfo and cfinfo is not None
-                        except:
-                            self.status = 0
-                            self.logger.error(
-                                "[%s]-  Non consistency between mars_paramid [%s] [%s=%s] and  variable [%s] [%s=%s]",
-                                str(self.getcheckname(self.addinfo)),
-                                str(v.mars_paramid),
-                                info,
-                                cfinfo,
-                                str(k),
-                                info,
-                                v.__getattr__(info),
-                            )
+        for var_name, nc_var in list(self.cfcollection.variables.items()):
+            if nc_var.mars_paramid:
+                for attr in ["units", "standard_name", "long_name"]:
+                    nc_var_attr_value = getattr(nc_var, attr)
+                    if nc_var_attr_value:
+                        attr_value = self.consgrib.get_info(nc_var.mars_paramid, attr)
+                        if attr_value is not None:
+                            if nc_var_attr_value != attr_value:
+                                self.status = 0
+                                self.logger.error(
+                                    "[%s]-  Non consistency between mars_paramid "
+                                    "[%s] [%s=%s] and  variable [%s] [%s=%s]",
+                                    self.getcheckname(self.addinfo),
+                                    nc_var.mars_paramid,
+                                    attr,
+                                    attr_value,
+                                    var_name,
+                                    attr,
+                                    nc_var_attr_value,
+                                )
