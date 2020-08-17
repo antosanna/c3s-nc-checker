@@ -303,7 +303,7 @@ def ds_without_mandatory_dim_for_variable(ds_with_mandatory_attrs_per_std_name):
 
 
 @pytest.fixture
-def ds_with_mandatory_global_attr_content(dataset_with_valid_file_format):
+def ds_with_all_mandatory_global_attr_content(dataset_with_valid_file_format):
     mandatory_global_attrs_values = {
         "Conventions": "CF-1.6 C3S-0.1",
         "summary": (
@@ -365,6 +365,20 @@ def ds_with_mandatory_global_attr_content_bad_value(dataset_with_valid_file_form
     }
     dataset_with_valid_file_format.setncatts(mandatory_global_attrs_values)
     yield dataset_with_valid_file_format
+
+
+@pytest.fixture
+def ds_with_all_global_mandatory_attrs(ds_with_all_mandatory_global_attr_content):
+    other_global_attrs = {
+        "comment": "This is a comment",
+        "source": "Evian",
+        "references": "A reference",
+        "forecast_reference_time": "2020-08-17T12:32:00Z",
+        "creation_date": "2020-08-17T12:32:00Z",
+        "commit": "hash",
+    }
+    ds_with_all_mandatory_global_attr_content.setncatts(other_global_attrs)
+    yield ds_with_all_mandatory_global_attr_content
 
 
 class TestC3S01:
@@ -494,10 +508,10 @@ class TestC3S01:
         )
 
     def test_mandatory_global_attrs_values_ok(
-        self, ds_with_mandatory_global_attr_content
+        self, ds_with_all_mandatory_global_attr_content
     ):
         self._check_success(
-            ds_with_mandatory_global_attr_content,
+            ds_with_all_mandatory_global_attr_content,
             "1_meta.Mandatory_global_attributes_content",
         )
 
@@ -507,6 +521,17 @@ class TestC3S01:
         self._check_failure(
             ds_with_mandatory_global_attr_content_bad_value,
             "1_meta.Mandatory_global_attributes_content",
+        )
+
+    def test_mandatory_global_attrs_ok(self, ds_with_all_global_mandatory_attrs):
+        self._check_success(
+            ds_with_all_global_mandatory_attrs, "1_meta.Mandatory_global_attributes"
+        )
+
+    def test_mandatory_global_attrs_ko(self, ds_with_all_mandatory_global_attr_content):
+        self._check_failure(
+            ds_with_all_mandatory_global_attr_content,
+            "1_meta.Mandatory_global_attributes",
         )
 
     def _check_success(self, dataset, check):

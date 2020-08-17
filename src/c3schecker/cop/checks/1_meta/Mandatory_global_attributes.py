@@ -24,15 +24,14 @@ class Mandatory_global_attributes(Basiccheck):
     """
 
     def apply(self):
-
         self.addinfo = "MetadataCheck"
-
-        mga = self.consmeta.get("mandatory_global_attributes", {})
-        for i in mga:
-            if i not in list(self.cfcollection.global_attributes.keys()):
+        expected = self.consmeta["mandatory_global_attributes"]
+        actual_attributes = self.cfcollection.ncattrs()
+        for attr_name in expected:
+            if attr_name not in actual_attributes:
                 self.status = 0
                 self.logger.error(
                     "[%s]-Global Attribute [%s] is missing",
-                    str(self.getcheckname(self.addinfo)),
-                    str(i),
+                    self.getcheckname(self.addinfo),
+                    attr_name,
                 )
