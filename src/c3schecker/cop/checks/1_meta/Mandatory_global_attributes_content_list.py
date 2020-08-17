@@ -24,22 +24,17 @@ class Mandatory_global_attributes_content_list(Basiccheck):
     """
 
     def apply(self):
-
         self.addinfo = "MetadataCheck"
-
-        mgavl = self.consmeta.get("mandatory_global_attributes_values_list", {})
-
-        for k, v in list(self.cfcollection.global_attributes.items()):
-
-            mgavl_possiblevalues = [str(a) for a in mgavl.get(k, [])]
-            if len(mgavl_possiblevalues) > 0:
-                # Each item of the List Of Values must exit
-                for i in mgavl_possiblevalues:
-                    if i not in [str(a).strip() for a in v.split(",")]:
-                        self.logger.error(
-                            "[%s]-Global Attribute [%s] does not contain [%s]",
-                            str(self.getcheckname(self.addinfo)),
-                            str(k),
-                            str(i),
-                        )
-                        self.status = 0
+        expected = self.consmeta["mandatory_global_attributes_values_list"]
+        for attr_name, attr_value in self.cfcollection.__dict__.items():
+            expected_list_of_values = expected.get(attr_name, [])
+            actual_list_of_values = [v.strip() for v in attr_value.split(",")]
+            for expected_value in expected_list_of_values:
+                if expected_value not in actual_list_of_values:
+                    self.logger.error(
+                        "[%s]-Global Attribute [%s] does not contain [%s]",
+                        self.getcheckname(self.addinfo),
+                        attr_name,
+                        expected_value,
+                    )
+                    self.status = 0

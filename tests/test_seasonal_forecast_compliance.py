@@ -381,6 +381,17 @@ def ds_with_all_global_mandatory_attrs(ds_with_all_mandatory_global_attr_content
     yield ds_with_all_mandatory_global_attr_content
 
 
+@pytest.fixture
+def ds_with_missing_val_in_kw_global_attr(dataset_with_valid_file_format):
+    all_but_ecmwf = (
+        "Seasonal Forecasts, C3S, Copernicus, Climate Change, "
+        "Climate Services, Earth Science Services, Environmental Advisories, "
+        "Climate Advisories"
+    )
+    dataset_with_valid_file_format.setncattr("keywords", all_but_ecmwf)
+    yield dataset_with_valid_file_format
+
+
 class TestC3S01:
     CONVENTION = "CF-1.6 C3S-0.1"
 
@@ -532,6 +543,22 @@ class TestC3S01:
         self._check_failure(
             ds_with_all_mandatory_global_attr_content,
             "1_meta.Mandatory_global_attributes",
+        )
+
+    def test_mandatory_global_attrs_content_list_ok(
+        self, ds_with_all_mandatory_global_attr_content
+    ):
+        self._check_success(
+            ds_with_all_mandatory_global_attr_content,
+            "1_meta.Mandatory_global_attributes_content_list",
+        )
+
+    def test_mandatory_global_attrs_content_list_ko(
+        self, ds_with_missing_val_in_kw_global_attr
+    ):
+        self._check_failure(
+            ds_with_missing_val_in_kw_global_attr,
+            "1_meta.Mandatory_global_attributes_content_list",
         )
 
     def _check_success(self, dataset, check):
