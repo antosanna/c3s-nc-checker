@@ -302,6 +302,71 @@ def ds_without_mandatory_dim_for_variable(ds_with_mandatory_attrs_per_std_name):
     yield ds_with_mandatory_attrs_per_std_name
 
 
+@pytest.fixture
+def ds_with_mandatory_global_attr_content(dataset_with_valid_file_format):
+    mandatory_global_attrs_values = {
+        "Conventions": "CF-1.6 C3S-0.1",
+        "summary": (
+            "Seasonal Forecast data produced by ECMWF as its contribution "
+            "to the seasonal forecast activity of the Copernicus Climate Change "
+            "Service (C3S). The data has global coverage with a 1-degree "
+            "horizontal resolution and spans for around 6 months since the "
+            "start date"
+        ),
+        "title": "ECMWF seasonal forecast model output prepared for C3S",
+        "forecast_type": "hindcast",
+        "institute_id": "ecmf",
+        "project": "C3S Seasonal Forecast",
+        "contact": "http://copernicus-support.ecmwf.int",
+        "keywords": (
+            "Seasonal Forecasts, C3S, ECMWF, Copernicus, Climate Change, "
+            "Climate Services, Earth Science Services, Environmental Advisories, "
+            "Climate Advisories"
+        ),
+        "institution": (
+            "ECMWF, European Centre for Medium-Range Weather Forecasts, "
+            "Reading, United Kingdom"
+        ),
+        "history": "",
+        "modeling_realm": "atmos",
+        "frequency": "mon",
+        "level_type": "surface",
+    }
+    dataset_with_valid_file_format.setncatts(mandatory_global_attrs_values)
+    yield dataset_with_valid_file_format
+
+
+@pytest.fixture
+def ds_with_mandatory_global_attr_content_bad_value(dataset_with_valid_file_format):
+    mandatory_global_attrs_values = {
+        "Conventions": "CF-1.6 C3S-0.1",
+        "summary": (
+            "This is an unsupported summary. As Such, "
+            "dataset_with_valid_file_format will not pass the check"
+        ),
+        "title": "ECMWF seasonal forecast model output prepared for C3S",
+        "forecast_type": "hindcast",
+        "institute_id": "ecmf",
+        "project": "C3S Seasonal Forecast",
+        "contact": "http://copernicus-support.ecmwf.int",
+        "keywords": (
+            "Seasonal Forecasts, C3S, ECMWF, Copernicus, Climate Change, "
+            "Climate Services, Earth Science Services, Environmental Advisories, "
+            "Climate Advisories"
+        ),
+        "institution": (
+            "ECMWF, European Centre for Medium-Range Weather Forecasts, "
+            "Reading, United Kingdom"
+        ),
+        "history": "",
+        "modeling_realm": "atmos",
+        "frequency": "mon",
+        "level_type": "surface",
+    }
+    dataset_with_valid_file_format.setncatts(mandatory_global_attrs_values)
+    yield dataset_with_valid_file_format
+
+
 class TestC3S01:
     CONVENTION = "CF-1.6 C3S-0.1"
 
@@ -426,6 +491,22 @@ class TestC3S01:
         self._check_failure(
             ds_without_mandatory_attributes_per_variable_name,
             "1_meta.Mandatory_attributes_per_variablename",
+        )
+
+    def test_mandatory_global_attrs_values_ok(
+        self, ds_with_mandatory_global_attr_content
+    ):
+        self._check_success(
+            ds_with_mandatory_global_attr_content,
+            "1_meta.Mandatory_global_attributes_content",
+        )
+
+    def test_mandatory_global_attrs_values_ko(
+        self, ds_with_mandatory_global_attr_content_bad_value
+    ):
+        self._check_failure(
+            ds_with_mandatory_global_attr_content_bad_value,
+            "1_meta.Mandatory_global_attributes_content",
         )
 
     def _check_success(self, dataset, check):
