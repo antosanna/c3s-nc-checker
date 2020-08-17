@@ -584,6 +584,22 @@ class TestC3S01:
             "1_meta.Mandatory_global_attributes_content_date",
         )
 
+    def test_mandatory_global_attrs_content_pattern_ok(
+        self, ds_with_all_global_mandatory_attrs
+    ):
+        self._check_success(
+            ds_with_all_global_mandatory_attrs,
+            "1_meta.Mandatory_global_attributes_content_pattern",
+        )
+
+    def test_mandatory_global_attrs_content_pattern_ko(
+        self, ds_with_bad_date_content_in_global_attrs
+    ):
+        self._check_failure(
+            ds_with_bad_date_content_in_global_attrs,
+            "1_meta.Mandatory_global_attributes_content_pattern",
+        )
+
     def _check_success(self, dataset, check):
         checker = self._get_checker(dataset, check)
         self._check_and_assert_status(checker, 1)

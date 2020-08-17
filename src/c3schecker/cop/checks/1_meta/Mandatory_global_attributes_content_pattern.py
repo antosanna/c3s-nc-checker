@@ -26,20 +26,18 @@ class Mandatory_global_attributes_content_pattern(Basiccheck):
     """
 
     def apply(self):
-
         self.addinfo = "MetadataCheck"
-
-        mgavp = self.consmeta.get("mandatory_global_attributes_values_pattern", {})
-
-        for k, v in list(self.cfcollection.global_attributes.items()):
-            mgavp_pattern = mgavp.get(k, "")
-
-            if len(mgavp_pattern) > 0 and not re.match(mgavp_pattern, v):
-                self.status = 0
-                self.logger.error(
-                    "[%s]-Global Attribute [%s] value is not allowed - Incorrect string pattern [%s] - It should be [%s]",
-                    str(self.getcheckname(self.addinfo)),
-                    str(k),
-                    str(v),
-                    str(mgavp_pattern),
-                )
+        expected = self.consmeta["mandatory_global_attributes_values_pattern"]
+        for attr_name, attr_value in self.cfcollection.__dict__.items():
+            expected_pattern = expected.get(attr_name)
+            if expected_pattern is not None:
+                if not re.match(expected_pattern, attr_value):
+                    self.status = 0
+                    self.logger.error(
+                        "[%s]-Global Attribute [%s] value is not allowed - Incorrect "
+                        "string pattern [%s] - It should be [%s]",
+                        self.getcheckname(self.addinfo),
+                        attr_name,
+                        attr_value,
+                        expected_pattern,
+                    )
