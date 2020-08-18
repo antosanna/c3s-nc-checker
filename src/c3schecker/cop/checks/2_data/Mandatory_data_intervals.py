@@ -24,55 +24,51 @@ class Mandatory_data_intervals(Basiccheck):
     """
 
     def apply(self):
-
         self.addinfo = "DataCheck"
+        expected_default_intervals = self.consdata.get("default", {}).get(
+            "mandatory_intervals", {}
+        )
+        for var_name, expected_interval in expected_default_intervals.items():
+            self._check(expected_interval, var_name)
 
-        for k, v in list(self.cfcollection.data_variables.items()):
+        for var_name, nc_var in self.cfcollection.variables.items():
+            var_constraints = self.consdata.get(var_name, {})
+            if not var_constraints:
+                continue
+            # 2 cases encountered so far:
+            # case 1: mandatory_intervals is at the root of the var constraint
+            interval_constraints = var_constraints.get("mandatory_intervals")
+            if interval_constraints is None:
+                # case 2: the root of the var constraint is the cell_method defined
+                # on this var
+                interval_constraints = var_constraints.get(nc_var.cell_methods, {}).get(
+                    "mandatory_intervals"
+                )
+                # If this is still not it, just mark the check as passed with a warning
+                if interval_constraints is None:
+                    self.logger.warning(
+                        "[%s]- [%s] variable specified in constraints but no "
+                        "constraint given",
+                        self.getcheckname(self.addinfo),
+                        var_name,
+                    )
+                    continue
+            for dependant_var_name, expected_interval in interval_constraints.items():
+                self._check(expected_interval, dependant_var_name)
 
-            default = True
-            datavariables_checks = self.consdata.get("default", {})
-            datavariables_tocheck = self.consdata.get(k, {})
-
-            if bool(datavariables_tocheck):
-                datavariables_checks = datavariables_tocheck
-                default = False
-
-            mandatoryintervals = datavariables_checks.get("mandatory_intervals", {})
-
-            if bool(mandatoryintervals):
-                for l, m in list(mandatoryintervals.items()):
-
-                    try:
-                        vv = self.cfcollection[l]
-                        values = vv.netcdfinit[:]
-                        valuesintervals = [
-                            (values[i - 1], x, x - values[i - 1])
-                            for i, x in enumerate(values)
-                            if x - values[i - 1] != int(m)
-                        ][1:]
-
-                        if len(valuesintervals) > 0:
-                            self.status = 0
-                            self.logger.error(
-                                "[%s]- [%s] intervals must be %s  - Some other intervals has been found - First: %s  ",
-                                str(self.getcheckname(self.addinfo)),
-                                str(l),
-                                str(m),
-                                str(
-                                    str(valuesintervals[0][0:2])
-                                    + "=interval "
-                                    + str(valuesintervals[0][2])
-                                ),
-                            )
-
-                    except:
-                        if default:
-                            pass
-                        else:
-                            self.status = 0
-                            self.logger.error(
-                                "[%s]-  no variable [%s] found",
-                                str(self.getcheckname(self.addinfo)),
-                                str(l),
-                            )
-                            continue
+    def _check(self, expected_interval, var_name):
+        actual_variable = self.cfcollection.variables.get(var_name)
+        if actual_variable is not None:
+            for idx in range(1, len(actual_variable)):
+                actual_interval = actual_variable[idx] - actual_variable[idx - 1]
+                if actual_interval != expected_interval:
+                    self.status = 0
+                    self.logger.error(
+                        "[%s]- [%s] intervals must be %s  - Some other "
+                        "intervals has been found - First spurious interval: %s  ",
+                        self.getcheckname(self.addinfo),
+                        var_name,
+                        expected_interval,
+                        actual_interval,
+                    )
+                    break

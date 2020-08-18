@@ -426,6 +426,90 @@ def ds_with_specific_humidity_malformed(dataset_with_valid_file_format):
     yield dataset_with_valid_file_format
 
 
+@pytest.fixture(
+    params=[
+        # lat and lon used to test default constraint for seasonal conf of
+        # mandatory_data_intervals check
+        [
+            {
+                "_name": "lat",
+                "_dimensions": {"lat": {"_type": np.float}},
+                "_values": np.arange(-89.5, 90, 1),
+                "_type": np.float,
+            },
+            {
+                "_name": "lon",
+                "_dimensions": {"lon": {"_type": np.float}},
+                "_values": np.arange(0.5, 360, 1),
+                "_type": np.float,
+            },
+        ],
+        # tas used to test the case when mandatory_data_intervals check is done
+        # on a configuration where the constraint is defined for variable with a
+        # specific type of cell_methods attribute (seasonal conf has such a use case)
+        [
+            {
+                "_name": "tas",
+                "_attrs": {"cell_methods": "leadtime: point"},
+                "_dimensions": {
+                    "leadtime": {"_type": np.float, "_value": np.arange(0, 24, 6)},
+                    "plev": {"_type": np.float},
+                    "lat": {"_type": np.float},
+                    "lon": {"_type": np.float},
+                },
+            }
+        ],
+        # orog used to test the case when the conf contains an error (this is the
+        # case for seasonal conf on this variable)
+        [{"_name": "orog", "_dimensions": {"leadtime": {"_type": np.float}}}],
+    ]
+)
+def ds_with_good_data_intervals(request, ds_all_dimensions: Dataset):
+    for var_conf in request.param:
+        var_name = var_conf["_name"]
+        var_dims = tuple(var_conf["_dimensions"].keys())
+        nc_var = ds_all_dimensions.createVariable(var_name, np.float, var_dims)
+        nc_var_value = var_conf.get("_values")
+        if nc_var_value is not None:
+            nc_var[:] = nc_var_value
+        nc_var.setncatts(var_conf.get("_attrs", {}))
+        for dim, conf in var_conf.get("_dimensions", {}).items():
+            value = conf.get("_value")
+            if value is not None:
+                dim_var = ds_all_dimensions.createVariable(dim, conf["_type"], (dim,))
+                dim_var[:] = value
+    yield ds_all_dimensions
+
+
+@pytest.fixture
+def ds_with_bad_data_intervals(ds_all_dimensions: Dataset):
+    # lat and lon used to test default constraint for seasonal conf of
+    # mandatory_data_intervals check. Here lat has bad interval (2 instead of 1). This
+    # is enough to test the case when the intervals in the data do not comply with the
+    # constraints
+    variables = [
+        {
+            "_name": "lat",
+            "_dimensions": {"lat": {"_type": np.float}},
+            "_values": np.arange(-179.5, 180, 2),
+            "_type": np.float,
+        },
+        {
+            "_name": "lon",
+            "_dimensions": {"lon": {"_type": np.float}},
+            "_values": np.arange(0.5, 360, 1),
+            "_type": np.float,
+        },
+    ]
+    for var_conf in variables:
+        var_name = var_conf["_name"]
+        var_dims = tuple(var_conf["_dimensions"].keys())
+        nc_var = ds_all_dimensions.createVariable(var_name, np.float, var_dims)
+        nc_var[:] = var_conf["_values"]
+        nc_var.setncatts(var_conf.get("_attrs", {}))
+    yield ds_all_dimensions
+
+
 class TestC3S01:
     CONVENTION = "CF-1.6 C3S-0.1"
 
@@ -635,6 +719,16 @@ class TestC3S01:
     def test_mandatory_grib_consistency_ko(self, ds_with_specific_humidity_malformed):
         self._check_failure(
             ds_with_specific_humidity_malformed, "1_meta.Mandatory_gribconsistency"
+        )
+
+    def test_mandatory_data_intervals_ok(self, ds_with_good_data_intervals):
+        self._check_success(
+            ds_with_good_data_intervals, "2_data.Mandatory_data_intervals"
+        )
+
+    def test_mandatory_data_intervals_ko(self, ds_with_bad_data_intervals):
+        self._check_failure(
+            ds_with_bad_data_intervals, "2_data.Mandatory_data_intervals"
         )
 
     def _check_success(self, dataset, check):
