@@ -760,6 +760,12 @@ class TestC3S01:
     def test_mandatory_data_ranges_ko(self, ds_with_bad_data_min_max):
         self._check_failure(ds_with_bad_data_min_max, "2_data.Mandatory_data_ranges")
 
+    def test_mandatory_data_values_ok(self, ds_with_good_data_min_max):
+        self._check_success(ds_with_good_data_min_max, "2_data.Mandatory_data_values")
+
+    def test_mandatory_data_values_ko(self, ds_with_bad_data_min_max):
+        self._check_failure(ds_with_bad_data_min_max, "2_data.Mandatory_data_values")
+
     def _check_success(self, dataset, check):
         checker = self._get_checker(dataset, check)
         self._check_and_assert_status(checker, 1)

@@ -16,6 +16,7 @@
 #
 
 import numpy as np
+from numpy.ma import MaskedArray
 
 from ..Basiccpcheck import Basiccheck
 
@@ -26,61 +27,35 @@ class Mandatory_data_values(Basiccheck):
     """
 
     def apply(self):
-
         self.addinfo = "DataCheck"
+        for var_name, nc_var in self.cfcollection.variables.items():
+            # First check if there is a constraint at the root of the constraint dict
+            var_values_constraints = self.consdata.get(var_name, {}).get(
+                "mandatory_values"
+            )
+            if var_values_constraints is None:
+                # If not, check if there is one in the default key of the
+                # constraint dict
+                var_values_constraints = (
+                    self.consdata.get("default", {})
+                    .get("mandatory_values", {})
+                    .get(var_name)
+                )
+            self._check(var_name, nc_var, var_values_constraints)
 
-        for k, v in list(self.cfcollection.data_variables.items()):
-
-            default = True
-            datavariables_checks = self.consdata.get("default", {})
-            datavariables_tocheck = self.consdata.get(k, {})
-
-            if bool(datavariables_tocheck):
-                datavariables_checks = datavariables_tocheck
-                default = False
-
-            mandatorylov = datavariables_checks.get("mandatory_values", {})
-            if bool(mandatorylov):
-
-                for x, y in list(mandatorylov.items()):
-
-                    try:
-                        errorvalue = ""
-                        vv = self.cfcollection[x]
-                        values = vv.netcdfinit[:]
-                        if values.ndim == 0:
-                            values = [values]
-
-                        if isinstance(
-                            values, np.ma.core.MaskedArray
-                        ):  # work around when Netcdf4 var is a MaskedArray (get only unmasked values)
-                            values = values.compressed()
-
-                        for l in values:
-                            if l not in [
-                                i for i in y
-                            ]:  # dirty -changed from string comparison
-                                errorvalue = str(l)
-                                break
-
-                        if errorvalue:
-                            self.status = 0
-                            self.logger.error(
-                                "[%s]- [%s] values must be in %s  - Some other values has been found - First: %s  ",
-                                str(self.getcheckname(self.addinfo)),
-                                str(x),
-                                str(y),
-                                str(len(values)),
-                            )
-
-                    except:
-                        if default:
-                            pass
-                        else:
-                            self.status = 0
-                            self.logger.error(
-                                "[%s]-  no variable [%s] found",
-                                str(self.getcheckname(self.addinfo)),
-                                str(x),
-                            )
-                            continue
+    def _check(self, var_name, nc_var, data_values_constraints):
+        if data_values_constraints:
+            if nc_var is not None:
+                data = nc_var[:]
+                if isinstance(data, MaskedArray):
+                    data = data.compressed()
+                invalid = np.asarray(data - data_values_constraints != 0).nonzero()[0]
+                if invalid.size > 0:
+                    self.status = 0
+                    self.logger.error(
+                        "[%s]- [%s] values must exactly equal %s - currently: %s",
+                        self.getcheckname(self.addinfo),
+                        var_name,
+                        data_values_constraints,
+                        data,
+                    )
