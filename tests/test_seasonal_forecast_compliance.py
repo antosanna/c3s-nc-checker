@@ -510,6 +510,23 @@ def ds_with_bad_data_intervals(ds_all_dimensions: Dataset):
     yield ds_all_dimensions
 
 
+@pytest.fixture
+def ds_with_good_data_min_max(ds_with_bad_data_intervals):
+    # Fix the problem with the values of latitude
+    lat = ds_with_bad_data_intervals.variables["lat"]
+    lat[:] = np.arange(-89.5, 90, 1)
+    yield ds_with_bad_data_intervals
+
+
+@pytest.fixture
+def ds_with_bad_data_min_max(ds_with_bad_data_intervals):
+    # Change the type of problem with the values of latitude
+    lat = ds_with_bad_data_intervals.variables["lat"]
+    # min value is now -80.5 instead of -89.5
+    lat[:] = np.arange(-80.5, 99, 1)
+    yield ds_with_bad_data_intervals
+
+
 class TestC3S01:
     CONVENTION = "CF-1.6 C3S-0.1"
 
@@ -730,6 +747,12 @@ class TestC3S01:
         self._check_failure(
             ds_with_bad_data_intervals, "2_data.Mandatory_data_intervals"
         )
+
+    def test_mandatory_data_min_max_ok(self, ds_with_good_data_min_max):
+        self._check_success(ds_with_good_data_min_max, "2_data.Mandatory_data_minmax")
+
+    def test_mandatory_data_min_max_ko(self, ds_with_bad_data_min_max):
+        self._check_failure(ds_with_bad_data_min_max, "2_data.Mandatory_data_minmax")
 
     def _check_success(self, dataset, check):
         checker = self._get_checker(dataset, check)

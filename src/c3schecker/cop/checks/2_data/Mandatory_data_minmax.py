@@ -24,50 +24,43 @@ class Mandatory_data_minmax(Basiccheck):
     """
 
     def apply(self):
-
         self.addinfo = "DataCheck"
+        for var_name, nc_var in self.cfcollection.variables.items():
+            # First check if there is a constraint at the root of the constraint dict
+            var_min_max_constraints = self.consdata.get(var_name, {}).get(
+                "mandatory_min_max"
+            )
+            if var_min_max_constraints is None:
+                # If not, check if there is one in the default key of the
+                # constraint dict
+                var_min_max_constraints = (
+                    self.consdata.get("default", {})
+                    .get("mandatory_min_max", {})
+                    .get(var_name)
+                )
+            self._check(var_name, nc_var, var_min_max_constraints)
 
-        for k, v in list(self.cfcollection.data_variables.items()):
+    def _check(self, var_name, nc_var, var_min_max_constraints):
+        if var_min_max_constraints:
+            if nc_var is not None:
+                nc_var_values = nc_var[:].data
+                expected_min = min(var_min_max_constraints)
+                expected_max = max(var_min_max_constraints)
+                actual_min = nc_var_values.min()
+                actual_max = nc_var_values.max()
+                self._assert(var_name, actual_min, expected_min, "minimum")
+                self._assert(var_name, actual_max, expected_max, "maximum")
 
-            default = True
-            datavariables_checks = self.consdata.get("default", {})
-            datavariables_tocheck = self.consdata.get(k, {})
-
-            if bool(datavariables_tocheck):
-                datavariables_checks = datavariables_tocheck
-                default = False
-
-            mandatoryminmax = datavariables_checks.get("mandatory_min_max", "")
-
-            if bool(mandatoryminmax):
-
-                for x, y in list(mandatoryminmax.items()):
-                    try:
-                        res = []
-
-                        vv = self.cfcollection[x]
-                        values = vv.netcdfinit[:]
-                        valuesminmax = [values.min(), values.max()]
-                        res = [i for i, j in zip(valuesminmax, y) if i != j]
-
-                        if len(res) > 0:
-                            self.status = 0
-                            self.logger.error(
-                                "[%s]- [%s] minimum and maximum values must be %s  - Currently %s",
-                                str(self.getcheckname(self.addinfo)),
-                                str(x),
-                                str(y),
-                                str(valuesminmax),
-                            )
-
-                    except:
-                        if default:
-                            pass
-                        else:
-                            self.status = 0
-                            self.logger.error(
-                                "[%s]-  no variable [%s] found",
-                                str(self.getcheckname(self.addinfo)),
-                                str(x),
-                            )
-                            continue
+    def _assert(self, var_name, actual, expected, category):
+        try:
+            assert actual == expected
+        except AssertionError:
+            self.status = 0
+            self.logger.error(
+                "[%s]- [%s] %s value must be %s - Currently %s",
+                self.getcheckname(self.addinfo),
+                var_name,
+                category,
+                expected,
+                actual,
+            )
