@@ -1701,7 +1701,7 @@
         }
     },
     "sftlf": {
-        "mandatory_range": [
+        "mandatory_ranges": [
             0,
             1
         ]

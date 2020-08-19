@@ -16,6 +16,7 @@
 #
 
 import numpy as np
+from numpy.ma import MaskedArray
 
 from ..Basiccpcheck import Basiccheck
 
@@ -26,56 +27,40 @@ class Mandatory_data_ranges(Basiccheck):
     """
 
     def apply(self):
-
         self.addinfo = "DataCheck"
+        for var_name, nc_var in self.cfcollection.variables.items():
+            # First check if there is a constraint at the root of the constraint dict
+            var_ranges_constraints = self.consdata.get(var_name, {}).get(
+                "mandatory_ranges"
+            )
+            if var_ranges_constraints is None:
+                # If not, check if there is one in the default key of the
+                # constraint dict
+                var_ranges_constraints = (
+                    self.consdata.get("default", {})
+                    .get("mandatory_ranges", {})
+                    .get(var_name)
+                )
+            self._check(var_name, nc_var, var_ranges_constraints)
 
-        for k, v in list(self.cfcollection.data_variables.items()):
-
-            default = True
-            datavariables_checks = self.consdata.get("default", {})
-            datavariables_tocheck = self.consdata.get(k, {})
-
-            if bool(datavariables_tocheck):
-                datavariables_checks = datavariables_tocheck
-                default = False
-
-            mandatoryrange = datavariables_checks.get("mandatory_ranges", {})
-
-            if bool(mandatoryrange):
-
-                for x, y in list(mandatoryrange.items()):
-
-                    try:
-                        vv = self.cfcollection[x]
-                        values = vv.netcdfinit[:]
-
-                        if values.ndim == 0:
-                            values = np.array([values])
-                        valuesoutofrange = np.where(
-                            np.logical_or(values > y[1], values < y[0])
-                        )
-
-                        # if values a des NaN -> traiter le cas
-                        # print str(y)
-
-                        if valuesoutofrange[0].size > 0:
-                            self.status = 0
-                            self.logger.error(
-                                "[%s]- [%s] range must be %s  - First %s",
-                                str(self.getcheckname(self.addinfo)),
-                                str(x),
-                                str(y),
-                                str(valuesoutofrange[0][0]),
-                            )
-
-                    except:
-                        if default:
-                            pass
-                        else:
-                            self.status = 0
-                            self.logger.error(
-                                "[%s]-  no variable [%s] found",
-                                str(self.getcheckname(self.addinfo)),
-                                str(x),
-                            )
-                            continue
+    def _check(self, var_name, nc_var, data_range_constraints):
+        if data_range_constraints:
+            bottom = data_range_constraints[0]
+            top = data_range_constraints[1]
+            if nc_var is not None:
+                data = nc_var[:]
+                if isinstance(data, MaskedArray):
+                    data = data[~data.mask]
+                out_of_range, _ = np.asarray(
+                    np.logical_or(data > top, data < bottom)
+                ).nonzero()
+                if out_of_range.size > 0:
+                    self.status = 0
+                    self.logger.error(
+                        "[%s]- [%s] all values must be in range %s - %s "
+                        "currently out of range",
+                        self.getcheckname(self.addinfo),
+                        var_name,
+                        data_range_constraints,
+                        out_of_range.size,
+                    )
