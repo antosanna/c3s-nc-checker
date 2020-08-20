@@ -3,9 +3,8 @@ import subprocess
 import tempfile
 
 import pytest
-
 from c3schecker.cmd import main
-from c3schecker.utils.functions import get_immediate_fullpathfiles
+from c3schecker.utils import get_immediate_fullpathfiles
 
 
 def cdl_files(dname):

@@ -7,3 +7,4 @@ compliance_checker.egg-info
 *.coverage
 htmlcov
 *.log
+*.nc

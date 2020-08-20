@@ -12,15 +12,13 @@
 # granted to it by virtue of its status as an intergovernmental organisation nor
 # does it submit to any jurisdiction.
 #
-
-
 import argparse
 import importlib
 import os
 import sys
 
-from .cop.Cpchecker import Cpchecker
-from .utils import get_immediate_subdirectories
+from c3schecker.cop.Cpchecker import Cpchecker
+from c3schecker.utils import get_immediate_subdirectories
 
 __CFVERSION__ = ("CF-1.6", "cf1_6")  # (CF version code, files directory)
 

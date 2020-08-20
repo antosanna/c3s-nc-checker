@@ -21,13 +21,12 @@ import shutil
 import sys
 import tempfile
 
+from c3schecker import utils
 from c3schecker.cmd import main
-from c3schecker.utils import functions as fct
 
 
 class Checker_test:
     def __init__(self, keep):
-
         self.failed = 0
         self.keep = keep
         self.test_compliantfiles()
@@ -41,7 +40,7 @@ class Checker_test:
                 return the list of NetCDF filename and their temporary location"""
 
         listnc = []
-        listcdl = fct.get_immediate_fullpathfiles(
+        listcdl = utils.get_immediate_fullpathfiles(
             os.path.join(os.path.dirname(os.path.realpath(__file__)) + cdldir),
             [],
             "cdl",
@@ -56,7 +55,7 @@ class Checker_test:
             try:
                 command = "ncgen -k 4 -o " + ncfile + " " + f
                 os.popen(command)
-                fct.prBlack(
+                utils.prBlack(
                     "Creation of temporary NetCDF file: " + ncfile + " from " + f
                 )
                 listnc.append(ncfile)
@@ -68,7 +67,7 @@ class Checker_test:
     def test_compliantfiles(self):
 
         cdldirmain = "/data/compliant/"
-        listsubdir = fct.get_immediate_subdirectories(
+        listsubdir = utils.get_immediate_subdirectories(
             os.path.join(os.path.dirname(os.path.realpath(__file__))) + cdldirmain
         )
 
@@ -80,16 +79,16 @@ class Checker_test:
             for ncfile in listnc:
 
                 status = main(["-t", subdir, ncfile])
-                fct.prBlack(
+                utils.prBlack(
                     "Check " + ncfile + " with configuration [" + subdir.upper() + "]"
                 )
                 try:
                     assert status == 1
                     print((subdir + ncfile))
-                    fct.prGreen(" PASSED - Checker status is 1 (Successful)")
+                    utils.prGreen(" PASSED - Checker status is 1 (Successful)")
                 except:
                     self.failed += 1
-                    fct.prRed(" FAILED - Checker status should be 1 (Successful)")
+                    utils.prRed(" FAILED - Checker status should be 1 (Successful)")
 
             if not (self.keep):
                 shutil.rmtree(tmpdir)
@@ -97,7 +96,7 @@ class Checker_test:
 
     def test_noncompliantfiles(self):
         cdldirmain = "/data/non_compliant/"
-        listsubdir = fct.get_immediate_subdirectories(
+        listsubdir = utils.get_immediate_subdirectories(
             os.path.join(os.path.dirname(os.path.realpath(__file__))) + cdldirmain
         )
         for subdir in listsubdir:
@@ -110,10 +109,10 @@ class Checker_test:
                 )
                 try:
                     assert status == 0
-                    fct.prGreen(" PASSED - Checker status is 1 (Unsuccessful)")
+                    utils.prGreen(" PASSED - Checker status is 0 (Unsuccessful)")
                 except:
                     self.failed += 1
-                    fct.prRed(" FAILED - Checker status should be 0 (Unsuccessful)")
+                    utils.prRed(" FAILED - Checker status should be 0 (Unsuccessful)")
 
             shutil.rmtree(tmpdir)
 
@@ -126,10 +125,12 @@ if __name__ == "__main__":
     args = parser.parse_args(sys.argv[1:])
 
     a = datetime.datetime.now()
-    fct.prGreen("========== Test session start - " + str(a) + "=========")
+    utils.prGreen("========== Test session start - " + str(a) + "=========")
 
-    fct.prCyan("Plateform: " + str(platform.system()) + " - " + str(platform.version()))
-    fct.prCyan("Python: " + str(platform.python_version()))
+    utils.prCyan(
+        "Plateform: " + str(platform.system()) + " - " + str(platform.version())
+    )
+    utils.prCyan("Python: " + str(platform.python_version()))
 
     failed = Checker_test(args.keep).get_failed()
 
@@ -138,8 +139,8 @@ if __name__ == "__main__":
     e = divmod(c.days * 86400 + c.seconds, 60)
 
     if failed > 0:
-        fct.prRedBold("Something Wrong")
-        fct.prRed(
+        utils.prRedBold("Something Wrong")
+        utils.prRed(
             "========== Test session end - Elapsed time : "
             + str(e[0])
             + " minutes "
@@ -148,8 +149,8 @@ if __name__ == "__main__":
         )
 
     else:
-        fct.prGreenBold("Tests OK")
-        fct.prGreen(
+        utils.prGreenBold("Tests OK")
+        utils.prGreen(
             "========== Test session end - Elapsed time : "
             + str(e[0])
             + " minutes "
