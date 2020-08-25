@@ -24,39 +24,31 @@ def read(fname):
     return open(file_path).read()
 
 
-version = '0.1.3'
+version = "0.1.3"
 
 
 setup(
-    name='c3schecker',
+    name="c3schecker",
     version=version,
-    author='ECMWF',
-    author_email='cedric.bergeron@ecmwf.int',
-    license='Apache2.0',
-    url='https://git.ecmwf.int/projects/CDS/repos/checker/browse',
+    author="ECMWF",
+    author_email="cedric.bergeron@ecmwf.int",
+    license="Apache2.0",
+    url="https://git.ecmwf.int/projects/CDS/repos/checker/browse",
     description="Checker for C3S NetCDF files",
-    long_description=read('README.rst'),
-    packages=find_packages('src'),
-    package_dir={'': 'src'},
+    long_description=read("README.rst"),
+    packages=find_packages("src"),
+    package_dir={"": "src"},
     include_package_data=True,
-    install_requires=[
-        'netCDF4',
-        'cfunits',
-        'numpy'
-    ],
+    install_requires=["netCDF4", "cfunits", "numpy"],
     classifiers=[
-        'Development Status :: Alpha',
-        'Intended Audience :: Data Analysts',
-        'Programming Language :: Python',
-        'Programming Language :: Python :: 3',
-        'Operating System :: OS Independent',
-        'License :: Apache 2.0',
-        'Topic :: Scientific/Engineering :: Copernicus Climate Change Service',
+        "Development Status :: Alpha",
+        "Intended Audience :: Data Analysts",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 3",
+        "Operating System :: OS Independent",
+        "License :: Apache 2.0",
+        "Topic :: Scientific/Engineering :: Copernicus Climate Change Service",
     ],
-    keywords='',
-    entry_points={
-        'console_scripts': [
-            'c3s-checker = c3schecker.cmd:main'
-        ],
-    },
+    keywords="",
+    entry_points={"console_scripts": ["c3s-checker = c3schecker.cmd:main"]},
 )

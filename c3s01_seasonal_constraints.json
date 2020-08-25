@@ -1,0 +1,2987 @@
+{
+    "convention": {
+        "expected": "CF-1.6 C3S-0.1"
+    },
+    "netcdf_format": {
+        "expected": "NETCDF4_CLASSIC"
+    },
+    "nb_data_var_per_file": {
+        "expected": 1
+    },
+    "dimensions": {
+        "expected": [
+            "lat",
+            "lon"
+        ],
+        "authorized": [
+            "plev",
+            "depth",
+            "height",
+            "realization",
+            "time",
+            "time_bnds",
+            "leadtime_bnds",
+            "lat_bnds",
+            "lon_bnds",
+            "depth_bnds",
+            "str31",
+            "leadtime"
+        ]
+    },
+    "attributes_per_var_names": {
+        "time": {
+            "expected": [
+                "units",
+                "calendar",
+                "long_name",
+                "standard_name"
+            ]
+        },
+        "reftime": {
+            "expected": [
+                "units",
+                "calendar",
+                "long_name",
+                "standard_name"
+            ]
+        },
+        "leadtime": {
+            "expected": [
+                "units",
+                "long_name",
+                "standard_name"
+            ]
+        },
+        "latitude": {
+            "expected": [
+                "axis",
+                "units",
+                "long_name",
+                "valid_min",
+                "valid_max",
+                "bounds",
+                "standard_name"
+            ]
+        },
+        "longitude": {
+            "expected": [
+                "axis",
+                "units",
+                "long_name",
+                "valid_min",
+                "valid_max",
+                "bounds",
+                "standard_name"
+            ]
+        },
+        "air_pressure": {
+            "expected": [
+                "axis",
+                "units",
+                "long_name",
+                "positive",
+                "standard_name"
+            ]
+        },
+        "depth": {
+            "expected": [
+                "axis",
+                "units",
+                "long_name",
+                "positive",
+                "bounds",
+                "standard_name"
+            ]
+        },
+        "height": {
+            "expected": [
+                "axis",
+                "units",
+                "long_name",
+                "positive",
+                "valid_min",
+                "valid_max",
+                "standard_name"
+            ]
+        },
+        "realization": {
+            "expected": [
+                "units",
+                "axis",
+                "standard_name",
+                "long_name"
+            ]
+        }
+    },
+    "possible_values_per_attributes": {
+        "calendar": {
+            "expected": [
+                "gregorian"
+            ]
+        }
+    },
+    "attributes_values_per_var_name": {
+        "lat": {
+            "expected": {
+                "units": "degrees_north",
+                "long_name": "latitude",
+                "standard_name": "latitude",
+                "axis": "Y",
+                "valid_min": -90.0,
+                "valid_max": 90.0,
+                "bounds": "lat_bnds"
+            }
+        },
+        "lon": {
+            "expected": {
+                "units": "degrees_east",
+                "long_name": "longitude",
+                "standard_name": "longitude",
+                "axis": "X",
+                "valid_min": 0.0,
+                "valid_max": 360.0,
+                "bounds": "lon_bnds"
+            }
+        },
+        "plev": {
+            "expected": {
+                "units": "Pa",
+                "long_name": "pressure",
+                "standard_name": "air_pressure",
+                "axis": "Z",
+                "positive": "down"
+            }
+        },
+        "depth": {
+            "expected": {
+                "units": "m",
+                "long_name": "depth",
+                "axis": "Z",
+                "positive": "down"
+            }
+        },
+        "height": {
+            "expected": {
+                "units": "m",
+                "long_name": "height",
+                "axis": "Z",
+                "positive": "up"
+            }
+        },
+        "realization": {
+            "expected": {
+                "units": "1",
+                "long_name": "realization",
+                "axis": "E",
+                "standard_name": "realization"
+            }
+        },
+        "reftime": {
+            "expected": {
+                "long_name": "Start date of the forecast",
+                "standard_name": "forecast_reference_time",
+                "calendar": "gregorian"
+            }
+        },
+        "leadtime": {
+            "expected": {
+                "long_name": "Time elapsed since the start of the forecast",
+                "standard_name": "forecast_period"
+            }
+        },
+        "time": {
+            "expected": {
+                "long_name": "Verification time of the forecast",
+                "calendar": "gregorian"
+            }
+        },
+        "hcrs": {
+            "expected": {
+                "grid_mapping_name": "latitude_longitude"
+            }
+        },
+        "sftlf": {
+            "expected": {
+                "units": "1",
+                "grid_mapping": "hcrs",
+                "long_name": "Land Area Fraction",
+                "coordinates": "lat lon",
+                "valid_min": 0,
+                "valid_max": 1
+            }
+        },
+        "orog": {
+            "expected": {
+                "units": "m",
+                "grid_mapping": "hcrs",
+                "long_name": "Surface Altitude",
+                "coordinates": "lat lon"
+            }
+        },
+        "tas": {
+            "expected": {
+                "long_name": "Near-Surface Air Temperature",
+                "units": "K",
+                "coordinates": "reftime realization time leadtime height lat lon",
+                "standard_name": "air_temperature",
+                "cell_methods": "leadtime: point",
+                "grid_mapping": "hcrs"
+            }
+        },
+        "tasmax": {
+            "expected": {
+                "long_name": "Daily Maximum Near-Surface Air Temperature",
+                "units": "K",
+                "coordinates": "reftime realization time leadtime height lat lon",
+                "standard_name": "air_temperature",
+                "cell_methods": "(leadtime: maximum$|(leadtime: maximum \\(interval: ?[0-9]*?.?[0-9]?[0-9] ?[a-z]*?\\)))",
+                "grid_mapping": "hcrs"
+            }
+        },
+        "tasmin": {
+            "expected": {
+                "long_name": "Daily Minimum Near-Surface Air Temperature",
+                "units": "K",
+                "coordinates": "reftime realization time leadtime height lat lon",
+                "standard_name": "air_temperature",
+                "cell_methods": "(leadtime: minimum$|(leadtime: minimum \\(interval: ?[0-9]*?.?[0-9]?[0-9] ?[a-z]*?\\)))",
+                "grid_mapping": "hcrs"
+            }
+        },
+        "tdps": {
+            "expected": {
+                "long_name": "2m Dewpoint Temperature",
+                "units": "K",
+                "coordinates": "reftime realization time leadtime height lat lon",
+                "standard_name": "dew_point_temperature",
+                "cell_methods": "leadtime: point",
+                "grid_mapping": "hcrs"
+            }
+        },
+        "uas": {
+            "expected": {
+                "long_name": "Eastward Near-Surface Wind",
+                "units": "m s-1",
+                "coordinates": "reftime realization time leadtime height lat lon",
+                "standard_name": "x_wind",
+                "cell_methods": "leadtime: point",
+                "grid_mapping": "hcrs"
+            }
+        },
+        "vas": {
+            "expected": {
+                "long_name": "Northward Near-Surface Wind",
+                "units": "m s-1",
+                "coordinates": "reftime realization time leadtime height lat lon",
+                "standard_name": "y_wind",
+                "cell_methods": "leadtime: point",
+                "grid_mapping": "hcrs"
+            }
+        },
+        "wsgmax": {
+            "expected": {
+                "long_name": "Maximum Wind Speed of Gust",
+                "units": "m s-1",
+                "coordinates": "reftime realization time leadtime height lat lon",
+                "standard_name": "wind_speed_of_gust",
+                "cell_methods": "(leadtime: maximum$|(leadtime: maximum \\(interval: ?[0-9]*?.?[0-9]?[0-9] ?[a-z]*?\\)))",
+                "grid_mapping": "hcrs"
+            }
+        },
+        "psl": {
+            "expected": {
+                "long_name": "Sea Level Pressure",
+                "units": "Pa",
+                "coordinates": "reftime realization time leadtime lat lon",
+                "standard_name": "air_pressure_at_sea_level",
+                "cell_methods": "leadtime: point",
+                "grid_mapping": "hcrs"
+            }
+        },
+        "clt": {
+            "expected": {
+                "long_name": "Total Cloud Fraction",
+                "units": "1",
+                "coordinates": "reftime realization time leadtime lat lon",
+                "standard_name": "cloud_area_fraction",
+                "cell_methods": "leadtime: point",
+                "grid_mapping": "hcrs"
+            }
+        },
+        "tsl": {
+            "expected": {
+                "long_name": "Temperature of Soil",
+                "units": "K",
+                "coordinates": "reftime realization time leadtime lat lon",
+                "standard_name": "soil_temperature",
+                "cell_methods": "leadtime: point",
+                "grid_mapping": "hcrs"
+            }
+        },
+        "tso": {
+            "expected": {
+                "long_name": "Sea Surface Temperature",
+                "units": "K",
+                "coordinates": "reftime realization time leadtime lat lon",
+                "standard_name": "sea_surface_temperature",
+                "cell_methods": "leadtime: point",
+                "grid_mapping": "hcrs"
+            }
+        },
+        "sitemptop": {
+            "expected": {
+                "long_name": "Surface Temperature of Sea Ice",
+                "units": "K",
+                "coordinates": "reftime realization time leadtime lat lon",
+                "standard_name": "sea_ice_temperature",
+                "cell_methods": "leadtime: point",
+                "grid_mapping": "hcrs"
+            }
+        },
+        "sic": {
+            "expected": {
+                "long_name": "Sea Ice Area Fraction",
+                "units": "1",
+                "coordinates": "reftime realization time leadtime lat lon",
+                "standard_name": "sea_ice_area_fraction",
+                "cell_methods": "leadtime: point",
+                "grid_mapping": "hcrs"
+            }
+        },
+        "mrlsl": {
+            "expected": {
+                "long_name": "Water Content per Unit Area of Soil Layers",
+                "units": "kg m-2",
+                "coordinates": "reftime realization time leadtime depth lat lon",
+                "standard_name": "moisture_content_of_soil_layer",
+                "cell_methods": "leadtime: point",
+                "grid_mapping": "hcrs"
+            }
+        },
+        "lwesnw": {
+            "expected": {
+                "long_name": "Liquid Water Equivalent Thickness of Surface Snow Amount",
+                "units": "m",
+                "coordinates": "reftime realization time leadtime lat lon",
+                "standard_name": "lwe_thickness_of_surface_snow_amount",
+                "cell_methods": "leadtime: point",
+                "grid_mapping": "hcrs"
+            }
+        },
+        "rhosn": {
+            "expected": {
+                "long_name": "Snow Density",
+                "units": "kg m-3",
+                "coordinates": "reftime realization time leadtime lat lon",
+                "standard_name": "snow_density",
+                "cell_methods": "leadtime: point",
+                "grid_mapping": "hcrs"
+            }
+        },
+        "lweprs": {
+            "expected": {
+                "long_name": "Liquid Water Equivalent Thickness of Stratiform Precipitation Amount",
+                "units": "m",
+                "coordinates": "reftime realization time leadtime lat lon",
+                "standard_name": "lwe_thickness_of_stratiform_precipitation_amount",
+                "cell_methods": "leadtime: sum",
+                "grid_mapping": "hcrs"
+            }
+        },
+        "lweprc": {
+            "expected": {
+                "long_name": "Liquid Water Equivalent Thickness of Convective Precipitation Amount",
+                "units": "m",
+                "coordinates": "reftime realization time leadtime lat lon",
+                "standard_name": "lwe_thickness_of_convective_precipitation_amount",
+                "cell_methods": "leadtime: sum",
+                "grid_mapping": "hcrs"
+            }
+        },
+        "lwepr": {
+            "expected": {
+                "long_name": "Liquid Water Equivalent Thickness of Total Precipitation Amount",
+                "units": "m",
+                "coordinates": "reftime realization time leadtime lat lon",
+                "standard_name": "lwe_thickness_of_precipitation_amount",
+                "cell_methods": "leadtime: sum",
+                "grid_mapping": "hcrs"
+            }
+        },
+        "lweprsn": {
+            "expected": {
+                "long_name": "Liquid Water Equivalent Thickness of Snowfall Amount",
+                "units": "m",
+                "coordinates": "reftime realization time leadtime lat lon",
+                "standard_name": "lwe_thickness_of_snowfall_amount",
+                "cell_methods": "leadtime: sum",
+                "grid_mapping": "hcrs"
+            }
+        },
+        "hfss": {
+            "expected": {
+                "long_name": "Surface Upward Sensible Heat Flux",
+                "units": "W m-2",
+                "coordinates": "reftime realization time leadtime lat lon",
+                "standard_name": "surface_upward_sensible_heat_flux",
+                "cell_methods": "(leadtime: mean$|(leadtime: mean \\(interval: ?[0-9]*?.?[0-9]?[0-9] ?[a-z]*?\\)))",
+                "grid_mapping": "hcrs"
+            }
+        },
+        "hfls": {
+            "expected": {
+                "long_name": "Surface Upward Latent Heat Flux",
+                "units": "W m-2",
+                "coordinates": "reftime realization time leadtime lat lon",
+                "standard_name": "surface_upward_latent_heat_flux",
+                "cell_methods": "(leadtime: mean$|(leadtime: mean \\(interval: ?[0-9]*?.?[0-9]?[0-9] ?[a-z]*?\\)))",
+                "grid_mapping": "hcrs"
+            }
+        },
+        "rsds": {
+            "expected": {
+                "long_name": "Surface Downwelling Shortwave Radiation",
+                "units": "W m-2",
+                "coordinates": "reftime realization time leadtime lat lon",
+                "standard_name": "surface_downwelling_shortwave_flux_in_air",
+                "cell_methods": "(leadtime: mean$|(leadtime: mean \\(interval: ?[0-9]*?.?[0-9]?[0-9] ?[a-z]*?\\)))",
+                "grid_mapping": "hcrs"
+            }
+        },
+        "rlds": {
+            "expected": {
+                "long_name": "Surface Downwelling Longwave Radiation",
+                "units": "W m-2",
+                "coordinates": "reftime realization time leadtime lat lon",
+                "standard_name": "surface_downwelling_longwave_flux_in_air",
+                "cell_methods": "(leadtime: mean$|(leadtime: mean \\(interval: ?[0-9]*?.?[0-9]?[0-9] ?[a-z]*?\\)))",
+                "grid_mapping": "hcrs"
+            }
+        },
+        "rss": {
+            "expected": {
+                "long_name": "Net Shortwave Surface Radiation",
+                "units": "W m-2",
+                "coordinates": "reftime realization time leadtime lat lon",
+                "cell_methods": "(leadtime: mean$|(leadtime: mean \\(interval: ?[0-9]*?.?[0-9]?[0-9] ?[a-z]*?\\)))",
+                "standard_name": "surface_net_downward_shortwave_flux",
+                "grid_mapping": "hcrs"
+            }
+        },
+        "rls": {
+            "expected": {
+                "long_name": "Net Longwave Surface Radiation",
+                "units": "W m-2",
+                "coordinates": "reftime realization time leadtime lat lon",
+                "standard_name": "surface_net_downward_longwave_flux",
+                "cell_methods": "(leadtime: mean$|(leadtime: mean \\(interval: ?[0-9]*?.?[0-9]?[0-9] ?[a-z]*?\\)))",
+                "grid_mapping": "hcrs"
+            }
+        },
+        "rst": {
+            "expected": {
+                "long_name": "TOA Net Shortwave Radiation",
+                "units": "W m-2",
+                "coordinates": "reftime realization time leadtime lat lon",
+                "standard_name": "toa_net_downward_shortwave_flux",
+                "cell_methods": "(leadtime: mean$|(leadtime: mean \\(interval: ?[0-9]*?.?[0-9]?[0-9] ?[a-z]*?\\)))",
+                "grid_mapping": "hcrs"
+            }
+        },
+        "rlt": {
+            "expected": {
+                "long_name": "TOA Net Longwave Radiation",
+                "units": "W m-2",
+                "coordinates": "reftime realization time leadtime lat lon",
+                "standard_name": "toa_net_downward_longwave_flux",
+                "cell_methods": "(leadtime: mean$|(leadtime: mean \\(interval: ?[0-9]*?.?[0-9]?[0-9] ?[a-z]*?\\)))",
+                "grid_mapping": "hcrs"
+            }
+        },
+        "rsdt": {
+            "expected": {
+                "long_name": "TOA Incident Shortwave Radiation",
+                "units": "W m-2",
+                "coordinates": "reftime realization time leadtime lat lon",
+                "standard_name": "toa_incoming_shortwave_flux",
+                "cell_methods": "(leadtime: mean$|(leadtime: mean \\(interval: ?[0-9]*?.?[0-9]?[0-9] ?[a-z]*?\\)))",
+                "grid_mapping": "hcrs"
+            }
+        },
+        "tauu": {
+            "expected": {
+                "long_name": "Surface Downward Eastward Wind Stress",
+                "units": "Pa",
+                "coordinates": "reftime realization time leadtime lat lon",
+                "standard_name": "surface_downward_eastward_stress",
+                "cell_methods": "(leadtime: mean$|(leadtime: mean \\(interval: ?[0-9]*?.?[0-9]?[0-9] ?[a-z]*?\\)))",
+                "grid_mapping": "hcrs"
+            }
+        },
+        "tauv": {
+            "expected": {
+                "long_name": "Surface Downward Northward Wind Stress",
+                "units": "Pa",
+                "coordinates": "reftime realization time leadtime lat lon",
+                "standard_name": "surface_downward_northward_stress",
+                "cell_methods": "(leadtime: mean$|(leadtime: mean \\(interval: ?[0-9]*?.?[0-9]?[0-9] ?[a-z]*?\\)))",
+                "grid_mapping": "hcrs"
+            }
+        },
+        "lwee": {
+            "expected": {
+                "long_name": "Liquid Water Equivalent Thickness of Evaporation Amount",
+                "units": "m",
+                "coordinates": "reftime realization time leadtime lat lon",
+                "standard_name": "lwe_thickness_of_water_evaporation_amount",
+                "cell_methods": "leadtime: sum",
+                "grid_mapping": "hcrs"
+            }
+        },
+        "mrroa": {
+            "expected": {
+                "long_name": "Total Run-off Amount",
+                "units": "kg m-2",
+                "coordinates": "reftime realization time leadtime lat lon",
+                "standard_name": "runoff_amount",
+                "cell_methods": "leadtime: sum",
+                "grid_mapping": "hcrs"
+            }
+        },
+        "mrroas": {
+            "expected": {
+                "long_name": "Surface Run-off Amount",
+                "units": "kg m-2",
+                "coordinates": "reftime realization time leadtime lat lon",
+                "standard_name": "surface_runoff_amount",
+                "cell_methods": "leadtime: sum",
+                "grid_mapping": "hcrs"
+            }
+        },
+        "mrroab": {
+            "expected": {
+                "long_name": "Subsurface Run-off Amount",
+                "units": "kg m-2",
+                "coordinates": "reftime realization time leadtime lat lon",
+                "standard_name": "subsurface_runoff_amount",
+                "cell_methods": "leadtime: sum",
+                "grid_mapping": "hcrs"
+            }
+        },
+        "zg": {
+            "expected": {
+                "long_name": "Geopotential Height",
+                "units": "m",
+                "coordinates": "reftime realization time leadtime plev lat lon",
+                "standard_name": "geopotential_height",
+                "cell_methods": "leadtime: point",
+                "grid_mapping": "hcrs"
+            }
+        },
+        "ta": {
+            "expected": {
+                "long_name": "Air Temperature",
+                "units": "K",
+                "coordinates": "reftime realization time leadtime plev lat lon",
+                "standard_name": "air_temperature",
+                "cell_methods": "leadtime: point",
+                "grid_mapping": "hcrs"
+            }
+        },
+        "hus": {
+            "expected": {
+                "long_name": "Specific Humidity",
+                "units": "1",
+                "coordinates": "reftime realization time leadtime plev lat lon",
+                "standard_name": "specific_humidity",
+                "cell_methods": "leadtime: point",
+                "grid_mapping": "hcrs"
+            }
+        },
+        "rv": {
+            "expected": {
+                "long_name": "Relative Vorticity",
+                "units": "s-1",
+                "coordinates": "reftime realization time leadtime plev lat lon",
+                "standard_name": "atmospheric_relative_vorticity",
+                "cell_methods": "leadtime: point",
+                "grid_mapping": "hcrs"
+            }
+        },
+        "wnddiv": {
+            "expected": {
+                "long_name": "Divergence of Wind",
+                "units": "s-1",
+                "coordinates": "reftime realization time leadtime plev lat lon",
+                "standard_name": "divergence_of_wind",
+                "cell_methods": "leadtime: point",
+                "grid_mapping": "hcrs"
+            }
+        },
+        "ua": {
+            "expected": {
+                "long_name": "Eastward Wind",
+                "units": "m s-1",
+                "coordinates": "reftime realization time leadtime plev lat lon",
+                "standard_name": "x_wind",
+                "cell_methods": "leadtime: point",
+                "grid_mapping": "hcrs"
+            }
+        },
+        "va": {
+            "expected": {
+                "long_name": "Northward Wind",
+                "units": "m s-1",
+                "coordinates": "reftime realization time leadtime plev lat lon",
+                "standard_name": "y_wind",
+                "cell_methods": "leadtime: point",
+                "grid_mapping": "hcrs"
+            }
+        }
+    },
+    "global_attributes": {
+        "expected": [
+            "Conventions",
+            "comment",
+            "summary",
+            "title",
+            "forecast_type",
+            "institute_id",
+            "project",
+            "source",
+            "contact",
+            "references",
+            "forecast_reference_time",
+            "keywords",
+            "creation_date",
+            "institution",
+            "history",
+            "modeling_realm",
+            "frequency",
+            "level_type",
+            "commit"
+        ]
+    },
+    "global_attributes_possible_values": {
+        "expected": {
+            "Conventions": [
+                "CF-1.6 C3S-0.1"
+            ],
+            "summary": [
+                "Seasonal Forecast data produced by ECMWF as its contribution to the seasonal forecast activity of the Copernicus Climate Change Service (C3S). The data has global coverage with a 1-degree horizontal resolution and spans for around 6 months since the start date",
+                "Seasonal Forecast data produced by Met Office as its contribution to the seasonal forecast activity of the Copernicus Climate Change Service (C3S). The data has global coverage with a 1-degree horizontal resolution and spans for around 6 months since the start date",
+                "Seasonal Forecast data produced by Meteo-France as its contribution to the seasonal forecast activity of the Copernicus Climate Change Service (C3S). The data has global coverage with a 1-degree horizontal resolution and spans for around 6 months since the start date",
+                "Seasonal Forecast data produced by DWD as its contribution to the seasonal forecast activity of the Copernicus Climate Change Service (C3S). The data has global coverage with a 1-degree horizontal resolution and spans for around 6 months since the start date",
+                "Seasonal Forecast data produced by CMCC as its contribution to the seasonal forecast activity of the Copernicus Climate Change Service (C3S). The data has global coverage with a 1-degree horizontal resolution and spans for around 6 months since the start date"
+            ],
+            "title": [
+                "ECMWF seasonal forecast model output prepared for C3S",
+                "Met Office seasonal forecast model output prepared for C3S",
+                "Meteo-France seasonal forecast model output prepared for C3S",
+                "DWD seasonal forecast model output prepared for C3S",
+                "CMCC seasonal forecast model output prepared for C3S"
+            ],
+            "forecast_type": [
+                "forecast",
+                "hindcast"
+            ],
+            "institute_id": [
+                "ecmf",
+                "egrr",
+                "lfpw",
+                "edzw",
+                "cmcc"
+            ],
+            "project": [
+                "C3S Seasonal Forecast"
+            ],
+            "contact": [
+                "http://copernicus-support.ecmwf.int"
+            ],
+            "keywords": [
+                "Seasonal Forecasts, C3S, ECMWF, Copernicus, Climate Change, Climate Services, Earth Science Services, Environmental Advisories, Climate Advisories"
+            ],
+            "institution": [
+                "ECMWF, European Centre for Medium-Range Weather Forecasts, Reading, United Kingdom",
+                "Met Office, Exeter, United Kingdom",
+                "Meteo-France, Toulouse, France",
+                "DWD, Deutscher Wetterdienst, Offenbach, Germany",
+                "CMCC, Centro Euro-Mediterraneo sui Cambiamenti Climatici, Bologna, Italy"
+            ],
+            "history": [
+                ""
+            ],
+            "modeling_realm": [
+                "atmos",
+                "ocean",
+                "land",
+                "landIce",
+                "seaIce",
+                "aerosol",
+                "atmosChem",
+                "ocnBgchem"
+            ],
+            "frequency": [
+                "mon",
+                "day",
+                "12hr",
+                "6hr",
+                "fix"
+            ],
+            "level_type": [
+                "surface",
+                "pressure",
+                "soil"
+            ]
+        }
+    },
+    "global_attributes_date_format": {
+        "expected": {
+            "creation_date": "%Y-%m-%dT%H:%M:%SZ",
+            "forecast_reference_time": "%Y-%m-%dT%H:%M:%SZ"
+        }
+    },
+    "variables_exact_dimensions": {
+        "expected": {
+            "lat": [
+                "lat"
+            ],
+            "lon": [
+                "lon"
+            ],
+            "plev": [
+                "plev"
+            ],
+            "depth": [
+                "depth"
+            ],
+            "realization": [
+                "str31"
+            ],
+            "leadtime": [
+                "leadtime"
+            ],
+            "time": [
+                "leadtime"
+            ],
+            "sftlf": [
+                "lat",
+                "lon"
+            ],
+            "orog": [
+                "lat",
+                "lon"
+            ],
+            "tas": [
+                "leadtime",
+                "lat",
+                "lon"
+            ],
+            "tasmax": [
+                "leadtime",
+                "lat",
+                "lon"
+            ],
+            "tasmin": [
+                "leadtime",
+                "lat",
+                "lon"
+            ],
+            "tdps": [
+                "leadtime",
+                "lat",
+                "lon"
+            ],
+            "uas": [
+                "leadtime",
+                "lat",
+                "lon"
+            ],
+            "vas": [
+                "leadtime",
+                "lat",
+                "lon"
+            ],
+            "wsgmax": [
+                "leadtime",
+                "lat",
+                "lon"
+            ],
+            "psl": [
+                "leadtime",
+                "lat",
+                "lon"
+            ],
+            "clt": [
+                "leadtime",
+                "lat",
+                "lon"
+            ],
+            "tsl": [
+                "leadtime",
+                "lat",
+                "lon"
+            ],
+            "tso": [
+                "leadtime",
+                "lat",
+                "lon"
+            ],
+            "sitemptop": [
+                "leadtime",
+                "lat",
+                "lon"
+            ],
+            "sic": [
+                "leadtime",
+                "lat",
+                "lon"
+            ],
+            "mrlsl": [
+                "leadtime",
+                "depth",
+                "lat",
+                "lon"
+            ],
+            "lwesnw": [
+                "leadtime",
+                "lat",
+                "lon"
+            ],
+            "rhosn": [
+                "leadtime",
+                "lat",
+                "lon"
+            ],
+            "lweprs": [
+                "leadtime",
+                "lat",
+                "lon"
+            ],
+            "lweprc": [
+                "leadtime",
+                "lat",
+                "lon"
+            ],
+            "lwepr": [
+                "leadtime",
+                "lat",
+                "lon"
+            ],
+            "lweprsn": [
+                "leadtime",
+                "lat",
+                "lon"
+            ],
+            "hfss": [
+                "leadtime",
+                "lat",
+                "lon"
+            ],
+            "hfls": [
+                "leadtime",
+                "lat",
+                "lon"
+            ],
+            "rsds": [
+                "leadtime",
+                "lat",
+                "lon"
+            ],
+            "rlds": [
+                "leadtime",
+                "lat",
+                "lon"
+            ],
+            "rss": [
+                "leadtime",
+                "lat",
+                "lon"
+            ],
+            "rls": [
+                "leadtime",
+                "lat",
+                "lon"
+            ],
+            "rst": [
+                "leadtime",
+                "lat",
+                "lon"
+            ],
+            "rlt": [
+                "leadtime",
+                "lat",
+                "lon"
+            ],
+            "rsdt": [
+                "leadtime",
+                "lat",
+                "lon"
+            ],
+            "tauu": [
+                "leadtime",
+                "lat",
+                "lon"
+            ],
+            "tauv": [
+                "leadtime",
+                "lat",
+                "lon"
+            ],
+            "lwee": [
+                "leadtime",
+                "lat",
+                "lon"
+            ],
+            "mrroa": [
+                "leadtime",
+                "lat",
+                "lon"
+            ],
+            "mrroas": [
+                "leadtime",
+                "lat",
+                "lon"
+            ],
+            "mrroab": [
+                "leadtime",
+                "lat",
+                "lon"
+            ],
+            "zg": [
+                "leadtime",
+                "plev",
+                "lat",
+                "lon"
+            ],
+            "ta": [
+                "leadtime",
+                "plev",
+                "lat",
+                "lon"
+            ],
+            "hus": [
+                "leadtime",
+                "plev",
+                "lat",
+                "lon"
+            ],
+            "rv": [
+                "leadtime",
+                "plev",
+                "lat",
+                "lon"
+            ],
+            "wnddiv": [
+                "leadtime",
+                "plev",
+                "lat",
+                "lon"
+            ],
+            "ua": [
+                "leadtime",
+                "plev",
+                "lat",
+                "lon"
+            ],
+            "va": [
+                "leadtime",
+                "plev",
+                "lat",
+                "lon"
+            ]
+        }
+    },
+    "grib_consistency": {
+        "expected": {
+            "129": {
+                "name": "z",
+                "cf": {
+                    "units": "m2 s-2",
+                    "long_name": "Geopotential",
+                    "standard_name": "geopotential"
+                }
+            },
+            "167": {
+                "name": "t",
+                "cf": {
+                    "units": "Ko",
+                    "long_name": "Temperature",
+                    "standard_name": "air_temperature"
+                }
+            },
+            "133": {
+                "name": "q",
+                "cf": {
+                    "units": "1",
+                    "long_name": "Specific humidity",
+                    "standard_name": "specific_humidity"
+                }
+            },
+            "140229": {
+                "name": "swh",
+                "cf": {
+                    "units": "m",
+                    "long_name": "Significant wave height",
+                    "standard_name": "significant_height_of_swell_waves"
+                }
+            }
+        }
+    },
+    "data_intervals": {
+        "expected": {
+            "default": {
+                "lat": 1.0,
+                "lon": 1.0
+            },
+            "tas": {
+                "with_cell_methods": "leadtime: point",
+                "dimensions": {
+                    "leadtime": 6
+                }
+            },
+            "tasmax": {
+                "dimensions": {
+                    "leadtime": 24
+                }
+            },
+            "tasmin": {
+                "with_cell_methods": "leadtime: minimum (interval: 0.75 hour)",
+                "dimensions": {
+                    "leadtime": 24
+                }
+            },
+            "tdps": {
+                "with_cell_methods": "leadtime: point",
+                "dimensions": {
+                    "leadtime": 6
+                }
+            },
+            "tsl": {
+                "with_cell_methods": "leadtime: point",
+                "dimensions": {
+                    "leadtime": 6
+                }
+            },
+            "uas": {
+                "with_cell_methods": "leadtime: point",
+                "dimensions": {
+                    "leadtime": 6
+                }
+            },
+            "vas": {
+                "with_cell_methods": "leadtime: point",
+                "dimensions": {
+                    "leadtime": 6
+                }
+            },
+            "wsgmax": {
+                "with_cell_methods": "leadtime: maximum (interval: 1 hour)",
+                "dimensions": {
+                    "leadtime": 6
+                }
+            },
+            "psl": {
+                "with_cell_methods": "leadtime: point",
+                "dimensions": {
+                    "leadtime": 6
+                }
+            },
+            "clt": {
+                "with_cell_methods": "leadtime: point",
+                "dimensions": {
+                    "leadtime": 6
+                }
+            },
+            "tso": {
+                "with_cell_methods": "leadtime: point",
+                "dimensions": {
+                    "leadtime": 6
+                }
+            },
+            "sitemptop": {
+                "with_cell_methods": "leadtime: point",
+                "dimensions": {
+                    "leadtime": 6
+                }
+            },
+            "sic": {
+                "with_cell_methods": "leadtime: point",
+                "dimensions": {
+                    "leadtime": 24
+                }
+            },
+            "mrlsl": {
+                "with_cell_methods": "leadtime: point",
+                "dimensions": {
+                    "leadtime": 24
+                }
+            },
+            "rhosn": {
+                "with_cell_methods": "leadtime: point",
+                "dimensions": {
+                    "leadtime": 24
+                }
+            },
+            "lweprs": {
+                "with_cell_methods": "leadtime: sum",
+                "dimensions": {
+                    "leadtime": 24
+                }
+            },
+            "lweprc": {
+                "with_cell_methods": "leadtime: sum",
+                "dimensions": {
+                    "leadtime": 24
+                }
+            },
+            "lwepr": {
+                "with_cell_methods": "leadtime: sum",
+                "dimensions": {
+                    "leadtime": 24
+                }
+            },
+            "lweprsn": {
+                "with_cell_methods": "leadtime: sum",
+                "dimensions": {
+                    "leadtime": 24
+                }
+            },
+            "hfss": {
+                "with_cell_methods": "leadtime: mean (interval: 1 hour)",
+                "dimensions": {
+                    "leadtime": 24
+                }
+            },
+            "hfls": {
+                "with_cell_methods": "leadtime: mean (interval: 1 hour)",
+                "dimensions": {
+                    "leadtime": 24
+                }
+            },
+            "rsds": {
+                "with_cell_methods": "leadtime: mean (interval: 1 hour)",
+                "dimensions": {
+                    "leadtime": 24
+                }
+            },
+            "rlds": {
+                "with_cell_methods": "leadtime: mean (interval: 1 hour)",
+                "dimensions": {
+                    "leadtime": 24
+                }
+            },
+            "rss": {
+                "with_cell_methods": "leadtime: mean (interval: 1 hour)",
+                "dimensions": {
+                    "leadtime": 24
+                }
+            },
+            "rls": {
+                "with_cell_methods": "leadtime: mean (interval: 1 hour)",
+                "dimensions": {
+                    "leadtime": 24
+                }
+            },
+            "rst": {
+                "with_cell_methods": "leadtime: mean (interval: 1 hour)",
+                "dimensions": {
+                    "leadtime": 24
+                }
+            },
+            "rlt": {
+                "with_cell_methods": "leadtime: mean (interval: 1 hour)",
+                "dimensions": {
+                    "leadtime": 24
+                }
+            },
+            "rsdt": {
+                "with_cell_methods": "leadtime: mean (interval: 1 hour)",
+                "dimensions": {
+                    "leadtime": 24
+                }
+            },
+            "tauu": {
+                "with_cell_methods": "leadtime: mean (interval: 1 hour)",
+                "dimensions": {
+                    "leadtime": 24
+                }
+            },
+            "tauv": {
+                "with_cell_methods": "leadtime: mean (interval: 1 hour)",
+                "dimensions": {
+                    "leadtime": 24
+                }
+            },
+            "lwee": {
+                "with_cell_methods": "leadtime: sum",
+                "dimensions": {
+                    "leadtime": 24
+                }
+            },
+            "mrroa": {
+                "with_cell_methods": "leadtime: sum",
+                "dimensions": {
+                    "leadtime": 24
+                }
+            },
+            "mrroas": {
+                "with_cell_methods": "leadtime: sum",
+                "dimensions": {
+                    "leadtime": 24
+                }
+            },
+            "mrroab": {
+                "with_cell_methods": "leadtime: sum",
+                "dimensions": {
+                    "leadtime": 24
+                }
+            },
+            "zg": {
+                "with_cell_methods": "leadtime: point",
+                "dimensions": {
+                    "leadtime": 12
+                }
+            },
+            "ta": {
+                "with_cell_methods": "leadtime: point",
+                "dimensions": {
+                    "leadtime": 12
+                }
+            },
+            "hus": {
+                "with_cell_methods": "leadtime: point",
+                "dimensions": {
+                    "leadtime": 12
+                }
+            },
+            "rv": {
+                "with_cell_methods": "leadtime: point",
+                "dimensions": {
+                    "leadtime": 12
+                }
+            },
+            "wnddiv": {
+                "with_cell_methods": "leadtime: point",
+                "dimensions": {
+                    "leadtime": 12
+                }
+            },
+            "ua": {
+                "with_cell_methods": "leadtime: point",
+                "dimensions": {
+                    "leadtime": 12
+                }
+            },
+            "va": {
+                "with_cell_methods": "leadtime: point",
+                "dimensions": {
+                    "leadtime": 12
+                }
+            }
+        }
+    },
+    "data_min_max": {
+        "expected": {
+            "default": {
+                "lat": [
+                    -89.5,
+                    89.5
+                ],
+                "lon": [
+                    0.5,
+                    359.5
+                ],
+                "lat_bnds": [
+                    -90.0,
+                    90.0
+                ],
+                "lon_bnds": [
+                    0.0,
+                    360.0
+                ],
+                "plev": [
+                    1000.0,
+                    92500.0
+                ]
+            }
+        }
+    },
+    "data_ranges": {
+        "expected": {
+            "default": {
+                "lat": [
+                    -90.0,
+                    90.0
+                ],
+                "lon": [
+                    0.0,
+                    360.0
+                ],
+                "lat_bnds": [
+                    -90.0,
+                    90.0
+                ],
+                "lon_bnds": [
+                    0.0,
+                    360.0
+                ],
+                "plev": [
+                    1000.0,
+                    92500.0
+                ],
+                "height": [
+                    0.0,
+                    30.0
+                ]
+            }
+        }
+    },
+    "data_values": {
+        "expected": {
+            "default": {
+                "lat": [
+                    -89.5,
+                    -88.5,
+                    -87.5,
+                    -86.5,
+                    -85.5,
+                    -84.5,
+                    -83.5,
+                    -82.5,
+                    -81.5,
+                    -80.5,
+                    -79.5,
+                    -78.5,
+                    -77.5,
+                    -76.5,
+                    -75.5,
+                    -74.5,
+                    -73.5,
+                    -72.5,
+                    -71.5,
+                    -70.5,
+                    -69.5,
+                    -68.5,
+                    -67.5,
+                    -66.5,
+                    -65.5,
+                    -64.5,
+                    -63.5,
+                    -62.5,
+                    -61.5,
+                    -60.5,
+                    -59.5,
+                    -58.5,
+                    -57.5,
+                    -56.5,
+                    -55.5,
+                    -54.5,
+                    -53.5,
+                    -52.5,
+                    -51.5,
+                    -50.5,
+                    -49.5,
+                    -48.5,
+                    -47.5,
+                    -46.5,
+                    -45.5,
+                    -44.5,
+                    -43.5,
+                    -42.5,
+                    -41.5,
+                    -40.5,
+                    -39.5,
+                    -38.5,
+                    -37.5,
+                    -36.5,
+                    -35.5,
+                    -34.5,
+                    -33.5,
+                    -32.5,
+                    -31.5,
+                    -30.5,
+                    -29.5,
+                    -28.5,
+                    -27.5,
+                    -26.5,
+                    -25.5,
+                    -24.5,
+                    -23.5,
+                    -22.5,
+                    -21.5,
+                    -20.5,
+                    -19.5,
+                    -18.5,
+                    -17.5,
+                    -16.5,
+                    -15.5,
+                    -14.5,
+                    -13.5,
+                    -12.5,
+                    -11.5,
+                    -10.5,
+                    -9.5,
+                    -8.5,
+                    -7.5,
+                    -6.5,
+                    -5.5,
+                    -4.5,
+                    -3.5,
+                    -2.5,
+                    -1.5,
+                    -0.5,
+                    0.5,
+                    1.5,
+                    2.5,
+                    3.5,
+                    4.5,
+                    5.5,
+                    6.5,
+                    7.5,
+                    8.5,
+                    9.5,
+                    10.5,
+                    11.5,
+                    12.5,
+                    13.5,
+                    14.5,
+                    15.5,
+                    16.5,
+                    17.5,
+                    18.5,
+                    19.5,
+                    20.5,
+                    21.5,
+                    22.5,
+                    23.5,
+                    24.5,
+                    25.5,
+                    26.5,
+                    27.5,
+                    28.5,
+                    29.5,
+                    30.5,
+                    31.5,
+                    32.5,
+                    33.5,
+                    34.5,
+                    35.5,
+                    36.5,
+                    37.5,
+                    38.5,
+                    39.5,
+                    40.5,
+                    41.5,
+                    42.5,
+                    43.5,
+                    44.5,
+                    45.5,
+                    46.5,
+                    47.5,
+                    48.5,
+                    49.5,
+                    50.5,
+                    51.5,
+                    52.5,
+                    53.5,
+                    54.5,
+                    55.5,
+                    56.5,
+                    57.5,
+                    58.5,
+                    59.5,
+                    60.5,
+                    61.5,
+                    62.5,
+                    63.5,
+                    64.5,
+                    65.5,
+                    66.5,
+                    67.5,
+                    68.5,
+                    69.5,
+                    70.5,
+                    71.5,
+                    72.5,
+                    73.5,
+                    74.5,
+                    75.5,
+                    76.5,
+                    77.5,
+                    78.5,
+                    79.5,
+                    80.5,
+                    81.5,
+                    82.5,
+                    83.5,
+                    84.5,
+                    85.5,
+                    86.5,
+                    87.5,
+                    88.5,
+                    89.5
+                ],
+                "lon": [
+                    0.5,
+                    1.5,
+                    2.5,
+                    3.5,
+                    4.5,
+                    5.5,
+                    6.5,
+                    7.5,
+                    8.5,
+                    9.5,
+                    10.5,
+                    11.5,
+                    12.5,
+                    13.5,
+                    14.5,
+                    15.5,
+                    16.5,
+                    17.5,
+                    18.5,
+                    19.5,
+                    20.5,
+                    21.5,
+                    22.5,
+                    23.5,
+                    24.5,
+                    25.5,
+                    26.5,
+                    27.5,
+                    28.5,
+                    29.5,
+                    30.5,
+                    31.5,
+                    32.5,
+                    33.5,
+                    34.5,
+                    35.5,
+                    36.5,
+                    37.5,
+                    38.5,
+                    39.5,
+                    40.5,
+                    41.5,
+                    42.5,
+                    43.5,
+                    44.5,
+                    45.5,
+                    46.5,
+                    47.5,
+                    48.5,
+                    49.5,
+                    50.5,
+                    51.5,
+                    52.5,
+                    53.5,
+                    54.5,
+                    55.5,
+                    56.5,
+                    57.5,
+                    58.5,
+                    59.5,
+                    60.5,
+                    61.5,
+                    62.5,
+                    63.5,
+                    64.5,
+                    65.5,
+                    66.5,
+                    67.5,
+                    68.5,
+                    69.5,
+                    70.5,
+                    71.5,
+                    72.5,
+                    73.5,
+                    74.5,
+                    75.5,
+                    76.5,
+                    77.5,
+                    78.5,
+                    79.5,
+                    80.5,
+                    81.5,
+                    82.5,
+                    83.5,
+                    84.5,
+                    85.5,
+                    86.5,
+                    87.5,
+                    88.5,
+                    89.5,
+                    90.5,
+                    91.5,
+                    92.5,
+                    93.5,
+                    94.5,
+                    95.5,
+                    96.5,
+                    97.5,
+                    98.5,
+                    99.5,
+                    100.5,
+                    101.5,
+                    102.5,
+                    103.5,
+                    104.5,
+                    105.5,
+                    106.5,
+                    107.5,
+                    108.5,
+                    109.5,
+                    110.5,
+                    111.5,
+                    112.5,
+                    113.5,
+                    114.5,
+                    115.5,
+                    116.5,
+                    117.5,
+                    118.5,
+                    119.5,
+                    120.5,
+                    121.5,
+                    122.5,
+                    123.5,
+                    124.5,
+                    125.5,
+                    126.5,
+                    127.5,
+                    128.5,
+                    129.5,
+                    130.5,
+                    131.5,
+                    132.5,
+                    133.5,
+                    134.5,
+                    135.5,
+                    136.5,
+                    137.5,
+                    138.5,
+                    139.5,
+                    140.5,
+                    141.5,
+                    142.5,
+                    143.5,
+                    144.5,
+                    145.5,
+                    146.5,
+                    147.5,
+                    148.5,
+                    149.5,
+                    150.5,
+                    151.5,
+                    152.5,
+                    153.5,
+                    154.5,
+                    155.5,
+                    156.5,
+                    157.5,
+                    158.5,
+                    159.5,
+                    160.5,
+                    161.5,
+                    162.5,
+                    163.5,
+                    164.5,
+                    165.5,
+                    166.5,
+                    167.5,
+                    168.5,
+                    169.5,
+                    170.5,
+                    171.5,
+                    172.5,
+                    173.5,
+                    174.5,
+                    175.5,
+                    176.5,
+                    177.5,
+                    178.5,
+                    179.5,
+                    180.5,
+                    181.5,
+                    182.5,
+                    183.5,
+                    184.5,
+                    185.5,
+                    186.5,
+                    187.5,
+                    188.5,
+                    189.5,
+                    190.5,
+                    191.5,
+                    192.5,
+                    193.5,
+                    194.5,
+                    195.5,
+                    196.5,
+                    197.5,
+                    198.5,
+                    199.5,
+                    200.5,
+                    201.5,
+                    202.5,
+                    203.5,
+                    204.5,
+                    205.5,
+                    206.5,
+                    207.5,
+                    208.5,
+                    209.5,
+                    210.5,
+                    211.5,
+                    212.5,
+                    213.5,
+                    214.5,
+                    215.5,
+                    216.5,
+                    217.5,
+                    218.5,
+                    219.5,
+                    220.5,
+                    221.5,
+                    222.5,
+                    223.5,
+                    224.5,
+                    225.5,
+                    226.5,
+                    227.5,
+                    228.5,
+                    229.5,
+                    230.5,
+                    231.5,
+                    232.5,
+                    233.5,
+                    234.5,
+                    235.5,
+                    236.5,
+                    237.5,
+                    238.5,
+                    239.5,
+                    240.5,
+                    241.5,
+                    242.5,
+                    243.5,
+                    244.5,
+                    245.5,
+                    246.5,
+                    247.5,
+                    248.5,
+                    249.5,
+                    250.5,
+                    251.5,
+                    252.5,
+                    253.5,
+                    254.5,
+                    255.5,
+                    256.5,
+                    257.5,
+                    258.5,
+                    259.5,
+                    260.5,
+                    261.5,
+                    262.5,
+                    263.5,
+                    264.5,
+                    265.5,
+                    266.5,
+                    267.5,
+                    268.5,
+                    269.5,
+                    270.5,
+                    271.5,
+                    272.5,
+                    273.5,
+                    274.5,
+                    275.5,
+                    276.5,
+                    277.5,
+                    278.5,
+                    279.5,
+                    280.5,
+                    281.5,
+                    282.5,
+                    283.5,
+                    284.5,
+                    285.5,
+                    286.5,
+                    287.5,
+                    288.5,
+                    289.5,
+                    290.5,
+                    291.5,
+                    292.5,
+                    293.5,
+                    294.5,
+                    295.5,
+                    296.5,
+                    297.5,
+                    298.5,
+                    299.5,
+                    300.5,
+                    301.5,
+                    302.5,
+                    303.5,
+                    304.5,
+                    305.5,
+                    306.5,
+                    307.5,
+                    308.5,
+                    309.5,
+                    310.5,
+                    311.5,
+                    312.5,
+                    313.5,
+                    314.5,
+                    315.5,
+                    316.5,
+                    317.5,
+                    318.5,
+                    319.5,
+                    320.5,
+                    321.5,
+                    322.5,
+                    323.5,
+                    324.5,
+                    325.5,
+                    326.5,
+                    327.5,
+                    328.5,
+                    329.5,
+                    330.5,
+                    331.5,
+                    332.5,
+                    333.5,
+                    334.5,
+                    335.5,
+                    336.5,
+                    337.5,
+                    338.5,
+                    339.5,
+                    340.5,
+                    341.5,
+                    342.5,
+                    343.5,
+                    344.5,
+                    345.5,
+                    346.5,
+                    347.5,
+                    348.5,
+                    349.5,
+                    350.5,
+                    351.5,
+                    352.5,
+                    353.5,
+                    354.5,
+                    355.5,
+                    356.5,
+                    357.5,
+                    358.5,
+                    359.5
+                ],
+                "lat_bnds": [
+                    -90.0,
+                    -89.0,
+                    -89.0,
+                    -88.0,
+                    -88.0,
+                    -87.0,
+                    -87.0,
+                    -86.0,
+                    -86.0,
+                    -85.0,
+                    -85.0,
+                    -84.0,
+                    -84.0,
+                    -83.0,
+                    -83.0,
+                    -82.0,
+                    -82.0,
+                    -81.0,
+                    -81.0,
+                    -80.0,
+                    -80.0,
+                    -79.0,
+                    -79.0,
+                    -78.0,
+                    -78.0,
+                    -77.0,
+                    -77.0,
+                    -76.0,
+                    -76.0,
+                    -75.0,
+                    -75.0,
+                    -74.0,
+                    -74.0,
+                    -73.0,
+                    -73.0,
+                    -72.0,
+                    -72.0,
+                    -71.0,
+                    -71.0,
+                    -70.0,
+                    -70.0,
+                    -69.0,
+                    -69.0,
+                    -68.0,
+                    -68.0,
+                    -67.0,
+                    -67.0,
+                    -66.0,
+                    -66.0,
+                    -65.0,
+                    -65.0,
+                    -64.0,
+                    -64.0,
+                    -63.0,
+                    -63.0,
+                    -62.0,
+                    -62.0,
+                    -61.0,
+                    -61.0,
+                    -60.0,
+                    -60.0,
+                    -59.0,
+                    -59.0,
+                    -58.0,
+                    -58.0,
+                    -57.0,
+                    -57.0,
+                    -56.0,
+                    -56.0,
+                    -55.0,
+                    -55.0,
+                    -54.0,
+                    -54.0,
+                    -53.0,
+                    -53.0,
+                    -52.0,
+                    -52.0,
+                    -51.0,
+                    -51.0,
+                    -50.0,
+                    -50.0,
+                    -49.0,
+                    -49.0,
+                    -48.0,
+                    -48.0,
+                    -47.0,
+                    -47.0,
+                    -46.0,
+                    -46.0,
+                    -45.0,
+                    -45.0,
+                    -44.0,
+                    -44.0,
+                    -43.0,
+                    -43.0,
+                    -42.0,
+                    -42.0,
+                    -41.0,
+                    -41.0,
+                    -40.0,
+                    -40.0,
+                    -39.0,
+                    -39.0,
+                    -38.0,
+                    -38.0,
+                    -37.0,
+                    -37.0,
+                    -36.0,
+                    -36.0,
+                    -35.0,
+                    -35.0,
+                    -34.0,
+                    -34.0,
+                    -33.0,
+                    -33.0,
+                    -32.0,
+                    -32.0,
+                    -31.0,
+                    -31.0,
+                    -30.0,
+                    -30.0,
+                    -29.0,
+                    -29.0,
+                    -28.0,
+                    -28.0,
+                    -27.0,
+                    -27.0,
+                    -26.0,
+                    -26.0,
+                    -25.0,
+                    -25.0,
+                    -24.0,
+                    -24.0,
+                    -23.0,
+                    -23.0,
+                    -22.0,
+                    -22.0,
+                    -21.0,
+                    -21.0,
+                    -20.0,
+                    -20.0,
+                    -19.0,
+                    -19.0,
+                    -18.0,
+                    -18.0,
+                    -17.0,
+                    -17.0,
+                    -16.0,
+                    -16.0,
+                    -15.0,
+                    -15.0,
+                    -14.0,
+                    -14.0,
+                    -13.0,
+                    -13.0,
+                    -12.0,
+                    -12.0,
+                    -11.0,
+                    -11.0,
+                    -10.0,
+                    -10.0,
+                    -9.0,
+                    -9.0,
+                    -8.0,
+                    -8.0,
+                    -7.0,
+                    -7.0,
+                    -6.0,
+                    -6.0,
+                    -5.0,
+                    -5.0,
+                    -4.0,
+                    -4.0,
+                    -3.0,
+                    -3.0,
+                    -2.0,
+                    -2.0,
+                    -1.0,
+                    -1.0,
+                    0.0,
+                    0.0,
+                    1.0,
+                    1.0,
+                    2.0,
+                    2.0,
+                    3.0,
+                    3.0,
+                    4.0,
+                    4.0,
+                    5.0,
+                    5.0,
+                    6.0,
+                    6.0,
+                    7.0,
+                    7.0,
+                    8.0,
+                    8.0,
+                    9.0,
+                    9.0,
+                    10.0,
+                    10.0,
+                    11.0,
+                    11.0,
+                    12.0,
+                    12.0,
+                    13.0,
+                    13.0,
+                    14.0,
+                    14.0,
+                    15.0,
+                    15.0,
+                    16.0,
+                    16.0,
+                    17.0,
+                    17.0,
+                    18.0,
+                    18.0,
+                    19.0,
+                    19.0,
+                    20.0,
+                    20.0,
+                    21.0,
+                    21.0,
+                    22.0,
+                    22.0,
+                    23.0,
+                    23.0,
+                    24.0,
+                    24.0,
+                    25.0,
+                    25.0,
+                    26.0,
+                    26.0,
+                    27.0,
+                    27.0,
+                    28.0,
+                    28.0,
+                    29.0,
+                    29.0,
+                    30.0,
+                    30.0,
+                    31.0,
+                    31.0,
+                    32.0,
+                    32.0,
+                    33.0,
+                    33.0,
+                    34.0,
+                    34.0,
+                    35.0,
+                    35.0,
+                    36.0,
+                    36.0,
+                    37.0,
+                    37.0,
+                    38.0,
+                    38.0,
+                    39.0,
+                    39.0,
+                    40.0,
+                    40.0,
+                    41.0,
+                    41.0,
+                    42.0,
+                    42.0,
+                    43.0,
+                    43.0,
+                    44.0,
+                    44.0,
+                    45.0,
+                    45.0,
+                    46.0,
+                    46.0,
+                    47.0,
+                    47.0,
+                    48.0,
+                    48.0,
+                    49.0,
+                    49.0,
+                    50.0,
+                    50.0,
+                    51.0,
+                    51.0,
+                    52.0,
+                    52.0,
+                    53.0,
+                    53.0,
+                    54.0,
+                    54.0,
+                    55.0,
+                    55.0,
+                    56.0,
+                    56.0,
+                    57.0,
+                    57.0,
+                    58.0,
+                    58.0,
+                    59.0,
+                    59.0,
+                    60.0,
+                    60.0,
+                    61.0,
+                    61.0,
+                    62.0,
+                    62.0,
+                    63.0,
+                    63.0,
+                    64.0,
+                    64.0,
+                    65.0,
+                    65.0,
+                    66.0,
+                    66.0,
+                    67.0,
+                    67.0,
+                    68.0,
+                    68.0,
+                    69.0,
+                    69.0,
+                    70.0,
+                    70.0,
+                    71.0,
+                    71.0,
+                    72.0,
+                    72.0,
+                    73.0,
+                    73.0,
+                    74.0,
+                    74.0,
+                    75.0,
+                    75.0,
+                    76.0,
+                    76.0,
+                    77.0,
+                    77.0,
+                    78.0,
+                    78.0,
+                    79.0,
+                    79.0,
+                    80.0,
+                    80.0,
+                    81.0,
+                    81.0,
+                    82.0,
+                    82.0,
+                    83.0,
+                    83.0,
+                    84.0,
+                    84.0,
+                    85.0,
+                    85.0,
+                    86.0,
+                    86.0,
+                    87.0,
+                    87.0,
+                    88.0,
+                    88.0,
+                    89.0,
+                    89.0,
+                    90.0
+                ],
+                "lon_bnds": [
+                    0.0,
+                    1.0,
+                    1.0,
+                    2.0,
+                    2.0,
+                    3.0,
+                    3.0,
+                    4.0,
+                    4.0,
+                    5.0,
+                    5.0,
+                    6.0,
+                    6.0,
+                    7.0,
+                    7.0,
+                    8.0,
+                    8.0,
+                    9.0,
+                    9.0,
+                    10.0,
+                    10.0,
+                    11.0,
+                    11.0,
+                    12.0,
+                    12.0,
+                    13.0,
+                    13.0,
+                    14.0,
+                    14.0,
+                    15.0,
+                    15.0,
+                    16.0,
+                    16.0,
+                    17.0,
+                    17.0,
+                    18.0,
+                    18.0,
+                    19.0,
+                    19.0,
+                    20.0,
+                    20.0,
+                    21.0,
+                    21.0,
+                    22.0,
+                    22.0,
+                    23.0,
+                    23.0,
+                    24.0,
+                    24.0,
+                    25.0,
+                    25.0,
+                    26.0,
+                    26.0,
+                    27.0,
+                    27.0,
+                    28.0,
+                    28.0,
+                    29.0,
+                    29.0,
+                    30.0,
+                    30.0,
+                    31.0,
+                    31.0,
+                    32.0,
+                    32.0,
+                    33.0,
+                    33.0,
+                    34.0,
+                    34.0,
+                    35.0,
+                    35.0,
+                    36.0,
+                    36.0,
+                    37.0,
+                    37.0,
+                    38.0,
+                    38.0,
+                    39.0,
+                    39.0,
+                    40.0,
+                    40.0,
+                    41.0,
+                    41.0,
+                    42.0,
+                    42.0,
+                    43.0,
+                    43.0,
+                    44.0,
+                    44.0,
+                    45.0,
+                    45.0,
+                    46.0,
+                    46.0,
+                    47.0,
+                    47.0,
+                    48.0,
+                    48.0,
+                    49.0,
+                    49.0,
+                    50.0,
+                    50.0,
+                    51.0,
+                    51.0,
+                    52.0,
+                    52.0,
+                    53.0,
+                    53.0,
+                    54.0,
+                    54.0,
+                    55.0,
+                    55.0,
+                    56.0,
+                    56.0,
+                    57.0,
+                    57.0,
+                    58.0,
+                    58.0,
+                    59.0,
+                    59.0,
+                    60.0,
+                    60.0,
+                    61.0,
+                    61.0,
+                    62.0,
+                    62.0,
+                    63.0,
+                    63.0,
+                    64.0,
+                    64.0,
+                    65.0,
+                    65.0,
+                    66.0,
+                    66.0,
+                    67.0,
+                    67.0,
+                    68.0,
+                    68.0,
+                    69.0,
+                    69.0,
+                    70.0,
+                    70.0,
+                    71.0,
+                    71.0,
+                    72.0,
+                    72.0,
+                    73.0,
+                    73.0,
+                    74.0,
+                    74.0,
+                    75.0,
+                    75.0,
+                    76.0,
+                    76.0,
+                    77.0,
+                    77.0,
+                    78.0,
+                    78.0,
+                    79.0,
+                    79.0,
+                    80.0,
+                    80.0,
+                    81.0,
+                    81.0,
+                    82.0,
+                    82.0,
+                    83.0,
+                    83.0,
+                    84.0,
+                    84.0,
+                    85.0,
+                    85.0,
+                    86.0,
+                    86.0,
+                    87.0,
+                    87.0,
+                    88.0,
+                    88.0,
+                    89.0,
+                    89.0,
+                    90.0,
+                    90.0,
+                    91.0,
+                    91.0,
+                    92.0,
+                    92.0,
+                    93.0,
+                    93.0,
+                    94.0,
+                    94.0,
+                    95.0,
+                    95.0,
+                    96.0,
+                    96.0,
+                    97.0,
+                    97.0,
+                    98.0,
+                    98.0,
+                    99.0,
+                    99.0,
+                    100.0,
+                    100.0,
+                    101.0,
+                    101.0,
+                    102.0,
+                    102.0,
+                    103.0,
+                    103.0,
+                    104.0,
+                    104.0,
+                    105.0,
+                    105.0,
+                    106.0,
+                    106.0,
+                    107.0,
+                    107.0,
+                    108.0,
+                    108.0,
+                    109.0,
+                    109.0,
+                    110.0,
+                    110.0,
+                    111.0,
+                    111.0,
+                    112.0,
+                    112.0,
+                    113.0,
+                    113.0,
+                    114.0,
+                    114.0,
+                    115.0,
+                    115.0,
+                    116.0,
+                    116.0,
+                    117.0,
+                    117.0,
+                    118.0,
+                    118.0,
+                    119.0,
+                    119.0,
+                    120.0,
+                    120.0,
+                    121.0,
+                    121.0,
+                    122.0,
+                    122.0,
+                    123.0,
+                    123.0,
+                    124.0,
+                    124.0,
+                    125.0,
+                    125.0,
+                    126.0,
+                    126.0,
+                    127.0,
+                    127.0,
+                    128.0,
+                    128.0,
+                    129.0,
+                    129.0,
+                    130.0,
+                    130.0,
+                    131.0,
+                    131.0,
+                    132.0,
+                    132.0,
+                    133.0,
+                    133.0,
+                    134.0,
+                    134.0,
+                    135.0,
+                    135.0,
+                    136.0,
+                    136.0,
+                    137.0,
+                    137.0,
+                    138.0,
+                    138.0,
+                    139.0,
+                    139.0,
+                    140.0,
+                    140.0,
+                    141.0,
+                    141.0,
+                    142.0,
+                    142.0,
+                    143.0,
+                    143.0,
+                    144.0,
+                    144.0,
+                    145.0,
+                    145.0,
+                    146.0,
+                    146.0,
+                    147.0,
+                    147.0,
+                    148.0,
+                    148.0,
+                    149.0,
+                    149.0,
+                    150.0,
+                    150.0,
+                    151.0,
+                    151.0,
+                    152.0,
+                    152.0,
+                    153.0,
+                    153.0,
+                    154.0,
+                    154.0,
+                    155.0,
+                    155.0,
+                    156.0,
+                    156.0,
+                    157.0,
+                    157.0,
+                    158.0,
+                    158.0,
+                    159.0,
+                    159.0,
+                    160.0,
+                    160.0,
+                    161.0,
+                    161.0,
+                    162.0,
+                    162.0,
+                    163.0,
+                    163.0,
+                    164.0,
+                    164.0,
+                    165.0,
+                    165.0,
+                    166.0,
+                    166.0,
+                    167.0,
+                    167.0,
+                    168.0,
+                    168.0,
+                    169.0,
+                    169.0,
+                    170.0,
+                    170.0,
+                    171.0,
+                    171.0,
+                    172.0,
+                    172.0,
+                    173.0,
+                    173.0,
+                    174.0,
+                    174.0,
+                    175.0,
+                    175.0,
+                    176.0,
+                    176.0,
+                    177.0,
+                    177.0,
+                    178.0,
+                    178.0,
+                    179.0,
+                    179.0,
+                    180.0,
+                    180.0,
+                    181.0,
+                    181.0,
+                    182.0,
+                    182.0,
+                    183.0,
+                    183.0,
+                    184.0,
+                    184.0,
+                    185.0,
+                    185.0,
+                    186.0,
+                    186.0,
+                    187.0,
+                    187.0,
+                    188.0,
+                    188.0,
+                    189.0,
+                    189.0,
+                    190.0,
+                    190.0,
+                    191.0,
+                    191.0,
+                    192.0,
+                    192.0,
+                    193.0,
+                    193.0,
+                    194.0,
+                    194.0,
+                    195.0,
+                    195.0,
+                    196.0,
+                    196.0,
+                    197.0,
+                    197.0,
+                    198.0,
+                    198.0,
+                    199.0,
+                    199.0,
+                    200.0,
+                    200.0,
+                    201.0,
+                    201.0,
+                    202.0,
+                    202.0,
+                    203.0,
+                    203.0,
+                    204.0,
+                    204.0,
+                    205.0,
+                    205.0,
+                    206.0,
+                    206.0,
+                    207.0,
+                    207.0,
+                    208.0,
+                    208.0,
+                    209.0,
+                    209.0,
+                    210.0,
+                    210.0,
+                    211.0,
+                    211.0,
+                    212.0,
+                    212.0,
+                    213.0,
+                    213.0,
+                    214.0,
+                    214.0,
+                    215.0,
+                    215.0,
+                    216.0,
+                    216.0,
+                    217.0,
+                    217.0,
+                    218.0,
+                    218.0,
+                    219.0,
+                    219.0,
+                    220.0,
+                    220.0,
+                    221.0,
+                    221.0,
+                    222.0,
+                    222.0,
+                    223.0,
+                    223.0,
+                    224.0,
+                    224.0,
+                    225.0,
+                    225.0,
+                    226.0,
+                    226.0,
+                    227.0,
+                    227.0,
+                    228.0,
+                    228.0,
+                    229.0,
+                    229.0,
+                    230.0,
+                    230.0,
+                    231.0,
+                    231.0,
+                    232.0,
+                    232.0,
+                    233.0,
+                    233.0,
+                    234.0,
+                    234.0,
+                    235.0,
+                    235.0,
+                    236.0,
+                    236.0,
+                    237.0,
+                    237.0,
+                    238.0,
+                    238.0,
+                    239.0,
+                    239.0,
+                    240.0,
+                    240.0,
+                    241.0,
+                    241.0,
+                    242.0,
+                    242.0,
+                    243.0,
+                    243.0,
+                    244.0,
+                    244.0,
+                    245.0,
+                    245.0,
+                    246.0,
+                    246.0,
+                    247.0,
+                    247.0,
+                    248.0,
+                    248.0,
+                    249.0,
+                    249.0,
+                    250.0,
+                    250.0,
+                    251.0,
+                    251.0,
+                    252.0,
+                    252.0,
+                    253.0,
+                    253.0,
+                    254.0,
+                    254.0,
+                    255.0,
+                    255.0,
+                    256.0,
+                    256.0,
+                    257.0,
+                    257.0,
+                    258.0,
+                    258.0,
+                    259.0,
+                    259.0,
+                    260.0,
+                    260.0,
+                    261.0,
+                    261.0,
+                    262.0,
+                    262.0,
+                    263.0,
+                    263.0,
+                    264.0,
+                    264.0,
+                    265.0,
+                    265.0,
+                    266.0,
+                    266.0,
+                    267.0,
+                    267.0,
+                    268.0,
+                    268.0,
+                    269.0,
+                    269.0,
+                    270.0,
+                    270.0,
+                    271.0,
+                    271.0,
+                    272.0,
+                    272.0,
+                    273.0,
+                    273.0,
+                    274.0,
+                    274.0,
+                    275.0,
+                    275.0,
+                    276.0,
+                    276.0,
+                    277.0,
+                    277.0,
+                    278.0,
+                    278.0,
+                    279.0,
+                    279.0,
+                    280.0,
+                    280.0,
+                    281.0,
+                    281.0,
+                    282.0,
+                    282.0,
+                    283.0,
+                    283.0,
+                    284.0,
+                    284.0,
+                    285.0,
+                    285.0,
+                    286.0,
+                    286.0,
+                    287.0,
+                    287.0,
+                    288.0,
+                    288.0,
+                    289.0,
+                    289.0,
+                    290.0,
+                    290.0,
+                    291.0,
+                    291.0,
+                    292.0,
+                    292.0,
+                    293.0,
+                    293.0,
+                    294.0,
+                    294.0,
+                    295.0,
+                    295.0,
+                    296.0,
+                    296.0,
+                    297.0,
+                    297.0,
+                    298.0,
+                    298.0,
+                    299.0,
+                    299.0,
+                    300.0,
+                    300.0,
+                    301.0,
+                    301.0,
+                    302.0,
+                    302.0,
+                    303.0,
+                    303.0,
+                    304.0,
+                    304.0,
+                    305.0,
+                    305.0,
+                    306.0,
+                    306.0,
+                    307.0,
+                    307.0,
+                    308.0,
+                    308.0,
+                    309.0,
+                    309.0,
+                    310.0,
+                    310.0,
+                    311.0,
+                    311.0,
+                    312.0,
+                    312.0,
+                    313.0,
+                    313.0,
+                    314.0,
+                    314.0,
+                    315.0,
+                    315.0,
+                    316.0,
+                    316.0,
+                    317.0,
+                    317.0,
+                    318.0,
+                    318.0,
+                    319.0,
+                    319.0,
+                    320.0,
+                    320.0,
+                    321.0,
+                    321.0,
+                    322.0,
+                    322.0,
+                    323.0,
+                    323.0,
+                    324.0,
+                    324.0,
+                    325.0,
+                    325.0,
+                    326.0,
+                    326.0,
+                    327.0,
+                    327.0,
+                    328.0,
+                    328.0,
+                    329.0,
+                    329.0,
+                    330.0,
+                    330.0,
+                    331.0,
+                    331.0,
+                    332.0,
+                    332.0,
+                    333.0,
+                    333.0,
+                    334.0,
+                    334.0,
+                    335.0,
+                    335.0,
+                    336.0,
+                    336.0,
+                    337.0,
+                    337.0,
+                    338.0,
+                    338.0,
+                    339.0,
+                    339.0,
+                    340.0,
+                    340.0,
+                    341.0,
+                    341.0,
+                    342.0,
+                    342.0,
+                    343.0,
+                    343.0,
+                    344.0,
+                    344.0,
+                    345.0,
+                    345.0,
+                    346.0,
+                    346.0,
+                    347.0,
+                    347.0,
+                    348.0,
+                    348.0,
+                    349.0,
+                    349.0,
+                    350.0,
+                    350.0,
+                    351.0,
+                    351.0,
+                    352.0,
+                    352.0,
+                    353.0,
+                    353.0,
+                    354.0,
+                    354.0,
+                    355.0,
+                    355.0,
+                    356.0,
+                    356.0,
+                    357.0,
+                    357.0,
+                    358.0,
+                    358.0,
+                    359.0,
+                    359.0,
+                    360.0
+                ],
+                "plev": [
+                    92500.0,
+                    85000.0,
+                    70000.0,
+                    50000.0,
+                    40000.0,
+                    30000.0,
+                    20000.0,
+                    10000.0,
+                    5000.0,
+                    3000.0,
+                    1000.0
+                ]
+            }
+        }
+    }
+}

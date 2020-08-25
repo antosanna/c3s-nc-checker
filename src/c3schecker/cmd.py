@@ -17,6 +17,9 @@ import importlib
 import os
 import sys
 
+from netCDF4 import Dataset
+
+from c3schecker.checks import ChecksRegistry
 from c3schecker.cop.Cpchecker import Cpchecker
 from c3schecker.utils import get_immediate_subdirectories
 
@@ -105,6 +108,19 @@ def main(args=None):
         parser.error("No configuration fileset requested, add --type or --confdir")
 
     return run(args)
+
+
+def run_checks(input_files, checks, spec):
+    outcomes = {}
+    convention = spec["convention"]
+    registered_checks = ChecksRegistry()[convention]
+    for input_file in input_files:
+        dataset = Dataset(input_file)
+        for check in checks:
+            check_function = registered_checks[check]
+            outcome = check_function(dataset, spec["constraints"])
+            outcomes[check] = outcome
+    return int(all(oc["status"] == 1 for oc in outcomes.values())), outcomes
 
 
 def run(args):
