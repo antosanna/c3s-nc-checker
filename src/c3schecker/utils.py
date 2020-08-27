@@ -17,6 +17,7 @@ import logging
 import os
 import types
 from io import StringIO
+from itertools import chain, combinations
 
 import numpy as np
 
@@ -215,3 +216,8 @@ class Singleton:
         if self.instance is None:
             self.instance = self.klass(*args, **kwds)
         return self.instance
+
+
+def powerset(iterable):
+    s = list(iterable)
+    return chain.from_iterable(combinations(s, r) for r in range(len(s) + 1))
