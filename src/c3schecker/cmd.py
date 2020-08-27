@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 #
-# C3S_checker.py checks  C3S NetCDF compliancy for the Climate Data Store
+# c3schecker checks NetCDF compliancy for C3S data
 #
-# AUTHOR: ECMWF - C. BERGERON
+# AUTHOR: ECMWF - C. BERGERON, A. OYONO
 #
-# (C) Copyright 1996-2016 ECMWF.
+# (C) Copyright 1996-2020 ECMWF.
 #
 # This software is licensed under the terms of the Apache Licence Version 2.0
 # which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
@@ -12,186 +12,77 @@
 # granted to it by virtue of its status as an intergovernmental organisation nor
 # does it submit to any jurisdiction.
 #
-import argparse
 import importlib
-import os
+import json
 import sys
+from pathlib import Path
 
+import click
 from netCDF4 import Dataset
 
 from c3schecker.checks import ChecksRegistry
-from c3schecker.cop.Cpchecker import Cpchecker
-from c3schecker.utils import get_immediate_subdirectories
-
-__CFVERSION__ = ("CF-1.6", "cf1_6")  # (CF version code, files directory)
 
 
-__VERSION__ = "0.1"
-__FAILURECODE__ = 1
-__SUCCESSCODE__ = 0
+# First import c3s01 in order to register all the available checks
+# We do this with importlib so that we don't have unused imports at the top
+importlib.import_module("c3schecker.checks.c3s01")
+DEFAULT_CONVENTION = "C3S-0.1"
 
 
-def main(args=None):
-    parser = argparse.ArgumentParser(
-        description="C3S NetCDF Compliancy Checker", epilog=" "
-    )
-    parser.add_argument(
-        "-V",
-        "--version",
-        action="version",
-        version="%(prog)s " + str(__VERSION__),
-        help="checker Version",
-    )
-
-    parser.add_argument("-v", "--verbose", action="store_true", help="verbose")
-
-    parser.add_argument(
-        "-m",
-        "--infolevel",
-        default="info",
-        action="store",
-        choices=["info", "warning", "error"],
-        help="information level output",
-    )
-
-    l = set(
-        get_immediate_subdirectories(os.path.join(os.path.dirname(__file__), "cop"))
-    ) - set(["checks"])
-    parser.add_argument(
-        "-t",
-        "--type",
-        required=False,
-        action="store",
-        choices=l,
-        help="Type of dataset" + str(l),
-    )
-
-    parser.add_argument("-c", "--cf", action="store_true", help="CF checkings ONLY")
-
-    parser.add_argument(
-        "-k", "--checks", action="store", help="Optional list of checks - default [All]"
-    )
-
-    parser.add_argument(
-        "-i",
-        "--ignorechecks",
-        action="store",
-        help="Optional list of checks to ignore - default [None]",
-    )
-
-    parser.add_argument("-s", "--stop", action="store_true", help="Stop on error")
-
-    parser.add_argument(
-        "-p", "--passed", action="store_true", help="Display all the checks status"
-    )
-
-    parser.add_argument(
-        "-d",
-        "--confdir",
-        action="store",
-        help="Directory containing the configuration files. It overrides the -t option",
-    )
-
-    parser.add_argument(
-        "inputfiles",
-        nargs="+",
-        action="store",
-        help="NetCDF files list separated by blank",
-    )
-
-    if args is not None:
-        args = parser.parse_args(args)
-    else:
-        args = parser.parse_args()
-
-    if not (args.type or args.confdir):
-        parser.error("No configuration fileset requested, add --type or --confdir")
-
-    return run(args)
+@click.command("c3schecker")
+@click.option(
+    "-c",
+    "checks",
+    multiple=True,
+    help="Specific constraints to be checked (only the specified ones will be done)",
+    default=set(ChecksRegistry()[DEFAULT_CONVENTION].keys()),
+    show_default=True,
+)
+@click.option(
+    "-s",
+    "--skip",
+    multiple=True,
+    help="Specific constraints to skip (specify as in -c)",
+    default=set(),
+)
+@click.option(
+    "--constraints",
+    required=True,
+    type=click.Path(exists=True, dir_okay=False, resolve_path=True, allow_dash=True),
+)
+@click.option(
+    "--convention",
+    required=True,
+    type=click.STRING,
+    default=DEFAULT_CONVENTION,
+    help="The NetCDF convention followed by the constraints file",
+    show_default=True,
+)
+@click.argument(
+    "inputs", nargs=-1, callback=lambda ctx, param, value: [Path(v) for v in value]
+)
+def main(inputs, convention, constraints, skip, checks):
+    """Check the input NetCDF files against the specified constraints file"""
+    checks = {
+        name: func
+        for name, func in ChecksRegistry()[convention].items()
+        if name in set(checks) - set(skip)
+    }
+    with open(constraints) as cf:
+        spec = json.load(cf)
+    print(json.dumps(run_checks(inputs, checks, spec)))
 
 
 def run_checks(input_files, checks, spec):
     outcomes = {}
-    convention = spec["convention"]
-    registered_checks = ChecksRegistry()[convention]
     for input_file in input_files:
         dataset = Dataset(input_file)
-        for check in checks:
-            check_function = registered_checks[check]
-            outcome = check_function(dataset, spec["constraints"])
-            outcomes[check] = outcome
-    return int(all(oc["status"] == 1 for oc in outcomes.values())), outcomes
-
-
-def run(args):
-    # Process the netcdf files - One by One
-    # -------------------------------------
-
-    all_status = []
-
-    for f in args.inputfiles:
-        all_msg = []
-        # FIRST STEP: CF Reader/Checker
-
-        # Dynamic import, depending on the CF convention version
-
-        module = importlib.import_module(
-            "c3schecker.cf." + __CFVERSION__[1] + ".Cfchecker"
-        )
-        cfcheckings = getattr(module, "Cfchecker")(
-            f, __CFVERSION__[0], args.infolevel, args.stop, args.passed
-        )
-
-        try:
-            cfstatus = cfcheckings.status
-            cfmessgs = cfcheckings.messages
-            cfcollec = cfcheckings.cfvariablescollection
-        except:
-            cfstatus = 0
-
-        all_status.append(cfstatus)
-        display_messages(args.verbose, cfmessgs)
-
-        # SECOND STEP: COPERNICUS Checkers
-        if cfcollec and not args.cf:
-
-            copcheckings = Cpchecker(
-                cfcollec,
-                args.type,
-                args.infolevel,
-                args.stop,
-                args.checks,
-                args.ignorechecks,
-                args.confdir,
-                args.passed,
-            )
-
-            copstatus = copcheckings.status
-            copmessgs = copcheckings.messages
-
-            all_status.append(copstatus)
-            display_messages(args.verbose, copmessgs)
-
-    if all(all_status):
-        return __SUCCESSCODE__
-
-    return __FAILURECODE__
-
-
-def display_messages(verbose, msgs):
-
-    all_msg_c = [m for m in msgs if str.find(m, "CRITICAL") != -1]
-    for m in all_msg_c:
-        print((str(m)))
-
-    if verbose:
-        all_msg = sorted(
-            msgs,
-            key=lambda x: 1 if str.find(x, "INFO") != -1 or len(x.strip()) == 0 else -1,
-            reverse=True,
-        )
-        for m in all_msg:
-            print((str(m)))
+        file_outcome = outcomes.setdefault(input_file.name, {})
+        for check_name, check in checks.items():
+            # print(f"Running check: {check}")
+            outcome = check(dataset, spec)
+            file_outcome[check_name] = outcome
+    return outcomes
 
 
 if __name__ == "__main__":

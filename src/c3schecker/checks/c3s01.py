@@ -1,6 +1,5 @@
 import datetime
 import re
-from pathlib import Path
 
 import numpy as np
 from c3schecker.checks import register
@@ -134,26 +133,21 @@ def c3s_meta_attributes_per_var_name(ds: Dataset, spec: dict) -> dict:
         query.update({attr: _ncattr_present for attr in expected})
         result = ds.get_variables_by_attributes(**query)
         if len(result) == 1:
-            outcome.get("info", []).append(f"{var_name} has all required attributes")
+            outcome.setdefault("info", []).append(f"{var_name}: OK")
         else:
-            variable = ds.get_variables_by_attributes(name=var_name)
-            if constraints.get("mandatory", True):
-                message_type = "errors"
-                new_status = 0
-            else:
-                message_type = "warnings"
-                new_status = 1
-            if variable:
+            variable = ds.variables.get(var_name)
+            if variable is not None:
+                if constraints.get("mandatory", True):
+                    message_type = "errors"
+                    new_status = 0
+                else:
+                    message_type = "warnings"
+                    new_status = 1
                 outcome.get(message_type, []).append(
                     f"{var_name} is missing mandatory attributes. "
                     f"Expected: {expected}; Actual: {variable.ncattrs()}"
                 )
-            else:
-                outcome.get(message_type, []).append(
-                    f"Dataset {Path(ds.filepath()).name} does not contain a "
-                    f"variable named {var_name}"
-                )
-            outcome["status"] = new_status
+                outcome["status"] = outcome["status"] and new_status
     return outcome
 
 
@@ -162,21 +156,14 @@ def c3s_meta_attributes_possible_values(ds: Dataset, spec: dict) -> dict:
     overall_constraints = spec.get("possible_values_per_attributes", {})
     outcome = {"status": 1}
     for attr_name, constraints in overall_constraints.items():
-        vars_with_attr = ds.get_variables_by_attributes(attr_name=_ncattr_present)
+        query = {attr_name: _ncattr_present}
+        vars_with_attr = ds.get_variables_by_attributes(**query)
         possible_values = constraints["expected"]
         for variable in vars_with_attr:
-            try:
-                actual_value = variable.getncatrr(attr_name)
-            except AttributeError:
-                outcome.setdefault("errors", []).append(
-                    f"Variable '{variable.name}' is missing attribute '{attr_name}'"
-                )
-                outcome["status"] = 0
-                continue
+            actual_value = getattr(variable, attr_name)
             if actual_value in possible_values:
                 outcome.setdefault("info", []).append(
-                    f"{variable.name} has allowed value ({actual_value}) for "
-                    f"attribute {attr_name}"
+                    f"{variable.name}->{attr_name}: OK"
                 )
             else:
                 if constraints.get("mandatory", True):
@@ -218,10 +205,7 @@ def c3s_meta_attributes_exact_values_per_var_name(ds: Dataset, spec: dict) -> di
             else:
                 check_result = re.match(expected_value, actual_value)
             if check_result:
-                outcome.setdefault("info", []).append(
-                    f"Attribute '{attr_name}' of variable '{var_name}' has allowed "
-                    f"value ({actual_value})"
-                )
+                outcome.setdefault("info", []).append(f"{var_name}->{attr_name}: OK")
             else:
                 if var_specific_constraints.get("mandatory", True):
                     message_type = "errors"
@@ -269,11 +253,11 @@ def c3s_meta_global_attributes_possible_values(ds: Dataset, spec: dict) -> dict:
     constraints = spec.get("global_attributes_possible_values", {})
     if not constraints:
         return {"status": 1, "info": ["No constraints -> Skipped"]}
-    outcome = {}
+    outcome = {"status": 1}
     mandatory_constraints = constraints.get("mandatory", True)
     for attr_name, possible_values in constraints["expected"].items():
         try:
-            actual_value = ds.getncatrr(attr_name)
+            actual_value = getattr(ds, attr_name)
         except AttributeError:
             outcome.setdefault("errors", []).append(
                 f"Dataset is missing global attribute '{attr_name}'"
@@ -281,9 +265,7 @@ def c3s_meta_global_attributes_possible_values(ds: Dataset, spec: dict) -> dict:
             outcome["status"] = 0
             continue
         if actual_value in possible_values:
-            outcome.setdefault("info", []).append(
-                f"Global Attribute '{attr_name}' has allowed value ({actual_value})"
-            )
+            outcome.setdefault("info", []).append(f"{attr_name}: OK")
             status = 1
         else:
             if mandatory_constraints:
@@ -305,7 +287,7 @@ def c3s_meta_global_attributes_date_format(ds: Dataset, spec: dict) -> dict:
     constraints = spec.get("global_attributes_date_format", {})
     if not constraints:
         return {"status": 1, "info": ["No constraints -> Skipped"]}
-    outcome = {}
+    outcome = {"status": 1}
     mandatory_constraints = constraints.get("mandatory", True)
     for date_attr_name, expected_date_attr_format in constraints["expected"].items():
         actual_date_attr_value = ds.getncattr(date_attr_name)
@@ -314,10 +296,7 @@ def c3s_meta_global_attributes_date_format(ds: Dataset, spec: dict) -> dict:
                 actual_date_attr_value, expected_date_attr_format
             )
             status = 1
-            outcome.setdefault("info", []).append(
-                f"Global date Attribute '{date_attr_name}' value follows required date "
-                f"format ({expected_date_attr_format})"
-            )
+            outcome.setdefault("info", []).append(f"{date_attr_name}: OK")
         except ValueError:
             if mandatory_constraints:
                 status = 0
@@ -338,7 +317,7 @@ def c3s_meta_variables_exact_dimensions(ds: Dataset, spec: dict) -> dict:
     constraints = spec.get("variables_exact_dimensions", {})
     if not constraints:
         return {"status": 1, "info": ["No constraints -> Skipped"]}
-    outcome = {}
+    outcome = {"status": 1}
     mandatory_constraints = constraints.get("mandatory", True)
     for var_name, expected_dimensions in constraints["expected"].items():
         try:
@@ -360,7 +339,7 @@ def c3s_meta_variables_exact_dimensions(ds: Dataset, spec: dict) -> dict:
         else:
             status = 1
             level = "info"
-            msg = f"'{var_name}' has all expected dimensions ({expected_dimensions})"
+            msg = f"{var_name}: OK"
         outcome.setdefault(level, []).append(msg)
         outcome["status"] = status
     return outcome
@@ -371,7 +350,7 @@ def c3s_meta_grib_consistency(ds: Dataset, spec: dict) -> dict:
     constraints = spec.get("grib_consistency", {})
     if not constraints:
         return {"status": 1, "info": ["No constraints -> Skipped"]}
-    outcome = {}
+    outcome = {"status": 1}
     mandatory_constraints = constraints.get("mandatory", True)
     for mars_paramid, expected_bindings in constraints["expected"].items():
         query = {"mars_paramid": mars_paramid}
@@ -382,7 +361,7 @@ def c3s_meta_grib_consistency(ds: Dataset, spec: dict) -> dict:
                 actual_value = nc_var[0].getncattr(attr_name)
                 if actual_value == expected:
                     status = 1
-                    msg = "OK"
+                    msg = f"mars id {mars_paramid}: OK"
                     level = "info"
                 else:
                     if mandatory_constraints:
@@ -408,14 +387,14 @@ def c3s_data_intervals(ds: Dataset, spec: dict) -> dict:
         "Not matching intervals found for '{var_name}' "
         "dimension '{dim_name}': {bad_intervals}"
     )
-    ok_msg = "Values correctly spaced for '{var_name}' dimension '{dim_name}'"
+    ok_msg = "{var_name} (dimension {dim_name}): OK"
 
     def logic(data, var_name, expected, dim_name=None):
         # Determine wether the logic is done on the dimension variable or otherwise
-        if dim_name is not None:
-            name = dim_name
+        if dim_name is None:
+            dim_name = name = var_name
         else:
-            name = var_name
+            name = dim_name
         dim_values = data.variables[name]
         all_intervals = dim_values[1:] - dim_values[:-1]
         not_matching_intervals = all_intervals[
@@ -435,21 +414,18 @@ def c3s_data_intervals(ds: Dataset, spec: dict) -> dict:
 @register(CONVENTION, "data_min_max")
 def c3s_data_min_max(ds: Dataset, spec: dict) -> dict:
     ko_msg = (
-        "Invalid min/max found for '{var_name}' (dimension - Not 'None' if relevant - "
-        "'{dim_name}'): min={actual_min}, max={actual_max}. "
-        "Expected: min={valid_min}, max={actual_max}"
+        "Invalid min/max found for '{var_name}' (dimension '{dim_name}'): "
+        "min={actual_min}, max={actual_max}. Expected: min={valid_min}, "
+        "max={actual_max}"
     )
-    ok_msg = (
-        "Min/max values are correct for '{var_name}' (dimension - Not 'None' if "
-        "relevant - '{dim_name}')"
-    )
+    ok_msg = "{var_name} (dimension: {dim_name}): OK"
 
     def logic(data, var_name, expected, dim_name=None):
         # Determine wether the logic is done on the dimension variable or otherwise
-        if dim_name is not None:
-            name = dim_name
+        if dim_name is None:
+            dim_name = name = var_name
         else:
-            name = var_name
+            name = dim_name
         dim_values = data.variables[name][:]
         expected_min, expected_max = expected
         actual_min, actual_max = dim_values.min(), dim_values.max()
@@ -470,20 +446,17 @@ def c3s_data_min_max(ds: Dataset, spec: dict) -> dict:
 @register(CONVENTION, "data_ranges")
 def c3s_data_ranges(ds: Dataset, spec: dict) -> dict:
     ko_msg = (
-        "Data out of valid range found for '{var_name}' (dimension - Not 'None' if "
-        "relevant - '{dim_name}'): {out_of_range}. Expected Range: {bot} - {top}"
+        "Data out of valid range found for '{var_name}' (dimension '{dim_name}'): "
+        "{out_of_range}. Expected Range: [{bot}, {top}]"
     )
-    ok_msg = (
-        "Data are in valid range for '{var_name}' (dimension - Not 'None' if "
-        "relevant - '{dim_name}'): {bot} - {top}"
-    )
+    ok_msg = "{var_name} (dimension {dim_name}): OK"
 
     def logic(data, var_name, expected, dim_name=None):
         # Determine wether the logic is done on the dimension variable or otherwise
-        if dim_name is not None:
-            name = dim_name
+        if dim_name is None:
+            dim_name = name = var_name
         else:
-            name = var_name
+            name = dim_name
         values = data.variables[name][:]
         bottom, top = expected
         if isinstance(values, MaskedArray):
@@ -506,20 +479,17 @@ def c3s_data_ranges(ds: Dataset, spec: dict) -> dict:
 @register(CONVENTION, "data_values")
 def c3s_data_values(ds: Dataset, spec: dict) -> dict:
     ko_msg = (
-        "Invalid values found for '{var_name}' (dimension - Not 'None' if "
-        "relevant - '{dim_name}'): {invalid_values}. Expected: {valid_values}"
+        "Invalid values found for '{var_name}' (dimension '{dim_name}'): "
+        "{invalid_values}. Expected: {valid_values}"
     )
-    ok_msg = (
-        "Data are valid for '{var_name}' (dimension - Not 'None' if "
-        "relevant - '{dim_name}')"
-    )
+    ok_msg = "{var_name} (dimension {dim_name}): OK"
 
     def logic(data, var_name, expected, dim_name=None):
         # Determine wether the logic is done on the dimension variable or otherwise
-        if dim_name is not None:
-            name = dim_name
+        if dim_name is None:
+            dim_name = name = var_name
         else:
-            name = var_name
+            name = dim_name
         expected = np.array(expected)
         values = data.variables[name][:]
         if isinstance(values, MaskedArray):
