@@ -205,17 +205,18 @@ def prBlack(prt):
     print(("\033[98m {}\033[00m".format(prt)))
 
 
-class Singleton:
-    """Wrapper class to make any class a singleton"""
+class Singleton(type):
+    """Metaclass to make any class a singleton
 
-    def __init__(self, klass):
-        self.klass = klass
-        self.instance = None
+    Credits: https://stackoverflow.com/questions/6760685/creating-a-singleton-in-python
+    """
 
-    def __call__(self, *args, **kwds):
-        if self.instance is None:
-            self.instance = self.klass(*args, **kwds)
-        return self.instance
+    _instances = {}
+
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
+        return cls._instances[cls]
 
 
 def powerset(iterable):

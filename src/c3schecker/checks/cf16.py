@@ -19,8 +19,7 @@ class UnknownStandardNameError(Exception):
     pass
 
 
-@Singleton
-class CFREF:
+class CFREF(metaclass=Singleton):
     data_types = (
         np.dtype("S1"),
         np.dtype("c"),
@@ -49,6 +48,7 @@ class CFREF:
     y_axis_std_names = ("latitude", "projection_y_coordinate", "grid_latitude")
     x_axis_std_names = ("longitude", "projection_x_coordinate", "grid_longitude")
     z_axis_units = ("level", "layer" "sigma_level")
+    z_axis_orientations = ("up", "down")
     global_attrs = (
         "title",
         "institution",
@@ -58,12 +58,83 @@ class CFREF:
         "comment",
     )
     deprecated_units = ("level", "layer", "sigma_level")
+    dimensionless_vertical_coordinates = {
+        "atmosphere_ln_pressure_coordinate": re.compile(
+            r"\s*p0\s*:\s*[\w_]+\s+lev\s*:\s*[\w_]+\s*"
+        ),
+        "atmosphere_sigma_coordinate": re.compile(
+            r"\s*sigma\s*:\s*[\w_]+\s+ps\s*:\s*[\w_]+\s+ptop\s*:\s*[\w_]+\s*"
+        ),
+        "atmosphere_hybrid_sigma_pressure_coordinate": re.compile(
+            r"\s*a\s*:\s*[\w_]+\s+b\s*:\s*[\w_]+\s+ps\s*:\s*[\w_]+\s+p0\s*:\s*[\w_]+\s*"
+        ),
+        "atmosphere_hybrid_height_coordinate": re.compile(
+            r"\s*a\s*:\s*[\w_]+\s+b\s*:\s*[\w_]+\s+orog\s*:\s*[\w_]+\s*"
+        ),
+        "atmosphere_sleve_coordinate": re.compile(
+            r"\s*a\s*:\s*[\w_]+\s+b1\s*:\s*[\w_]+\s+b2\s*:\s*[\w_]+\s+"
+            r"ztop\s*:\s*[\w_]+\s+zsurf1\s*:\s*[\w_]+\s+zsurf2\s*:\s*[\w_]+\s*"
+        ),
+        "ocean_sigma_coordinate": re.compile(
+            r"\s*sigma\s*:\s*[\w_]+\s+eta\s*:\s*[\w_]+\s+depth:\s*[\w_]+\s*"
+        ),
+        "ocean_s_coordinate": re.compile(
+            r"\s*s\s*:\s*[\w_]+\s+eta\s*:\s*[\w_]+\s+depth:\s*[\w_]+\s+a:\s*[\w_]+\s+"
+            r"b:\s*[\w_]+\s+depth_c:\s*[\w_]+\s*"
+        ),
+        "ocean_sigma_z_coordinate": re.compile(
+            r"\s*sigma\s*:\s*[\w_]+\s+eta\s*:\s*[\w_]+\s+depth\s*:\s*[\w_]+\s+"
+            r"depth_c\s*:\s*[\w_]+\s+nsigma\s*:\s*[\w_]+\s+zlev\s*:\s*[\w_]+\s*"
+        ),
+        "ocean_double_sigma_coordinate": re.compile(
+            r"\s*sigma\s*:\s*[\w_]+\s+depth\s*:\s*[\w_]+\s+z1\s*:\s*[\w_]+\s+"
+            r"z2\s*:\s*[\w_]+\s+a\s*:\s*[\w_]+\s+href\s*:\s*[\w_]+\s+"
+            r"k_c\s*:\s*[\w_]+\s*"
+        ),
+    }
     cf_units_modifiers = {
         "detection_minimum": None,
         "number_of_observations": "1",
         "standard_error": None,
         "status_flag": None,
     }
+    cf_recommended_latitude_unit = "degrees_north"
+    cf_acceptable_latitude_units = (
+        "degree_north",
+        "degree_N",
+        "degrees_N",
+        "degreeN",
+        "degreesN",
+    )
+    cf_recommended_longitude_unit = "degrees_east"
+    cf_acceptable_longitude_units = (
+        "degree_east",
+        "degree_E",
+        "degrees_E",
+        "degreeE",
+        "degreesE",
+    )
+    cf_calendars = (
+        "gregorian",
+        "standard",
+        "proleptic_gregorian",
+        "noleap",
+        "365_day",
+        "all_leap",
+        "366_day",
+        "360_day",
+        "julian",
+        "none",
+    )
+    cf_cell_methods_pattern = re.compile(
+        r"^((?P<name>(\s*area|[\w_]+:\s+)+)(?P<method>(point|sum|mean|maximum|minimum"
+        r"|mid_range|standard_deviation|variance|mode|median)"
+        r"(\s+where\s+[\w_-]+(\s+over\s+[\w_-]+)?)?"
+        r"(\s+\((((interval:\s[0-9]+(\.[0-9]+)?\s([a-zA-Z_]+|1))"
+        r"(\s+interval:\s[0-9]+(\.[0-9]+)?\s([a-zA-Z_]+|1))*"
+        r"(\s+comment:(\s[\w_-]+)+)?)|(([\w_-]+\s*)+))\))?))*$",
+        re.VERBOSE,
+    )
     __standard_names = None
     __std_names_tree = ElementTree.parse(
         resource_filename("c3schecker", "resources/cf-standard-name-table.xml")
@@ -77,33 +148,39 @@ class CFREF:
                     return axis
         except AttributeError:
             pass
-        std_name = dim_var.standard_name
-        for idx, allowed_std_names in enumerate(
-            [
-                self.time_axis_std_names,
-                self.z_axis_std_names,
-                self.y_axis_std_names,
-                self.x_axis_std_names,
-            ]
-        ):
-            if std_name in allowed_std_names:
-                return self.dimensions_order[idx + 1]
-        unit = Units(dim_var.units)
-        if unit.isreftime or unit.istime:
-            return self.dimensions_order[1]
         try:
-            if (
-                unit.ispressure
-                or dim_var.units in self.z_axis_units
-                or dim_var.positive.lower() in ["up", "down"]
+            std_name = dim_var.standard_name
+            for idx, allowed_std_names in enumerate(
+                [
+                    self.time_axis_std_names,
+                    self.z_axis_std_names,
+                    self.y_axis_std_names,
+                    self.x_axis_std_names,
+                ]
             ):
-                return self.dimensions_order[2]
+                if std_name in allowed_std_names:
+                    return self.dimensions_order[idx + 1]
         except AttributeError:
             pass
-        if unit.islongitude:
-            return self.dimensions_order[3]
-        if unit.islatitude:
-            return self.dimensions_order[4]
+        try:
+            unit = Units(dim_var.units)
+            if unit.isreftime or unit.istime:
+                return self.dimensions_order[1]
+            try:
+                if (
+                    unit.ispressure
+                    or dim_var.units in self.z_axis_units
+                    or dim_var.positive.lower() in CFREF().z_axis_orientations
+                ):
+                    return self.dimensions_order[2]
+            except AttributeError:
+                pass
+            if unit.islongitude:
+                return self.dimensions_order[3]
+            if unit.islatitude:
+                return self.dimensions_order[4]
+        except AttributeError:
+            pass
         # Fall back to "*" (which means everything else)
         return self.dimensions_order[0]
 
@@ -123,7 +200,18 @@ class CFREF:
     def is_cf_grid_mapping_variable(nc_var):
         return "grid_mapping" in nc_var.ncattrs()
 
-    @lru_cache
+    @staticmethod
+    def is_cf_coordinate_variable(nc_var):
+        return nc_var.ndim == 1 and nc_var.name == nc_var.dimensions[0]
+
+    @staticmethod
+    def is_cf_auxilliary_coordinate_variable(nc_var, all_variables):
+        """A netCDF variable is a auxiliary coord var if it is present in
+        the `coordinates` attribute of at least one variable of the netCDF data set
+        """
+        return any(nc_var.name in getattr(v, "coordinates", "") for v in all_variables)
+
+    @lru_cache()
     def cf_standard_name_def(self, std_name):
         for elt in self.__std_names_tree.iter("entry"):
             if elt.attrib["id"] == std_name:
@@ -415,6 +503,7 @@ def cf_standard_names_check(ds: Dataset, _):
                 f"Attribute 'standard_name' of variable '{var_name}' ({std_name}) "
                 f"is not a recognized CF standard name"
             )
+    return outcome
 
 
 @register(CONVENTION, "cf_units")
@@ -487,6 +576,7 @@ def cf_units_check(ds: Dataset, _):
                                         f"is not consistent with standard name "
                                         f"canonical units ('{known_units}')"
                                     )
+    return outcome
 
 
 @register(CONVENTION, "cf_flags")
@@ -610,6 +700,228 @@ def cf_flags_check(ds: Dataset, _):
                                 f"available in attribute 'flag_values'. Must result"
                                 f" in '{flag_values}'"
                             )
+    return outcome
+
+
+@register(CONVENTION, "cf_coordinates_variables")
+def cf_coordinates_variables_check(ds: Dataset, _):
+    outcome = {"status": 1}
+    nc_variables = ds.variables.values()
+    for var_name, nc_var in zip(ds.variables, nc_variables):
+        if CFREF().is_cf_coordinate_variable(
+            nc_var
+        ) or CFREF().is_cf_auxilliary_coordinate_variable(nc_var, nc_variables):
+            try:
+                unit = nc_var.getncattr("units")
+            except AttributeError:
+                try:
+                    std_name = nc_var.getncattr("standard_name")
+                    if std_name not in CFREF().dimensionless_vertical_coordinates:
+                        outcome["status"] = 0
+                        outcome.setdefault("errors", []).append(
+                            f"Coordinate variables must have units or have their "
+                            f"standard_name in the list of dimensionless vertical "
+                            f"coordinates"
+                        )
+                except AttributeError:
+                    pass
+            else:
+                try:
+                    positive = nc_var.getncattr("positive")
+                    if positive.lower() not in CFREF().z_axis_orientations:
+                        outcome["status"] = 0
+                        outcome.setdefault("errors", []).append(
+                            f"Value of 'positive' attribute ({positive}) is not allowed. "
+                            f"Use one of '{CFREF().z_axis_orientations}' instead"
+                        )
+                except AttributeError:
+                    pass
+                dimension_type = CFREF().identify_dimension_type(nc_var)
+                axis = getattr(nc_var, "axis", "")
+                if dimension_type == "*":
+                    if axis == "E":
+                        outcome.setdefault("warnings", []).append(
+                            f"Axis E of coordinate '{var_name}' is not part of "
+                            f"CF-1.6 but may be allowed in CF 1.7"
+                        )
+                    else:
+                        outcome["status"] = 0
+                        outcome.setdefault("errors", []).append(
+                            f"Unsupported value of attribute 'axis' for coordinate "
+                            f"variable '{var_name}': '{axis}'. Should be one of "
+                            f"'{CFREF().dimensions_order[1:] + ('E',)}'"
+                        )
+                else:
+                    if axis != dimension_type and unit != "1":
+                        outcome["status"] = 0
+                        outcome.setdefault("errors", []).append(
+                            f"Attribute 'axis' of coordinate variable '{var_name}' "
+                            f"is not consistent with unit '{unit}'"
+                        )
+        else:
+            axis = getattr(nc_var, "axis", "")
+            positive = getattr(nc_var, "positive", "")
+            if axis:
+                outcome.setdefault("warnings", []).append(
+                    f"Value of attribute 'axis' of variable '{var_name}' ('{axis}') "
+                    f"may not be allowed because variable is not identified as a "
+                    f"coordinate variable"
+                )
+            if positive:
+                outcome.setdefault("warnings", []).append(
+                    f"Value of attribute 'positive' of variable '{var_name}' "
+                    f"('{positive}') may not be allowed because variable is not "
+                    f"identified as a coordinate variable"
+                )
+    return outcome
+
+
+@register(CONVENTION, "cf_dimensionless_vertical_coordinates")
+def cf_dimensionless_vertical_coordinates_check(ds: Dataset, _):
+    outcome = {"status": 1}
+    for var_name, nc_var in ds.variables.items():
+        try:
+            std_name = nc_var.getncattr("standard_name")
+            regex = CFREF().dimensionless_vertical_coordinates.get(std_name)
+            if regex and not regex.match(nc_var.getncattr("formula_terms")):
+                outcome["status"] = 0
+                outcome.setdefault("errors", []).append(
+                    f"Value of attribute 'formula_terms' of variable '{var_name}' "
+                    f"does not match the known pattern for this standard_name "
+                    f"'{std_name}'. Must match: '{regex}' (Python Regex)"
+                )
+        except AttributeError:
+            pass
+
+
+@register(CONVENTION, "cf_latitude")
+def cf_latitude_check(ds: Dataset, _):
+    outcome = {"status": 1}
+    nc_variables = ds.variables.values()
+    for var_name, nc_var in zip(ds.variables, nc_variables):
+        if CFREF().is_cf_coordinate_variable(
+            nc_var
+        ) or CFREF().is_cf_auxilliary_coordinate_variable(nc_var, nc_variables):
+            unit = getattr(nc_var, "units", "")
+            if unit in CFREF().cf_acceptable_latitude_units + (
+                CFREF().cf_recommended_latitude_unit,
+            ):
+                dim_type = CFREF().identify_dimension_type(nc_var)
+                std_name = getattr(nc_var, "standard_name", "")
+                axis = getattr(nc_var, "axis", "")
+                if any([std_name != "latitude", dim_type != axis != "Y"]):
+                    outcome["status"] = 0
+                    outcome.setdefault("errors", []).append(
+                        f"Variable '{var_name}' is identified as a latitude "
+                        f"coordinate variable but has inconsistent standard_name "
+                        f"('{std_name}') and/or axis ('{axis}') attributes and/or "
+                        f"inconsistent dimension type ('{dim_type}')"
+                    )
+    return outcome
+
+
+@register(CONVENTION, "cf_longitude")
+def cf_longitude_check(ds: Dataset, _):
+    outcome = {"status": 1}
+    nc_variables = ds.variables.values()
+    for var_name, nc_var in zip(ds.variables, nc_variables):
+        if CFREF().is_cf_coordinate_variable(
+            nc_var
+        ) or CFREF().is_cf_auxilliary_coordinate_variable(nc_var, nc_variables):
+            unit = getattr(nc_var, "units", "")
+            if unit in CFREF().cf_acceptable_longitude_units + (
+                CFREF().cf_recommended_longitude_unit,
+            ):
+                dim_type = CFREF().identify_dimension_type(nc_var)
+                std_name = getattr(nc_var, "standard_name", "")
+                axis = getattr(nc_var, "axis", "")
+                if any([std_name != "longitude", dim_type != axis != "X"]):
+                    outcome["status"] = 0
+                    outcome.setdefault("errors", []).append(
+                        f"Variable '{var_name}' is identified as a longitude "
+                        f"coordinate variable but has inconsistent standard_name "
+                        f"('{std_name}') and/or axis ('{axis}') attributes and/or "
+                        f"inconsistent dimension type ('{dim_type}')"
+                    )
+    return outcome
+
+
+@register(CONVENTION, "cf_time")
+def cf_time_check(ds: Dataset, _):
+    outcome = {"status": 1}
+    for var_name, nc_var in ds.variables.items():
+        dimension_type = CFREF().identify_dimension_type(nc_var)
+        if dimension_type == "T":
+            calendar = getattr(nc_var, "calendar", "")
+            if calendar:
+                if calendar not in CFREF().cf_calendars:
+                    outcome.setdefault("warnings", []).append(
+                        f"Non standard value for attribute 'calendar' ('{calendar}') "
+                        f"of variable '{var_name}' which is identified as a time "
+                        f"variable. Should be one of {CFREF().cf_calendars}"
+                    )
+                missing_month_length_msg = (
+                    f"Attribute 'month_length' is recommended when attribute "
+                    f"'calendar' has a non standard value. Missing for variable: "
+                    f"'{var_name}'"
+                )
+            else:
+                outcome.setdefault("warnings", []).append(
+                    f"Attribute 'calendar' is recommended for variables identified "
+                    f"as time variables. Missing for '{var_name}'"
+                )
+                missing_month_length_msg = (
+                    f"Attribute 'month_length' is recommended when attribute "
+                    f"'calendar' is not declared. Missing for variable: '{var_name}'"
+                )
+            if not getattr(nc_var, "month_length", ""):
+                outcome.setdefault("warnings", []).append(missing_month_length_msg)
+    return outcome
+
+
+@register(CONVENTION, "cf_coordinates")
+def cf_coordinates_check(ds: Dataset, _):
+    outcome = {"status": 1}
+    for var_name, nc_var in ds.variables.items():
+        coords = getattr(nc_var, "coordinates", "")
+        if coords:
+            for aux_coord in coords.split():
+                if aux_coord not in ds.variables:
+                    outcome["status"] = 0
+                    outcome.setdefault("errors", []).append(
+                        f"Variable '{aux_coord}' declared as auxiliary coordinate "
+                        f"for variable '{var_name}' but inexistent in the dataset"
+                    )
+                else:
+                    aux_coord_var = ds.variables[aux_coord]
+                    dim_type = CFREF().identify_dimension_type(aux_coord_var)
+                    if dim_type in ("X", "Y") and not set(
+                        aux_coord_var.dimensions
+                    ).issubset(set(nc_var.dimensions)):
+                        outcome["status"] = 0
+                        outcome.setdefault("errors", []).append(
+                            f"Dimensions of 2-Dimensional auxiliary coordinate "
+                            f"'{aux_coord}' are not part of dimensions of "
+                            f"coordinate variable '{var_name}'"
+                        )
+    return outcome
+
+
+@register(CONVENTION, "cf_cell_methods")
+def cf_cell_methods_check(ds: Dataset, _):
+    outcome = {"status": 1}
+    for var_name, nc_var in ds.variables.items():
+        cell_methods = getattr(nc_var, "cell_methods", "")
+        if cell_methods:
+            match = CFREF().cf_cell_methods_pattern.match(cell_methods)
+            if not match:
+                outcome["status"] = 0
+                outcome.setdefault("errors", []).append(
+                    f"Value of attribute cell_methods ('{cell_methods}') "
+                    f"of variable '{var_name}' does not match the pattern "
+                    f"for cell_methods: {CFREF().cf_cell_methods_pattern.pattern}"
+                )
+    return outcome
 
 
 def __get_std_name(std_name):
