@@ -26,6 +26,8 @@ from c3schecker.checks import ChecksRegistry
 
 # First import all existing conventions in order to register all the available checks
 # We do this with importlib so that we don't have unused imports at the top
+from c3schecker.postprocessing import print_score_info
+
 importlib.import_module("c3schecker.checks.c3s01")
 importlib.import_module("c3schecker.checks.cf16")
 
@@ -52,10 +54,13 @@ importlib.import_module("c3schecker.checks.cf16")
     help="The NetCDF convention followed by the constraints file",
     callback=lambda ctx, param, value: set(value),
 )
+@click.option(
+    "--json", "js", help="Print output in json format", is_flag=True, flag_value=True
+)
 @click.argument(
     "inputs", nargs=-1, callback=lambda ctx, param, value: [Path(v) for v in value]
 )
-def main(inputs, conventions, constraints, checks):
+def main(inputs, conventions, constraints, checks, js):
     """Check the input NetCDF files against the specified constraints file"""
     if not constraints:
         if "C3S-0.1" in conventions:
@@ -73,7 +78,10 @@ def main(inputs, conventions, constraints, checks):
             spec = json.load(cf)
     else:
         spec = {}
-    print(json.dumps(run_checks(inputs, checks, spec)))
+    result = run_checks(inputs, checks, spec)
+    print_score_info(result)
+    if js:
+        print(json.dumps(result))
 
 
 def run_checks(input_files, checks, spec):
