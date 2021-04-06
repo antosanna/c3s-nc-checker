@@ -1,8 +1,7 @@
 from c3schecker.utils import Singleton
 
 
-@Singleton
-class ChecksRegistry:
+class ChecksRegistry(metaclass=Singleton):
     __registry = {"C3S-0.1": {}}
 
     def register(self, convention, check_name, check_implementation):
