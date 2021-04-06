@@ -240,7 +240,7 @@ def cf_filename_extension_check(ds: Dataset, _):
 @register(CONVENTION, "cf_convention")
 def cf_convention_check(ds: Dataset, _):
     actual = ds.Conventions
-    if actual not in CONVENTION:
+    if CONVENTION not in actual:
         return {
             "status": 0,
             "errors": [

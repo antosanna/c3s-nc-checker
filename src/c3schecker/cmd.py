@@ -19,14 +19,15 @@ from pathlib import Path
 
 import click
 from netCDF4 import Dataset
+from pkg_resources import resource_filename
 
 from c3schecker.checks import ChecksRegistry
 
 
-# First import c3s01 in order to register all the available checks
+# First import all existing conventions in order to register all the available checks
 # We do this with importlib so that we don't have unused imports at the top
 importlib.import_module("c3schecker.checks.c3s01")
-DEFAULT_CONVENTION = "C3S-0.1"
+importlib.import_module("c3schecker.checks.cf16")
 
 
 @click.command("c3schecker")
@@ -35,41 +36,43 @@ DEFAULT_CONVENTION = "C3S-0.1"
     "checks",
     multiple=True,
     help="Specific constraints to be checked (only the specified ones will be done)",
-    default=set(ChecksRegistry()[DEFAULT_CONVENTION].keys()),
-    show_default=True,
-)
-@click.option(
-    "-s",
-    "--skip",
-    multiple=True,
-    help="Specific constraints to skip (specify as in -c)",
-    default=set(),
 )
 @click.option(
     "--constraints",
-    required=True,
+    required=False,
     type=click.Path(exists=True, dir_okay=False, resolve_path=True, allow_dash=True),
 )
 @click.option(
     "--convention",
+    "-C",
+    "conventions",
     required=True,
+    multiple=True,
     type=click.STRING,
-    default=DEFAULT_CONVENTION,
     help="The NetCDF convention followed by the constraints file",
-    show_default=True,
+    callback=lambda ctx, param, value: set(value),
 )
 @click.argument(
     "inputs", nargs=-1, callback=lambda ctx, param, value: [Path(v) for v in value]
 )
-def main(inputs, convention, constraints, skip, checks):
+def main(inputs, conventions, constraints, checks):
     """Check the input NetCDF files against the specified constraints file"""
+    if not constraints:
+        if "C3S-0.1" in conventions:
+            constraints = resource_filename(
+                "c3schecker", "resources/c3s01_seasonal_constraints.json"
+            )
     checks = {
         name: func
+        for convention in conventions
         for name, func in ChecksRegistry()[convention].items()
-        if name in set(checks) - set(skip)
+        if not checks or checks and name in set(checks)
     }
-    with open(constraints) as cf:
-        spec = json.load(cf)
+    if constraints:
+        with open(constraints) as cf:
+            spec = json.load(cf)
+    else:
+        spec = {}
     print(json.dumps(run_checks(inputs, checks, spec)))
 
 
