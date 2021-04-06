@@ -82,6 +82,12 @@ def main(inputs, conventions, constraints, checks, js):
     print_score_info(result)
     if js:
         print(json.dumps(result))
+    # Exit with anomalous code if there is even 1 failed check
+    for outcome in result.values():
+        for check_outcome in outcome.values():
+            if check_outcome["status"] == 0:
+                sys.exit(1)
+    sys.exit(0)
 
 
 def run_checks(input_files, checks, spec):
