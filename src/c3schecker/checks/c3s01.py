@@ -193,7 +193,12 @@ def c3s_meta_attributes_exact_values_per_var_name(ds: Dataset, spec: dict) -> di
             "expected", {}
         ).items():
             try:
-                actual_value = nc_var.getncattr(attr_name)
+                if attr_name not in check_regex:
+                    actual_value = np.array(
+                        nc_var.getncattr(attr_name), dtype=nc_var.dtype
+                    )
+                else:
+                    actual_value = str(nc_var.getncattr(attr_name))
             except AttributeError:
                 outcome.setdefault("errors", []).append(
                     f"Variable '{var_name}' is missing attribute '{attr_name}'"
@@ -201,7 +206,9 @@ def c3s_meta_attributes_exact_values_per_var_name(ds: Dataset, spec: dict) -> di
                 outcome["status"] = 0
                 continue
             if attr_name not in check_regex:
-                check_result = actual_value == expected_value
+                check_result = actual_value == np.array(
+                    expected_value, dtype=nc_var.dtype
+                )
             else:
                 check_result = re.match(expected_value, actual_value)
             if check_result:
@@ -215,7 +222,7 @@ def c3s_meta_attributes_exact_values_per_var_name(ds: Dataset, spec: dict) -> di
                     new_status = 1
                 outcome.setdefault(message_type, []).append(
                     f"Attribute '{attr_name}' of variable '{var_name}' ({actual_value})"
-                    f"is not allowed. Expected: {expected_value}"
+                    f" is not allowed. Expected: {expected_value}"
                 )
                 outcome["status"] = outcome["status"] and new_status
     return outcome
@@ -226,8 +233,8 @@ def c3s_meta_global_attributes(ds: Dataset, spec: dict) -> dict:
     constraints = spec.get("global_attributes", {})
     if not constraints:
         return {"status": 1, "info": ["No constraints -> Skipped"]}
-    actual = set(ds.ncattrs())
-    expected = set(constraints["expected"])
+    actual = set(sorted(ds.ncattrs()))
+    expected = set(sorted(constraints["expected"]))
     if expected == actual:
         outcome = {"status": 1, "info": ["OK"]}
     else:
