@@ -8,6 +8,7 @@ from numpy.ma import MaskedArray
 
 
 CONVENTION = "C3S-0.1"
+NUMBER_REGEX = re.compile(r"^[0-9]+.?[0-9]*$")
 
 
 @register(CONVENTION, "md_convention")
@@ -194,9 +195,13 @@ def c3s_meta_attributes_exact_values_per_var_name(ds: Dataset, spec: dict) -> di
         ).items():
             try:
                 if attr_name not in check_regex:
-                    actual_value = np.array(
-                        nc_var.getncattr(attr_name), dtype=nc_var.dtype
-                    )
+                    actual_value = nc_var.getncattr(attr_name)
+                    # Does the actual value look like a number?
+                    if NUMBER_REGEX.match(actual_value):
+                        # If yes, convert it to the type of the referring var
+                        actual_value = np.array(
+                            nc_var.getncattr(attr_name), dtype=nc_var.dtype
+                        )
                 else:
                     actual_value = str(nc_var.getncattr(attr_name))
             except AttributeError:
@@ -206,9 +211,9 @@ def c3s_meta_attributes_exact_values_per_var_name(ds: Dataset, spec: dict) -> di
                 outcome["status"] = 0
                 continue
             if attr_name not in check_regex:
-                check_result = actual_value == np.array(
-                    expected_value, dtype=nc_var.dtype
-                )
+                if NUMBER_REGEX.match(expected_value):
+                    expected_value = np.array(expected_value, dtype=nc_var.dtype)
+                check_result = actual_value == expected_value
             else:
                 check_result = re.match(expected_value, actual_value)
             if check_result:
