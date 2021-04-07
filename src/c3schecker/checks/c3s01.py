@@ -232,7 +232,7 @@ def c3s_meta_global_attributes(ds: Dataset, spec: dict) -> dict:
         outcome = {"status": 1, "info": ["OK"]}
     else:
         missing = expected - actual
-        if constraints["mandatory"]:
+        if constraints.get("mandatory", True):
             level = "errors"
             status = 0
         else:
