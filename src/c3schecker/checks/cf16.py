@@ -343,24 +343,13 @@ def cf_missing_data_check(ds: Dataset, _):
             )
         else:
             if "valid_range" in attrs:
-                vmin, vmax = nc_var.getncattr("valid_range")
-            elif "valid_min" in attrs:
-                vmin = nc_var.getncattr("valid_min")
-                vmax = None
+                _, vmax = nc_var.getncattr("valid_range")
             elif "valid_max" in attrs:
-                vmin = None
                 vmax = nc_var.getncattr("valid_max")
             else:
-                vmin = vmax = None
-            if vmin is not None:
-                fill_value = nc_var[:1].fill_value
-                if fill_value >= vmin:
-                    outcome["status"] = 0
-                    outcome.setdefault("errors", []).append(
-                        f"Fill value '{fill_value}' is greater than valid min '{vmin}' "
-                        f"for variable '{var_name}'"
-                    )
+                vmax = None
             if vmax is not None:
+                vmax = np.array(vmax, dtype=nc_var.dtype)
                 fill_value = nc_var[:1].fill_value
                 if fill_value <= vmax:
                     outcome["status"] = 0
