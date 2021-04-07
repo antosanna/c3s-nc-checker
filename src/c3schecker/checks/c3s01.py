@@ -8,7 +8,7 @@ from numpy.ma import MaskedArray
 
 
 CONVENTION = "C3S-0.1"
-NUMBER_REGEX = re.compile(r"^[0-9]+.?[0-9]*$")
+NUMBER_REGEX = re.compile(r"^[-+]?[0-9]+.?[0-9]*$")
 
 
 @register(CONVENTION, "md_convention")
@@ -211,7 +211,7 @@ def c3s_meta_attributes_exact_values_per_var_name(ds: Dataset, spec: dict) -> di
                 outcome["status"] = 0
                 continue
             if attr_name not in check_regex:
-                if NUMBER_REGEX.match(expected_value):
+                if NUMBER_REGEX.match(str(expected_value)):
                     expected_value = np.array(expected_value, dtype=nc_var.dtype)
                 check_result = actual_value == expected_value
             else:
@@ -240,10 +240,10 @@ def c3s_meta_global_attributes(ds: Dataset, spec: dict) -> dict:
         return {"status": 1, "info": ["No constraints -> Skipped"]}
     actual = set(sorted(ds.ncattrs()))
     expected = set(sorted(constraints["expected"]))
-    if expected == actual:
+    missing = expected - actual
+    if not missing:
         outcome = {"status": 1, "info": ["OK"]}
     else:
-        missing = expected - actual
         if constraints.get("mandatory", True):
             level = "errors"
             status = 0
