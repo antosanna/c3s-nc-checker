@@ -79,9 +79,10 @@ def main(inputs, conventions, constraints, checks, js):
     else:
         spec = {}
     result = run_checks(inputs, checks, spec)
-    print_score_info(result)
     if js:
         print(json.dumps(result))
+    else:
+        print_score_info(result)
     # Exit with anomalous code if there is even 1 failed check
     for outcome in result.values():
         for check_outcome in outcome.values():

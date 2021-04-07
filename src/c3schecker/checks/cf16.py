@@ -781,6 +781,7 @@ def cf_dimensionless_vertical_coordinates_check(ds: Dataset, _):
                 )
         except AttributeError:
             pass
+    return outcome
 
 
 @register(CONVENTION, "cf_latitude")
