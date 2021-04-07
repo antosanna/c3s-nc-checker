@@ -26,7 +26,7 @@ from c3schecker.checks import ChecksRegistry
 
 # First import all existing conventions in order to register all the available checks
 # We do this with importlib so that we don't have unused imports at the top
-from c3schecker.postprocessing import print_score_info
+from c3schecker.postprocessing import print_score_info, compute_score
 
 importlib.import_module("c3schecker.checks.c3s01")
 importlib.import_module("c3schecker.checks.cf16")
@@ -57,10 +57,32 @@ importlib.import_module("c3schecker.checks.cf16")
 @click.option(
     "--json", "js", help="Print output in json format", is_flag=True, flag_value=True
 )
+@click.option(
+    "--score-threshold",
+    help=(
+        "The minimum score a file must have to be considered as passing all "
+        "the checks (expressed as a percentage - i.e between 0 and 100)"
+    ),
+    type=click.IntRange(min=0, max=100),
+    default=100,
+    show_default=True,
+)
+@click.option(
+    "--min-passing-files",
+    help=(
+        "The minimum number of files that must pass to consider the command as "
+        "passing (expressed as a percentage - i.e between 0 and 100)"
+    ),
+    type=click.IntRange(min=0, max=100),
+    default=100,
+    show_default=True,
+)
 @click.argument(
     "inputs", nargs=-1, callback=lambda ctx, param, value: [Path(v) for v in value]
 )
-def main(inputs, conventions, constraints, checks, js):
+def main(
+    inputs, conventions, constraints, checks, js, score_threshold, min_passing_files
+):
     """Check the input NetCDF files against the specified constraints file"""
     if not constraints:
         if "C3S-0.1" in conventions:
@@ -84,10 +106,16 @@ def main(inputs, conventions, constraints, checks, js):
     else:
         print_score_info(result)
     # Exit with anomalous code if there is even 1 failed check
-    for outcome in result.values():
-        for check_outcome in outcome.values():
-            if check_outcome["status"] == 0:
-                sys.exit(1)
+    nb_passing_files = 0
+    for filename, outcome in result.items():
+        score, _, total = compute_score(outcome)
+        if score * 100 / total >= score_threshold:
+            print(f"{filename}: Passed (according to threshold: {score_threshold}%)")
+            nb_passing_files += 1
+        else:
+            print(f"{filename}: Failed (according to threshold: {score_threshold}%)")
+    if nb_passing_files * 100 / len(inputs) < min_passing_files:
+        sys.exit(1)
     sys.exit(0)
 
 
