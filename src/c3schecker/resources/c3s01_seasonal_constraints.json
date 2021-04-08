@@ -731,7 +731,8 @@
             "level_type": [
                 "surface",
                 "pressure",
-                "soil"
+                "soil",
+                "ocean2d"
             ]
         }
     },

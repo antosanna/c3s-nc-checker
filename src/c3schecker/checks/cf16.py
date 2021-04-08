@@ -385,21 +385,26 @@ def cf_naming_convention_check(ds: Dataset, _):
             ),
         )
         for attribute in nc_var.ncattrs():
+            # Make an exception for _FillValue. CF convention is not clear about this:
+            # it says attributes shouldn't start with an underscore, but then there is
+            # this one it talks about in the chapter on Missing Values
+            if attribute != "_FillValue":
+                _check(
+                    attribute,
+                    (
+                        f"Attribute '{attribute}' of variable '{var_name}' does not "
+                        f"follow naming convention '{naming_convention.pattern}'"
+                    ),
+                )
+    for global_attribute in ds.ncattrs():
+        if global_attribute != "_FillValue":
             _check(
-                attribute,
+                global_attribute,
                 (
-                    f"Attribute '{attribute}' of variable '{var_name}' does not follow "
-                    f"naming convention '{naming_convention.pattern}'"
+                    f"Global attribute '{global_attribute}' does not follow naming "
+                    f"convention '{naming_convention.pattern}'"
                 ),
             )
-    for global_attribute in ds.ncattrs():
-        _check(
-            global_attribute,
-            (
-                f"Global attribute '{global_attribute}' does not follow naming "
-                f"convention '{naming_convention.pattern}'"
-            ),
-        )
     return outcome
 
 
@@ -732,6 +737,11 @@ def cf_coordinates_variables_check(ds: Dataset, _):
                         outcome.setdefault("warnings", []).append(
                             f"Axis E of coordinate '{var_name}' is not part of "
                             f"CF-1.6 but may be allowed in CF 1.7"
+                        )
+                    elif not axis:
+                        outcome.setdefault("warnings", []).append(
+                            f"Axis attribute not provided for coordinate variable"
+                            f" '{var_name}'"
                         )
                     else:
                         outcome["status"] = 0

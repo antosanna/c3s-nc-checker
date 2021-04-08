@@ -194,16 +194,13 @@ def c3s_meta_attributes_exact_values_per_var_name(ds: Dataset, spec: dict) -> di
             "expected", {}
         ).items():
             try:
-                if attr_name not in check_regex:
-                    actual_value = nc_var.getncattr(attr_name)
-                    # Does the actual value look like a number?
-                    if NUMBER_REGEX.match(actual_value):
-                        # If yes, convert it to the type of the referring var
-                        actual_value = np.array(
-                            nc_var.getncattr(attr_name), dtype=nc_var.dtype
-                        )
-                else:
-                    actual_value = str(nc_var.getncattr(attr_name))
+                actual_value = str(nc_var.getncattr(attr_name))
+                # Does the actual value look like a number?
+                if NUMBER_REGEX.match(actual_value):
+                    # If yes, convert it to the type of the referring var
+                    actual_value = np.array(
+                        nc_var.getncattr(attr_name), dtype=nc_var.dtype
+                    )
             except AttributeError:
                 outcome.setdefault("errors", []).append(
                     f"Variable '{var_name}' is missing attribute '{attr_name}'"
