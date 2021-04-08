@@ -754,8 +754,10 @@ def cf_coordinates_variables_check(ds: Dataset, _):
                     if axis != dimension_type and unit != "1":
                         outcome["status"] = 0
                         outcome.setdefault("errors", []).append(
-                            f"Attribute 'axis' of coordinate variable '{var_name}' "
-                            f"is not consistent with unit '{unit}'"
+                            f"Attribute 'axis' (value: '{axis}') of coordinate variable"
+                            f" '{var_name}' is not consistent with its unit '{unit}'. "
+                            f"It should be set to '{dimension_type}' or the 'unit' "
+                            f"should be 1"
                         )
         else:
             axis = getattr(nc_var, "axis", "")
