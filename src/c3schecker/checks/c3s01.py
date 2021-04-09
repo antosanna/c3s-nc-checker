@@ -494,24 +494,101 @@ def c3s_data_values(ds: Dataset, spec: dict) -> dict:
     ok_msg = "{var_name} (dimension {dim_name}): OK"
 
     def logic(data, var_name, expected, dim_name=None):
-        # Determine wether the logic is done on the dimension variable or otherwise
+        # Determine whether the logic is done on the dimension variable or otherwise
         if dim_name is None:
             dim_name = name = var_name
         else:
             name = dim_name
-        expected = np.array(expected)
+        # Unroll the expected arrays to do comparisons on 1-D arrays
+        expected = np.array(expected).ravel()
         values = data.variables[name][:]
         if isinstance(values, MaskedArray):
-            # Get non masked values as a 1D array
-            values = values.compressed()
-        unauthorized_values = values[np.asarray((values - expected) != 0).nonzero()]
-        results = {
-            "var_name": var_name,
-            "dim_name": dim_name,
-            "valid_values": expected,
-            "invalid_values": list(unauthorized_values),
-            "failure": unauthorized_values.any(),
-        }
+            # For masked arrays, return the non masked data as unrolled numpy array
+            values = values.compressed().ravel()
+        # If expected has lower nb of values than actual, pad the smaller array in all
+        # possible ways in order to do comparisons: left, right, left and right
+        nb_actual_values = values.shape[0]
+        nb_expected_values = expected.shape[0]
+        if nb_actual_values > nb_expected_values:
+            diff = nb_actual_values - nb_expected_values
+            exp_left_padded = np.pad(expected, ((diff, 0),), constant_values=np.nan)
+            exp_right_padded = np.pad(expected, ((0, diff),), constant_values=np.nan)
+            # When all expected values are there, it's not a failure
+            if len(values[values == exp_left_padded]) == nb_expected_values:
+                results = {
+                    "var_name": var_name,
+                    "dim_name": dim_name,
+                    "valid_values": expected,
+                    "invalid_values": list(values[values != exp_left_padded]),
+                    "failure": False,
+                    "warnings": True,
+                }
+            elif len(values[values == exp_right_padded]) == nb_expected_values:
+                results = {
+                    "var_name": var_name,
+                    "dim_name": dim_name,
+                    "valid_values": expected,
+                    "invalid_values": list(values[values != exp_right_padded]),
+                    "failure": False,
+                    "warnings": True,
+                }
+            else:
+                both_padding_width = int(diff / 2)
+                if both_padding_width == 0:
+                    # This case means the order of the expected values is not even
+                    # followed in the actual data. We need to check the actual data
+                    # one by one
+                    # TODO: Implement this
+                    # For now, just say it's an error, setting everything as invalid
+                    results = {
+                        "var_name": var_name,
+                        "dim_name": dim_name,
+                        "valid_values": expected,
+                        "invalid_values": list(values),
+                        "failure": True,
+                    }
+                else:
+                    exp_both_padded = np.pad(
+                        expected, both_padding_width, constant_values=np.nan
+                    )
+                    if len(values[values == exp_both_padded]) == nb_expected_values:
+                        results = {
+                            "var_name": var_name,
+                            "dim_name": dim_name,
+                            "valid_values": expected,
+                            "invalid_values": list(values[values != exp_both_padded]),
+                            "failure": False,
+                            "warnings": True,
+                        }
+                    else:
+                        results = {
+                            "var_name": var_name,
+                            "dim_name": dim_name,
+                            "valid_values": expected,
+                            "invalid_values": list(values),
+                            "failure": True,
+                        }
+        elif nb_actual_values < nb_expected_values:
+            # It's an error to not have all the expected values
+            results = {
+                "var_name": var_name,
+                "dim_name": dim_name,
+                "valid_values": expected,
+                "invalid_values": list(values),
+                "failure": True,
+            }
+        else:
+            # If the expected and the actual are the same length
+            if len(values[values == expected]) == nb_expected_values:
+                results = {"var_name": var_name, "dim_name": dim_name, "failure": False}
+            else:
+                results = {
+                    "var_name": var_name,
+                    "dim_name": dim_name,
+                    "valid_values": expected,
+                    "invalid_values": list(values[values != expected]),
+                    "failure": True,
+                }
         return results
 
     return _data_check("data_values", ds, spec, logic, ko_msg, ok_msg)
@@ -532,6 +609,9 @@ def _data_check(_type, ds, spec, check_logic, fail_msg, success_msg):
                 level, status = "errors", 0
             else:
                 level, status = "warnings", 0
+            msg = fail_msg.format(**results)
+        elif results.get("warnings", False):
+            level, status = "warning", 1
             msg = fail_msg.format(**results)
         else:
             level, status = "info", 1
