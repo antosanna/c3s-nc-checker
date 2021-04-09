@@ -394,7 +394,7 @@ def c3s_meta_grib_consistency(ds: Dataset, spec: dict) -> dict:
 def c3s_data_intervals(ds: Dataset, spec: dict) -> dict:
     ko_msg = (
         "Not matching intervals found for '{var_name}' "
-        "dimension '{dim_name}': {bad_intervals}"
+        "dimension '{dim_name}' (expected interval: {valid}): {bad_intervals}"
     )
     ok_msg = "{var_name} (dimension {dim_name}): OK"
 
@@ -412,6 +412,7 @@ def c3s_data_intervals(ds: Dataset, spec: dict) -> dict:
         results = {
             "var_name": var_name,
             "dim_name": dim_name,
+            "valid": expected,
             "bad_intervals": list(not_matching_intervals),
             "failure": not_matching_intervals.any(),
         }
