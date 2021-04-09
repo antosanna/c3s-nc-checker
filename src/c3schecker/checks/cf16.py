@@ -350,19 +350,21 @@ def cf_missing_data_check(ds: Dataset, _):
                 vmax = None
             if vmax is not None:
                 vmax = np.array(vmax, dtype=nc_var.dtype)
-                fill_value = nc_var[:1].fill_value
-                if fill_value <= vmax:
-                    outcome["status"] = 0
-                    outcome.setdefault("errors", []).append(
-                        f"Fill value '{fill_value}' is lower than valid max '{vmax}' "
-                        f"for variable '{var_name}'"
-                    )
-        fvalue_type = nc_var[:1].fill_value.dtype
-        if nc_var.dtype != fvalue_type:
-            outcome.setdefault("warnings", []).append(
-                f"Variable '{var_name}' type ({nc_var.dtype}) differs from fill "
-                f"value type ({fvalue_type})"
-            )
+                if "_FillValue" in attrs:
+                    fill_value = nc_var._FillValue
+                    if fill_value <= vmax:
+                        outcome["status"] = 0
+                        outcome.setdefault("errors", []).append(
+                            f"Fill value '{fill_value}' is lower than valid max "
+                            f"'{vmax}' for variable '{var_name}'"
+                        )
+        if "_FillValue" in attrs:
+            fvalue_type = nc_var._FillValue.dtype
+            if nc_var.dtype != fvalue_type:
+                outcome.setdefault("warnings", []).append(
+                    f"Variable '{var_name}' type ({nc_var.dtype}) differs from fill "
+                    f"value type ({fvalue_type})"
+                )
     return outcome
 
 
