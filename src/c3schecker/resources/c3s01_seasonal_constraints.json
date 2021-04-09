@@ -637,6 +637,126 @@
                 "cell_methods": "leadtime: point",
                 "grid_mapping": "hcrs"
             }
+        },
+        "mlotstheta001": {
+            "cell_methods": "leadtime: mean",
+            "coordinates": "reftime realization time leadtime sigma_theta lat lon",
+            "grid_mapping": "hcrs",
+            "long_name": "Ocean Mixed Layer Thickness Defined by Sigma Theta 0.01 kg/m3",
+            "standard_name": "ocean_mixed_layer_thickness_defined_by_sigma_theta",
+            "units": "m"
+        },
+        "mlotstheta003": {
+            "cell_methods": "leadtime: mean",
+            "coordinates": "reftime realization time leadtime sigma_theta lat lon",
+            "grid_mapping": "hcrs",
+            "long_name": "Ocean Mixed Layer Thickness Defined by Sigma Theta 0.03 kg/m3",
+            "standard_name": "ocean_mixed_layer_thickness_defined_by_sigma_theta",
+            "units": "m"
+        },
+        "sithick": {
+            "cell_methods": "leadtime: mean",
+            "coordinates": "reftime realization time leadtime lat lon",
+            "grid_mapping": "hcrs",
+            "long_name": "Sea Ice Thickness",
+            "standard_name": "sea_ice_thickness",
+            "units": "m"
+        },
+        "sos": {
+            "cell_methods": "leadtime: mean",
+            "coordinates": "reftime realization time leadtime lat lon",
+            "grid_mapping": "hcrs",
+            "long_name": "Sea Surface Salinity",
+            "standard_name": "sea_water_practical_salinity",
+            "units": "1"
+        },
+        "sot300": {
+            "cell_methods": "depth: mean leadtime: mean",
+            "coordinates": "reftime realization time leadtime depth lat lon",
+            "grid_mapping": "hcrs",
+            "long_name": "Depth Average Salinity of Upper 300m",
+            "standard_name": "sea_water_practical_salinity",
+            "units": "1"
+        },
+        "t14d": {
+            "cell_methods": "leadtime: mean",
+            "coordinates": "reftime realization time leadtime temperature lat lon",
+            "grid_mapping": "hcrs",
+            "long_name": "Depth of 14 degree Celsius Isotherm",
+            "standard_name": "depth_of_isosurface_of_sea_water_potential_temperature",
+            "units": "m"
+        },
+        "t17d": {
+            "cell_methods": "leadtime: mean",
+            "coordinates": "reftime realization time leadtime temperature lat lon",
+            "grid_mapping": "hcrs",
+            "long_name": "Depth of 17 degree Celsius Isotherm",
+            "standard_name": "depth_of_isosurface_of_sea_water_potential_temperature",
+            "units": "m"
+        },
+        "t20d": {
+            "cell_methods": "leadtime: mean",
+            "coordinates": "reftime realization time leadtime temperature lat lon",
+            "grid_mapping": "hcrs",
+            "long_name": "Depth of 20 degree Celsius Isotherm",
+            "standard_name": "depth_of_isosurface_of_sea_water_potential_temperature",
+            "units": "m"
+        },
+        "t26d": {
+            "cell_methods": "leadtime: mean",
+            "coordinates": "reftime realization time leadtime temperature lat lon",
+            "grid_mapping": "hcrs",
+            "long_name": "Depth of 26 degree Celsius Isotherm",
+            "standard_name": "depth_of_isosurface_of_sea_water_potential_temperature",
+            "units": "m"
+        },
+        "t28d": {
+            "cell_methods": "leadtime: mean",
+            "coordinates": "reftime realization time leadtime temperature lat lon",
+            "grid_mapping": "hcrs",
+            "long_name": "Depth of 28 degree Celsius Isotherm",
+            "standard_name": "depth_of_isosurface_of_sea_water_potential_temperature",
+            "units": "m"
+        },
+        "thetaot300": {
+            "cell_methods": "depth: mean leadtime: mean",
+            "coordinates": "reftime realization time leadtime depth lat lon",
+            "grid_mapping": "hcrs",
+            "long_name": "Depth Average Potential Temperature of Upper 300m",
+            "standard_name": "sea_water_potential_temperature",
+            "units": "K"
+        },
+        "zos": {
+            "cell_methods": "leadtime: mean",
+            "coordinates": "reftime realization time leadtime lat lon",
+            "grid_mapping": "hcrs",
+            "long_name": "Sea Surface Height Above Geoid",
+            "standard_name": "sea_surface_height_above_geoid",
+            "units": "m"
+        },
+        "prw": {
+            "long_name": "Water Vapor Path",
+            "units": "kg m-2",
+            "coordinates": "reftime realization time leadtime lat lon",
+            "standard_name": "atmosphere_mass_content_of_water_vapor",
+            "cell_methods": "leadtime: point",
+            "grid_mapping": "hcrs"
+        },
+        "cllvi": {
+            "long_name": "Liquid Water Path",
+            "units": "kg m-2",
+            "coordinates": "reftime realization time leadtime lat lon",
+            "standard_name": "atmosphere_mass_content_of_cloud_liquid_water",
+            "cell_methods": "leadtime: point",
+            "grid_mapping": "hcrs"
+        },
+        "clivi": {
+            "long_name": "Ice Water Path",
+            "units": "kg m-2",
+            "coordinates": "reftime realization time leadtime lat lon",
+            "standard_name": "atmosphere_mass_content_of_cloud_ice",
+            "cell_methods": "leadtime: point",
+            "grid_mapping": "hcrs"
         }
     },
     "global_attributes": {
@@ -672,14 +792,16 @@
                 "Seasonal Forecast data produced by Met Office as its contribution to the seasonal forecast activity of the Copernicus Climate Change Service (C3S). The data has global coverage with a 1-degree horizontal resolution and spans for around 6 months since the start date",
                 "Seasonal Forecast data produced by Meteo-France as its contribution to the seasonal forecast activity of the Copernicus Climate Change Service (C3S). The data has global coverage with a 1-degree horizontal resolution and spans for around 6 months since the start date",
                 "Seasonal Forecast data produced by DWD as its contribution to the seasonal forecast activity of the Copernicus Climate Change Service (C3S). The data has global coverage with a 1-degree horizontal resolution and spans for around 6 months since the start date",
-                "Seasonal Forecast data produced by CMCC as its contribution to the seasonal forecast activity of the Copernicus Climate Change Service (C3S). The data has global coverage with a 1-degree horizontal resolution and spans for around 6 months since the start date"
+                "Seasonal Forecast data produced by CMCC as its contribution to the seasonal forecast activity of the Copernicus Climate Change Service (C3S). The data has global coverage with a 1-degree horizontal resolution and spans for around 6 months since the start date",
+                "Seasonal Forecast data produced by ECCC as its contribution to the seasonal forecast activity of the Copernicus Climate Change Service (C3S). The data has global coverage with a 1-degree horizontal resolution and spans 12 months since the start date"
             ],
             "title": [
                 "ECMWF seasonal forecast model output prepared for C3S",
                 "Met Office seasonal forecast model output prepared for C3S",
                 "Meteo-France seasonal forecast model output prepared for C3S",
                 "DWD seasonal forecast model output prepared for C3S",
-                "CMCC seasonal forecast model output prepared for C3S"
+                "CMCC seasonal forecast model output prepared for C3S",
+                "ECCC seasonal forecast model output prepared for C3S"
             ],
             "forecast_type": [
                 "forecast",
@@ -690,7 +812,8 @@
                 "egrr",
                 "lfpw",
                 "edzw",
-                "cmcc"
+                "cmcc",
+                "cwao"
             ],
             "project": [
                 "C3S Seasonal Forecast"
@@ -706,7 +829,8 @@
                 "Met Office, Exeter, United Kingdom",
                 "Meteo-France, Toulouse, France",
                 "DWD, Deutscher Wetterdienst, Offenbach, Germany",
-                "CMCC, Centro Euro-Mediterraneo sui Cambiamenti Climatici, Bologna, Italy"
+                "CMCC, Centro Euro-Mediterraneo sui Cambiamenti Climatici, Bologna, Italy",
+                "ECCC, Environment and Climate Change Canada, Montreal, QC, Canada"
             ],
             "history": [
                 ""
@@ -988,6 +1112,81 @@
             "va": [
                 "leadtime",
                 "plev",
+                "lat",
+                "lon"
+            ],
+            "mlotstheta001": [
+                "leadtime",
+                "lat",
+                "lon"
+            ],
+            "mlotstheta003": [
+                "leadtime",
+                "lat",
+                "lon"
+            ],
+            "sithick": [
+                "leadtime",
+                "lat",
+                "lon"
+            ],
+            "sos": [
+                "leadtime",
+                "lat",
+                "lon"
+            ],
+            "sot300": [
+                "leadtime",
+                "lat",
+                "lon"
+            ],
+            "t14d": [
+                "leadtime",
+                "lat",
+                "lon"
+            ],
+            "t17d": [
+                "leadtime",
+                "lat",
+                "lon"
+            ],
+            "t20d": [
+                "leadtime",
+                "lat",
+                "lon"
+            ],
+            "t26d": [
+                "leadtime",
+                "lat",
+                "lon"
+            ],
+            "t28d": [
+                "leadtime",
+                "lat",
+                "lon"
+            ],
+            "thetaot300": [
+                "leadtime",
+                "lat",
+                "lon"
+            ],
+            "zos": [
+                "leadtime",
+                "lat",
+                "lon"
+            ],
+            "prw": [
+                "leadtime",
+                "lat",
+                "lon"
+            ],
+            "cllvi": [
+                "leadtime",
+                "lat",
+                "lon"
+            ],
+            "clivi": [
+                "leadtime",
                 "lat",
                 "lon"
             ]
@@ -1278,6 +1477,24 @@
                 "with_cell_methods": "leadtime: point",
                 "dimensions": {
                     "leadtime": 12
+                }
+            },
+            "prw": {
+                "with_cell_methods": "leadtime: point",
+                "dimensions": {
+                    "leadtime": 24
+                }
+            },
+            "cllvi": {
+                "with_cell_methods": "leadtime: point",
+                "dimensions": {
+                    "leadtime": 24
+                }
+            },
+            "clivi": {
+                "with_cell_methods": "leadtime: point",
+                "dimensions": {
+                    "leadtime": 24
                 }
             }
         }
