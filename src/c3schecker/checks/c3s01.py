@@ -426,7 +426,7 @@ def c3s_data_min_max(ds: Dataset, spec: dict) -> dict:
     ko_msg = (
         "Invalid min/max found for '{var_name}' (dimension '{dim_name}'): "
         "min={actual_min}, max={actual_max}. Expected: min={valid_min}, "
-        "max={actual_max}"
+        "max={valid_max}"
     )
     ok_msg = "{var_name} (dimension: {dim_name}): OK"
 
