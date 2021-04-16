@@ -511,57 +511,51 @@ def c3s_data_values(ds: Dataset, spec: dict) -> dict:
         nb_actual_values = values.shape[0]
         nb_expected_values = expected.shape[0]
         if nb_actual_values > nb_expected_values:
-            diff = nb_actual_values - nb_expected_values
-            exp_left_padded = np.pad(expected, ((diff, 0),), constant_values=np.nan)
-            exp_right_padded = np.pad(expected, ((0, diff),), constant_values=np.nan)
+            # This gives a guarantee that we will get at most len(expected) indices,
+            # which enables us to index both the expected and the values arrays
+            # Get the indices of expected where the value appears in the actual array
+            expected_idx_in_actual = np.flatnonzero(np.isin(expected, values))
+
+            # Compare the expected values that are in the actual array with the
+            # values of the actual arrays that are at these indices: if the 2 are
+            # equal, then the expected values appear in the actual array exactly
+            # as expected
+            expected_is_in_order = np.all(
+                expected[expected_idx_in_actual] == values[expected_idx_in_actual]
+            )
             # When all expected values are there, it's not a failure
-            if len(values[values == exp_left_padded]) == nb_expected_values:
-                results = {
-                    "var_name": var_name,
-                    "dim_name": dim_name,
-                    "valid_values": expected,
-                    "invalid_values": list(values[values != exp_left_padded]),
-                    "failure": False,
-                    "warnings": True,
-                }
-            elif len(values[values == exp_right_padded]) == nb_expected_values:
-                results = {
-                    "var_name": var_name,
-                    "dim_name": dim_name,
-                    "valid_values": expected,
-                    "invalid_values": list(values[values != exp_right_padded]),
-                    "failure": False,
-                    "warnings": True,
-                }
-            else:
-                both_padding_width = int(diff / 2)
-                if both_padding_width == 0:
-                    # This case means the order of the expected values is not even
-                    # followed in the actual data. We need to check the actual data
-                    # one by one
-                    # TODO: Implement this
-                    # For now, just say it's an error, setting everything as invalid
+            if expected_idx_in_actual.size == nb_expected_values:
+                # TODO: Should we consider the order of the expected values?
+                # For now, fail if we have the expected values but they are not in order
+                if expected_is_in_order:
                     results = {
                         "var_name": var_name,
                         "dim_name": dim_name,
                         "valid_values": expected,
-                        "invalid_values": list(values),
-                        "failure": True,
+                        "invalid_values": list(
+                            values[np.isin(values, expected, invert=True)]
+                        ),
+                        "failure": False,
+                        "warnings": True,
                     }
                 else:
-                    exp_both_padded = np.pad(
-                        expected, both_padding_width, constant_values=np.nan
-                    )
-                    if len(values[values == exp_both_padded]) == nb_expected_values:
+                    # In this case, there is the possibility that the values are in
+                    # order, but with some additional values in between. For example:
+                    # expected = [1, 2, 3]; actual = [0, 1, 1.5, 2, 3]
+                    # TODO: Should we fail in this case? For now let's say no, and give
+                    #   warnings
+                    if np.all(values[np.isin(values, expected)] == expected):
                         results = {
                             "var_name": var_name,
                             "dim_name": dim_name,
                             "valid_values": expected,
-                            "invalid_values": list(values[values != exp_both_padded]),
+                            "invalid_values": list(values),
                             "failure": False,
                             "warnings": True,
                         }
                     else:
+                        # This means the data in the actual array are completely mixed
+                        # up, which we consider as an error
                         results = {
                             "var_name": var_name,
                             "dim_name": dim_name,
@@ -569,6 +563,15 @@ def c3s_data_values(ds: Dataset, spec: dict) -> dict:
                             "invalid_values": list(values),
                             "failure": True,
                         }
+            else:
+                # It's an error to not have all the expected values
+                results = {
+                    "var_name": var_name,
+                    "dim_name": dim_name,
+                    "valid_values": expected,
+                    "invalid_values": list(values),
+                    "failure": True,
+                }
         elif nb_actual_values < nb_expected_values:
             # It's an error to not have all the expected values
             results = {
@@ -578,16 +581,20 @@ def c3s_data_values(ds: Dataset, spec: dict) -> dict:
                 "invalid_values": list(values),
                 "failure": True,
             }
+        # If the expected and the actual are the same length
         else:
-            # If the expected and the actual are the same length
-            if len(values[values == expected]) == nb_expected_values:
+            # In this case, all values in actual array must match the expected,
+            # in the same order
+            if np.all(values == expected):
                 results = {"var_name": var_name, "dim_name": dim_name, "failure": False}
             else:
                 results = {
                     "var_name": var_name,
                     "dim_name": dim_name,
                     "valid_values": expected,
-                    "invalid_values": list(values[values != expected]),
+                    "invalid_values": list(
+                        values[np.isin(values, expected, invert=True)]
+                    ),
                     "failure": True,
                 }
         return results
