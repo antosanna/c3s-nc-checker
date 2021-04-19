@@ -190,7 +190,7 @@ class CFREF(metaclass=Singleton):
 
     @staticmethod
     def is_cf_label_variable(nc_var):
-        return np.issubdtype(nc_var.dtype, np.str)
+        return np.issubdtype(nc_var.dtype, np.str_)
 
     @staticmethod
     def is_cf_climatology_variable(nc_var):
