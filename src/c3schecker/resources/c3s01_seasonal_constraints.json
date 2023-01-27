@@ -793,7 +793,8 @@
                 "Seasonal Forecast data produced by Meteo-France as its contribution to the seasonal forecast activity of the Copernicus Climate Change Service (C3S). The data has global coverage with a 1-degree horizontal resolution and spans for around 6 months since the start date",
                 "Seasonal Forecast data produced by DWD as its contribution to the seasonal forecast activity of the Copernicus Climate Change Service (C3S). The data has global coverage with a 1-degree horizontal resolution and spans for around 6 months since the start date",
                 "Seasonal Forecast data produced by CMCC as its contribution to the seasonal forecast activity of the Copernicus Climate Change Service (C3S). The data has global coverage with a 1-degree horizontal resolution and spans for around 6 months since the start date",
-                "Seasonal Forecast data produced by ECCC as its contribution to the seasonal forecast activity of the Copernicus Climate Change Service (C3S). The data has global coverage with a 1-degree horizontal resolution and spans 12 months since the start date"
+                "Seasonal Forecast data produced by ECCC as its contribution to the seasonal forecast activity of the Copernicus Climate Change Service (C3S). The data has global coverage with a 1-degree horizontal resolution and spans 12 months since the start date",
+                "Seasonal Forecast data produced by BOM as its contribution to the seasonal forecast activity of the Copernicus Climate Change Service (C3S). The data has global coverage with a 1-degree horizontal resolution and spans 12 months since the start date"
             ],
             "title": [
                 "ECMWF seasonal forecast model output prepared for C3S",
@@ -801,7 +802,8 @@
                 "Meteo-France seasonal forecast model output prepared for C3S",
                 "DWD seasonal forecast model output prepared for C3S",
                 "CMCC seasonal forecast model output prepared for C3S",
-                "ECCC seasonal forecast model output prepared for C3S"
+                "ECCC seasonal forecast model output prepared for C3S",
+                "BOM seasonal forecast model output prepared for C3S"
             ],
             "forecast_type": [
                 "forecast",
@@ -813,7 +815,8 @@
                 "lfpw",
                 "edzw",
                 "cmcc",
-                "cwao"
+                "cwao",
+                "ammc"
             ],
             "project": [
                 "C3S Seasonal Forecast"
@@ -830,7 +833,8 @@
                 "Meteo-France, Toulouse, France",
                 "DWD, Deutscher Wetterdienst, Offenbach, Germany",
                 "CMCC, Centro Euro-Mediterraneo sui Cambiamenti Climatici, Bologna, Italy",
-                "ECCC, Environment and Climate Change Canada, Montreal, QC, Canada"
+                "ECCC, Environment and Climate Change Canada, Montreal, QC, Canada",
+                "Bureau of Meteorology, Melbourne, Australia"
             ],
             "history": [
                 ""
