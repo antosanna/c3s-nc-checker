@@ -26,7 +26,10 @@ def c3s_meta_convention_check(ds: Dataset, spec: dict) -> dict:
             "(Not Mandatory). Currently: '{actual}'"
         )
     ]
-    actual = ds.Conventions
+    try:
+        actual = ds.Conventions
+    except AttributeError:
+        actual = "Absent (the dataset doesn't have a 'Conventions' attribute)"
     return _simple_equality_check(actual, constraints, warn_msgs, err_msgs)
 
 
@@ -268,10 +271,16 @@ def c3s_meta_global_attributes_possible_values(ds: Dataset, spec: dict) -> dict:
         try:
             actual_value = getattr(ds, attr_name)
         except AttributeError:
-            outcome.setdefault("errors", []).append(
+            if mandatory_constraints:
+                level = "errors"
+                status = 0
+            else:
+                level = "warnings"
+                status = 1
+            outcome.setdefault(level, []).append(
                 f"Dataset is missing global attribute '{attr_name}'"
             )
-            outcome["status"] = 0
+            outcome["status"] = status
             continue
         if actual_value in possible_values:
             outcome.setdefault("info", []).append(f"{attr_name}: OK")
@@ -299,7 +308,20 @@ def c3s_meta_global_attributes_date_format(ds: Dataset, spec: dict) -> dict:
     outcome = {"status": 1}
     mandatory_constraints = constraints.get("mandatory", True)
     for date_attr_name, expected_date_attr_format in constraints["expected"].items():
-        actual_date_attr_value = ds.getncattr(date_attr_name)
+        try:
+            actual_date_attr_value = ds.getncattr(date_attr_name)
+        except AttributeError:
+            if mandatory_constraints:
+                level = "errors"
+                status = 0
+            else:
+                level = "warnings"
+                status = 1
+            outcome.setdefault(level, []).append(
+                f"Dataset is missing global attribute '{date_attr_name}'"
+            )
+            outcome["status"] = status
+            continue
         try:
             datetime.datetime.strptime(
                 actual_date_attr_value, expected_date_attr_format
@@ -339,7 +361,7 @@ def c3s_meta_variables_exact_dimensions(ds: Dataset, spec: dict) -> dict:
                 status = 0
                 level = "errors"
             else:
-                status = 0
+                status = 1
                 level = "warnings"
             msg = (
                 f"Missing dimensions {list(missing_dimensions)} for variable "
@@ -365,9 +387,24 @@ def c3s_meta_grib_consistency(ds: Dataset, spec: dict) -> dict:
         query = {"mars_paramid": mars_paramid}
         nc_var = ds.get_variables_by_attributes(**query)
         if nc_var:
+            nc_var = nc_var[0]
             mars_param_name = expected_bindings["name"]
             for attr_name, expected in expected_bindings["cf"].items():
-                actual_value = nc_var[0].getncattr(attr_name)
+                try:
+                    actual_value = nc_var.getncattr(attr_name)
+                except AttributeError:
+                    if mandatory_constraints:
+                        level = "errors"
+                        status = 0
+                    else:
+                        level = "warnings"
+                        status = 1
+                    outcome.setdefault(level, []).append(
+                        f"Dataset Variable {nc_var.name} is missing attribute "
+                        f"'{attr_name}'"
+                    )
+                    outcome["status"] = status
+                    continue
                 if actual_value == expected:
                     status = 1
                     msg = f"mars id {mars_paramid}: OK"
