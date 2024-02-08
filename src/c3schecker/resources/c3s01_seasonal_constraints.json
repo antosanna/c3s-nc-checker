@@ -25,7 +25,8 @@
             "lon_bnds",
             "depth_bnds",
             "str31",
-            "leadtime"
+            "leadtime",
+            "bnds"
         ]
     },
     "attributes_per_var_names": {
