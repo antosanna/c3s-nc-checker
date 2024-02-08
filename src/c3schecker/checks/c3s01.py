@@ -102,11 +102,11 @@ def c3s_meta_dimensions_checks(ds: Dataset, spec: dict) -> dict:
 
     # Only test for authorized dimensions if the actual count of dimensions exceeds
     # the count of expected mandatory dimensions
-    rest = set(expected_dimensions) - set(actual_dimensions)
+    rest = set(actual_dimensions) - set(expected_dimensions)
     if rest:
         authorized_dims = constraints.get("authorized", [])
         if authorized_dims:
-            not_authorized = set(authorized_dims) - set(rest)
+            not_authorized = [dim for dim in rest if dim not in authorized_dims]
             if not_authorized:
                 msgs.append(
                     f"Dataset Dimensions {list(not_authorized)} are neither in the "
