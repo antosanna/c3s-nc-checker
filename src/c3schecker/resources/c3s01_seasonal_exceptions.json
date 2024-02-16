@@ -1,0 +1,331 @@
+{   
+    "exceptions": {
+        "ecmf": {},
+        "egrr": {
+            "HadGEM3-GC3.2-v20200929": {
+                "attributes_values_per_var_name": {
+                    "sftlf": {
+                        "expected": {
+                            "units": "1",
+                            "grid_mapping": "hcrs",
+                            "long_name": "Land Area Fraction",
+                            "coordinates": "lat lon"
+                        }
+                    },
+                    "t20d": {
+                        "expected": {
+                            "cell_methods": "leadtime: mean",
+                            "coordinates": "temperature reftime realization time leadtime lat lon",
+                            "grid_mapping": "hcrs",
+                            "long_name": "Depth of 20 degree Celsius Isotherm",
+                            "standard_name": "depth_of_isosurface_of_sea_water_potential_temperature",
+                            "units": "m"
+                        }
+                    },
+                    "t28d": {
+                        "expected": {
+                            "cell_methods": "leadtime: mean",
+                            "coordinates": "temperature reftime realization time leadtime lat lon",
+                            "grid_mapping": "hcrs",
+                            "long_name": "Depth of 20 degree Celsius Isotherm",
+                            "standard_name": "depth_of_isosurface_of_sea_water_potential_temperature",
+                            "units": "m"
+                        }
+                    }
+                },
+                
+                "units": {
+                    "temperature": "C"
+                },
+                "missing_values" : [ "hus" ]                
+            }
+        },
+        
+        "lfpw": {
+            "System8-v20210101": {
+                "filename" : [
+                    "clivi", 
+                    "cllvi", 
+                    "prw", 
+                    "mrlsl",
+                    "mlotstheta001",
+                    "mlotstheta003",
+                    "sithick",
+                    "sos",
+                    "sot300",
+                    "t14d",
+                    "t17d",
+                    "t20d",
+                    "t26d",
+                    "t28d",
+                    "thetaot300",
+                    "zos"
+                   ],
+                "attributes_values_per_var_name": {
+                    "sftlf": {
+                        "expected": {
+                            "units": "1",
+                            "grid_mapping": "hcrs",
+                            "long_name": "Land Area Fraction",
+                            "coordinates": "lat lon"
+                        }
+                    },
+                    "mrlsl": {
+                        "expected": {
+                            "long_name": "Water Content per Unit Area of Soil Layers",
+                            "units": "kg m-2",
+                            "coordinates": "reftime realization time leadtime depth lat lon",
+                            "standard_name": "moisture_content_of_soil_layer",
+                            "cell_methods": "leadtime: mean (interval: 600 s)",
+                            "grid_mapping": "hcrs"
+                        }
+                    }
+                },
+                "units_per_variable": {
+                    "t20d" : "C"
+                },
+                "attributes_per_var_name": {
+                    "time": {
+                        "expected": [
+                            "standard_name",
+                            "calendar",
+                            "units",
+                            "long_name"
+                            
+                        ]
+                    }
+                },
+                "missing_values" : [ "orog", "hus", "ta", "ua", "va", "zg", "clt", "psl", "hfls", "hfss", "sftlf" ]               
+            }
+        },
+        "cmcc": {
+            "CMCC-CM2-v20191201": {
+                "attributes_values_per_var_name": {
+                    "sftlf": {
+                        "expected": {
+                            "units": "1",
+                            "grid_mapping": "hcrs",
+                            "long_name": "Land Area Fraction",
+                            "coordinates": "lat lon"
+                        }
+                    }
+                },
+                "units": {
+                    "temperature": "C"
+                },
+                "attributes_per_var_name": {
+                    "time": {
+                        "expected": [
+                            "standard_name",
+                            "calendar",
+                            "units",
+                            "long_name"
+                            
+                        ]
+                    }
+                }
+            }
+        },
+        "cwao": {
+            "CanCM4i-v20190731": {
+                "attributes_values_per_var_name": {
+                    "sftlf": {
+                        "expected": {
+                            "units": "1",
+                            "grid_mapping": "hcrs",
+                            "long_name": "Land Area Fraction",
+                            "coordinates": "realization lat lon"
+                        }
+                    },
+                    "orog": {
+                        "expected": {
+                            "units": "1",
+                            "grid_mapping": "hcrs",
+                            "long_name": "Land Area Fraction",
+                            "coordinates": "realization lat lon"
+                        }
+                    },
+                    "mrlsl": {
+                        "expected": {
+                            "units": "1",
+                            "grid_mapping": "hcrs",
+                            "long_name": "Land Area Fraction",
+                            "coordinates": "reftime realization time leadtime lat lon"
+                        }
+                    },
+                    "lwee": {
+                        "expected": {
+                            "long_name": "Liquid Water Equivalent Thickness of Evaporation Amount",
+                            "units": "m",
+                            "coordinates": "reftime realization time leadtime lat lon",
+                            "standard_name": "lwe_thickness_of_water_evaporation_amount",
+                            "cell_methods": "leadtime: mean (interval: 0.25 hr)",
+                            "grid_mapping": "hcrs"
+                        }
+                    },
+                    "rhosn": {
+                        "expected": {
+                            "long_name": "Snow density",
+                            "units": "kg m-3",
+                            "coordinates": "reftime realization time leadtime lat lon",
+                            "standard_name": "snow_density",
+                            "cell_methods": "leadtime: point",
+                            "grid_mapping": "hcrs"
+                        }
+                    },
+                    "sitemptop": {
+                        "expected": {
+                            "long_name": "Surface temperature of Sea Ice",
+                            "units": "K",
+                            "coordinates": "reftime realization time leadtime lat lon",
+                            "standard_name": "sea_ice_temperature",
+                            "cell_methods": "leadtime: point",
+                            "grid_mapping": "hcrs"
+                        }
+                    }
+                },
+                "units": {
+                    "temperature": "C"
+                }, 
+                "data_values": {
+                    "plev": [
+                        1000.0,
+                        3000.0,
+                        5000.0,
+                        10000.0,
+                        20000.0,
+                        30000.0,
+                        40000.0,
+                        50000.0,
+                        70000.0,
+                        85000.0,
+                        92500.0,
+                        100000.0
+                    ]
+                },
+                "attributes_per_var_name": {
+                    "time": {
+                        "expected": [
+                            "standard_name",
+                            "calendar",
+                            "units",
+                            "long_name"
+                            
+                        ]
+                    }
+                }
+                
+            },
+            "GEM5-NEMO-v20211130": {
+                "attributes_values_per_var_name": {
+                    "sftlf": {
+                        "expected": {
+                            "units": "1",
+                            "grid_mapping": "hcrs",
+                            "long_name": "Land Area Fraction",
+                            "coordinates": "realization lat lon"
+                        }
+                    },
+                    "orog": {
+                        "expected": {
+                            "units": "1",
+                            "grid_mapping": "hcrs",
+                            "long_name": "Land Area Fraction",
+                            "coordinates": "realization lat lon"
+                        }
+                    }
+                },
+                "units": {
+                    "temperature": "C"
+                }, 
+                "data_values": {
+                    "plev": [
+                        1000.0,
+                        3000.0,
+                        5000.0,
+                        10000.0,
+                        20000.0,
+                        30000.0,
+                        40000.0,
+                        50000.0,
+                        70000.0,
+                        85000.0,
+                        92500.0,
+                        100000.0
+                    ]
+                },
+                "attributes_per_var_name": {
+                    "time": {
+                        "expected": [
+                            "standard_name",
+                            "calendar",
+                            "units",
+                            "long_name"
+                            
+                        ]
+                    }
+                }
+                
+            }
+
+        },
+        "edzw": {
+            "GCFS2.1-v20200320": {
+                "attributes_per_var_name": {
+                    "time": {
+                        "expected": [
+                            "standard_name",
+                            "calendar",
+                            "units",
+                            "long_name"
+                            
+                        ]
+                    }
+                },
+                "attributes_values_per_var_name": {
+                    "sftlf": {
+                        "expected": {
+                            "units": "1",
+                            "grid_mapping": "hcrs",
+                            "long_name": "Land Area Fraction",
+                            "coordinates": "lat lon"
+                        }
+                    },
+                    "lat": {
+                        "expected": {
+                            "units": "degrees_north",
+                            "long_name": "latitude",
+                            "standard_name": "latitude",
+                            "axis": "Y",
+                            "valid_min": -90.0,
+                            "valid_max": 90.0,
+                            "bounds": "lat_bnds"
+                        }
+                    },
+                    "lon": {
+                        "expected": {
+                            "units": "degrees_east",
+                            "long_name": "longitude",
+                            "standard_name": "longitude",
+                            "axis": "X",
+                            "valid_min": 0.0,
+                            "valid_max": 360.0,
+                            "bounds": "lon_bnds"
+                        }
+                    },
+                    "hcrs": {
+                        "expected": {
+                            "grid_mappping_name": "latitude_longitude"
+                        }
+                    }
+                },
+                "units": {
+                    "temperature": "C"
+                }
+            }
+
+        }
+        
+    }    
+    
+}
