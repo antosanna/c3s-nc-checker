@@ -531,6 +531,76 @@ def cf_missing_data_check(ds: Dataset, _, excep: dict, verbose, operational):
                     )
     return outcome
 
+################
+@register(CONVENTION, "cf_attributes_values_type")
+def cf_attributes_values_type_check(ds: Dataset, _, excep: dict, verbose, operational):
+    if verbose:
+        logging.info("Check the missing data.")
+    outcome = {"test":7, "status": 1}
+    for var_name, nc_var in ds.variables.items():
+        attrs = nc_var.ncattrs()
+        #print(attrs)
+        for attr in attrs:
+            attribute_value = nc_var.getncattr(attr)
+            #print(f"Variable: {var_name}, Attribute: {attr}, value: {attribute_value}, Data Type: {type(attribute_value)}")
+            if attr in ['valid_min', 'valid_max', '_FillValue', 'missing_value']:
+                if (isinstance(attribute_value, np.float32) or isinstance(attribute_value, np.float64) 
+                    or isinstance(attribute_value, np.int32) or isinstance(attribute_value, np.int64)):
+                    outcome.setdefault("info", []).append(
+                        f"Variable: {str(var_name)} attribute {str(attr)} "
+                        f"attribute value: {str(attribute_value)} "
+                        f"type: {str(type(attribute_value))} OK"
+                        )
+                    if verbose:
+                        logging.info(
+                            f"Variable: {str(var_name):<15} attribute {str(attr):<18} "
+                            f"attribute value: {str(attribute_value):<50} "
+                            f"type: {str(type(attribute_value)):<25} -->  OK"
+                        )
+                
+                else:
+                    outcome.setdefault("errors", []).append(
+                        f"Variable: {str(var_name)} attribute {str(attr)} "
+                        f"attribute value: {str(attribute_value)} "
+                        f"type: {str(type(attribute_value))} wrong attribute value type NOK"
+                        )
+                    if verbose:
+                        logging.info(
+                            f"Variable: {str(var_name):<15} attribute {str(attr):<18} "
+                            f"attribute value: {str(attribute_value):<50} "
+                            f"type: {str(type(attribute_value)):<25} -->  NOK (wrong atrribute value type) "
+                            f"expected type: 'numeric'"
+                        )
+            else:
+                if isinstance(attribute_value, str) or isinstance(attribute_value, str):
+                    outcome.setdefault("info", []).append(
+                        f"Variable '{var_name}' with correct attributes value type ({type(attribute_value)})"
+                        )
+                    if verbose:
+                        logging.info(
+                            f"Variable: {str(var_name):<15} attribute {str(attr):<18} "
+                            f"attribute value: {str(attribute_value):<50} "
+                            f"type: {str(type(attribute_value)):<25} -->  OK"
+                        )
+                else:
+                    outcome.setdefault("errors", []).append(
+                        f"Variable: {str(var_name)} attribute {str(attr)} "
+                        f"attribute value: {str(attribute_value)} "
+                        f"type: {str(type(attribute_value))} wrong attribute value type NOK"
+                        )
+                    if verbose:
+                        logging.info(
+                            f"Variable: {str(var_name):<15} attribute {str(attr):<18} "
+                            f"attribute value: {str(attribute_value):<50} "
+                            f"type: {str(type(attribute_value)):<25} -->  NOK (wrong atrribute value type) "
+                             f"expected type: 'string'"
+                        )
+    return outcome
+
+
+
+################
+
 # Test 8.
 @register(CONVENTION, "cf_naming_convention")
 def cf_naming_convention_check(ds: Dataset, _, excep: dict, verbose, operational):
