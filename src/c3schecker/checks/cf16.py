@@ -250,7 +250,6 @@ def cf_filename_extension_check(
     actual = Path(ds.filepath())
     if actual.suffix != ".nc":
         outcome = {
-            "test": 1,
             "status": 1,
             "warnings": [
                 f"Non compliant filename extension: '{actual.suffix}'. Should be '.nc'"
@@ -261,7 +260,6 @@ def cf_filename_extension_check(
                 f"'{actual.suffix}' --> NOK")
     else:
         outcome = {
-            "test":"1", 
             "status": 1, 
             "info": [f"OK, compliant filename extension '{actual.suffix}'"]
             }
@@ -282,7 +280,6 @@ def cf_convention_check(
     actual = ds.Conventions
     if CONVENTION not in actual:
         outcome = {
-            "test": 2,
             "status": 0,
             "errors": [
                 f"Current Convention metadata ('{actual}' is not compliant with "
@@ -297,7 +294,6 @@ def cf_convention_check(
                 f"See CF reference chapter 2.6.1")
     else:
         outcome = {
-            "test": 2, 
             "status": 1, 
             "info": [f"OK, Compliant Convention ('{actual}')"]
             }
@@ -314,7 +310,7 @@ def cf_datatypes_check(
     ) -> dict:
     if verbose:
         logging.info("Check the datatypes of the Dataset.")
-    outcome = {"test":3, "status": 1}
+    outcome = {"status": 1}
     for var_name, nc_var in ds.variables.items():
         actual = nc_var.dtype
         if actual not in CFREF().data_types:
@@ -340,7 +336,7 @@ def cf_datatypes_check(
 def cf_dimensions_order_check(ds: Dataset, _, excep: dict, verbose, operational):
     if verbose:
         logging.info("Check the order of Dimensions.")
-    outcome = {"test":"4", "status": 1}
+    outcome = {"status": 1}
     for var_name, variable in ds.variables.items():
         dims = variable.dimensions
         if len(dims) > 1:
@@ -383,7 +379,7 @@ def cf_dimensions_order_check(ds: Dataset, _, excep: dict, verbose, operational)
 def cf_dimensions_unicity_check(ds: Dataset, _, excep: dict, verbose, operational):
     if verbose:
         logging.info("Check the unicity of Dimensions.")
-    outcome = {"test":"5", "status": 1}
+    outcome = {"status": 1}
     for var_name, variable in ds.variables.items():
         dims = variable.dimensions
         dims_count = [dims.count(dim) for dim in dims]
@@ -408,7 +404,7 @@ def cf_dimensions_unicity_check(ds: Dataset, _, excep: dict, verbose, operationa
 def cf_global_attributes_check(ds: Dataset, _, excep: dict, verbose, operational):
     if verbose:
         logging.info("Check the Global Attributes.")
-    outcome = {"test":"6", "status": 1}
+    outcome = {"status": 1}
     status_flag = True
     global_attrs = set(ds.ncattrs())
     recommended = set(CFREF().global_attrs)
@@ -459,7 +455,7 @@ def cf_global_attributes_check(ds: Dataset, _, excep: dict, verbose, operational
 def cf_missing_data_check(ds: Dataset, _, excep: dict, verbose, operational):
     if verbose:
         logging.info("Check the missing data.")
-    outcome = {"test":7, "status": 1}
+    outcome = {"status": 1}
     for var_name, nc_var in ds.variables.items():
         attrs = nc_var.ncattrs()
         if "valid_range" in attrs and any(
@@ -531,12 +527,14 @@ def cf_missing_data_check(ds: Dataset, _, excep: dict, verbose, operational):
                     )
     return outcome
 
+#Test 8.
 ################
 @register(CONVENTION, "cf_attributes_values_type")
 def cf_attributes_values_type_check(ds: Dataset, _, excep: dict, verbose, operational):
     if verbose:
         logging.info("Check the missing data.")
-    outcome = {"test":7, "status": 1}
+    status = 1
+    outcome = {"status": status}
     for var_name, nc_var in ds.variables.items():
         attrs = nc_var.ncattrs()
         #print(attrs)
@@ -559,6 +557,7 @@ def cf_attributes_values_type_check(ds: Dataset, _, excep: dict, verbose, operat
                         )
                 
                 else:
+                    status = 0
                     outcome.setdefault("errors", []).append(
                         f"Variable: {str(var_name)} attribute {str(attr)} "
                         f"attribute value: {str(attribute_value)} "
@@ -583,6 +582,7 @@ def cf_attributes_values_type_check(ds: Dataset, _, excep: dict, verbose, operat
                             f"type: {str(type(attribute_value)):<25} -->  OK"
                         )
                 else:
+                    status = 0
                     outcome.setdefault("errors", []).append(
                         f"Variable: {str(var_name)} attribute {str(attr)} "
                         f"attribute value: {str(attribute_value)} "
@@ -595,18 +595,20 @@ def cf_attributes_values_type_check(ds: Dataset, _, excep: dict, verbose, operat
                             f"type: {str(type(attribute_value)):<25} -->  NOK (wrong atrribute value type) "
                              f"expected type: 'string'"
                         )
+    
+    outcome["status"] = status
     return outcome
 
 
 
 ################
 
-# Test 8.
+# Test 9.
 @register(CONVENTION, "cf_naming_convention")
 def cf_naming_convention_check(ds: Dataset, _, excep: dict, verbose, operational):
     if verbose:
         logging.info("Check the naming convention.")
-    outcome = {"test":"8", "status": 1}
+    outcome = {"status": 1}
     naming_convention = re.compile("[a-zA-Z][a-zA-Z0-9_]*")
 
     def _check(name, err_msg):
@@ -674,12 +676,12 @@ def cf_naming_convention_check(ds: Dataset, _, excep: dict, verbose, operational
     return outcome
 
 
-# Test 9.
+# Test 10.
 @register(CONVENTION, "cf_naming_unicity")
 def cf_naming_unicity_check(ds: Dataset, _, excep: dict, verbose, operational):
     if verbose:
         logging.info("Check the naming unicity.")
-    outcome = {"test":9 ,"status": 1}
+    outcome = {"status": 1}
     ds_names = Counter(k.lower() for k in ds.variables)
     for name, count in ds_names.items():
         if count > 1:
@@ -699,12 +701,12 @@ def cf_naming_unicity_check(ds: Dataset, _, excep: dict, verbose, operational):
     return outcome
 
 
-# Test 10.
+# Test 11.
 @register(CONVENTION, "cf_ancillary_data")
 def cf_ancillary_data_check(ds: Dataset, _, excep: dict, verbose, operational):
     if verbose:
         logging.info("Check ancillary data.")
-    outcome = {"test":"10", "status": 1}    
+    outcome = {"status": 1}    
     variables = set(ds.variables.keys())
     for var_name, nc_var in ds.variables.items():
         try:
@@ -745,12 +747,12 @@ def cf_ancillary_data_check(ds: Dataset, _, excep: dict, verbose, operational):
 
 
 
-# Test 11.
+# Test 12.
 @register(CONVENTION, "cf_standard_names")
 def cf_standard_names_check(ds: Dataset, _, excep: dict, verbose, operational):
     if verbose:
         logging.info("Check standard names.")
-    outcome = {"test":"11", "status": 1}
+    outcome = {"status": 1}
     for var_name, nc_var in ds.variables.items():
         attrs = nc_var.ncattrs()
         status_flag = True
@@ -844,12 +846,12 @@ def cf_standard_names_check(ds: Dataset, _, excep: dict, verbose, operational):
     return outcome
 
 
-# Test 12. Check the units of the variables
+# Test 13. Check the units of the variables
 @register(CONVENTION, "cf_units")
 def cf_units_check(ds: Dataset, _, excep: dict, verbose, operational):
     if verbose:
         logging.info("Check the units of the variables.")
-    outcome = {"test":"12", "status": 1}
+    outcome = {"status": 1}
     institute_id = ds.institute_id
     system = ds.source.split()[0].split(":")[0]
     
@@ -993,12 +995,12 @@ def cf_units_check(ds: Dataset, _, excep: dict, verbose, operational):
     return outcome
 
 
-# Test 13. Check flags
+# Test 14. Check flags
 @register(CONVENTION, "cf_flags")
 def cf_flags_check(ds: Dataset, _, excep: dict, verbose, operational):
     if verbose:
         logging.info("Check flags.")
-    outcome = {"test":"13", "status": 1}
+    outcome = {"status": 1}
     flag_meanings_pattern = re.compile("^[0-9A-Za-z_\-@+.]+$")
     for var_name, nc_var in ds.variables.items():
         status_flag = True
@@ -1192,12 +1194,12 @@ def cf_flags_check(ds: Dataset, _, excep: dict, verbose, operational):
     return outcome
 
 
-# Test 14. Check coordinates of the variables.
+# Test 15. Check coordinates of the variables.
 @register(CONVENTION, "cf_coordinates_variables")
 def cf_coordinates_variables_check(ds: Dataset, _, excep: dict, verbose, operational):
     if verbose:
         logging.info("Check coordinates of the variables.")
-    outcome = {"test":"14", "status": 1}
+    outcome = {"status": 1}
     nc_variables = ds.variables.values()
     for var_name, nc_var in zip(ds.variables, nc_variables):
         status_flag = True
@@ -1340,12 +1342,12 @@ def cf_coordinates_variables_check(ds: Dataset, _, excep: dict, verbose, operati
     return outcome
 
 
-# Test 15. Check dimensionless vertical coordinates.
+# Test 16. Check dimensionless vertical coordinates.
 @register(CONVENTION, "cf_dimensionless_vertical_coordinates")
 def cf_dimensionless_vertical_coordinates_check(ds: Dataset, _, excep: dict, verbose, operational):
     if verbose:
         logging.info("Check dimensionless vertical coordinates.")
-    outcome = {"test":"15", "status": 1}
+    outcome = {"status": 1}
     for var_name, nc_var in ds.variables.items():
         try:
             std_name = nc_var.getncattr("standard_name")
@@ -1380,12 +1382,12 @@ def cf_dimensionless_vertical_coordinates_check(ds: Dataset, _, excep: dict, ver
     return outcome
 
 
-# Test 16. Check latitude coordinate.
+# Test 17. Check latitude coordinate.
 @register(CONVENTION, "cf_latitude")
 def cf_latitude_check(ds: Dataset, _, excep: dict, verbose, operational):
     if verbose:
         logging.info("Check latitude coordinate.")
-    outcome = {"test":"16", "status": 1}
+    outcome = {"status": 1}
     nc_variables = ds.variables.values()
     for var_name, nc_var in zip(ds.variables, nc_variables):
         if CFREF().is_cf_coordinate_variable(
@@ -1455,12 +1457,12 @@ def cf_latitude_check(ds: Dataset, _, excep: dict, verbose, operational):
     return outcome
 
 
-# Test 17. Check longitude coordinate.
+# Test 18. Check longitude coordinate.
 @register(CONVENTION, "cf_longitude")
 def cf_longitude_check(ds: Dataset, _, excep: dict, verbose, operational):
     if verbose:
         logging.info("Check longitude coordinate.")
-    outcome = {"test":"17", "status": 1}
+    outcome = {"status": 1}
     nc_variables = ds.variables.values()
     for var_name, nc_var in zip(ds.variables, nc_variables):
         if CFREF().is_cf_coordinate_variable(
@@ -1529,12 +1531,12 @@ def cf_longitude_check(ds: Dataset, _, excep: dict, verbose, operational):
     return outcome
 
 
-# Test 18. Check time coordinate.
+# Test 19. Check time coordinate.
 @register(CONVENTION, "cf_time")
 def cf_time_check(ds: Dataset, _, excep: dict, verbose, operational):
     if verbose:
         logging.info("Check time coordinate.")
-    outcome = {"test":"18", "status": 1}
+    outcome = {"status": 1}
     for var_name, nc_var in ds.variables.items():
         dimension_type = CFREF().identify_dimension_type(nc_var)
         if dimension_type == "T":
@@ -1619,12 +1621,12 @@ def cf_time_check(ds: Dataset, _, excep: dict, verbose, operational):
     return outcome
 
 
-# Test 19. Check coordinates.
+# Test 20. Check coordinates.
 @register(CONVENTION, "cf_coordinates")
 def cf_coordinates_check(ds: Dataset, _, excep: dict, verbose, operational):
     if verbose:
         logging.info("Check coordinates.")
-    outcome = {"test":"19", "status": 1}
+    outcome = {"status": 1}
     for var_name, nc_var in ds.variables.items():
         coords = getattr(nc_var, "coordinates", "")
         status_flag = True
@@ -1705,12 +1707,12 @@ def cf_coordinates_check(ds: Dataset, _, excep: dict, verbose, operational):
     return outcome
 
 
-# Test 20. Check cell methods.
+# Test 21. Check cell methods.
 @register(CONVENTION, "cf_cell_methods")
 def cf_cell_methods_check(ds: Dataset, _, excep: dict, verbose, operational):
     if verbose:
         logging.info("Check cell methods.")
-    outcome = {"test":"20", "status": 1}    
+    outcome = {"status": 1}    
     for var_name, nc_var in ds.variables.items():
         cell_methods = getattr(nc_var, "cell_methods", "")
         if cell_methods:
