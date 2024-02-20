@@ -177,7 +177,7 @@ def main(
     if js:
         print(json.dumps(result))
     else:
-        print_score_info(result)
+        print_score_info(result, verbose)
     # Exit with anomalous code if there is even 1 failed check
     nb_passing_files = 0
     #print("=====================================================================")
@@ -201,7 +201,10 @@ def run_checks(input_files, checks, spec, c3s_excep, verbose, operational):
         i = 1 
         logging.info("--------------------------------------------")
         logging.info(f"Checking file: [{input_file}]")
-        dataset = Dataset(input_file)
+        try:
+            dataset = Dataset(input_file)
+        except OSError:
+            logging.error(f"Not an NetCDF file, continue ... ")
         file_outcome = outcomes.setdefault(input_file.name, {})
         for check_name, check in checks.items():
             if verbose:

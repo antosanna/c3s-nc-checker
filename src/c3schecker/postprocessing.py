@@ -3,7 +3,7 @@ from collections import Counter
 import logging
 
 
-def print_score_info(check_result):
+def print_score_info(check_result, verbose):
     lv1_indent = " " * 4
     lv2_indent = lv1_indent * 2
     lv3_indent = lv1_indent * 3
@@ -23,15 +23,34 @@ def print_score_info(check_result):
         logging.error(textwrap.indent(f"Failed tests: {nok}", lv1_indent))
         #print("=====================================================================")
         #print(textwrap.indent("Errors:", lv1_indent))
-        failed_outcomes = {cn: oc for cn, oc in outcomes.items() if oc["status"] == 0}
-        #print(textwrap.indent(f"Failed test(s) results:", lv1_indent))
-        logging.error(textwrap.indent(f"Failed test(s) results:", lv1_indent))
-        for check_name, outcome in failed_outcomes.items():
-            #print(textwrap.indent(f"{check_name}:", lv2_indent))
-            logging.error(textwrap.indent(f"Check name: {check_name}:", lv2_indent))
-            for err_msg in outcome["errors"]:
-                #print(textwrap.indent(f"{err_msg}", lv3_indent))
-                logging.error(textwrap.indent(f"{err_msg}", lv3_indent))
+        ##failed_outcomes = {cn: oc for cn, oc in outcomes.items() if oc["status"] == 0}
+        if not verbose:
+            errors_outcomes = {cn: oc for cn, oc in outcomes.items() if oc.get("errors", {})}
+            #print(textwrap.indent(f"Failed test(s) results:", lv1_indent))
+            #logging.error(textwrap.indent(f"Failed test(s) results:", lv1_indent))
+            logging.error(textwrap.indent(f"Errors results:", lv1_indent))
+            #for check_name, outcome in failed_outcomes.items():
+            for check_name, outcome in errors_outcomes.items():
+                #print(textwrap.indent(f"{check_name}:", lv2_indent))
+                logging.error(textwrap.indent(f"Check name: {check_name}:", lv2_indent))
+                for err_msg in outcome["errors"]:
+                    #print(textwrap.indent(f"{err_msg}", lv3_indent))
+                    logging.error(textwrap.indent(f"{err_msg}", lv3_indent))
+            
+            logging.warning(textwrap.indent(f"Warnings results:", lv1_indent))
+            warnings_outcomes = {cn: oc for cn, oc in outcomes.items() if oc.get("warnings", {})}
+            for check_name, outcome in warnings_outcomes.items():
+                logging.warning(textwrap.indent(f"Check name: {check_name}:", lv2_indent))
+                for wrn_msg in outcome["warnings"]:
+                    logging.warning(textwrap.indent(f"{wrn_msg}", lv3_indent))
+
+        
+        
+        #info_outcomes = {cn: oc for cn, oc in outcomes.items() if oc.get("info", {})}
+        
+        #errors_outcomes = {cn: oc for cn, oc in outcomes.items() if oc.get("errors", {})}
+        #print(warnings_outcomes)
+        #print(errors_outcomes)
 
 
 def compute_score(outcome):

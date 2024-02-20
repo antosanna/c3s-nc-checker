@@ -374,7 +374,7 @@ def cf_dimensions_order_check(ds: Dataset, _, excep: dict, verbose, operational)
                 if verbose:
                     logging.info(
                         f"Variable: {str(var_name):<20} has correct "
-                        f"dimensions -> {dims_order} {' '*23} --> OK")
+                        f"dimensions -> {dims_order} {' '*28} --> OK")
     return outcome
 
 
