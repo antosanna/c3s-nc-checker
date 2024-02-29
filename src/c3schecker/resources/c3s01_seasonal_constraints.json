@@ -451,6 +451,7 @@
             "leadtime", 
             "height", 
             "lat",
+            "lon",
             "hcrs"
         ],
         "vas": [
