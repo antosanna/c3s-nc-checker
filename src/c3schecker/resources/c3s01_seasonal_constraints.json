@@ -55,6 +55,16 @@
         "depth_soil": [
             "depth"
         ],
+        "depth_ocean": [
+
+        ],
+         "depth_bnds": [
+             "depth", 
+             "bnds"
+         ],
+         "depth_bnds_ocean": [ 
+            "bnds"
+        ],
         "height": [
 
         ],
@@ -451,6 +461,7 @@
             "leadtime", 
             "height", 
             "lat",
+            "lon",
             "hcrs"
         ],
         "vas": [

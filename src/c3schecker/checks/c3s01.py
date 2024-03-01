@@ -252,7 +252,9 @@ def c3s_meta_convention_check(
     f"(Not Mandatory). Currently: '{actual}'"
      
     result =  _simple_equality_check(actual, constraints, warn_msgs, err_msgs)
-    outcome = outcome | result
+    
+    #outcome = outcome | result
+    outcome = result
     
     if verbose:
         if outcome["status"] == 1:
@@ -476,10 +478,19 @@ def c3s_meta_variable_dimensions_checks(
                 )
     overall_constraints = spec.get("dimensions_per_var_name", {})
     outcome = {"status": 1}
+    modeling_realm = ds.modeling_realm
 
     for var_name, nc_var in ds.variables.items():
-        var_specific_constraints = overall_constraints.get(var_name, {}) 
+        var_name_constrains = var_name
         actual_dimensions = ds[var_name].dimensions
+        if modeling_realm == "ocean" and var_name == "depth":
+            var_name_constrains = "depth_ocean"
+        elif modeling_realm == "ocean" and var_name == "depth_bnds":
+            var_name_constrains = "depth_bnds_ocean"
+        elif modeling_realm == "soil" and var_name == "depth":
+            var_name_constrains = "depth_soil"
+        
+        var_specific_constraints = overall_constraints.get(var_name_constrains, {}) 
         expected_dimensions = tuple(var_specific_constraints)
         
         if actual_dimensions == expected_dimensions:
@@ -491,6 +502,7 @@ def c3s_meta_variable_dimensions_checks(
                     f"{str(actual_dimensions):<92} --> OK"
                 )
         else:
+            outcome["status"] = 0
             error_message = [
                 f"Variable '{var_name}' with wrong dimensions; "
                 f"expected: {expected_dimensions}; actual: {actual_dimensions}"
@@ -498,9 +510,9 @@ def c3s_meta_variable_dimensions_checks(
             outcome["errors"] = error_message
             if verbose:
                 logging.error(
-                    f"Variable:  {var_name:<13} with wrong dimensions: "
-                    f"Expected: {expected_dimensions} "
-                    f"Actual {str(actual_dimensions):<47} --> NOK"
+                    f"Variable:  {var_name:<13} with wrong dimensions. "
+                    f"Expected: {str(expected_dimensions):<35} "
+                    f"Actual {str(actual_dimensions):<33} --> NOK"
                 )
     #print(outcome)
     return outcome
@@ -587,13 +599,14 @@ def c3s_coordinates_per_var_name(
                 #             f"C3S guidelines. It's an additional coordinate variable"
                 #         )     
                 # else:
-                    outcome.setdefault("errors", []).append(
-                        f"Additional variable ('{var}') was found"
-                    )
-                    if verbose:
-                        logging.error(
-                            f"Additional variable ('{var}') was found {' '*91} --> NOK"
-                        ) 
+                status = 0
+                outcome.setdefault("errors", []).append(
+                    f"Additional variable ('{var}') was found"
+                )
+                if verbose:
+                    logging.error(
+                        f"Additional variable ('{var}') was found {' '*91} --> NOK"
+                    ) 
     except:
         status = 0
         outcome.setdefault("errors", []).append(
@@ -938,28 +951,37 @@ def c3s_meta_attributes_exact_values_per_var_name(
                 if verbose:
                     logging.info(
                         f"Variable: {var_name:<12} attribute {' '*6}: {attr_name:<17} "
-                        f"value: {actual_value:<53} "
-                    )
-            elif check_result and attr_name == "cell_methods":
-                outcome.setdefault("warnings", []).append(
-                    f"Variable: '{var_name}', attribute: '{attr_name}', actual value '{actual_value}' "
-                    f"manual inspection: the interval is required to have a value<=3 hours"
-                )
-                if verbose:
-                    logging.info(
-                            f"Variable: {var_name:<12} attribute {' '*6}: {attr_name:<17} "
-                            f"value: {actual_value:<53} --> OK (cell_methods attributes is compliant to the regex)"
-                        )
-                    logging.warning(
-                        f"Variable: {var_name:<12} attribute {' '*6}: "
-                        f"{attr_name:<17} "
-                        f"Manual inspection of the interval. "
-                        f"The interval is required to have a value<=3 hours)"
-                    )
-                    logging.info(
-                        f"Variable: {var_name:<12} attribute {' '*6}: {attr_name:<17} "
                         f"value: {actual_value:<53} --> OK"
                     )
+            elif check_result and attr_name == "cell_methods":
+                if "point" not in actual_value:
+                    outcome.setdefault("warnings", []).append(
+                        f"Variable: '{var_name}', attribute: '{attr_name}', actual value '{actual_value}' "
+                        f"manual inspection: the interval is required to have a value<=3 hours"
+                    )
+                    if verbose:
+                        logging.info(
+                                f"Variable: {var_name:<12} attribute {' '*6}: {attr_name:<17} "
+                                f"value: {actual_value:<53} --> OK (cell_methods attributes is compliant to the regex)"
+                            )
+                        logging.warning(
+                            f"Variable: {var_name:<12} attribute {' '*6}: "
+                            f"{attr_name:<17} "
+                            f"Manual inspection of the interval. "
+                            f"The interval is required to have a value<=3 hours)"
+                        )
+                        logging.info(
+                            f"Variable: {var_name:<12} attribute {' '*6}: {attr_name:<17} "
+                            f"value: {actual_value:<53} (value<=3 hours)"
+                        )
+                else:
+                    outcome.setdefault("info", []).append(f"{var_name} {attr_name}: OK")
+                    if verbose:
+                        logging.info(
+                            f"Variable: {var_name:<12} attribute {' '*6}: {attr_name:<17} "
+                            f"value: {actual_value:<53} --> OK"
+                        )
+
             else:
                 try:
                     exceptions = excep.get("exceptions", {}).get(
@@ -2006,6 +2028,9 @@ def c3s_19_units_check(
                 elif var_name == "time":
                     if str(units_attr) == str(units):
                         status_flag = True
+                elif ds.level_type == "ocean2d":
+                    if str(units_attr) == str(units):
+                        status_flag = True
                 elif str(units_attr) not in str(cfcheck["units"]):
                     institute_id = ds.institute_id
                     system = ds.source.split()[0][:-1]
@@ -2015,6 +2040,7 @@ def c3s_19_units_check(
                             )
                     if units_attr not in exceptions:
                         status_flag = False
+                        outcome["status"] = 0
                         outcome.setdefault("errors", []).append(
                             f"Variable '{var_name}' (units: {units_attr}): NOK. "
                             f"Expected CF units {cfcheck['units']}"
@@ -2055,11 +2081,12 @@ def c3s_19_units_check(
                 logging.info(f"Variable:  {var_name:<15}  without units {' '*33} --> OK")
             outcome.setdefault("info", []).append(f"'{var_name}' without units")
 
-    if not status_flag:
-        status = 0
-    else:
-        status = 1
-    outcome["status"] = status
+    # print(status_flag)
+    # if status_flag:
+    #     status = 1
+    # else:
+    #     status = 0
+    # outcome["status"] = status
     #print(outcome)
     return outcome
 
@@ -2129,29 +2156,25 @@ def c3s_leadtime_bnds_coordinates_check(
     leadt_units = ds.variables['leadtime'].units
     leadt_bnds  = ds.variables['leadtime_bnds'][:]
 
-    #step = constraints.get(scientific_var_name)["step"]
+    # expected_step could not be easily defined for the ocean variables 
+    # frequency = mon and the step depends on the month. 
+    # expected_step = constraints.get(scientific_var_name)["step"]
     
     step = 0
     for n in range(len(leadt)): 
-        
         center = (leadt_bnds[n][1] - leadt_bnds[n][0])/2 + step
         step = (leadt_bnds[n][1] - leadt_bnds[n][0]) + step
-        #interval += step
-        # print('======')
-        # print(f"end: {leadt_bnds[n][1]}")
-        # print(f"start: {leadt_bnds[n][0]}")
-        # print(f"difference: {leadt_bnds[n][1] - leadt_bnds[n][0]}")
-        
-        # print('---')
-        # print(center)
-        # print(leadt[n])
-        # print(f"interval: {step}")
-        # print("======")
         if center == leadt[n]:
             result = True
         else:
             result = False
-            status = 0
+            status = 0 
+            if verbose:
+                logging.error(
+                    f"Not correct leadtime boundary: {str(leadt_bnds[n]):<15}, "
+                    f"actual value of the leadtime variable: "
+                    f"{str(leadt[n]):<10} not in the middle {' '*8} --> NOK"
+                )
 
     if result:
         outcome.setdefault("info", []).append(
@@ -2174,15 +2197,16 @@ def c3s_leadtime_bnds_coordinates_check(
             f"leadtime boundary --> NOK"
         )
         if verbose:
-            logging.info(
+            logging.error(
                 f"The values of leadtime variable is not in the center of the "
                 f"leadtime boundary {' '*46} --> NOK"
             )
-            logging.info(
-                f"First boundary leadtime boundary: {str(leadt_bnds[0]):<15}; "
-                f"Value of the leadtime variable: "
-                f"{str(leadt[0]):<20} {' '*20} --> NOK"
-            )
+        #     for i in range(len(leadt_bnds)):
+        #         logging.error(
+        #             f"First boundary leadtime boundary: {str(leadt_bnds[i]):<15}; "
+        #             f"Value of the leadtime variable: "
+        #             f"{str(leadt[i]):<20} {' '*20} --> NOK"
+        #         )
         
     outcome["status"] = status   
     #print(outcome)

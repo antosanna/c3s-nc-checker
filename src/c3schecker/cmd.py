@@ -203,21 +203,22 @@ def run_checks(input_files, checks, spec, c3s_excep, verbose, operational):
         logging.info(f"Checking file: [{input_file}]")
         try:
             dataset = Dataset(input_file)
+        
+            file_outcome = outcomes.setdefault(input_file.name, {})
+            for check_name, check in checks.items():
+                if verbose:
+                    logging.info("--------------------------------------------")
+                    logging.info(f"Running check : {check_name}")
+                outcome = check(dataset, spec, c3s_excep, verbose, operational)
+                file_outcome[check_name] = outcome
+                if verbose:
+                    if outcome['status'] == 1:
+                        logging.info(f"Check#{i} was successful.")
+                    else:
+                        logging.error(f"Check#{i} was failed. ")
+                i += 1
         except OSError:
             logging.error(f"Not an NetCDF file, continue ... ")
-        file_outcome = outcomes.setdefault(input_file.name, {})
-        for check_name, check in checks.items():
-            if verbose:
-                logging.info("--------------------------------------------")
-                logging.info(f"Running check : {check_name}")
-            outcome = check(dataset, spec, c3s_excep, verbose, operational)
-            file_outcome[check_name] = outcome
-            if verbose:
-                if outcome['status'] == 1:
-                    logging.info(f"Check#{i} was successful.")
-                else:
-                    logging.error(f"Check#{i} was failed. ")
-            i += 1
 
     return outcomes
 
