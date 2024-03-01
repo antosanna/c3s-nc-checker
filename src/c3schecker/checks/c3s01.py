@@ -882,7 +882,7 @@ def c3s_meta_attributes_exact_values_per_var_name(
                         )
                         logging.error(
                             f"Variable: {var_name:<12} Actual attribute: "
-                            f"{nc_var.ncattrs()} Excepted attributes: "
+                            f"{nc_var.ncattrs()} Expected attributes: "
                             f"{var_attrs}"
                         )
             try:

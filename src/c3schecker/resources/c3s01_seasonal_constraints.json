@@ -319,72 +319,60 @@
         ],
         "mlotstheta001": [
             "leadtime", 
-            "depth", 
             "lat", 
             "lon"
         ],
         "mlotstheta003": [
             "leadtime", 
-            "depth", 
             "lat", 
             "lon"
         ],
         "sithick": [
             "leadtime", 
-            "depth", 
             "lat", 
             "lon"
         ],
         "sos": [
             "leadtime", 
-            "depth", 
             "lat", 
             "lon"
         ],
         "sot300": [
             "leadtime", 
-            "depth", 
             "lat", 
             "lon"],
         "t14d": [
             "leadtime", 
-            "depth", 
             "lat", 
             "lon"
         ],
         "t17d": [
             "leadtime", 
-            "depth", 
             "lat", 
             "lon"
         ],
         "t20d": [
             "leadtime", 
-            "depth", 
             "lat", 
             "lon"
         ],
         "t26d": [
             "leadtime", 
-            "depth", 
             "lat", 
             "lon"
         ],
         "t28d": [
             "leadtime", 
-            "depth", 
             "lat", 
             "lon"
         ],
         "thetaot300": [
             "leadtime", 
-            "depth", 
             "lat", 
             "lon"
         ],
         "zos": [
             "leadtime", 
-            "depth", 
             "lat", 
             "lon"
         ],
