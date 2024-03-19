@@ -9,3 +9,4 @@ htmlcov
 *.log
 *.nc
 *.DS_Store
+.vscode/

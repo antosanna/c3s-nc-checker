@@ -1,6 +1,7 @@
 {
-    "convention": {
-        "expected": "CF-1.6 C3S-0.1"
+    "convention": 
+    {
+        "expected": "CF-1.6 C3S-0.1" 
     },
     "netcdf_format": {
         "expected": "NETCDF4_CLASSIC"
@@ -25,16 +26,939 @@
             "lon_bnds",
             "depth_bnds",
             "str31",
+            "leadtime",
+            "bnds"
+        ],
+        "required": "mandatory"
+    },
+    "dimensions_per_var_name": {
+        "lat": [
+            "lat"
+        ],
+        "lat_bnds": [
+            "lat", 
+            "bnds"
+        ],
+        "lon": [
+            "lon"
+        ],
+        "lon_bnds": [
+            "lon", 
+            "bnds"
+        ],
+        "plev": [
+            "plev"
+        ],
+        "depth": [
+            "depth"
+        ],
+        "depth_soil": [
+            "depth"
+        ],
+        "depth_ocean": [
+
+        ],
+         "depth_bnds": [
+             "depth", 
+             "bnds"
+         ],
+         "depth_bnds_ocean": [ 
+            "bnds"
+        ],
+        "height": [
+
+        ],
+        "realization": [
+            "str31"
+        ],
+        "reftime": [
+
+        ],
+        "leadtime": [
             "leadtime"
-        ]
+        ],
+        "leadtime_bnds": [
+            "leadtime",
+            "bnds"
+        ],
+        "time": [
+            "leadtime"
+        ],
+        "time_bnds": [
+            "leadtime",
+            "bnds"
+        ],
+        "hcrs": [
+
+        ],
+        "sftlf": [
+            "lat", 
+            "lon"
+        ],
+        "orog": [
+            "lat", 
+            "lon"
+        ],
+        "tas": [
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
+        "tasmax": [
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
+        "tasmin": [
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
+        "tdps": [
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
+        "uas": [
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
+        "vas": [
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
+        "wsgmax": [
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
+        "psl": [
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
+        "clt": [
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
+        "tsl": [
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
+        "tso": [
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
+        "sitemptop": [
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
+        "sic": [
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
+        "mrlsl": [
+            "leadtime", 
+            "depth", 
+            "lat", 
+            "lon"
+        ],
+        "lwesnw": [
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
+        "rhosn": [
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
+        "lweprs": [
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
+        "lweprc": [
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
+        "lwepr": [
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
+        "lweprsn": [
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
+        "hfss": [
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
+        "hfls": [
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
+        "rsds": [
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
+        "rlds": [
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
+        "rss": [
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
+        "rls": [
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
+        "rst": [
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
+        "rlt": [
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
+        "rsdt": [
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
+        "tauu": [
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
+        "tauv": [
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
+        "lwee": [
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
+        "mrroa": [
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
+        "mrroas": [
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
+        "mrroab": [
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
+        "zg": [
+            "leadtime", 
+            "plev", 
+            "lat", 
+            "lon"
+        ],
+        "ta": [
+            "leadtime", 
+            "plev", 
+            "lat", 
+            "lon"
+        ],
+        "hus": [
+            "leadtime", 
+            "plev", 
+            "lat", 
+            "lon"
+        ],
+        "rv": [
+            "leadtime", 
+            "plev", 
+            "lat", 
+            "lon"
+        ],
+        "wnddiv": [
+            "leadtime", 
+            "plev", 
+            "lat", 
+            "lon"
+        ],
+        "ua": [
+            "leadtime", 
+            "plev", 
+            "lat", 
+            "lon"
+        ],
+        "va": [
+            "leadtime", 
+            "plev", 
+            "lat", 
+            "lon"
+        ],
+        "mlotstheta001": [
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
+        "mlotstheta003": [
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
+        "sithick": [
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
+        "sos": [
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
+        "sot300": [
+            "leadtime", 
+            "lat", 
+            "lon"],
+        "t14d": [
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
+        "t17d": [
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
+        "t20d": [
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
+        "t26d": [
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
+        "t28d": [
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
+        "thetaot300": [
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
+        "zos": [
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
+        "prw": [
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
+        "cllvi": [
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
+        "clivi": [
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
+        "required":["mandatory"]
+    },
+    "variables_per_var_name": {
+        "sftlf": [
+            "lat", 
+            "lon"
+        ],
+        "orog": [
+            "lat", 
+            "lon"
+        ],
+        "tas": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "height", 
+            "lat", 
+            "lon",
+            "hcrs"
+        ],
+        "tasmax": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "height", 
+            "lat", 
+            "lon",
+            "hcrs"
+        ],
+        "tasmin": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "height", 
+            "lat", 
+            "lon",
+            "hcrs"
+        ],        
+        "tdps": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "height", 
+            "lat", 
+            "lon",
+            "hcrs"
+        ],
+        "uas": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "height", 
+            "lat",
+            "lon",
+            "hcrs"
+        ],
+        "vas": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "height", 
+            "lat", 
+            "lon",
+            "hcrs"
+        ],
+        "wsgmax":[
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "height", 
+            "lat", 
+            "lon",
+            "hcrs"
+        ],      
+        "psl": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "lat", 
+            "lon",
+            "hcrs"
+        ],
+        "clt": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "lat", 
+            "lon",
+            "hcrs"
+        ],
+        "tsl": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "lat", 
+            "lon",
+            "hcrs"
+        ],
+        "tso": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "lat", 
+            "lon",
+            "hcrs"
+        ],
+        "sitemptop": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "lat", 
+            "lon",
+            "hcrs"
+        ],
+        "sic": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "lat", 
+            "lon",
+            "hcrs"
+        ],
+        "mrlsl": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "depth", 
+            "lat", 
+            "lon",
+            "hcrs"
+        ],
+        "lwesnw": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "lat", 
+            "lon",
+            "hcrs"
+        ],
+        "rhosn": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "lat", 
+            "lon",
+            "hcrs"
+        ],
+        "lweprs": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "lat", 
+            "lon",
+            "hcrs"
+        ],
+        "lweprc": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "lat", 
+            "lon",
+            "hcrs"
+        ],
+        "lwepr": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "lat", 
+            "lon",
+            "hcrs"
+        ],
+        "lweprsn": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "lat", 
+            "lon",
+            "hcrs"
+        ],
+        "hfss": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "lat", 
+            "lon",
+            "hcrs"
+        ],
+        "hfls": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "lat", 
+            "lon",
+            "hcrs"
+        ],
+        "rsds": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "lat", 
+            "lon",
+            "hcrs"
+        ],
+        "rlds": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "lat", 
+            "lon",
+            "hcrs"
+        ],
+        "rss": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "lat", 
+            "lon",
+            "hcrs"
+        ],
+        "rls": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "lat", 
+            "lon",
+            "hcrs"
+        ],
+        "rst": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "lat", 
+            "lon",
+            "hcrs"
+        ],
+        "rlt": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "lat", 
+            "lon",
+            "hcrs"
+        ],
+        "rsdt": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "lat", 
+            "lon",
+            "hcrs"
+        ],
+        "tauu": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "lat", 
+            "lon",
+            "hcrs"
+        ],
+        "tauv": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "lat", 
+            "lon",
+            "hcrs"
+        ],
+        "lwee": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "lat", 
+            "lon",
+            "hcrs"
+        ],
+        "mrroa": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "lat", 
+            "lon",
+            "hcrs"
+        ],
+        "mrroas": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "lat", 
+            "lon",
+            "hcrs"
+        ],
+        "mrroab": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "lat", 
+            "lon",
+            "hcrs"
+        ],
+        "zg": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "plev", 
+            "lat", 
+            "lon",
+            "hcrs"
+        ],
+        "ta": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "plev", 
+            "lat", 
+            "lon",
+            "hcrs"
+        ],
+        "hus": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "plev", 
+            "lat", 
+            "lon",
+            "hcrs"
+        ],
+        "rv": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "plev", 
+            "lat", 
+            "lon",
+            "hcrs"
+        ],
+        "wnddiv": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "plev", 
+            "lat", 
+            "lon",
+            "hcrs"
+        ],
+        "ua": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "plev", 
+            "lat", 
+            "lon",
+            "hcrs"
+        ],
+        "va": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "plev", 
+            "lat", 
+            "lon",
+            "hcrs"
+        ],
+        "mlotstheta001": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "sigma_theta", 
+            "lat", 
+            "lon",
+            "hcrs"
+        ],
+        "mlotstheta003": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "sigma_theta", 
+            "lat", 
+            "lon",
+            "hcrs"
+        ],
+        "sithick": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "lat", 
+            "lon",
+            "hcrs"
+        ],
+        "sos": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "lat", 
+            "lon",
+            "hcrs"
+        ],
+        "sot300": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "depth", 
+            "lat", 
+            "lon",
+            "hcrs"
+        ],
+        "t14d": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "lat", 
+            "lon",
+            "hcrs",
+            "temperature"
+        ],
+        "t17d": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "lat", 
+            "lon",
+            "hcrs",
+            "temperature"
+        ],
+        "t20d": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "lat", 
+            "lon",
+            "hcrs",
+            "temperature"
+        ],
+        "t26d": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "lat", 
+            "lon",
+            "hcrs",
+            "temperature"
+        ],
+        "t28d": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "lat", 
+            "lon",
+            "hcrs",
+            "temperature"
+        ],
+        "thetaot300": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "depth", 
+            "lat", 
+            "lon",
+            "hcrs"
+        ],
+        "zos": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "lat", 
+            "lon",
+            "hcrs"
+        ],
+        "prw": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "lat", 
+            "lon",
+            "hcrs"
+        ],
+        "cllvi": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "lat", 
+            "lon",
+            "hcrs"
+        ],
+        "clivi": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "lat", 
+            "lon",
+            "hcrs"
+        ],
+        "required":["mandatory"]
     },
     "attributes_per_var_names": {
-        "time": {
+        "time_inst": {
             "expected": [
                 "units",
                 "calendar",
                 "long_name",
                 "standard_name"
+                
+            ]
+        },
+        "time_accu": {
+            "expected": [
+                "bounds",
+                "units",
+                "calendar",
+                "long_name",
+                "standard_name"
+                
             ]
         },
         "reftime": {
@@ -52,7 +976,7 @@
                 "standard_name"
             ]
         },
-        "latitude": {
+        "lat": {
             "expected": [
                 "axis",
                 "units",
@@ -63,7 +987,7 @@
                 "standard_name"
             ]
         },
-        "longitude": {
+        "lon": {
             "expected": [
                 "axis",
                 "units",
@@ -74,7 +998,7 @@
                 "standard_name"
             ]
         },
-        "air_pressure": {
+        "plev": {
             "expected": [
                 "axis",
                 "units",
@@ -111,14 +1035,30 @@
                 "standard_name",
                 "long_name"
             ]
-        }
+        },
+        "sigma_theta": {
+            "expected": [
+                "units",               
+                "standard_name",
+                "long_name"
+            ]
+        },
+        "temperature": {
+            "expected": [
+                "units",               
+                "standard_name",
+                "long_name"
+            ]
+        },
+        "required": ["mandatory"]
     },
     "possible_values_per_attributes": {
         "calendar": {
             "expected": [
                 "gregorian"
             ]
-        }
+        },
+        "required":["mandatory"]
     },
     "attributes_values_per_var_name": {
         "lat": {
@@ -160,13 +1100,39 @@
                 "positive": "down"
             }
         },
+        "depth_soil": {
+            "expected": {
+                "units": "m",
+                "long_name": "depth",
+                "axis": "Z",
+                "positive": "down",
+                "bounds": "depth_bnds"
+            }
+        },
         "height": {
             "expected": {
                 "units": "m",
                 "long_name": "height",
                 "axis": "Z",
-                "positive": "up"
+                "positive": "up",
+                "standard_name": "height",
+                "valid_max": "10.",
+                "valid_min": 1.0
             }
+        },
+        "sigma_theta": {
+            "expected": {
+                "units": "kg m-3",
+                "long_name": "Sigma-theta of Sea Water",
+                "standard_name": "sea_water_sigma_theta"
+                }
+        },
+        "temperature": {
+            "expected": {
+                "units": "C",
+                "long_name": "Isotherm Temperature",
+                "standard_name": "sea_water_potential_temperature"
+                }
         },
         "realization": {
             "expected": {
@@ -208,6 +1174,11 @@
                 "coordinates": "lat lon",
                 "valid_min": 0,
                 "valid_max": 1
+            },
+            "global": {
+                "frequency": "fix",
+                "level_type": "surface",
+                "modeling_realm": "atmos"
             }
         },
         "orog": {
@@ -216,6 +1187,11 @@
                 "grid_mapping": "hcrs",
                 "long_name": "Surface Altitude",
                 "coordinates": "lat lon"
+            },
+            "global": {
+                "frequency": "fix",
+                "level_type": "surface",
+                "modeling_realm": "atmos"
             }
         },
         "tas": {
@@ -226,6 +1202,11 @@
                 "standard_name": "air_temperature",
                 "cell_methods": "leadtime: point",
                 "grid_mapping": "hcrs"
+            },
+            "global": {
+                "frequency": "6hr",
+                "level_type": "surface",
+                "modeling_realm": "atmos"
             }
         },
         "tasmax": {
@@ -236,6 +1217,11 @@
                 "standard_name": "air_temperature",
                 "cell_methods": "(leadtime: maximum$|(leadtime: maximum \\(interval: ?[0-9]*?.?[0-9]?[0-9] ?[a-z]*?\\)))",
                 "grid_mapping": "hcrs"
+            },
+            "global": {
+                "frequency": "day",
+                "level_type": "surface",
+                "modeling_realm": "atmos"
             }
         },
         "tasmin": {
@@ -246,6 +1232,11 @@
                 "standard_name": "air_temperature",
                 "cell_methods": "(leadtime: minimum$|(leadtime: minimum \\(interval: ?[0-9]*?.?[0-9]?[0-9] ?[a-z]*?\\)))",
                 "grid_mapping": "hcrs"
+            },
+            "global": {
+                "frequency": "day",
+                "level_type": "surface",
+                "modeling_realm": "atmos"
             }
         },
         "tdps": {
@@ -256,6 +1247,11 @@
                 "standard_name": "dew_point_temperature",
                 "cell_methods": "leadtime: point",
                 "grid_mapping": "hcrs"
+            },
+            "global": {
+                "frequency": "6hr",
+                "level_type": "surface",
+                "modeling_realm": "atmos"
             }
         },
         "uas": {
@@ -266,6 +1262,11 @@
                 "standard_name": "x_wind",
                 "cell_methods": "leadtime: point",
                 "grid_mapping": "hcrs"
+            },
+            "global": {
+                "frequency": "6hr",
+                "level_type": "surface",
+                "modeling_realm": "atmos"
             }
         },
         "vas": {
@@ -276,6 +1277,11 @@
                 "standard_name": "y_wind",
                 "cell_methods": "leadtime: point",
                 "grid_mapping": "hcrs"
+            },
+            "global": {
+                "frequency": "6hr",
+                "level_type": "surface",
+                "modeling_realm": "atmos"
             }
         },
         "wsgmax": {
@@ -286,6 +1292,11 @@
                 "standard_name": "wind_speed_of_gust",
                 "cell_methods": "(leadtime: maximum$|(leadtime: maximum \\(interval: ?[0-9]*?.?[0-9]?[0-9] ?[a-z]*?\\)))",
                 "grid_mapping": "hcrs"
+            },
+            "global": {
+                "frequency": "day",
+                "level_type": "surface",
+                "modeling_realm": "atmos"
             }
         },
         "psl": {
@@ -296,6 +1307,11 @@
                 "standard_name": "air_pressure_at_sea_level",
                 "cell_methods": "leadtime: point",
                 "grid_mapping": "hcrs"
+            },
+            "global": {
+                "frequency": "6hr",
+                "level_type": "surface",
+                "modeling_realm": "atmos"
             }
         },
         "clt": {
@@ -306,6 +1322,11 @@
                 "standard_name": "cloud_area_fraction",
                 "cell_methods": "leadtime: point",
                 "grid_mapping": "hcrs"
+            },
+            "global": {
+                "frequency": "6hr",
+                "level_type": "surface",
+                "modeling_realm": "atmos"
             }
         },
         "tsl": {
@@ -316,6 +1337,11 @@
                 "standard_name": "soil_temperature",
                 "cell_methods": "leadtime: point",
                 "grid_mapping": "hcrs"
+            },
+            "global": {
+                "frequency": "6hr",
+                "level_type": "surface",
+                "modeling_realm": "land"
             }
         },
         "tso": {
@@ -326,6 +1352,11 @@
                 "standard_name": "sea_surface_temperature",
                 "cell_methods": "leadtime: point",
                 "grid_mapping": "hcrs"
+            },
+            "global": {
+                "frequency": "6hr",
+                "level_type": "surface",
+                "modeling_realm": "ocean"
             }
         },
         "sitemptop": {
@@ -336,6 +1367,11 @@
                 "standard_name": "sea_ice_temperature",
                 "cell_methods": "leadtime: point",
                 "grid_mapping": "hcrs"
+            },
+            "global": {
+                "frequency": "6hr",
+                "level_type": "surface",
+                "modeling_realm": "seaIce"
             }
         },
         "sic": {
@@ -346,6 +1382,11 @@
                 "standard_name": "sea_ice_area_fraction",
                 "cell_methods": "leadtime: point",
                 "grid_mapping": "hcrs"
+            },
+            "global": {
+                "frequency": "day",
+                "level_type": "surface",
+                "modeling_realm": "seaIce"
             }
         },
         "mrlsl": {
@@ -356,6 +1397,11 @@
                 "standard_name": "moisture_content_of_soil_layer",
                 "cell_methods": "leadtime: point",
                 "grid_mapping": "hcrs"
+            },
+            "global": {
+                "frequency": "day",
+                "level_type": "soil",
+                "modeling_realm": "land"
             }
         },
         "lwesnw": {
@@ -366,6 +1412,11 @@
                 "standard_name": "lwe_thickness_of_surface_snow_amount",
                 "cell_methods": "leadtime: point",
                 "grid_mapping": "hcrs"
+            },
+            "global": {
+                "frequency": "day",
+                "level_type": "surface",
+                "modeling_realm": "land"
             }
         },
         "rhosn": {
@@ -376,6 +1427,11 @@
                 "standard_name": "snow_density",
                 "cell_methods": "leadtime: point",
                 "grid_mapping": "hcrs"
+            },
+            "global": {
+                "frequency": "day",
+                "level_type": "surface",
+                "modeling_realm": "land"
             }
         },
         "lweprs": {
@@ -396,6 +1452,11 @@
                 "standard_name": "lwe_thickness_of_convective_precipitation_amount",
                 "cell_methods": "leadtime: sum",
                 "grid_mapping": "hcrs"
+            },
+            "global": {
+                "frequency": "day",
+                "level_type": "surface",
+                "modeling_realm": "atmos"
             }
         },
         "lwepr": {
@@ -406,6 +1467,11 @@
                 "standard_name": "lwe_thickness_of_precipitation_amount",
                 "cell_methods": "leadtime: sum",
                 "grid_mapping": "hcrs"
+            },
+            "global": {
+                "frequency": "day",
+                "level_type": "surface",
+                "modeling_realm": "atmos"
             }
         },
         "lweprsn": {
@@ -416,6 +1482,11 @@
                 "standard_name": "lwe_thickness_of_snowfall_amount",
                 "cell_methods": "leadtime: sum",
                 "grid_mapping": "hcrs"
+            },
+            "global": {
+                "frequency": "day",
+                "level_type": "surface",
+                "modeling_realm": "atmos"
             }
         },
         "hfss": {
@@ -426,6 +1497,11 @@
                 "standard_name": "surface_upward_sensible_heat_flux",
                 "cell_methods": "(leadtime: mean$|(leadtime: mean \\(interval: ?[0-9]*?.?[0-9]?[0-9] ?[a-z]*?\\)))",
                 "grid_mapping": "hcrs"
+            },
+            "global": {
+                "frequency": "day",
+                "level_type": "surface",
+                "modeling_realm": "atmos"
             }
         },
         "hfls": {
@@ -436,6 +1512,11 @@
                 "standard_name": "surface_upward_latent_heat_flux",
                 "cell_methods": "(leadtime: mean$|(leadtime: mean \\(interval: ?[0-9]*?.?[0-9]?[0-9] ?[a-z]*?\\)))",
                 "grid_mapping": "hcrs"
+            },
+            "global": {
+                "frequency": "day",
+                "level_type": "surface",
+                "modeling_realm": "atmos"
             }
         },
         "rsds": {
@@ -446,6 +1527,11 @@
                 "standard_name": "surface_downwelling_shortwave_flux_in_air",
                 "cell_methods": "(leadtime: mean$|(leadtime: mean \\(interval: ?[0-9]*?.?[0-9]?[0-9] ?[a-z]*?\\)))",
                 "grid_mapping": "hcrs"
+            },
+            "global": {
+                "frequency": "day",
+                "level_type": "surface",
+                "modeling_realm": "atmos"
             }
         },
         "rlds": {
@@ -456,6 +1542,11 @@
                 "standard_name": "surface_downwelling_longwave_flux_in_air",
                 "cell_methods": "(leadtime: mean$|(leadtime: mean \\(interval: ?[0-9]*?.?[0-9]?[0-9] ?[a-z]*?\\)))",
                 "grid_mapping": "hcrs"
+            },
+            "global": {
+                "frequency": "day",
+                "level_type": "surface",
+                "modeling_realm": "atmos"
             }
         },
         "rss": {
@@ -466,6 +1557,11 @@
                 "cell_methods": "(leadtime: mean$|(leadtime: mean \\(interval: ?[0-9]*?.?[0-9]?[0-9] ?[a-z]*?\\)))",
                 "standard_name": "surface_net_downward_shortwave_flux",
                 "grid_mapping": "hcrs"
+            },
+            "global": {
+                "frequency": "day",
+                "level_type": "surface",
+                "modeling_realm": "atmos"
             }
         },
         "rls": {
@@ -476,6 +1572,11 @@
                 "standard_name": "surface_net_downward_longwave_flux",
                 "cell_methods": "(leadtime: mean$|(leadtime: mean \\(interval: ?[0-9]*?.?[0-9]?[0-9] ?[a-z]*?\\)))",
                 "grid_mapping": "hcrs"
+            },
+            "global": {
+                "frequency": "day",
+                "level_type": "surface",
+                "modeling_realm": "atmos"
             }
         },
         "rst": {
@@ -486,6 +1587,11 @@
                 "standard_name": "toa_net_downward_shortwave_flux",
                 "cell_methods": "(leadtime: mean$|(leadtime: mean \\(interval: ?[0-9]*?.?[0-9]?[0-9] ?[a-z]*?\\)))",
                 "grid_mapping": "hcrs"
+            },
+            "global": {
+                "frequency": "day",
+                "level_type": "surface",
+                "modeling_realm": "atmos"
             }
         },
         "rlt": {
@@ -496,6 +1602,11 @@
                 "standard_name": "toa_net_downward_longwave_flux",
                 "cell_methods": "(leadtime: mean$|(leadtime: mean \\(interval: ?[0-9]*?.?[0-9]?[0-9] ?[a-z]*?\\)))",
                 "grid_mapping": "hcrs"
+            },
+            "global": {
+                "frequency": "day",
+                "level_type": "surface",
+                "modeling_realm": "atmos"
             }
         },
         "rsdt": {
@@ -506,6 +1617,11 @@
                 "standard_name": "toa_incoming_shortwave_flux",
                 "cell_methods": "(leadtime: mean$|(leadtime: mean \\(interval: ?[0-9]*?.?[0-9]?[0-9] ?[a-z]*?\\)))",
                 "grid_mapping": "hcrs"
+            },
+            "global": {
+                "frequency": "day",
+                "level_type": "surface",
+                "modeling_realm": "atmos"
             }
         },
         "tauu": {
@@ -516,6 +1632,11 @@
                 "standard_name": "surface_downward_eastward_stress",
                 "cell_methods": "(leadtime: mean$|(leadtime: mean \\(interval: ?[0-9]*?.?[0-9]?[0-9] ?[a-z]*?\\)))",
                 "grid_mapping": "hcrs"
+            },
+            "global": {
+                "frequency": "day",
+                "level_type": "surface",
+                "modeling_realm": "atmos"
             }
         },
         "tauv": {
@@ -526,6 +1647,11 @@
                 "standard_name": "surface_downward_northward_stress",
                 "cell_methods": "(leadtime: mean$|(leadtime: mean \\(interval: ?[0-9]*?.?[0-9]?[0-9] ?[a-z]*?\\)))",
                 "grid_mapping": "hcrs"
+            },
+            "global": {
+                "frequency": "day",
+                "level_type": "surface",
+                "modeling_realm": "atmos"
             }
         },
         "lwee": {
@@ -536,6 +1662,11 @@
                 "standard_name": "lwe_thickness_of_water_evaporation_amount",
                 "cell_methods": "leadtime: sum",
                 "grid_mapping": "hcrs"
+            },
+            "global": {
+                "frequency": "day",
+                "level_type": "surface",
+                "modeling_realm": "land"
             }
         },
         "mrroa": {
@@ -546,6 +1677,11 @@
                 "standard_name": "runoff_amount",
                 "cell_methods": "leadtime: sum",
                 "grid_mapping": "hcrs"
+            },
+            "global": {
+                "frequency": "day",
+                "level_type": "surface",
+                "modeling_realm": "land"
             }
         },
         "mrroas": {
@@ -556,6 +1692,11 @@
                 "standard_name": "surface_runoff_amount",
                 "cell_methods": "leadtime: sum",
                 "grid_mapping": "hcrs"
+            },
+            "global": {
+                "frequency": "day",
+                "level_type": "surface",
+                "modeling_realm": "land"
             }
         },
         "mrroab": {
@@ -566,6 +1707,11 @@
                 "standard_name": "subsurface_runoff_amount",
                 "cell_methods": "leadtime: sum",
                 "grid_mapping": "hcrs"
+            },
+            "global": {
+                "frequency": "day",
+                "level_type": "surface",
+                "modeling_realm": "land"
             }
         },
         "zg": {
@@ -576,6 +1722,11 @@
                 "standard_name": "geopotential_height",
                 "cell_methods": "leadtime: point",
                 "grid_mapping": "hcrs"
+            },
+            "global": {
+                "frequency": "12hr",
+                "level_type": "pressure",
+                "modeling_realm": "atmos"
             }
         },
         "ta": {
@@ -586,6 +1737,11 @@
                 "standard_name": "air_temperature",
                 "cell_methods": "leadtime: point",
                 "grid_mapping": "hcrs"
+            },
+            "global": {
+                "frequency": "12hr",
+                "level_type": "pressure",
+                "modeling_realm": "atmos"
             }
         },
         "hus": {
@@ -596,6 +1752,11 @@
                 "standard_name": "specific_humidity",
                 "cell_methods": "leadtime: point",
                 "grid_mapping": "hcrs"
+            },
+            "global": {
+                "frequency": "12hr",
+                "level_type": "pressure",
+                "modeling_realm": "atmos"
             }
         },
         "rv": {
@@ -606,6 +1767,11 @@
                 "standard_name": "atmospheric_relative_vorticity",
                 "cell_methods": "leadtime: point",
                 "grid_mapping": "hcrs"
+            },
+            "global": {
+                "frequency": "12hr",
+                "level_type": "pressure",
+                "modeling_realm": "atmos"
             }
         },
         "wnddiv": {
@@ -616,6 +1782,11 @@
                 "standard_name": "divergence_of_wind",
                 "cell_methods": "leadtime: point",
                 "grid_mapping": "hcrs"
+            },
+            "global": {
+                "frequency": "12hr",
+                "level_type": "pressure",
+                "modeling_realm": "atmos"
             }
         },
         "ua": {
@@ -626,6 +1797,11 @@
                 "standard_name": "x_wind",
                 "cell_methods": "leadtime: point",
                 "grid_mapping": "hcrs"
+            },
+            "global": {
+                "frequency": "12hr",
+                "level_type": "pressure",
+                "modeling_realm": "atmos"
             }
         },
         "va": {
@@ -636,158 +1812,313 @@
                 "standard_name": "y_wind",
                 "cell_methods": "leadtime: point",
                 "grid_mapping": "hcrs"
+            },
+            "global": {
+                "frequency": "12hr",
+                "level_type": "pressure",
+                "modeling_realm": "atmos"
             }
         },
         "mlotstheta001": {
-            "cell_methods": "leadtime: mean",
-            "coordinates": "reftime realization time leadtime sigma_theta lat lon",
-            "grid_mapping": "hcrs",
-            "long_name": "Ocean Mixed Layer Thickness Defined by Sigma Theta 0.01 kg/m3",
-            "standard_name": "ocean_mixed_layer_thickness_defined_by_sigma_theta",
-            "units": "m"
+            "expected" : {
+                "cell_methods": "leadtime: mean",
+                "coordinates": "reftime realization time leadtime sigma_theta lat lon",
+                "grid_mapping": "hcrs",
+                "long_name": "Ocean Mixed Layer Thickness Defined by Sigma Theta 0.01 kg/m3",
+                "standard_name": "ocean_mixed_layer_thickness_defined_by_sigma_theta",
+                "units": "m"
+            },
+            "global": {
+                "frequency": "mon",
+                "level_type": "ocean2d",
+                "modeling_realm": "ocean"
+            }
         },
         "mlotstheta003": {
-            "cell_methods": "leadtime: mean",
-            "coordinates": "reftime realization time leadtime sigma_theta lat lon",
-            "grid_mapping": "hcrs",
-            "long_name": "Ocean Mixed Layer Thickness Defined by Sigma Theta 0.03 kg/m3",
-            "standard_name": "ocean_mixed_layer_thickness_defined_by_sigma_theta",
-            "units": "m"
+            "expected" : {
+                "cell_methods": "leadtime: mean",
+                "coordinates": "reftime realization time leadtime sigma_theta lat lon",
+                "grid_mapping": "hcrs",
+                "long_name": "Ocean Mixed Layer Thickness Defined by Sigma Theta 0.03 kg/m3",
+                "standard_name": "ocean_mixed_layer_thickness_defined_by_sigma_theta",
+                "units": "m"
+            },
+            "global": {
+                "frequency": "mon",
+                "level_type": "ocean2d",
+                "modeling_realm": "ocean"
+            }
         },
         "sithick": {
-            "cell_methods": "leadtime: mean",
-            "coordinates": "reftime realization time leadtime lat lon",
-            "grid_mapping": "hcrs",
-            "long_name": "Sea Ice Thickness",
-            "standard_name": "sea_ice_thickness",
-            "units": "m"
+            "expected": {
+                "cell_methods": "leadtime: mean",
+                "coordinates": "reftime realization time leadtime lat lon",
+                "grid_mapping": "hcrs",
+                "long_name": "Sea Ice Thickness",
+                "standard_name": "sea_ice_thickness",
+                "units": "m"
+            },
+            "global": {
+                "frequency": "mon",
+                "level_type": "ocean2d",
+                "modeling_realm": "ocean"
+            }
         },
         "sos": {
-            "cell_methods": "leadtime: mean",
-            "coordinates": "reftime realization time leadtime lat lon",
-            "grid_mapping": "hcrs",
-            "long_name": "Sea Surface Salinity",
-            "standard_name": "sea_water_practical_salinity",
-            "units": "1"
+            "expected": {
+                "cell_methods": "leadtime: mean",
+                "coordinates": "reftime realization time leadtime lat lon",
+                "grid_mapping": "hcrs",
+                "long_name": "Sea Surface Salinity",
+                "standard_name": "sea_water_practical_salinity",
+                "units": "1"
+            },
+            "global": {
+                "frequency": "mon",
+                "level_type": "ocean2d",
+                "modeling_realm": "ocean"
+            }
         },
         "sot300": {
-            "cell_methods": "depth: mean leadtime: mean",
-            "coordinates": "reftime realization time leadtime depth lat lon",
-            "grid_mapping": "hcrs",
-            "long_name": "Depth Average Salinity of Upper 300m",
-            "standard_name": "sea_water_practical_salinity",
-            "units": "1"
+            "expected": {
+                "cell_methods": "depth: mean leadtime: mean",
+                "coordinates": "reftime realization time leadtime depth lat lon",
+                "grid_mapping": "hcrs",
+                "long_name": "Depth Average Salinity of Upper 300m",
+                "standard_name": "sea_water_practical_salinity",
+                "units": "1"
+            },
+            "global": {
+                "frequency": "mon",
+                "level_type": "ocean2d",
+                "modeling_realm": "ocean"
+            }
         },
         "t14d": {
-            "cell_methods": "leadtime: mean",
-            "coordinates": "reftime realization time leadtime temperature lat lon",
-            "grid_mapping": "hcrs",
-            "long_name": "Depth of 14 degree Celsius Isotherm",
-            "standard_name": "depth_of_isosurface_of_sea_water_potential_temperature",
-            "units": "m"
+            "expected": {
+                "cell_methods": "leadtime: mean",
+                "coordinates": "reftime realization time leadtime temperature lat lon",
+                "grid_mapping": "hcrs",
+                "long_name": "Depth of 14 degree Celsius Isotherm",
+                "standard_name": "depth_of_isosurface_of_sea_water_potential_temperature",
+                "units": "m"
+            },
+            "global": {
+                "frequency": "mon",
+                "level_type": "ocean2d",
+                "modeling_realm": "ocean"
+            }
         },
         "t17d": {
-            "cell_methods": "leadtime: mean",
-            "coordinates": "reftime realization time leadtime temperature lat lon",
-            "grid_mapping": "hcrs",
-            "long_name": "Depth of 17 degree Celsius Isotherm",
-            "standard_name": "depth_of_isosurface_of_sea_water_potential_temperature",
-            "units": "m"
+            "expected": {
+                "cell_methods": "leadtime: mean",
+                "coordinates": "reftime realization time leadtime temperature lat lon",
+                "grid_mapping": "hcrs",
+                "long_name": "Depth of 17 degree Celsius Isotherm",
+                "standard_name": "depth_of_isosurface_of_sea_water_potential_temperature",
+                "units": "m"
+            },
+            "global": {
+                "frequency": "mon",
+                "level_type": "ocean2d",
+                "modeling_realm": "ocean"
+            }
         },
         "t20d": {
-            "cell_methods": "leadtime: mean",
-            "coordinates": "reftime realization time leadtime temperature lat lon",
-            "grid_mapping": "hcrs",
-            "long_name": "Depth of 20 degree Celsius Isotherm",
-            "standard_name": "depth_of_isosurface_of_sea_water_potential_temperature",
-            "units": "m"
+            "expected": {
+                "cell_methods": "leadtime: mean",
+                "coordinates": "reftime realization time leadtime temperature lat lon",
+                "grid_mapping": "hcrs",
+                "long_name": "Depth of 20 degree Celsius Isotherm",
+                "standard_name": "depth_of_isosurface_of_sea_water_potential_temperature",
+                "units": "m"
+            },
+            "global": {
+                "frequency": "mon",
+                "level_type": "ocean2d",
+                "modeling_realm": "ocean"
+            }
         },
         "t26d": {
-            "cell_methods": "leadtime: mean",
-            "coordinates": "reftime realization time leadtime temperature lat lon",
-            "grid_mapping": "hcrs",
-            "long_name": "Depth of 26 degree Celsius Isotherm",
-            "standard_name": "depth_of_isosurface_of_sea_water_potential_temperature",
-            "units": "m"
+            "expected": {
+                "cell_methods": "leadtime: mean",
+                "coordinates": "reftime realization time leadtime temperature lat lon",
+                "grid_mapping": "hcrs",
+                "long_name": "Depth of 26 degree Celsius Isotherm",
+                "standard_name": "depth_of_isosurface_of_sea_water_potential_temperature",
+                "units": "m"
+            },
+            "global": {
+                "frequency": "mon",
+                "level_type": "ocean2d",
+                "modeling_realm": "ocean"
+            }
         },
         "t28d": {
-            "cell_methods": "leadtime: mean",
-            "coordinates": "reftime realization time leadtime temperature lat lon",
-            "grid_mapping": "hcrs",
-            "long_name": "Depth of 28 degree Celsius Isotherm",
-            "standard_name": "depth_of_isosurface_of_sea_water_potential_temperature",
-            "units": "m"
+            "expected": {
+                "cell_methods": "leadtime: mean",
+                "coordinates": "reftime realization time leadtime temperature lat lon",
+                "grid_mapping": "hcrs",
+                "long_name": "Depth of 28 degree Celsius Isotherm",
+                "standard_name": "depth_of_isosurface_of_sea_water_potential_temperature",
+                "units": "m"
+            },
+            "global": {
+                "frequency": "mon",
+                "level_type": "ocean2d",
+                "modeling_realm": "ocean"
+            }
         },
         "thetaot300": {
-            "cell_methods": "depth: mean leadtime: mean",
-            "coordinates": "reftime realization time leadtime depth lat lon",
-            "grid_mapping": "hcrs",
-            "long_name": "Depth Average Potential Temperature of Upper 300m",
-            "standard_name": "sea_water_potential_temperature",
-            "units": "K"
+            "expected": {
+                "cell_methods": "depth: mean leadtime: mean",
+                "coordinates": "reftime realization time leadtime depth lat lon",
+                "grid_mapping": "hcrs",
+                "long_name": "Depth Average Potential Temperature of Upper 300m",
+                "standard_name": "sea_water_potential_temperature",
+                "units": "K"
+            },
+            "global": {
+                "frequency": "mon",
+                "level_type": "ocean2d",
+                "modeling_realm": "ocean"
+            }
         },
         "zos": {
-            "cell_methods": "leadtime: mean",
-            "coordinates": "reftime realization time leadtime lat lon",
-            "grid_mapping": "hcrs",
-            "long_name": "Sea Surface Height Above Geoid",
-            "standard_name": "sea_surface_height_above_geoid",
-            "units": "m"
+            "expected": {
+                "cell_methods": "leadtime: mean",
+                "coordinates": "reftime realization time leadtime lat lon",
+                "grid_mapping": "hcrs",
+                "long_name": "Sea Surface Height Above Geoid",
+                "standard_name": "sea_surface_height_above_geoid",
+                "units": "m"
+            },
+            "global": {
+                "frequency": "mon",
+                "level_type": "ocean2d",
+                "modeling_realm": "ocean"
+            }
         },
         "prw": {
-            "long_name": "Water Vapor Path",
-            "units": "kg m-2",
-            "coordinates": "reftime realization time leadtime lat lon",
-            "standard_name": "atmosphere_mass_content_of_water_vapor",
-            "cell_methods": "leadtime: point",
-            "grid_mapping": "hcrs"
+            "expected": {
+                "long_name": "Water Vapor Path",
+                "units": "kg m-2",
+                "coordinates": "reftime realization time leadtime lat lon",
+                "standard_name": "atmosphere_mass_content_of_water_vapor",
+                "cell_methods": "leadtime: point",
+                "grid_mapping": "hcrs"
+            },
+            "global": {
+                "frequency": "day",
+                "level_type": "surface",
+                "modeling_realm": "atmos"
+            }
         },
         "cllvi": {
-            "long_name": "Liquid Water Path",
-            "units": "kg m-2",
-            "coordinates": "reftime realization time leadtime lat lon",
-            "standard_name": "atmosphere_mass_content_of_cloud_liquid_water",
-            "cell_methods": "leadtime: point",
-            "grid_mapping": "hcrs"
+            "expected": {
+                "long_name": "Liquid Water Path",
+                "units": "kg m-2",
+                "coordinates": "reftime realization time leadtime lat lon",
+                "standard_name": "atmosphere_mass_content_of_cloud_liquid_water",
+                "cell_methods": "leadtime: point",
+                "grid_mapping": "hcrs"
+            },
+            "global": {
+                "frequency": "day",
+                "level_type": "surface",
+                "modeling_realm": "atmos"
+            }
         },
         "clivi": {
-            "long_name": "Ice Water Path",
-            "units": "kg m-2",
-            "coordinates": "reftime realization time leadtime lat lon",
-            "standard_name": "atmosphere_mass_content_of_cloud_ice",
-            "cell_methods": "leadtime: point",
-            "grid_mapping": "hcrs"
-        }
+            "expected": {
+                "long_name": "Ice Water Path",
+                "units": "kg m-2",
+                "coordinates": "reftime realization time leadtime lat lon",
+                "standard_name": "atmosphere_mass_content_of_cloud_ice",
+                "cell_methods": "leadtime: point",
+                "grid_mapping": "hcrs"
+            },
+            "global": {
+                "frequency": "day",
+                "level_type": "surface",
+                "modeling_realm": "atmos"
+            }
+        },
+        "required":["mandatory"]
     },
+    
     "global_attributes": {
-        "expected": [
-            "Conventions",
-            "comment",
-            "summary",
-            "title",
-            "forecast_type",
-            "institute_id",
-            "project",
-            "source",
-            "contact",
-            "references",
-            "forecast_reference_time",
-            "keywords",
-            "creation_date",
-            "institution",
-            "history",
-            "modeling_realm",
-            "frequency",
-            "level_type",
-            "commit"
-        ]
+        "expected": {
+            "Conventions": {
+                "required": "mandatory"
+            },
+            "comment": {
+                "required": "optional"
+            },
+            "summary": {
+                "required": "optional"
+            },
+            "title": {
+                "required": "optional"
+            },
+            "forecast_type": {
+                "required": "mandatory"
+            },
+            "institute_id": {
+                "required": "mandatory"
+            },
+            "project": {
+                "required": "mandatory"
+            },
+            "source": {
+                "required": "mandatory"
+            },
+            "contact": {
+                "required": "optional"
+            },
+            "references": {
+                "required": "optional"
+            },
+            "forecast_reference_time": {
+                "required": "mandatory"
+            },
+            "keywords": {
+                "required": "optional"
+            },
+            "creation_date": {
+                "required": "mandatory"
+            },
+            "institution": {
+                "required": "optional"
+            },
+            "history": {
+                "required": "optional"
+            },
+            "modeling_realm": {
+                "required": "mandatory"
+            },
+            "level_type": {
+                "required": "mandatory"
+            },
+            "commit": {
+                "required": "optional"
+            },
+            "frequency": {
+                "required": "mandatory"
+            }
+        },
+        "required":"mandatory"
     },
     "global_attributes_possible_values": {
         "expected": {
-            "Conventions": [
+            "Conventions": {
+                "value":[
                 "CF-1.6 C3S-0.1"
             ],
-            "summary": [
+            "required": "mandatory"
+        },
+            "summary": {
+                "value": [
                 "Seasonal Forecast data produced by ECMWF as its contribution to the seasonal forecast activity of the Copernicus Climate Change Service (C3S). The data has global coverage with a 1-degree horizontal resolution and spans for around 6 months since the start date",
                 "Seasonal Forecast data produced by Met Office as its contribution to the seasonal forecast activity of the Copernicus Climate Change Service (C3S). The data has global coverage with a 1-degree horizontal resolution and spans for around 6 months since the start date",
                 "Seasonal Forecast data produced by Meteo-France as its contribution to the seasonal forecast activity of the Copernicus Climate Change Service (C3S). The data has global coverage with a 1-degree horizontal resolution and spans for around 6 months since the start date",
@@ -796,7 +2127,10 @@
                 "Seasonal Forecast data produced by ECCC as its contribution to the seasonal forecast activity of the Copernicus Climate Change Service (C3S). The data has global coverage with a 1-degree horizontal resolution and spans 12 months since the start date",
                 "Seasonal Forecast data produced by BOM as its contribution to the seasonal forecast activity of the Copernicus Climate Change Service (C3S). The data has global coverage with a 1-degree horizontal resolution and spans 12 months since the start date"
             ],
-            "title": [
+            "required": "optional"
+        },
+            "title": {
+                "value": [
                 "ECMWF seasonal forecast model output prepared for C3S",
                 "Met Office seasonal forecast model output prepared for C3S",
                 "Meteo-France seasonal forecast model output prepared for C3S",
@@ -805,11 +2139,17 @@
                 "ECCC seasonal forecast model output prepared for C3S",
                 "BOM seasonal forecast model output prepared for C3S"
             ],
-            "forecast_type": [
+            "required": "optional"
+        },
+            "forecast_type": {
+                "value":[
                 "forecast",
                 "hindcast"
             ],
-            "institute_id": [
+            "required": "mandatory"
+        },
+            "institute_id": {
+                "value": [
                 "ecmf",
                 "egrr",
                 "lfpw",
@@ -818,16 +2158,28 @@
                 "cwao",
                 "ammc"
             ],
-            "project": [
+            "required": "mandatory"
+        },
+            "project": {
+                "value": [
                 "C3S Seasonal Forecast"
             ],
-            "contact": [
+            "required": "mandatory"
+        },
+            "contact": {
+                "value": [
                 "http://copernicus-support.ecmwf.int"
             ],
-            "keywords": [
+            "required": "optional"
+        },
+            "keywords": {
+                "value": [
                 "Seasonal Forecasts, C3S, ECMWF, Copernicus, Climate Change, Climate Services, Earth Science Services, Environmental Advisories, Climate Advisories"
             ],
-            "institution": [
+            "required": "optional"
+        },
+            "institution": {
+                "value": [
                 "ECMWF, European Centre for Medium-Range Weather Forecasts, Reading, United Kingdom",
                 "Met Office, Exeter, United Kingdom",
                 "Meteo-France, Toulouse, France",
@@ -836,10 +2188,16 @@
                 "ECCC, Environment and Climate Change Canada, Montreal, QC, Canada",
                 "Bureau of Meteorology, Melbourne, Australia"
             ],
-            "history": [
-                ""
+            "required": "optional"
+        },
+            "history": {
+                "value": [
+                "", " "
             ],
-            "modeling_realm": [
+            "required": "optional"
+        },
+            "modeling_realm": {
+                "value": [
                 "atmos",
                 "ocean",
                 "land",
@@ -849,26 +2207,40 @@
                 "atmosChem",
                 "ocnBgchem"
             ],
-            "frequency": [
+            "required": "mandatory"
+        },
+            "frequency": {
+                "value": [
                 "mon",
                 "day",
                 "12hr",
                 "6hr",
                 "fix"
             ],
-            "level_type": [
+            "required": "mandatory"
+        },
+            "level_type": {
+                "value": [
                 "surface",
                 "pressure",
                 "soil",
                 "ocean2d"
-            ]
-        }
+            ],
+            "required": "mandatory"
+        },
+           "test": {
+               "value": []
+           }
+        },
+        "required": ["mandatory"]
     },
+    
     "global_attributes_date_format": {
         "expected": {
-            "creation_date": "%Y-%m-%dT%H:%M:%SZ",
-            "forecast_reference_time": "%Y-%m-%dT%H:%M:%SZ"
-        }
+            "creation_date": "%Y-%m-%dT%H:%M:%S",
+            "forecast_reference_time": "%Y-%m-%dT%H:%M:%S"
+        },
+        "required": "mandatory"        
     },
     "variables_exact_dimensions": {
         "expected": {
@@ -900,6 +2272,15 @@
             "orog": [
                 "lat",
                 "lon"
+            ],
+            "height": [
+                
+            ],
+            "sigma_theta": [
+                
+            ],
+            "temperature": [
+                
             ],
             "tas": [
                 "leadtime",
@@ -1194,7 +2575,8 @@
                 "lat",
                 "lon"
             ]
-        }
+        },
+        "required": "mandatory"
     },
     "grib_consistency": {
         "expected": {
@@ -1206,10 +2588,18 @@
                     "standard_name": "geopotential"
                 }
             },
+            "130": {
+                "name": "t",
+                "cf": {
+                    "units": "K",
+                    "long_name": "Temperature",
+                    "standard_name": "air_temperature"
+                }
+            },
             "167": {
                 "name": "t",
                 "cf": {
-                    "units": "Ko",
+                    "units": "K",
                     "long_name": "Temperature",
                     "standard_name": "air_temperature"
                 }
@@ -1230,275 +2620,287 @@
                     "standard_name": "significant_height_of_swell_waves"
                 }
             }
-        }
+        }, 
+        "required": "mandatory"
     },
     "data_intervals": {
+        "required": "mandatory", 
         "expected": {
             "default": {
                 "lat": 1.0,
                 "lon": 1.0
             },
+            "lat": {
+                "dimensions": {
+                    "lat": 1.0
+                }
+            },
+            "lon": {
+                "dimensions": {
+                    "lon": 1.0
+                }
+            },
             "tas": {
                 "with_cell_methods": "leadtime: point",
                 "dimensions": {
-                    "leadtime": 6
+                    "leadtime": 0.25
                 }
             },
             "tasmax": {
                 "dimensions": {
-                    "leadtime": 24
+                    "leadtime": 1
                 }
             },
             "tasmin": {
                 "with_cell_methods": "leadtime: minimum (interval: 0.75 hour)",
                 "dimensions": {
-                    "leadtime": 24
+                    "leadtime": 1
                 }
             },
             "tdps": {
                 "with_cell_methods": "leadtime: point",
                 "dimensions": {
-                    "leadtime": 6
+                    "leadtime": 0.25
                 }
             },
             "tsl": {
                 "with_cell_methods": "leadtime: point",
                 "dimensions": {
-                    "leadtime": 6
+                    "leadtime": 0.25
                 }
             },
             "uas": {
                 "with_cell_methods": "leadtime: point",
                 "dimensions": {
-                    "leadtime": 6
+                    "leadtime": 0.25
                 }
             },
             "vas": {
                 "with_cell_methods": "leadtime: point",
                 "dimensions": {
-                    "leadtime": 6
+                    "leadtime": 0.25
                 }
             },
             "wsgmax": {
                 "with_cell_methods": "leadtime: maximum (interval: 1 hour)",
                 "dimensions": {
-                    "leadtime": 6
+                    "leadtime": 1
                 }
             },
             "psl": {
                 "with_cell_methods": "leadtime: point",
                 "dimensions": {
-                    "leadtime": 6
+                    "leadtime": 0.25
                 }
             },
             "clt": {
                 "with_cell_methods": "leadtime: point",
                 "dimensions": {
-                    "leadtime": 6
+                    "leadtime": 0.25
                 }
             },
             "tso": {
                 "with_cell_methods": "leadtime: point",
                 "dimensions": {
-                    "leadtime": 6
+                    "leadtime": 0.25
                 }
             },
             "sitemptop": {
                 "with_cell_methods": "leadtime: point",
                 "dimensions": {
-                    "leadtime": 6
+                    "leadtime": 0.25
                 }
             },
             "sic": {
                 "with_cell_methods": "leadtime: point",
                 "dimensions": {
-                    "leadtime": 24
+                    "leadtime": 1
                 }
             },
             "mrlsl": {
                 "with_cell_methods": "leadtime: point",
                 "dimensions": {
-                    "leadtime": 24
+                    "leadtime": 1
                 }
             },
             "rhosn": {
                 "with_cell_methods": "leadtime: point",
                 "dimensions": {
-                    "leadtime": 24
+                    "leadtime": 1
                 }
             },
             "lweprs": {
                 "with_cell_methods": "leadtime: sum",
                 "dimensions": {
-                    "leadtime": 24
+                    "leadtime": 1
                 }
             },
             "lweprc": {
                 "with_cell_methods": "leadtime: sum",
                 "dimensions": {
-                    "leadtime": 24
+                    "leadtime": 1
                 }
             },
             "lwepr": {
                 "with_cell_methods": "leadtime: sum",
                 "dimensions": {
-                    "leadtime": 24
+                    "leadtime": 1
                 }
             },
             "lweprsn": {
                 "with_cell_methods": "leadtime: sum",
                 "dimensions": {
-                    "leadtime": 24
+                    "leadtime": 1
                 }
             },
             "hfss": {
                 "with_cell_methods": "leadtime: mean (interval: 1 hour)",
                 "dimensions": {
-                    "leadtime": 24
+                    "leadtime": 1
                 }
             },
             "hfls": {
                 "with_cell_methods": "leadtime: mean (interval: 1 hour)",
                 "dimensions": {
-                    "leadtime": 24
+                    "leadtime": 1
                 }
             },
             "rsds": {
                 "with_cell_methods": "leadtime: mean (interval: 1 hour)",
                 "dimensions": {
-                    "leadtime": 24
+                    "leadtime": 1
                 }
             },
             "rlds": {
                 "with_cell_methods": "leadtime: mean (interval: 1 hour)",
                 "dimensions": {
-                    "leadtime": 24
+                    "leadtime": 1
                 }
             },
             "rss": {
                 "with_cell_methods": "leadtime: mean (interval: 1 hour)",
                 "dimensions": {
-                    "leadtime": 24
+                    "leadtime": 1
                 }
             },
             "rls": {
                 "with_cell_methods": "leadtime: mean (interval: 1 hour)",
                 "dimensions": {
-                    "leadtime": 24
+                    "leadtime": 1
                 }
             },
             "rst": {
                 "with_cell_methods": "leadtime: mean (interval: 1 hour)",
                 "dimensions": {
-                    "leadtime": 24
+                    "leadtime": 1
                 }
             },
             "rlt": {
                 "with_cell_methods": "leadtime: mean (interval: 1 hour)",
                 "dimensions": {
-                    "leadtime": 24
+                    "leadtime": 1
                 }
             },
             "rsdt": {
                 "with_cell_methods": "leadtime: mean (interval: 1 hour)",
                 "dimensions": {
-                    "leadtime": 24
+                    "leadtime": 1
                 }
             },
             "tauu": {
                 "with_cell_methods": "leadtime: mean (interval: 1 hour)",
                 "dimensions": {
-                    "leadtime": 24
+                    "leadtime": 1
                 }
             },
             "tauv": {
                 "with_cell_methods": "leadtime: mean (interval: 1 hour)",
                 "dimensions": {
-                    "leadtime": 24
+                    "leadtime": 1
                 }
             },
             "lwee": {
                 "with_cell_methods": "leadtime: sum",
                 "dimensions": {
-                    "leadtime": 24
+                    "leadtime": 1
                 }
             },
             "mrroa": {
                 "with_cell_methods": "leadtime: sum",
                 "dimensions": {
-                    "leadtime": 24
+                    "leadtime": 1
                 }
             },
             "mrroas": {
                 "with_cell_methods": "leadtime: sum",
                 "dimensions": {
-                    "leadtime": 24
+                    "leadtime": 1
                 }
             },
             "mrroab": {
                 "with_cell_methods": "leadtime: sum",
                 "dimensions": {
-                    "leadtime": 24
+                    "leadtime": 1
                 }
             },
             "zg": {
                 "with_cell_methods": "leadtime: point",
                 "dimensions": {
-                    "leadtime": 12
+                    "leadtime": 0.5
                 }
             },
             "ta": {
                 "with_cell_methods": "leadtime: point",
                 "dimensions": {
-                    "leadtime": 12
+                    "leadtime": 0.5
                 }
             },
             "hus": {
                 "with_cell_methods": "leadtime: point",
                 "dimensions": {
-                    "leadtime": 12
+                    "leadtime": 0.5
                 }
             },
             "rv": {
                 "with_cell_methods": "leadtime: point",
                 "dimensions": {
-                    "leadtime": 12
+                    "leadtime": 0.5
                 }
             },
             "wnddiv": {
                 "with_cell_methods": "leadtime: point",
                 "dimensions": {
-                    "leadtime": 12
+                    "leadtime": 0.5
                 }
             },
             "ua": {
                 "with_cell_methods": "leadtime: point",
                 "dimensions": {
-                    "leadtime": 12
+                    "leadtime": 0.5
                 }
             },
             "va": {
                 "with_cell_methods": "leadtime: point",
                 "dimensions": {
-                    "leadtime": 12
+                    "leadtime": 0.5
                 }
             },
             "prw": {
                 "with_cell_methods": "leadtime: point",
                 "dimensions": {
-                    "leadtime": 24
+                    "leadtime": 1
                 }
             },
             "cllvi": {
                 "with_cell_methods": "leadtime: point",
                 "dimensions": {
-                    "leadtime": 24
+                    "leadtime": 1
                 }
             },
             "clivi": {
                 "with_cell_methods": "leadtime: point",
                 "dimensions": {
-                    "leadtime": 24
+                    "leadtime": 1
                 }
             }
         }
@@ -1524,10 +2926,11 @@
                 ],
                 "plev": [
                     1000.0,
-                    92500.0
+                    100000.0
                 ]
             }
-        }
+        },
+        "required": "mandatory"
     },
     "data_ranges": {
         "expected": {
@@ -1550,14 +2953,246 @@
                 ],
                 "plev": [
                     1000.0,
-                    92500.0
+                    100000.0
                 ],
                 "height": [
                     0.0,
                     30.0
                 ]
             }
-        }
+        },
+        "required": "mandatory"
+    },
+    "time_coordinates_values_per_var_name": {
+        "tas": {
+            "cell_methods": "point",
+            "step": 6
+        },
+        "tasmax": {
+            "cell_methods": "maximun",
+            "step": 24
+        },
+        "tasmin": {
+            "cell_methods": "minimum",
+            "step": 24
+        },       
+        "tdps": {
+            "cell_methods": "point",
+            "step": 6
+        },
+        "uas": {
+            "cell_methods": "point",
+            "step": 6
+        },
+        "vas": {
+            "cell_methods": "point",
+            "step": 6
+        },
+        "wsgmax": {
+            "cell_methods": "maximun",
+            "step": 24
+        },
+        "psl": {
+            "cell_methods": "point",
+            "step": 6
+        },
+        "clt": {
+            "cell_methods": "point",
+            "step": 6
+        },
+        "tsl": {
+            "cell_methods": "point",
+            "step": 6
+        },
+        "tso": {
+            "cell_methods": "point",
+            "step": 6
+        },
+        "sitemptop": {
+            "cell_methods": "point",
+            "step": 6
+        },
+        "sic": {
+            "cell_methods": "point",
+            "step": 24
+        },
+        "mrlsl": {
+            "cell_methods": "point",
+            "step": 24
+        },
+        "lwesnw": {
+            "cell_methods": "point",
+            "step": 24
+        },
+        "rhosn": {
+            "cell_methods": "point",
+            "step": 6
+        },
+        "lweprs": {
+            "cell_methods": "sum",
+            "step": 24
+        },
+        "lweprc": {
+            "cell_methods": "sum",
+            "step": 24
+        },
+        "lwepr": {
+            "cell_methods": "sum",
+            "step": 24
+        },
+        "lweprsn": {
+            "cell_methods": "sum",
+            "step": 24
+        },
+        "hfss": {
+            "cell_methods": "mean",
+            "step": 24
+        },
+        "hfls": {
+            "cell_methods": "mean",
+            "step": 24
+        },
+        "rsds": {
+            "cell_methods": "mean",
+            "step": 24
+        },
+        "rlds": {
+            "cell_methods": "mean",
+            "step": 24
+        },
+        "rss": {
+            "cell_methods": "mean",
+            "step": 24
+        },
+        "rls": {
+            "cell_methods": "mean",
+            "step": 24
+        },
+        "rst": {
+            "cell_methods": "mean",
+            "step": 24
+        },
+        "rlt": {
+            "cell_methods": "mean",
+            "step": 24
+        },
+        "rsdt": {
+            "cell_methods": "mean",
+            "step": 24
+        },
+        "tauu": {
+            "cell_methods": "mean",
+            "step": 24
+        },
+        "tauv": {
+            "cell_methods": "mean",
+            "step": 24
+        },
+        "lwee": {
+            "cell_methods": "sum",
+            "step": 24
+        },
+        "mrroa": {
+            "cell_methods": "sum",
+            "step": 24
+        },
+        "mrroas": {
+            "cell_methods": "sum",
+            "step": 24
+        },
+        "mrroab": {
+            "cell_methods": "sum",
+            "step": 24
+        },
+        "zg": {
+            "cell_methods": "point",
+            "step": 12
+        },
+        "ta": {
+            "cell_methods": "point",
+            "step": 12
+        },
+        "hus": {
+            "cell_methods": "point",
+            "step": 12
+        },
+        "rv": {
+            "cell_methods": "point",
+            "step": 12
+        },
+        "wnddiv": {
+            "cell_methods": "point",
+            "step": 12
+        },
+        "ua": {
+            "cell_methods": "point",
+            "step": 12
+        },
+        "va": {
+            "cell_methods": "point",
+            "step": 12
+        },
+        "mlotstheta001": {
+            "cell_methods": "mean",
+            "step": 708
+        },
+        "mlotstheta003": {
+            "cell_methods": "mean",
+            "step": 708
+        },
+        "sithick": {
+            "cell_methods": "mean",
+            "step": 708
+        },
+        "sos": {
+            "cell_methods": "mean",
+            "step": 708
+        },
+        "sot300": {
+            "cell_methods": "mean",
+            "step": 708
+        },
+        "t14d": {
+            "cell_methods": "mean",
+            "step": 708
+        },
+        "t17d": {
+            "cell_methods": "mean",
+            "step": 708
+        },
+        "t20d": {
+            "cell_methods": "mean",
+            "step": 708
+        },
+        "t26d": {
+            "cell_methods": "mean",
+            "step": 708
+        },
+        "t28d": {
+            "cell_methods": "mean",
+            "step": 708
+        },
+        "thetaot300": {
+            "cell_methods": "mean",
+            "step": 708
+        },
+        "zos": {
+            "cell_methods": "mean",
+            "step": 708
+        },
+        "prw": {
+            "cell_methods": "point",
+            "step": 24
+        },
+        "cllvi": {
+            "cell_methods": "point",
+            "step": 24
+        },
+        "clivi": {
+            "cell_methods": "point",
+            "step": 24
+        },
+        "required":["mandatory"]
     },
     "data_values": {
         "expected": {
@@ -3191,6 +4826,7 @@
                     360.0
                 ],
                 "plev": [
+                    100000.0,
                     92500.0,
                     85000.0,
                     70000.0,
@@ -3202,8 +4838,52 @@
                     5000.0,
                     3000.0,
                     1000.0
+                ],
+                "height_tas_":[
+                    2.0
+                ],
+                "height_tasmax_":[
+                    2.0
+                ],
+                "height_tasmin_":[
+                    2.0
+                ],
+                "height_tdps_":[
+                    2.0
+                ],
+                "height_uas_":[
+                    10.0
+                ],
+                "height_vas_":[
+                    10.0
+                ],
+                "height_wsgmax_":[
+                    10.0
+                ],
+                "sigma_theta_mlotstheta001":[
+                    0.01
+                ],
+                "sigma_theta_mlotstheta003":[
+                    0.03
+                ],
+                "temperature_t14d":[
+                    14.0
+                ],
+                "temperature_t17d":[
+                    17.0
+                ],
+                "temperature_t20d":[
+                    20.0
+                ],
+                "temperature_t26d":[
+                    26.0
+                ],
+                "temperature_t28d":[
+                    28.0
                 ]
+                
             }
         }
-    }
+    },
+    "required": "mandatory"
 }

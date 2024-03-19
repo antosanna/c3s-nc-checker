@@ -31,6 +31,7 @@ from c3schecker.checks import ChecksRegistry
 from c3schecker.postprocessing import print_score_info, compute_score
 
 importlib.import_module("c3schecker.checks.c3s01")
+importlib.import_module("c3schecker.checks.c3s03")
 importlib.import_module("c3schecker.checks.cf16")
 
 logging.basicConfig(level=logging.DEBUG,
@@ -39,10 +40,11 @@ logging.basicConfig(level=logging.DEBUG,
 
 @click.command("c3schecker")
 @click.option(
-    "-c",
-    "checks",
+    "-t",
+    "--tests",
+    "tests",
     multiple=True,
-    help="Specific constraints to be checked (only the specified ones will be done)",
+    help="Specific test to be run",
 )
 @click.option(
     "--constraints",
@@ -70,7 +72,8 @@ logging.basicConfig(level=logging.DEBUG,
     "--score-threshold",
     help=(
         "The minimum score a file must have to be considered as passing all "
-        "the checks (expressed as a percentage - i.e between 0 and 100)"
+        "the checks (expressed as a percentage - i.e between 0 and 100). For operational "
+        "run the score should be 100"
     ),
     type=click.IntRange(min=0, max=100),
     default=100,
@@ -80,7 +83,8 @@ logging.basicConfig(level=logging.DEBUG,
     "--min-passing-files",
     help=(
         "The minimum number of files that must pass to consider the command as "
-        "passing (expressed as a percentage - i.e between 0 and 100)"
+        "passing (expressed as a percentage - i.e between 0 and 100) "
+        "For operational runs all the files should have pass all the tests."
     ),
     type=click.IntRange(min=0, max=100),
     default=100,
@@ -91,8 +95,11 @@ logging.basicConfig(level=logging.DEBUG,
 @click.argument(
     "inputs", nargs=-1, callback=lambda ctx, param, value: [Path(v) for v in value]
 )
+
+
+
 def main(
-    inputs, conventions, constraints, c3sexceptions, checks, js, verbose, operational, score_threshold, min_passing_files
+    inputs, conventions, constraints, c3sexceptions, tests, js, verbose, operational, score_threshold, min_passing_files
 ):
     """Check the input NetCDF files against the specified constraints file"""
     
@@ -114,7 +121,7 @@ def main(
     logging.info(f"        Report generated at "
           f"{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     logging.info(f"        Convention(s) {' '.join(conventions)}")
-    logging.info("        !!! Testing version !!!")
+    #logging.info("        !!! Testing version !!!")
     logging.info('')
     logging.info("=====================================================================")
 
@@ -131,22 +138,28 @@ def main(
             )
         if "C3S-0.2" in conventions:
             constraints = resource_filename(
-                "c3schecker", "resources/c3s02_seasonal_constraints.json"
+                "c3schecker", "resources/c3s01_seasonal_constraints.json"
             )
             logging.info(
-            f"The default C3S-0.1 constrains will "
+            f"The default C3S-0.1 (same as C3S-0.1) constrains will "
             f"be used for the checks [{constraints}]"
-            )    
+            )
+        if "C3S-0.3" in conventions:
+            constraints = resource_filename(
+                "c3schecker", "resources/c3s03_seasonal_constraints.json"
+            )
+            logging.info(
+            f"The default C3S-0.3 constrains will "
+            f"be used for the checks [{constraints}]"
+            )
     
+
     checks = {
         name: func
         for convention in conventions
         for name, func in ChecksRegistry()[convention].items()
-        if not checks or checks and name in set(checks)
-    }
-
-    #logging.info(f"checks {checks}")
-    
+        if not tests or tests and name in set(tests)
+    }    
 
     # Constraints
     if constraints:
@@ -221,7 +234,6 @@ def run_checks(input_files, checks, spec, c3s_excep, verbose, operational):
             logging.error(f"Not an NetCDF file, continue ... ")
 
     return outcomes
-
 
 if __name__ == "__main__":
     sys.exit(main())

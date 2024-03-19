@@ -850,7 +850,8 @@
             "leadtime", 
             "lat", 
             "lon",
-            "hcrs"
+            "hcrs",
+            "temperature"
         ],
         "t17d": [
             "reftime", 
@@ -859,7 +860,8 @@
             "leadtime", 
             "lat", 
             "lon",
-            "hcrs"
+            "hcrs",
+            "temperature"
         ],
         "t20d": [
             "reftime", 
@@ -868,7 +870,8 @@
             "leadtime", 
             "lat", 
             "lon",
-            "hcrs"
+            "hcrs",
+            "temperature"
         ],
         "t26d": [
             "reftime", 
@@ -877,7 +880,8 @@
             "leadtime", 
             "lat", 
             "lon",
-            "hcrs"
+            "hcrs",
+            "temperature"
         ],
         "t28d": [
             "reftime", 
@@ -886,7 +890,8 @@
             "leadtime", 
             "lat", 
             "lon",
-            "hcrs"
+            "hcrs",
+            "temperature"
         ],
         "thetaot300": [
             "reftime", 
@@ -1031,6 +1036,20 @@
                 "long_name"
             ]
         },
+        "sigma_theta": {
+            "expected": [
+                "units",               
+                "standard_name",
+                "long_name"
+            ]
+        },
+        "temperature": {
+            "expected": [
+                "units",               
+                "standard_name",
+                "long_name"
+            ]
+        },
         "required": ["mandatory"]
     },
     "possible_values_per_attributes": {
@@ -1100,6 +1119,20 @@
                 "valid_max": "10.",
                 "valid_min": 1.0
             }
+        },
+        "sigma_theta": {
+            "expected": {
+                "units": "kg m-3",
+                "long_name": "Sigma-theta of Sea Water",
+                "standard_name": "sea_water_sigma_theta"
+                }
+        },
+        "temperature": {
+            "expected": {
+                "units": "C",
+                "long_name": "Isotherm Temperature",
+                "standard_name": "sea_water_potential_temperature"
+                }
         },
         "realization": {
             "expected": {
@@ -2239,6 +2272,15 @@
             "orog": [
                 "lat",
                 "lon"
+            ],
+            "height": [
+                
+            ],
+            "sigma_theta": [
+                
+            ],
+            "temperature": [
+                
             ],
             "tas": [
                 "leadtime",
@@ -4797,11 +4839,47 @@
                     3000.0,
                     1000.0
                 ],
-                "height_2m":[
+                "height_tas_":[
                     2.0
                 ],
-                "height_10m":[
+                "height_tasmax_":[
+                    2.0
+                ],
+                "height_tasmin_":[
+                    2.0
+                ],
+                "height_tdps_":[
+                    2.0
+                ],
+                "height_uas_":[
                     10.0
+                ],
+                "height_vas_":[
+                    10.0
+                ],
+                "height_wsgmax_":[
+                    10.0
+                ],
+                "sigma_theta_mlotstheta001":[
+                    0.01
+                ],
+                "sigma_theta_mlotstheta003":[
+                    0.03
+                ],
+                "temperature_t14d":[
+                    14.0
+                ],
+                "temperature_t17d":[
+                    17.0
+                ],
+                "temperature_t20d":[
+                    20.0
+                ],
+                "temperature_t26d":[
+                    26.0
+                ],
+                "temperature_t28d":[
+                    28.0
                 ]
                 
             }

@@ -110,7 +110,7 @@ Basic Command Line Usage
 ========================
 
 ::
- C3Schecker [-h] [-V] [-v] [-d {info,warning,error}] -t{seasonal,nemo,...} [-c] [-k C3SCHECK] [-i C3SCHECK] [-s] inputfiles [inputfiles ...]
+ c3s-checker [-h] [-v] [-p] [-t {name of the test}] [--constraints {constraints file}] [--c3sexceptions {c3sexceptions file}] [--json] inputfiles [inputfiles ...]
 
 Positional arguments::
 ----------------------
@@ -120,12 +120,11 @@ Optional arguments:
 -------------------
 
 *   -h, --help            show this help message and exit
-*   -V, --version         CF Version
-*   -v, --verbose         Verbose
-*   -d {info,warning,error}, --infolevel {info,warning,error} Information Level output
-*   -t {seasonal,nemo}, --c3stype {seasonal,nemo} Type of Datasetset(['seasonal', 'nemo'])
-*   -c, --cf              CF Checkings ONLY
-*   -k C3SCHECK, --checks  Optional List of checks - Default [All]
-*   -i C3SCHECK, --ignorechecks  Optional List of ignored checks - Default [None]
-*   -s, --stop            Stop on error
+*   -C, --convention      The NetCDF convention followed by the constraints file
+*   -v, --verbose         Enables verbose mode
+*   -t, --tests           Specific test to be run
+*   --constraints         constraints file
+*   --c3sexceptions       Specific C3S exceptions to be used
+*   --json                Print output in json format
+*   -p, --operational     Operational mode
 

@@ -1,9 +1,11 @@
-from c3schecker.utils import Singleton
+from c3schecker.utils import Singleton 
 
 
 class ChecksRegistry(metaclass=Singleton):
-    __registry = {"C3S-0.1": {}}
-
+    __registry = {"C3S-0.1": {}, "C3S-0.3": {}}
+    #__registry = {"C3S-0.3": {}}
+    #__registry = {"C3S-0.3": {}, "CF-1.6":{}}
+    
     def register(self, convention, check_name, check_implementation):
         try:
             self.update(convention, {check_name: check_implementation})
@@ -18,7 +20,9 @@ class ChecksRegistry(metaclass=Singleton):
 
     def __contains__(self, convention):
         return convention in self.__registry
-
+    
+    #def __getconvention__(self, convention):
+    #    print(convention)
 
 def register(convention, check_name):
     """Alias to ChecksRegistry().register to be used as a decorator"""
@@ -28,3 +32,5 @@ def register(convention, check_name):
         return func
 
     return decorator
+
+

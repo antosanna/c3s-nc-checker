@@ -256,16 +256,20 @@ def cf_filename_extension_check(
             ],
         }
         if verbose: 
-            logging.error(f"Non compliant filename extension --> "
-                f"'{actual.suffix}' --> NOK")
+            logging.error(
+                f"Non compliant filename extension "
+                f"suffix {str(actual.suffix):<10} {' '*89} --> NOK"
+            )
     else:
         outcome = {
             "status": 1, 
             "info": [f"OK, compliant filename extension '{actual.suffix}'"]
             }
         if verbose: 
-            logging.info(f"Compliant filename extension: '{actual.suffix}'"
-                         f" {' '*70} --> OK")
+            logging.info(
+                f"Compliant filename extension: '{str(actual.suffix):<3}' "
+                f"{' '*104} --> OK"
+            )
     return outcome
 
 # Test 2.
@@ -288,17 +292,17 @@ def cf_convention_check(
         }
         if verbose:
             logging.error(
-                f"Current Convention metadata ('{actual}' "
+                f"Current Convention metadata {str(actual):<15} "
                 f"is not compliant "
-                f"with expected Convention: '{CONVENTION}'. "
-                f"See CF reference chapter 2.6.1")
+                f"with expected Convention: {CONVENTION:<15}. "
+                f"See CF reference chapter 2.6.1 {' '*5} --> NOK")
     else:
         outcome = {
             "status": 1, 
             "info": [f"OK, Compliant Convention ('{actual}')"]
             }
         if verbose:
-            logging.info(f"Compliant CF Convention: '{actual}' {' '*64} --> OK")
+            logging.info(f"Compliant CF Convention: {str(actual):<15} {' '*99} --> OK")
     return {"status": 1, "info": ["OK"]}
 
 # Test 3.
@@ -320,15 +324,15 @@ def cf_datatypes_check(
             outcome["status"] = outcome["status"] and 0
             if verbose:
                 logging.error(
-                    f"Variable: {str(var_name):<20} has invalid "
-                    f"data type --> {str(actual):<20}  -->  NOK")
+                    f"Variable:  {str(var_name):<20} has invalid "
+                    f"data type {str(actual):<20} {' '*65} --> NOK")
             status_flag = False
         else:
             outcome.setdefault("info", []).append(f"{var_name} datatype OK")
             if verbose:
                 logging.info(
-                    f"Variable: {str(var_name):<20} has correct data "
-                    f"type  -->  Actual data type:  {str(actual):<10}  {' '*16} --> OK")  
+                    f"Variable:  {str(var_name):<20} has correct data "
+                    f"type {str(actual):<10} {' '*75} --> OK")  
     return outcome
 
 # Test 4.
@@ -348,7 +352,7 @@ def cf_dimensions_order_check(ds: Dataset, _, excep: dict, verbose, operational)
                 if verbose:
                     logging.info(
                         f"Variable: {str(var_name):<20} One of the dimensions "
-                        f"is not a Coordinate. Continue ..."
+                        f"{str(dims)} is not a Coordinate. Continue ..."
                         )
                 # One of the dimensions is not a Coordinate (see comment above)
                 continue
@@ -362,15 +366,15 @@ def cf_dimensions_order_check(ds: Dataset, _, excep: dict, verbose, operational)
                 )
                 if verbose:
                     logging.warning(
-                        f"Variable: {str(var_name):<20} dimensions does not "
-                        f"follow recommended order, {CFREF().dimensions_order}. "
-                        f"Found '{dims_order}' instead.")
+                        f"Variable:  {str(var_name):<20} dimensions does not "
+                        f"follow recommended order, {str(CFREF().dimensions_order):<10}. "
+                        f"Found {str(dims_order):<25} instead {' '*10} --> NOK")
             else:
                 outcome.setdefault("info", []).append(f"'{var_name}' dimensions order OK")
                 if verbose:
                     logging.info(
-                        f"Variable: {str(var_name):<20} has correct "
-                        f"dimensions -> {dims_order} {' '*28} --> OK")
+                        f"Variable:  {str(var_name):<20} dimensions follow recommended order "
+                        f"-> {str(dims_order):<25} {' '*43} --> OK")
     return outcome
 
 
@@ -390,12 +394,12 @@ def cf_dimensions_unicity_check(ds: Dataset, _, excep: dict, verbose, operationa
             outcome["status"] = 0
             if verbose:
                 logging.error(
-                    f"Variable: {str(var_name):<20} with dimensions:  "
-                    f"{str(dims):<40}  -->  NOK (duplicate dimension(s))")
+                    f"Variable:  {str(var_name):<20} with dimensions: "
+                    f"{str(dims):<40} (duplicate dimension(s)) {' '*25} -->  NOK")
         else:
             if verbose:
-                logging.info(f"Variable: {str(var_name):<20} with dimensions:  "
-                    f"{str(dims):<40} {' '*16} --> OK")
+                logging.info(f"Variable:  {str(var_name):<20} with dimensions: "
+                    f"{str(dims):<40} {' '*50} --> OK")
             outcome.setdefault("info", []).append(f"'{var_name}' dimension OK")
     return outcome
 
@@ -428,17 +432,17 @@ def cf_global_attributes_check(ds: Dataset, _, excep: dict, verbose, operational
         attr_value = ds.getncattr(attr)
         if verbose:
             logging.info(
-                f"Global attributes: {str(attr):<25} with "
-                f"type: {type(attr_value)} {' '*36} --> OK")
+                f"Global attributes:  {str(attr):<25} with "
+                f"type: {str(type(attr_value)):<30} {' '*52} --> OK")
         if not isinstance(attr_value, str):
             outcome.setdefault("errors", []).append(
-                f"Global attributes '{attr}' is not a string. Found type "
+                f"Global attributes  '{attr}' is not a string. Found type "
                 f"'{type(attr_value)}' instead"
             )
             if verbose:
                 logging.error(
-                    f"Global attributes {str(attr):<25} with type: "
-                    f"{type(attr_value)}  -->  NOK (type is not a string.)"
+                    f"Global attributes:  {str(attr):<25} with type: "
+                    f"{str(type(attr_value)):<30} (type is not a string) {' '*29} --> NOK"
                     )
             outcome["status"] = 0
             status_flag = False
@@ -470,7 +474,7 @@ def cf_missing_data_check(ds: Dataset, _, excep: dict, verbose, operational):
                 logging.error(
                     f"Attributes 'valid_range' must not be defined at the "
                     f"same time as either 'valid_min' or 'valid_max' "
-                    f"for variable '{var_name}'"
+                    f"for variable {str(var_name):<20} {' '*7} --> NOK"
                     )
         else:
             if "valid_range" in attrs:
@@ -481,8 +485,8 @@ def cf_missing_data_check(ds: Dataset, _, excep: dict, verbose, operational):
                 vmax = None
             if verbose:
                 logging.info(
-                    f"Variable: {str(var_name):<20} "
-                    f"with value max --> {str(vmax):<20} {' '*35} --> OK"
+                    f"Variable:  {str(var_name):<20} "
+                    f"with max value: {str(vmax):<20} {' '*71} --> OK"
                     )
                     
             if vmax is not None:
@@ -497,8 +501,8 @@ def cf_missing_data_check(ds: Dataset, _, excep: dict, verbose, operational):
                         )
                         if verbose:
                             logging.error(
-                                f"Fill value '{fill_value}' is lower than valid max "
-                                f"'{vmax}' for variable '{var_name}'")
+                                f"Variable:  {str(var_name):<20} _FillValue {str(fill_value):<10} "
+                                f"is lower than valid max {str(vmax):<10} {' '*51} --> NOK")
         if "_FillValue" in attrs:
             fvalue_type = nc_var._FillValue.dtype
             if nc_var.dtype != fvalue_type:
@@ -507,14 +511,14 @@ def cf_missing_data_check(ds: Dataset, _, excep: dict, verbose, operational):
                     f"value type ({fvalue_type})"
                 )
                 logging.warning(
-                    f"Variable: {str(var_name):<20} with type ({nc_var.dtype}) differs "
-                    f"from fill value type ({fvalue_type})  -->  OK"
+                    f"Variable:  {str(var_name):<20} with type {str(nc_var.dtype):<10} differs "
+                    f"from fill value type {str(fvalue_type):<10} {' '*47} --> OK"
                     )
             else:
                 if verbose:
                     logging.info(
-                        f"Variable: {str(var_name):<20} with type ({nc_var.dtype}), "
-                        f"fill value with type: ({fvalue_type})  -->  OK"
+                        f"Variable:  {str(var_name):<20} with type {str(nc_var.dtype):<10}, "
+                        f"fill value with type: {str(fvalue_type):<10} {' '*53} --> OK"
                         )
                 outcome.setdefault("info", []).append(
                         f"Variable '{var_name}' with correct fill value type ({fvalue_type})"
@@ -522,8 +526,8 @@ def cf_missing_data_check(ds: Dataset, _, excep: dict, verbose, operational):
         else:
              if verbose:
                 logging.info(
-                    f"Variable: {str(var_name):<20} with type: {str(nc_var.dtype):<20} "
-                    f"without _FillValue {' '*24} --> OK"
+                    f"Variable:  {str(var_name):<20} with type: {str(nc_var.dtype):<10} "
+                    f"without _FillValue {' '*67} --> OK"
                     )
     return outcome
 
@@ -532,7 +536,7 @@ def cf_missing_data_check(ds: Dataset, _, excep: dict, verbose, operational):
 @register(CONVENTION, "cf_attributes_values_type")
 def cf_attributes_values_type_check(ds: Dataset, _, excep: dict, verbose, operational):
     if verbose:
-        logging.info("Check the missing data.")
+        logging.info("Check the attributes values.")
     status = 1
     outcome = {"status": status}
     for var_name, nc_var in ds.variables.items():
@@ -551,9 +555,9 @@ def cf_attributes_values_type_check(ds: Dataset, _, excep: dict, verbose, operat
                         )
                     if verbose:
                         logging.info(
-                            f"Variable: {str(var_name):<15} attribute {str(attr):<18} "
-                            f"attribute value: {str(attribute_value):<50} "
-                            f"type: {str(type(attribute_value)):<25} -->  OK"
+                            f"Variable:  {str(var_name):<15} attribute {str(attr):<20} "
+                            f"type of attributes's value: {str(type(attribute_value)):<25} "
+                            f"{' '*28} --> OK"
                         )
                 
                 else:
@@ -565,10 +569,9 @@ def cf_attributes_values_type_check(ds: Dataset, _, excep: dict, verbose, operat
                         )
                     if verbose:
                         logging.info(
-                            f"Variable: {str(var_name):<15} attribute {str(attr):<18} "
-                            f"attribute value: {str(attribute_value):<50} "
-                            f"type: {str(type(attribute_value)):<25} -->  NOK (wrong atrribute value type) "
-                            f"expected type: 'numeric'"
+                            f"Variable:  {str(var_name):<15} attribute {str(attr):<20} "
+                            f"type of attributes's value: {str(type(attribute_value)):<25} " 
+                            f"(expected type: 'numeric') {' '*1} --> NOK "
                         )
             else:
                 if isinstance(attribute_value, str) or isinstance(attribute_value, str):
@@ -577,9 +580,9 @@ def cf_attributes_values_type_check(ds: Dataset, _, excep: dict, verbose, operat
                         )
                     if verbose:
                         logging.info(
-                            f"Variable: {str(var_name):<15} attribute {str(attr):<18} "
-                            f"attribute value: {str(attribute_value):<50} "
-                            f"type: {str(type(attribute_value)):<25} -->  OK"
+                            f"Variable:  {str(var_name):<15} attribute {str(attr):<20} "
+                            f"type of attributes's value: {str(type(attribute_value)):<25} "
+                            f"{' '*28} --> OK"
                         )
                 else:
                     status = 0
@@ -590,10 +593,9 @@ def cf_attributes_values_type_check(ds: Dataset, _, excep: dict, verbose, operat
                         )
                     if verbose:
                         logging.info(
-                            f"Variable: {str(var_name):<15} attribute {str(attr):<18} "
-                            f"attribute value: {str(attribute_value):<50} "
-                            f"type: {str(type(attribute_value)):<25} -->  NOK (wrong atrribute value type) "
-                             f"expected type: 'string'"
+                            f"Variable:  {str(var_name):<15} attribute {str(attr):<20} "
+                            f"type of attributes's value: {str(type(attribute_value)):<25} "
+                            f"(expected type: 'string') {' '*1} --> NOK "
                         )
     
     outcome["status"] = status
@@ -618,14 +620,14 @@ def cf_naming_convention_check(ds: Dataset, _, excep: dict, verbose, operational
             outcome.setdefault("errors", []).append(err_msg)
             if verbose:
                 logging.error(
-                    f"{str(name):<25} doesn't follows the name convention  {' '*43} --> NOK"
+                    f"{str(name):<25} doesn't follows the name convention {' '*78} --> NOK"
                     )
                 logging.error(f"{err_msg}")
             status_flag = False
         else:
             if verbose:
                 logging.info(
-                    f"{str(name):<25} follows the name convention  {' '*51} --> OK"
+                    f"{str(name):<25} follows the name convention {' '*86} --> OK"
                     )
         return status_flag
 
@@ -690,13 +692,21 @@ def cf_naming_unicity_check(ds: Dataset, _, excep: dict, verbose, operational):
                 f"Found {count} occurrences in the dataset")
             outcome.setdefault("errors", []).append(err_msg)
             if verbose:
-                logging.error(err_msg)
+                logging.error(
+                    f"Variable:  {str(name):<20} is not unique. "
+                    f"Found {str(count):2} occurrences in the dataset "
+                    f"{' '*57} --> NOK"
+                )
         else:
             info_msg = (
-                f"Variable: {str(name):<20}  {count:<3} "
-                f"occurrence in the dataset {' '*44} --> OK")
+                f"Variable: {name}  {count} "
+                f"occurrence in the dataset OK"
+            )
             if verbose:
-                logging.info(info_msg)
+                logging.info(
+                    f"Variable:  {str(name):<20} unique {str(count):<2} "
+                    f"occurrence in the dataset {' '*72} --> OK"
+                )
             outcome.setdefault("info", []).append(f"'{name}' is unique")
     return outcome
 
@@ -718,8 +728,8 @@ def cf_ancillary_data_check(ds: Dataset, _, excep: dict, verbose, operational):
                     f"be a string"
                 )
                 logging.error(
-                    f"Variable: {str(var_name):<20} attribute 'ancillary_variables' "
-                    f"must be a string  -->  NOK"
+                    f"Variable:  {str(var_name):<20} attribute 'ancillary_variables' "
+                    f"must be a string {' '*59} -->  NOK"
                     )
             else:
                 for anc_var in anc_vars.split():
@@ -730,16 +740,16 @@ def cf_ancillary_data_check(ds: Dataset, _, excep: dict, verbose, operational):
                             f"for '{var_name}' but is not defined in the dataset"
                         )
                 logging.error(
-                    f"Variable: {str(anc_var):<20}' is declared as Ancillary "
-                    f"Variable for '{str(var_name):<20}' but is not defined in "
-                    f"the dataset  -->  NOK"
+                    f"Variable:  {str(anc_var):<20} is declared as Ancillary "
+                    f"variable for {str(var_name):<20} but is not defined in "
+                    f"the dataset {' '*15} -->  NOK"
                     )
         except AttributeError:
             #pass
             if verbose:
                 logging.info(
-                    f"Variable: {str(var_name):<20} is not declared as Ancillary "
-                    f"Variable {' '*37} --> OK"
+                    f"Variable:  {str(var_name):<20} is not declared as Ancillary "
+                    f"Variable {' '*70} --> OK"
                     )
             outcome.setdefault("info", []).append(f"'{var_name}' not ancillary")
             
@@ -770,22 +780,22 @@ def cf_standard_names_check(ds: Dataset, _, excep: dict, verbose, operational):
             outcome.setdefault("warnings", []).append(warning_msg)
             if verbose:
                 logging.warning(
-                        f"Variable: {str(var_name):<15} description with 'long_name' "
+                        f"Variable:  {str(var_name):<15} description with 'long_name' "
                         f"and 'standard_name' attributes is highly recommended. Not found. "
                     )
                 if "C3S" in ds.Conventions and "hcrs" in var_name:
                     logging.info(
-                        f"Variable: {str(var_name):<15} without 'long_name' and "
+                        f"Variable:  {str(var_name):<15} without 'long_name' and "
                         "'standard_name'. It's allowed in C3S "
-                        f"conventions {' '*7 } --> OK"
+                        f"conventions {' '*40} --> OK"
                         )
                 else:
                     logging.warning(warning_msg)
         else:
             if verbose:
                 logging.info(
-                    f"Variable: {str(var_name):<15} is described with 'long_name' "
-                    f"and 'standard_name' {' '*30} --> OK"
+                    f"Variable:  {str(var_name):<15} is described with 'long_name' "
+                    f"and 'standard_name' {' '*63} --> OK"
                     )
         try:
             std_name, modifier = __get_std_name(nc_var.getncattr("standard_name"))
@@ -796,7 +806,10 @@ def cf_standard_names_check(ds: Dataset, _, excep: dict, verbose, operational):
                 )
                 outcome.setdefault("errors", []).append(error_msg)
                 if verbose:
-                    logging.error(error_msg)
+                    logging.error(
+                        f"Variable:  {str(var_name):<15} attribute 'standard_name' must be a "
+                        f"string. Currently {type(std_name):<20} {' '*39} --> NOK"
+                    )
                 status_flag = False
             else:
                 if std_name is None and modifier is None:
@@ -808,7 +821,12 @@ def cf_standard_names_check(ds: Dataset, _, excep: dict, verbose, operational):
                     )
                     outcome.setdefault("errors", []).append(error_msg)
                     if verbose:
-                        logging.error(error_msg)
+                        logging.error(
+                            f"Variable:  {str(var_name):<15} only two blank separated "
+                            f"names allowed for attribute 'standard_name', currently "
+                            f"{str(len(nc_var.getncattr('standard_name').split())):<3} "
+                            f"{' '*29} --> NOK"
+                        )
                     status_flag = False
                 else:
                     _ = CFREF().cf_standard_name_def(std_name)
@@ -823,25 +841,29 @@ def cf_standard_names_check(ds: Dataset, _, excep: dict, verbose, operational):
                             f"modifier"
                         )
                         outcome.setdefault("errors", []).append(error_msg)
-                        logging.error(error_msg)
+                        logging.error(
+                            f"Variable:  {str(var_name):<15} standard name modifier "
+                            f"{str(modifier):<20} is not a recognized CF standard name "
+                            f"modifier {' '*23} --> NOK"
+                        )
                         status_flag = False
         except AttributeError:
             pass
         except UnknownStandardNameError:
-            outcome.setdefault("warnings", []).append(
+            outcome.setdefault("errors", []).append(
                 f"Attribute 'standard_name' of variable '{var_name}' ({std_name}) "
                 f"is not a recognized CF standard name"
             )
             if verbose:
-                logging.warning(
-                    f"Attribute 'standard_name' of variable '{var_name}' ({std_name}) "
-                    f"is not a recognized CF standard name"
+                logging.error(
+                    f"Variable:  {str(var_name):<15} attribute 'standard_name' {str(std_name):<49} "
+                    f"is not a recognized CF standard name {' '*1} --> NOK"
                 )
         if status_flag:
             if verbose:
                 logging.info(
-                    f"Variable: {str(var_name):<15} "
-                    f"checked successfully {' '*59} --> OK ")
+                    f"Variable:  {str(var_name):<15} "
+                    f"standard name is checked successfully {' '*75} --> OK ")
             outcome.setdefault("info", []).append(f"'{var_name}' standard name OK")
     return outcome
 
@@ -879,7 +901,10 @@ def cf_units_check(ds: Dataset, _, excep: dict, verbose, operational):
                     )
                     outcome.setdefault("errors", []).append(error_msg)
                     if verbose:
-                        logging.error(error_msg)
+                        logging.error(
+                            f"Variable:  {str(var_name):<15} attribute 'units' must be a string, "
+                            f"currently {str(type(units_attr)):<20} {' '*46} --> NOK"
+                        )
                 elif units_attr in CFREF.deprecated_units:
                     warning_message = (
                         f"Value of attribute 'units' of variable '{var_name}' is "
@@ -887,7 +912,10 @@ def cf_units_check(ds: Dataset, _, excep: dict, verbose, operational):
                     )
                     outcome.setdefault("warnings", []).append(warning_message)
                     if verbose:
-                        logging.warning(warning_message)
+                        logging.warning(
+                            f"Variable:  {str(var_name):<15} value of attribute 'units' is "
+                            f"deprecated: {str(units_attr):<20}. No further checks done {' '*26} --> OK"
+                        )
                 else:
                     units = Units(units_attr)
                     if not units.isvalid:
@@ -899,22 +927,22 @@ def cf_units_check(ds: Dataset, _, excep: dict, verbose, operational):
                         )
                         if verbose:
                             logging.error(
-                                f"Value of attribute 'units' of variable '{var_name}' "
-                                f"is invalid: '{units}'"
+                                f"Variable:  {str(var_name):<15} value of attribute 'units' "
+                                f"is invalid: {str(units):20} {' '*52} --> NOK"
                                 )
                     elif "standard_name" in attrs:
                         std_name, modifier = __get_std_name(
                             nc_var.getncattr("standard_name")
                         )
                         if std_name is None:
-                            outcome.setdefault("warnings", []).append(
+                            outcome.setdefault("errors", []).append(
                                 "Further units checking skipped due to invalid "
                                 "standard name"
                             )
                             if verbose:
-                                logging.warning(
-                                    "Further units checking skipped due to invalid "
-                                    "standard name"
+                                logging.error(
+                                    f"Variable:  {str(var_name):<15} further units checking skipped due to invalid "
+                                    f"standard name {' '*53} --> NOK"
                                     )
                         else:
                             known_units = Units(
@@ -931,10 +959,10 @@ def cf_units_check(ds: Dataset, _, excep: dict, verbose, operational):
                                 )
                                 if verbose:
                                     logging.error(
-                                    f"Units of variable '{var_name}' ('{units}') "
+                                    f"Variable:  {str(var_name):<15} units {str(units):20} "
                                     f"cannot be compared with standard name canonical "
-                                    f"units because the canonical units is invalid "
-                                    f"('{known_units}')"
+                                    f"units, the canonical units is invalid "
+                                    f"--> NOK"
                                 )
                             else:
                                 known_units = Units(
@@ -957,11 +985,10 @@ def cf_units_check(ds: Dataset, _, excep: dict, verbose, operational):
                                         )
                                         if verbose:
                                             logging.warning(
-                                                f"Variable: {str(var_name):<20} "
-                                                f"Units ({units}) are not consistent "
-                                                f"with standard name cannonical units "
-                                                f"('{known_units}')  -->  OK   --> "
-                                                f"Under exception"
+                                                f"Variable:  {str(var_name):<15} "
+                                                f"units {str(units):15} are not consistent "
+                                                f"with standard name canonical units "
+                                                f"{str(known_units):<15} (under exception) {' '*3} --> OK"
                                         )
                                     else:
                                         outcome["status"] = 0
@@ -973,24 +1000,24 @@ def cf_units_check(ds: Dataset, _, excep: dict, verbose, operational):
                                             )
                                         if verbose:
                                             logging.error(
-                                            f"Units of variable '{var_name}' ('{units}') "
+                                            f"Variable:  {str(var_name):<15} units {str(units):<20} "
                                             f"is not consistent with standard name "
-                                            f"canonical units ('{known_units}')"
+                                            f"canonical units {str(known_units):<20} {' '*12} --> NOK"
                                         )
                 if status_flag:
                     outcome.setdefault("info", []).append(f"'{var_name}' units OK")
                     if verbose:
                         logging.info(
-                            f"Variable: {str(var_name):<20} with correct "
-                            f"units: {str(units_attr):<54}  --> OK")
+                            f"Variable:  {str(var_name):<15} with correct "
+                            f"units: {str(units_attr):<54} {' '*38} --> OK")
             else:
                 outcome.setdefault("info", []).append(
                     f"'{var_name}' without units"
                     )
                 if verbose:
                     logging.info(
-                        f"Variable: {str(var_name):<20} without "
-                        f"units {' '*61} --> OK"
+                        f"Variable:  {str(var_name):<15} without "
+                        f"units {' '*99} --> OK"
                         ) 
     return outcome
 
@@ -1011,9 +1038,12 @@ def cf_flags_check(ds: Dataset, _, excep: dict, verbose, operational):
                 warning_message = (
                     "Further flags checking skipped due to invalid standard name"
                 )
-                outcome.setdefault("warnings", []).append(warning_message)
+                outcome.setdefault("errors", []).append(warning_message)
                 if verbose:
-                    logging.warning(warning_message)
+                    logging.error(
+                        f"Variable:  {str(var_name):<15} Further flags checking "
+                        f"skipped due to invalid standard name {' '*53} --> NOK"
+                    )
             else:
                 if (
                     modifier in (m for m in CFREF().cf_units_modifiers if "flag" in m)
@@ -1027,7 +1057,10 @@ def cf_flags_check(ds: Dataset, _, excep: dict, verbose, operational):
                     )
                     outcome.setdefault("errors", []).append(error_message)
                     if verbose:
-                        logging.error(error_message)
+                        logging.error(
+                            f"Variable:  {str(var_name):<15} standard name modified to a flag but no 'flag_meanings' "
+                            f"found in attributes {' '*37} --> NOK"
+                        )
         if "flag_meanings" in attrs and all(
             a not in attrs for a in ["flag_values", "flag_masks"]
         ):
@@ -1039,7 +1072,10 @@ def cf_flags_check(ds: Dataset, _, excep: dict, verbose, operational):
             )
             outcome.setdefault("errors", []).append(error_message)
             if verbose:
-                logging.error(error_message)
+                logging.error(
+                    f"Variable:  {str(var_name):<15} attribute 'flag_meanings' is defined but "
+                    f"neither 'flag_values' nor 'flag_masks' are defined {' '*21} --> NOK"
+                )
         elif "flag_meanings" not in attrs and any(
             a in attrs for a in ["flag_values", "flag_masks"]
         ):
@@ -1051,7 +1087,11 @@ def cf_flags_check(ds: Dataset, _, excep: dict, verbose, operational):
             )
             outcome.setdefault("errors", []).append(error_message)
             if verbose:
-                logging.error(error_message)
+                logging.error(
+                    f"Variable:  {str(var_name):<15} attribute 'flag_meanings' is missing "
+                    f"although either 'flag_values' or 'flag_masks' "
+                    f"attributes are defined {' '*7} --> NOK"
+                )
         elif "flag_meanings" in attrs:
             flag_meanings = nc_var.getncattr("flag_meanings")
             if not isinstance(flag_meanings, str):
@@ -1063,7 +1103,11 @@ def cf_flags_check(ds: Dataset, _, excep: dict, verbose, operational):
                 )
                 outcome.setdefault("errors", []).append(error_message)
                 if verbose:
-                    logging.error(error_message)
+                    logging.error(
+                        f"Variable:  {str(var_name):<15} value of attribute {str(flag_meanings):<20} "
+                        f"must be a string. Found "
+                        f"{(type(flag_meanings)):<20} instead {' '*20} --> NOK"
+                    )
             elif not all(
                 flag_meanings_pattern.match(item) for item in flag_meanings.split()
             ):
@@ -1076,7 +1120,11 @@ def cf_flags_check(ds: Dataset, _, excep: dict, verbose, operational):
                 )
                 outcome.setdefault("errors", []).append(error_message)
                 if verbose:
-                    logging.error(error_message)
+                    logging.error(
+                        f"Variable:  {str(var_name):<15} incorrect Syntax for "
+                        f"flag_meanings attribute value: {str(flag_meanings):<20} Must be: "
+                        f"{str(flag_meanings_pattern):<20} {' '*10} --> NOK"
+                    )
             if "flag_values" in attrs:
                 flag_values = np.array(nc_var.getncattr("flag_values"))
                 if not np.issubdtype(flag_values.dtype, nc_var.dtype):
@@ -1088,7 +1136,10 @@ def cf_flags_check(ds: Dataset, _, excep: dict, verbose, operational):
                     )
                     outcome.setdefault("errors", []).append(error_message)
                     if verbose:
-                        logging.error(error_message)
+                        logging.error(
+                            f"Variable:  {str(var_name):<15} values of attribute for 'flag_values' must have the same type "
+                            f"as the variable. Found {str(flag_values.dtype):<20} {' '*8} --> NOK"
+                        )
                 elif len(flag_values) != len(flag_meanings):
                     outcome["status"] = 0
                     status_flag = False
@@ -1098,7 +1149,11 @@ def cf_flags_check(ds: Dataset, _, excep: dict, verbose, operational):
                     )
                     outcome.setdefault("errors", []).append(error_message)
                     if verbose:
-                        logging.error(error_message)
+                        logging.error(
+                            f"Variable:  {str(var_name):<15} attribute 'flag_values' must have "
+                            f"the same number of elements as attribute 'flag_meanings' {' '*22} --> NOK"
+                        )
+
                 elif len(flag_values) != len(set(flag_values)):
                     outcome["status"] = 0
                     status_flag = False
@@ -1108,7 +1163,10 @@ def cf_flags_check(ds: Dataset, _, excep: dict, verbose, operational):
                     )
                     outcome.setdefault("errors", []).append(error_message)
                     if verbose:
-                        logging.error(error_message)
+                        logging.error(
+                            f"Variable:  {str(var_name):<15} values for attribute 'flag_values' "
+                            f"must be unique {' '*63} --> NOK"
+                        )
             if "flag_masks" in attrs:
                 flag_masks = np.array(nc_var.getncattr("flag_masks"))
                 if not np.issubdtype(flag_masks.dtype, nc_var.dtype):
@@ -1120,7 +1178,10 @@ def cf_flags_check(ds: Dataset, _, excep: dict, verbose, operational):
                     )
                     outcome.setdefault("errors", []).append(error_message)
                     if verbose:
-                        logging.error(error_message)
+                        logging.error(
+                            f"Variable:  {str(var_name):<15} values of attribute 'flag_masks' must have the same type "
+                            f"as the variable. Found {str(flag_masks.dtype):<20} {' '*12} --> NOK"
+                        )
                 elif nc_var.dtype not in [
                     np.char,
                     np.dtype("b"),
@@ -1138,7 +1199,11 @@ def cf_flags_check(ds: Dataset, _, excep: dict, verbose, operational):
                     )
                     outcome.setdefault("errors", []).append(error_message)
                     if verbose:
-                        logging.error(error_message)
+                        logging.error(
+                            f"Variable:  {str(var_name):<15} type is not appropriate for flag "
+                            f"masking {str(nc_var.dtype):<20}. Must be one of {str(expected):<20} "
+                            f"{' '*34} --> NOK"
+                        )
                 elif len(flag_masks) != len(flag_meanings):
                     outcome["status"] = 0
                     status_flag = False
@@ -1148,7 +1213,10 @@ def cf_flags_check(ds: Dataset, _, excep: dict, verbose, operational):
                     )
                     outcome.setdefault("errors", []).append(error_message)
                     if verbose:
-                        logging.error(error_message)
+                        logging.error(
+                            f"Variable:  {str(var_name):<15} attribute 'flag_masks' must have "
+                            f"the same number of elements as attribute 'flag_meanings' {' '*23} --> NOK"
+                        )
                 elif np.count_nonzero(flag_masks) != flag_masks.size:
                     outcome["status"] = 0
                     status_flag = False
@@ -1159,7 +1227,11 @@ def cf_flags_check(ds: Dataset, _, excep: dict, verbose, operational):
                     )
                     outcome.setdefault("errors", []).append(error_message)
                     if verbose:
-                        logging.error(error_message)
+                        logging.error(
+                            f"Variable:  {str(var_name):<15} attribute 'flag_masks' must have "
+                            f"only non zero elements in its values. Currently "
+                            f"{str(np.count_nonzero(flag_masks)):<17} zero values {' '*2} --> NOK"
+                        )
                 elif "flag_values" in attrs:
                     flag_values = np.array(nc_var.getncattr("flag_values"))
                     for mask in flag_masks:
@@ -1174,22 +1246,27 @@ def cf_flags_check(ds: Dataset, _, excep: dict, verbose, operational):
                             )
                             outcome.setdefault("errors", []).append(error_message)
                             if verbose:
-                                logging.error(error_message)
+                                logging.error(
+                                    f"Variable:  {str(var_name):<15} Bitwise AND of flag_masks value '{mask}' and "
+                                    f"'{var_name}' values results in a value not "
+                                    f"available in attribute 'flag_values'. Must result"
+                                    f" in '{flag_values}' --> NOK"
+                                )
         if status_flag:
             outcome.setdefault("info", []).append(f"'{var_name}' flags OK")
             if verbose:
                 if "flag_meanings" not in attrs:
                     logging.info(
-                        f"Variable: {str(var_name):<20} no 'flag_meaning' "
-                        f"attribute {' '*47} --> OK")
+                        f"Variable:  {str(var_name):<15} no 'flag_meaning' "
+                        f"attribute {' '*85} --> OK")
                 if "flag_values" not in attrs:
                     logging.info(
-                        f"Variable: {str(var_name):<20} no "
-                        f"'flag_values' attribute {' '*48} --> OK")
+                        f"Variable:  {str(var_name):<15} no "
+                        f"'flag_values' attribute {' '*86} --> OK")
                 if "flag_masks" not in attrs:
                     logging.info(
-                        f"Variable: {str(var_name):<20} no "
-                        f"'flag_masks' attribute {' '*49} --> OK")
+                        f"Variable:  {str(var_name):<15} no "
+                        f"'flag_masks' attribute {' '*87} --> OK")
 
     return outcome
 
@@ -1221,7 +1298,11 @@ def cf_coordinates_variables_check(ds: Dataset, _, excep: dict, verbose, operati
                         )
                         outcome.setdefault("errors", []).append(error_message)
                         if verbose:
-                            logging.error(error_message)
+                            logging.error(
+                                f"Coordinate variables must have units or have their "
+                                f"standard_name in the list of dimensionless vertical "
+                                f"coordinates {' '*25} --> NOK"
+                            )
                 except AttributeError:
                     pass
             else:
@@ -1236,7 +1317,11 @@ def cf_coordinates_variables_check(ds: Dataset, _, excep: dict, verbose, operati
                         )
                         outcome.setdefault("errors", []).append(error_message)
                         if verbose:
-                            logging.error(error_message)
+                            logging.error(
+                                f"Value of 'positive' attribute {str(positive):<10} is not allowed. "
+                                f"Use one of {str(CFREF().z_axis_orientations):<10} instead "
+                                f"{' '*63} --> NOK"
+                            )
                 except AttributeError:
                     pass
                 dimension_type = CFREF().identify_dimension_type(nc_var)
@@ -1250,9 +1335,9 @@ def cf_coordinates_variables_check(ds: Dataset, _, excep: dict, verbose, operati
                         )
                         if verbose:
                             logging.info(
-                                f"Variable: {str(var_name):<20} Axis E of "
-                                f"coordinate '{var_name}' is not part of "
-                                f"CF-1.6 but it's mandatory in C3S 0.1"
+                                f"Variable:  {str(var_name):<15} axis E of "
+                                f"coordinate {str(var_name):<15} is not part of "
+                                f"CF-1.6 but it's mandatory in C3S 0.1 {' '*24} --> OK"
                             )
                     elif not axis:
                         outcome.setdefault("warnings", []).append(
@@ -1261,7 +1346,7 @@ def cf_coordinates_variables_check(ds: Dataset, _, excep: dict, verbose, operati
                         )
                         if verbose:
                             logging.warning(
-                                f"Variable: {str(var_name):<20} Axis attribute "
+                                f"Variable:  {str(var_name):<15} axis attribute "
                                 f"not provided for coordinate variable '{var_name}'"
                                 )
                     else:
@@ -1274,10 +1359,11 @@ def cf_coordinates_variables_check(ds: Dataset, _, excep: dict, verbose, operati
                         )
                         if verbose:
                             logging.error(
-                                f"Variable: {str(var_name):<20} Unsupported value of "
-                                f"attribute 'axis' for coordinate "
-                                f"variable '{var_name}': '{axis}'. Should be one of "
-                                f"'{CFREF().dimensions_order[1:] + ('E',)}'"
+                                f"Variable:  {str(var_name):<15} unsupported value of "
+                                f"attribute 'axis' {str(axis):<20} "
+                                f"Should be one of "
+                                f"{str(CFREF().dimensions_order[1:] + ('E',)):<20} "
+                                f"{' '*16} --> NOK"
                             )
                 else:
                     # for time coordinates is allowed not to have axis and 
@@ -1294,7 +1380,7 @@ def cf_coordinates_variables_check(ds: Dataset, _, excep: dict, verbose, operati
                         )
                         if verbose:
                             logging.error(
-                                f"Variable: {str(var_name):<20} Attribute 'axis' "
+                                f"Variable:  {str(var_name):<15} Attribute 'axis' "
                                 f"(value: '{axis}') of coordinate variable"
                                 f" '{var_name}' is not consistent with its unit '{unit}'. "
                                 f"It should be set to '{dimension_type}' or the 'unit' "
@@ -1311,7 +1397,7 @@ def cf_coordinates_variables_check(ds: Dataset, _, excep: dict, verbose, operati
                 )
                 if verbose:
                     logging.warning(
-                        f"Variable: {str(var_name):<20} Value of attribute "
+                        f"Variable:  {str(var_name):<15} Value of attribute "
                         f"'axis' of variable '{var_name}' ('{axis}') "
                         f"may not be allowed because variable is not identified as a "
                         f"coordinate variable"
@@ -1324,7 +1410,7 @@ def cf_coordinates_variables_check(ds: Dataset, _, excep: dict, verbose, operati
                 )
                 if verbose:
                     logging.warning(
-                        f"Variable: {str(var_name):<20} Value of attribute "
+                        f"Variable:  {str(var_name):<15} Value of attribute "
                         f"'positive' of variable '{var_name}' "
                         f"('{positive}') may not be allowed because variable is not "
                         f"identified as a coordinate variable"
@@ -1334,15 +1420,15 @@ def cf_coordinates_variables_check(ds: Dataset, _, excep: dict, verbose, operati
             if verbose:
                 if axis:
                     logging.info(
-                        f"Variable: {str(var_name):<20} "
-                        f"with axis: {axis} {' '*62} --> OK")
+                        f"Variable:  {str(var_name):<15} "
+                        f"with axis: {str(axis):<10} {' '*91} --> OK")
                 else:
                     logging.info(
-                        f"Variable: {str(var_name):<20} without {' '*67} --> OK")
+                        f"Variable:  {str(var_name):<15} without axis {' '*100} --> OK")
     return outcome
 
 
-# Test 16. Check dimensionless vertical coordinates.
+# Test 16. Check dimensionless vertical coordinates. 
 @register(CONVENTION, "cf_dimensionless_vertical_coordinates")
 def cf_dimensionless_vertical_coordinates_check(ds: Dataset, _, excep: dict, verbose, operational):
     if verbose:
@@ -1358,8 +1444,8 @@ def cf_dimensionless_vertical_coordinates_check(ds: Dataset, _, excep: dict, ver
                     )
                 if verbose:
                     logging.info(
-                        f"Variable: {str(var_name):<20} not dimensionless "
-                        f"vertical coordinates {' '*36} --> OK")
+                        f"Variable:  {str(var_name):<15} not dimensionless "
+                        f"vertical coordinates {' '*74} --> OK")
             if regex and not regex.match(nc_var.getncattr("formula_terms")):
                 outcome["status"] = 0
                 outcome.setdefault("errors", []).append(
@@ -1369,7 +1455,7 @@ def cf_dimensionless_vertical_coordinates_check(ds: Dataset, _, excep: dict, ver
                 )
                 if verbose:
                     logging.error(
-                        f"Variable: {str(var_name):<20} Value of attribute 'formula_terms' "
+                        f"Variable:  {str(var_name):<15} Value of attribute 'formula_terms' "
                         f"does not match the known pattern for this standard_name "
                         f"'{std_name}'. Must match: '{regex}' (Python Regex)"
                     )
@@ -1377,8 +1463,8 @@ def cf_dimensionless_vertical_coordinates_check(ds: Dataset, _, excep: dict, ver
             #pass
             if verbose:
                 logging.info(
-                    f"Variable: {str(var_name):<20} without "
-                    f"standard name {' '*53} --> OK")
+                    f"Variable:  {str(var_name):<15} without "
+                    f"standard name {' '*91} --> OK")
     return outcome
 
 
@@ -1410,7 +1496,7 @@ def cf_latitude_check(ds: Dataset, _, excep: dict, verbose, operational):
                     )
                     if verbose:
                         logging.error(
-                            f"Variable '{var_name}' is identified as a latitude "
+                            f"Variable:  {str(var_name):<15} is identified as a latitude "
                             f"coordinate variable but has inconsistent standard_name "
                             f"('{std_name}') and/or axis ('{axis}') attributes and/or "
                             f"inconsistent dimension type ('{dim_type}')"
@@ -1421,20 +1507,20 @@ def cf_latitude_check(ds: Dataset, _, excep: dict, verbose, operational):
                         )
                     if verbose:
                         logging.info(
-                            f"Variable: {str(var_name):<20} is identified as a latitude "
-                            f"coordinate variable"
+                            f"Variable:  {str(var_name):<15} is identified as a latitude "
+                            f"coordinate variable {' '*65} --> OK"
                         )
                         logging.info(
-                            f"Variable: {str(var_name):<20} consistent standard_name "
-                            f"('{std_name}') attribute {' '*27} --> OK"
+                            f"Variable:  {str(var_name):<15} consistent standard_name "
+                            f"('{std_name:<8}') attribute {' '*65} --> OK"
                         )
                         logging.info(
-                            f"Variable: {str(var_name):<20} consistent axis "
-                            f"('{axis}') attribute {' '*43} --> OK"
+                            f"Variable:  {str(var_name):<15} consistent axis "
+                            f"('{axis:<1}') attribute {' '*81} --> OK"
                         )
                         logging.info(
-                            f"Variable: {str(var_name):<20} consistent dimension "
-                            f" type ('{dim_type}') {' '*42} --> OK"
+                            f"Variable:  {str(var_name):<15} consistent dimension "
+                            f"type ('{dim_type:<1}') {' '*81} --> OK"
                         )
             else:
                 outcome.setdefault("info", []).append(
@@ -1442,8 +1528,8 @@ def cf_latitude_check(ds: Dataset, _, excep: dict, verbose, operational):
                     )
                 if verbose:
                     logging.info(
-                        f"Variable: {str(var_name):<20} is not latitude "
-                        f"coordinate variable {' '*39} --> OK"
+                        f"Variable:  {str(var_name):<15} is not latitude "
+                        f"coordinate variable"
                         )
         else:
             outcome.setdefault("info", []).append(
@@ -1451,8 +1537,8 @@ def cf_latitude_check(ds: Dataset, _, excep: dict, verbose, operational):
                 ) 
             if verbose:
                 logging.info(
-                    f"Variable: {str(var_name):<20} is not "
-                    f"coordinate variable {' '*48} --> OK"
+                    f"Variable:  {str(var_name):<15} is not "
+                    f"coordinate variable"
                     )
     return outcome
 
@@ -1485,7 +1571,7 @@ def cf_longitude_check(ds: Dataset, _, excep: dict, verbose, operational):
                     )
                     if verbose:
                         logging.error(
-                            f"Variable: {str(var_name):<20} is identified as a longitude "
+                            f"Variable:  {str(var_name):<15} is identified as a longitude "
                             f"coordinate variable but has inconsistent standard_name "
                             f"('{std_name}') and/or axis ('{axis}') attributes and/or "
                             f"inconsistent dimension type ('{dim_type}')"
@@ -1496,20 +1582,20 @@ def cf_longitude_check(ds: Dataset, _, excep: dict, verbose, operational):
                         )
                     if verbose:
                         logging.info(
-                            f"Variable: {str(var_name):<20} is identified as a longitude "
-                            f"coordinate variable"
+                            f"Variable:  {str(var_name):<15} is identified as a longitude "
+                            f"coordinate variable {' '*64} --> OK"
                         )
                         logging.info(
-                            f"Variable: {str(var_name):<20} consistent standard_name "
-                            f"('{std_name}') attribute {' '*26} --> OK"
+                            f"Variable:  {str(var_name):<15} consistent standard_name "
+                            f"('{std_name:<9}') attribute {' '*64} --> OK"
                         )
                         logging.info(
-                            f"Variable: {str(var_name):<20} consistent axis "
-                            f"('{axis}') attribute {' '*43} --> OK"
+                            f"Variable:  {str(var_name):<15} consistent axis "
+                            f"('{axis:<1}') attribute {' '*81} --> OK"
                         )
                         logging.info(
-                            f"Variable: {str(var_name):<20} consistent dimension "
-                            f" type ('{dim_type}') {' '*42} --> OK"
+                            f"Variable:  {str(var_name):<15} consistent dimension "
+                            f"type ('{dim_type:<1}') {' '*81} --> OK"
                         )
             else:
                 outcome.setdefault("info", []).append(
@@ -1517,16 +1603,16 @@ def cf_longitude_check(ds: Dataset, _, excep: dict, verbose, operational):
                     )
                 if verbose:
                     logging.info(
-                        f"Variable: {str(var_name):<20} is not "
-                        f"longitude coordinate variable {' '*38} --> OK")
+                        f"Variable:  {str(var_name):<15} is not "
+                        f"longitude coordinate variable")
         else:
             outcome.setdefault("info", []).append(
                 f"'{var_name}' not coordinate variable"
                 )
             if verbose:
                 logging.info(
-                    f"Variable: {str(var_name):<20} is not longitude "
-                    f"coordinate variable {' '*38} --> OK"
+                    f"Variable:  {str(var_name):<15} is not longitude "
+                    f"coordinate variable"
                 )
     return outcome
 
@@ -1564,8 +1650,8 @@ def cf_time_check(ds: Dataset, _, excep: dict, verbose, operational):
                             f"'{var_name}' time coordinate variable OK"
                         )
                         logging.info(
-                            f"Variable: {str(var_name):<20} time "
-                            f"coordinate variable --> calendar {' '*37} --> OK")
+                            f"Variable:  {str(var_name):<15} time "
+                            f"coordinate variable --> calendar {' '*75} --> OK")
 
             else:
                 if var_name != "leadtime":
@@ -1575,7 +1661,7 @@ def cf_time_check(ds: Dataset, _, excep: dict, verbose, operational):
                         )
                     if verbose:
                             logging.warning(
-                        f"Variable: {str(var_name):<20} Attribute "
+                        f"Variable:  {str(var_name):<15} Attribute "
                         f"'calendar' is recommended for variables identified "
                         f"as time variables. Missing for '{var_name}'"
                         )
@@ -1586,13 +1672,13 @@ def cf_time_check(ds: Dataset, _, excep: dict, verbose, operational):
                     )
                     if verbose:
                         logging.info(
-                            f"Variable: {str(var_name):<20} Attribute "
+                            f"Variable:  {str(var_name):<15} Attribute "
                             f"'calendar' is recommended for variables identified "
                             f"as time variables."
                         )
                         logging.info(
-                            f"Variable: {str(var_name):<20} In C3S-0.1 "
-                            f"leadtime is the forecast step. No calendar is needed."
+                            f"Variable:  {str(var_name):<15} in C3S-0.1 "
+                            f"leadtime is the forecast step. No calendar is needed {' '*49} --> OK"
                         )
                 if not getattr(nc_var, "month_length", ""):
                     if var_name != "leadtime":
@@ -1604,7 +1690,7 @@ def cf_time_check(ds: Dataset, _, excep: dict, verbose, operational):
                         )
                         if verbose:
                             logging.warning(
-                                f"Variable: {str(var_name):<20} Attribute 'month_length' "
+                                f"Variable:  {str(var_name):<15} Attribute 'month_length' "
                                 f"is recommended when attribute "
                                 f"'calendar' is not declared. "
                                 f"Missing for variable: '{var_name}'"
@@ -1615,8 +1701,8 @@ def cf_time_check(ds: Dataset, _, excep: dict, verbose, operational):
             )
             if verbose:
                 logging.info(
-                    f"Variable: {str(var_name):<20} is not time coordinate "
-                    f"variable {' '*43} --> OK "
+                    f"Variable:  {str(var_name):<15} is not time coordinate "
+                    f"variable"
                 )
     return outcome
 
@@ -1641,7 +1727,11 @@ def cf_coordinates_check(ds: Dataset, _, excep: dict, verbose, operational):
                     )
                     outcome.setdefault("errors", []).append(error_message)
                     if verbose:
-                        logging.error(error_message)
+                        logging.error(
+                            f"Variable {str(aux_coord):<15} declared as auxiliary coordinate "
+                            f"for variable {str(var_name):<15} but inexistent in the dataset "
+                            f"{' '*23} --> NOK"
+                        )
                 else:
                     aux_coord_var = ds.variables[aux_coord]
                     dim_type = CFREF().identify_dimension_type(aux_coord_var)
@@ -1694,15 +1784,15 @@ def cf_coordinates_check(ds: Dataset, _, excep: dict, verbose, operational):
                 outcome.setdefault("info", []).append(f"'{var_name}' coordinates OK")
                 if verbose:
                     logging.info(
-                        f"Variable: {str(var_name):<20} coordinates: "
-                        f"{str(coords):<62} --> OK"
+                        f"Variable:  {str(var_name):<15} coordinates: "
+                        f"{str(coords):<80} {' '*19} --> OK"
                     )
         else:
             outcome.setdefault("info", []).append(f"'{var_name}' without coordinates")
             if verbose:
                 logging.info(
-                    f"Variable: {str(var_name):<20} without "
-                    f"coordinates {' '*55} --> OK"
+                    f"Variable:  {str(var_name):<15} without "
+                    f"coordinates {' '*93} --> OK"
                 )
     return outcome
 
@@ -1731,15 +1821,15 @@ def cf_cell_methods_check(ds: Dataset, _, excep: dict, verbose, operational):
                 outcome.setdefault("info", []).append(f"'{var_name}' cell methods OK")
                 if verbose:
                     logging.info(
-                        f"Variable: {str(var_name):<20} Value of attribute "
-                        f"cell_methods: {str(cell_methods):<42} --> OK"
+                        f"Variable:  {str(var_name):<15} value of attribute "
+                        f"cell_methods: {str(cell_methods):<70} {' '*9} --> OK"
                     )
         else:
             outcome.setdefault("info", []).append(f"'{var_name}' no cell methods") 
             if verbose:
                 logging.info(
-                    f"Variable: {str(var_name):<20} no cell "
-                    f"methods {' '*59} --> OK ")
+                    f"Variable:  {str(var_name):<15} no cell "
+                    f"methods {' '*97} --> OK ")
             
     return outcome
 
