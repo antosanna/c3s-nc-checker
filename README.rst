@@ -32,7 +32,7 @@ Create directory for checker::
 
 To deploy the 'master' branch from the GIT repository::
 
- git clone https://software.ecmwf.int/stash/scm/cds/checker.git
+ git clone https://git.ecmwf.int/projects/SAPP/repos/c3s-nc-checker/browse
 
 Switch to checker directory::
 
