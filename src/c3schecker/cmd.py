@@ -31,6 +31,7 @@ from c3schecker.checks import ChecksRegistry
 from c3schecker.postprocessing import print_score_info, compute_score
 
 importlib.import_module("c3schecker.checks.c3s01")
+importlib.import_module("c3schecker.checks.c3s02")
 importlib.import_module("c3schecker.checks.c3s03")
 importlib.import_module("c3schecker.checks.cf16")
 
@@ -136,7 +137,7 @@ def main(
             f"The default C3S-0.1 constrains will "
             f"be used for the checks [{constraints}]"
             )
-        if "C3S-0.2" in conventions:
+        elif "C3S-0.2" in conventions:
             constraints = resource_filename(
                 "c3schecker", "resources/c3s01_seasonal_constraints.json"
             )
@@ -144,7 +145,7 @@ def main(
             f"The default C3S-0.1 (same as C3S-0.1) constrains will "
             f"be used for the checks [{constraints}]"
             )
-        if "C3S-0.3" in conventions:
+        elif "C3S-0.3" in conventions:
             constraints = resource_filename(
                 "c3schecker", "resources/c3s03_seasonal_constraints.json"
             )
@@ -152,8 +153,14 @@ def main(
             f"The default C3S-0.3 constrains will "
             f"be used for the checks [{constraints}]"
             )
+        else:
+            logging.error(
+                f"The convention is not supported. Exit ...  "
+            )
+            sys.exit(1)
     
 
+    
     checks = {
         name: func
         for convention in conventions

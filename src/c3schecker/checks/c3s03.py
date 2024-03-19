@@ -23,7 +23,6 @@ warnings.simplefilter(action='ignore', category=Warning)
 #print(ChecksRegistry.register())
 #print(register.convention())
 
-#CONVENTION = ["C3S-0.3", "C3S-0.1"]
 CONVENTION = "C3S-0.3"
 NUMBER_REGEX = re.compile(r"^[-+]?[0-9]+.?[0-9]*$")
 

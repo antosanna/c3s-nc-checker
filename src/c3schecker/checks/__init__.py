@@ -2,7 +2,7 @@ from c3schecker.utils import Singleton
 
 
 class ChecksRegistry(metaclass=Singleton):
-    __registry = {"C3S-0.1": {}, "C3S-0.3": {}}
+    __registry = {"C3S-0.1": {}, "C3S-0.2": {}, "C3S-0.3": {}}
     #__registry = {"C3S-0.3": {}}
     #__registry = {"C3S-0.3": {}, "CF-1.6":{}}
     

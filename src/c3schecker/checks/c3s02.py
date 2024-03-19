@@ -1,3 +1,4 @@
+
 import datetime
 import re
 import logging
@@ -24,7 +25,7 @@ warnings.simplefilter(action='ignore', category=Warning)
 #print(register.convention())
 
 #CONVENTION = ["C3S-0.1", "C3S-0.2"]
-CONVENTION = "C3S-0.1"
+CONVENTION = "C3S-0.2"
 NUMBER_REGEX = re.compile(r"^[-+]?[0-9]+.?[0-9]*$")
 
 # Number of character up to --> OK/NOK is 140
