@@ -110,7 +110,7 @@ Basic Command Line Usage
 ========================
 
 ::
- c3s-checker [-h] [-v] [-p] [-t {name of the test}] [--constraints {constraints file}] [--c3sexceptions {c3sexceptions file}] [--json] inputfiles [inputfiles ...]
+ c3s-checker [-h] [-v] [-p] [-t {name of the test}] [--constraints {constraints file}] [--c3sexceptions {c3sexceptions file}] [--json] -C {convention} inputfiles [inputfiles ...]
 
 Positional arguments::
 ----------------------

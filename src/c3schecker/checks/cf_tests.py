@@ -237,7 +237,8 @@ class CFREF(metaclass=Singleton):
         raise UnknownStandardNameError(std_name)
 
 # Test 1.
-@register(CONVENTION, "cf_filename_extension")
+#@register(CONVENTION, "cf_filename_extension")
+@register("cf_filename_extension")
 def cf_filename_extension_check(
     ds: Dataset, 
     _, 
@@ -273,7 +274,7 @@ def cf_filename_extension_check(
     return outcome
 
 # Test 2.
-@register(CONVENTION, "cf_convention")
+@register("cf_convention")
 def cf_convention_check(
     ds: Dataset, _, 
     excep: dict, 
@@ -306,7 +307,7 @@ def cf_convention_check(
     return {"status": 1, "info": ["OK"]}
 
 # Test 3.
-@register(CONVENTION, "cf_data_types")
+@register("cf_data_types")
 def cf_datatypes_check(
     ds: Dataset, _, 
     excep: dict, 
@@ -336,7 +337,7 @@ def cf_datatypes_check(
     return outcome
 
 # Test 4.
-@register(CONVENTION, "cf_dimensions_order")
+@register("cf_dimensions_order")
 def cf_dimensions_order_check(ds: Dataset, _, excep: dict, verbose, operational):
     if verbose:
         logging.info("Check the order of Dimensions.")
@@ -379,7 +380,7 @@ def cf_dimensions_order_check(ds: Dataset, _, excep: dict, verbose, operational)
 
 
 # Test 5.
-@register(CONVENTION, "cf_dimensions_unicity")
+@register("cf_dimensions_unicity")
 def cf_dimensions_unicity_check(ds: Dataset, _, excep: dict, verbose, operational):
     if verbose:
         logging.info("Check the unicity of Dimensions.")
@@ -404,7 +405,7 @@ def cf_dimensions_unicity_check(ds: Dataset, _, excep: dict, verbose, operationa
     return outcome
 
 # Test 6.
-@register(CONVENTION, "cf_global_attributes")
+@register("cf_global_attributes")
 def cf_global_attributes_check(ds: Dataset, _, excep: dict, verbose, operational):
     if verbose:
         logging.info("Check the Global Attributes.")
@@ -455,7 +456,7 @@ def cf_global_attributes_check(ds: Dataset, _, excep: dict, verbose, operational
     return outcome
 
 # Test 7.
-@register(CONVENTION, "cf_missing_data")
+@register("cf_missing_data")
 def cf_missing_data_check(ds: Dataset, _, excep: dict, verbose, operational):
     if verbose:
         logging.info("Check the missing data.")
@@ -533,7 +534,7 @@ def cf_missing_data_check(ds: Dataset, _, excep: dict, verbose, operational):
 
 #Test 8.
 ################
-@register(CONVENTION, "cf_attributes_values_type")
+@register("cf_attributes_values_type")
 def cf_attributes_values_type_check(ds: Dataset, _, excep: dict, verbose, operational):
     if verbose:
         logging.info("Check the attributes values.")
@@ -606,7 +607,7 @@ def cf_attributes_values_type_check(ds: Dataset, _, excep: dict, verbose, operat
 ################
 
 # Test 9.
-@register(CONVENTION, "cf_naming_convention")
+@register("cf_naming_convention")
 def cf_naming_convention_check(ds: Dataset, _, excep: dict, verbose, operational):
     if verbose:
         logging.info("Check the naming convention.")
@@ -679,7 +680,7 @@ def cf_naming_convention_check(ds: Dataset, _, excep: dict, verbose, operational
 
 
 # Test 10.
-@register(CONVENTION, "cf_naming_unicity")
+@register("cf_naming_unicity")
 def cf_naming_unicity_check(ds: Dataset, _, excep: dict, verbose, operational):
     if verbose:
         logging.info("Check the naming unicity.")
@@ -712,7 +713,7 @@ def cf_naming_unicity_check(ds: Dataset, _, excep: dict, verbose, operational):
 
 
 # Test 11.
-@register(CONVENTION, "cf_ancillary_data")
+@register("cf_ancillary_data")
 def cf_ancillary_data_check(ds: Dataset, _, excep: dict, verbose, operational):
     if verbose:
         logging.info("Check ancillary data.")
@@ -758,7 +759,7 @@ def cf_ancillary_data_check(ds: Dataset, _, excep: dict, verbose, operational):
 
 
 # Test 12.
-@register(CONVENTION, "cf_standard_names")
+@register("cf_standard_names")
 def cf_standard_names_check(ds: Dataset, _, excep: dict, verbose, operational):
     if verbose:
         logging.info("Check standard names.")
@@ -869,7 +870,7 @@ def cf_standard_names_check(ds: Dataset, _, excep: dict, verbose, operational):
 
 
 # Test 13. Check the units of the variables
-@register(CONVENTION, "cf_units")
+@register("cf_units")
 def cf_units_check(ds: Dataset, _, excep: dict, verbose, operational):
     if verbose:
         logging.info("Check the units of the variables.")
@@ -1026,7 +1027,7 @@ def cf_units_check(ds: Dataset, _, excep: dict, verbose, operational):
 
 
 # Test 14. Check flags
-@register(CONVENTION, "cf_flags")
+@register("cf_flags")
 def cf_flags_check(ds: Dataset, _, excep: dict, verbose, operational):
     if verbose:
         logging.info("Check flags.")
@@ -1275,7 +1276,7 @@ def cf_flags_check(ds: Dataset, _, excep: dict, verbose, operational):
 
 
 # Test 15. Check coordinates of the variables.
-@register(CONVENTION, "cf_coordinates_variables")
+@register("cf_coordinates_variables")
 def cf_coordinates_variables_check(ds: Dataset, _, excep: dict, verbose, operational):
     if verbose:
         logging.info("Check coordinates of the variables.")
@@ -1432,7 +1433,7 @@ def cf_coordinates_variables_check(ds: Dataset, _, excep: dict, verbose, operati
 
 
 # Test 16. Check dimensionless vertical coordinates. 
-@register(CONVENTION, "cf_dimensionless_vertical_coordinates")
+@register("cf_dimensionless_vertical_coordinates")
 def cf_dimensionless_vertical_coordinates_check(ds: Dataset, _, excep: dict, verbose, operational):
     if verbose:
         logging.info("Check dimensionless vertical coordinates.")
@@ -1472,7 +1473,7 @@ def cf_dimensionless_vertical_coordinates_check(ds: Dataset, _, excep: dict, ver
 
 
 # Test 17. Check latitude coordinate.
-@register(CONVENTION, "cf_latitude")
+@register("cf_latitude")
 def cf_latitude_check(ds: Dataset, _, excep: dict, verbose, operational):
     if verbose:
         logging.info("Check latitude coordinate.")
@@ -1547,7 +1548,7 @@ def cf_latitude_check(ds: Dataset, _, excep: dict, verbose, operational):
 
 
 # Test 18. Check longitude coordinate.
-@register(CONVENTION, "cf_longitude")
+@register("cf_longitude")
 def cf_longitude_check(ds: Dataset, _, excep: dict, verbose, operational):
     if verbose:
         logging.info("Check longitude coordinate.")
@@ -1621,7 +1622,7 @@ def cf_longitude_check(ds: Dataset, _, excep: dict, verbose, operational):
 
 
 # Test 19. Check time coordinate.
-@register(CONVENTION, "cf_time")
+@register("cf_time")
 def cf_time_check(ds: Dataset, _, excep: dict, verbose, operational):
     if verbose:
         logging.info("Check time coordinate.")
@@ -1711,7 +1712,7 @@ def cf_time_check(ds: Dataset, _, excep: dict, verbose, operational):
 
 
 # Test 20. Check coordinates.
-@register(CONVENTION, "cf_coordinates")
+@register("cf_coordinates")
 def cf_coordinates_check(ds: Dataset, _, excep: dict, verbose, operational):
     if verbose:
         logging.info("Check coordinates.")
@@ -1801,7 +1802,7 @@ def cf_coordinates_check(ds: Dataset, _, excep: dict, verbose, operational):
 
 
 # Test 21. Check cell methods.
-@register(CONVENTION, "cf_cell_methods")
+@register("cf_cell_methods")
 def cf_cell_methods_check(ds: Dataset, _, excep: dict, verbose, operational):
     if verbose:
         logging.info("Check cell methods.")
