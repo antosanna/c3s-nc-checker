@@ -1,10 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# Author: C. BERGERON
+# AUTHOR: ECMWF - Adrien OYONO OWONO, Charalampos KARVELIS
 #
-#
-# (C) Copyright 1996-2016 ECMWF.
+# (C) Copyright 2020-2024 ECMWF.
 #
 # This software is licensed under the terms of the Apache Licence Version 2.0
 # which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
@@ -31,17 +30,17 @@ setup(
     name="c3schecker",
     version=version,
     author="ECMWF",
-    author_email="cedric.bergeron@ecmwf.int",
+    author_email="adrien.owono@ecmwf.int",
     license="Apache2.0",
-    url="https://git.ecmwf.int/projects/CDS/repos/checker/browse",
-    description="Checker for C3S NetCDF files",
+    url="https://git.ecmwf.int/projects/SAPP/repos/c3s-nc-checker/browse",
+    description="Checker for NetCDF files",
     long_description=read("README.rst"),
     packages=find_packages("src"),
     package_dir={"": "src"},
     include_package_data=True,
-    install_requires=["netCDF4", "cfunits", "numpy"],
+    install_requires=read("requirements.txt").splitlines(),
     classifiers=[
-        "Development Status :: Alpha",
+        "Development Status :: Beta",
         "Intended Audience :: Data Analysts",
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",

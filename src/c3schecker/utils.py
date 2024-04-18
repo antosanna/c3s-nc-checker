@@ -22,109 +22,10 @@ from itertools import chain, combinations
 import numpy as np
 
 
-class loggers:
-    def __init__(self, infolevel):
-
-        self.infolevel = infolevel
-
-        self.log_stream = StringIO()
-        self.logger = logging.getLogger()
-
-        self.define_logger()
-
-    @property
-    def levels(self):
-
-        levels = {
-            "CRITICAL": logging.CRITICAL,
-            "ERROR": logging.ERROR,
-            "WARNING": logging.WARNING,
-            "INFO": logging.INFO,
-            "DEBUG": logging.DEBUG,
-        }
-        return levels
-
-    def get_logger(self):
-        return self.logger, self.log_stream
-
-    def define_logger(self):
-        def log_staticinfo(self, numline=1, msg=""):
-
-            self.removeHandler(self.console_handler)
-            self.addHandler(self.blank_handler)
-            for i in range(numline):
-                self.info(msg)
-
-            self.removeHandler(self.blank_handler)
-            self.addHandler(self.console_handler)
-
-        def log_checkinfo(self, msg=""):
-
-            self.removeHandler(self.console_handler)
-            self.addHandler(self.console_handler2)
-
-            self.info(msg)
-
-            self.removeHandler(self.console_handler2)
-            self.addHandler(self.console_handler)
-
-            # self.removeHandler(self.console_handler)
-            # self.addHandler(self.blank_handler)
-
-            # self.removeHandler(self.blank_handler)
-            # self.addHandler(self.console_handler)
-
-        levels = self.levels
-
-        try:
-            self.logger.setLevel(levels[self.infolevel.upper()])
-        except:
-            self.logger.setLevel(levels["INFO"])
-
-        console_handler = logging.StreamHandler(self.log_stream)
-        console_handler.setFormatter(
-            logging.Formatter(
-                "%(asctime)s %(levelname)8s - %(message)s", datefmt="%H:%M:%S"
-            )
-        )
-
-        blank_handler = logging.StreamHandler(self.log_stream)
-        blank_handler.setFormatter(logging.Formatter("%(message)s"))
-
-        console_handler2 = logging.StreamHandler(self.log_stream)
-        console_handler2.setFormatter(
-            logging.Formatter("%(asctime)s   %(message)s", datefmt="%H:%M:%S")
-        )
-
-        self.logger.addHandler(console_handler)
-
-        self.logger.console_handler = console_handler
-        self.logger.blank_handler = blank_handler
-        self.logger.console_handler2 = console_handler2
-        self.logger.staticinfo = types.MethodType(log_staticinfo, self.logger)
-
-        self.logger.checkinfo = types.MethodType(log_checkinfo, self.logger)
-
-
 def get_immediate_subdirectories(a_dir):
     return [
         name for name in os.listdir(a_dir) if os.path.isdir(os.path.join(a_dir, name))
     ]
-
-
-def get_immediate_files(a_dir, excludefiles=[], extension="*"):
-    filelist = []
-    for path, subdirs, files in os.walk(a_dir):
-        for name in files:
-            if name.endswith("." + extension) and name not in excludefiles:
-                filelist.append(
-                    os.path.abspath(os.path.join(path, name))
-                    .replace(a_dir, "")
-                    .replace(os.sep, ".")
-                    .replace("." + extension, "")
-                )
-
-    return filelist
 
 
 def get_immediate_filenames(a_dir, excludefiles=[], extension="*"):

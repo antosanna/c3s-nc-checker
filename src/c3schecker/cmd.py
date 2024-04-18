@@ -2,9 +2,9 @@
 #
 # c3schecker checks NetCDF compliancy for C3S data
 #
-# AUTHOR: ECMWF - C. BERGERON, A. OYONO
+# AUTHOR: ECMWF - Adrien OYONO OWONO, Charalampos KARVELIS
 #
-# (C) Copyright 1996-2020 ECMWF.
+# (C) Copyright 2020-2024 ECMWF.
 #
 # This software is licensed under the terms of the Apache Licence Version 2.0
 # which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
@@ -38,20 +38,21 @@ logging.basicConfig(
 )
 
 
-@click.command("c3schecker")
+@click.command("c3s-checker")
 @click.option(
     "-t",
     "--tests",
     "tests",
     multiple=True,
-    help="Specific test to be run",
+    help="Specific test (s) to be run",
 )
 @click.option(
     "-f",
-    "--tests_family",
+    "--tests-family",
     required=False,
-    default=["all"],
-    multiple=True,
+    default="all",
+    show_default=True,
+    type=click.Choice(["c3s", "cf", "cerise", "all"]),
     help="Specific group of tests to be run",
 )
 @click.option(
@@ -60,7 +61,7 @@ logging.basicConfig(
     type=click.Path(exists=True, dir_okay=False, resolve_path=True, allow_dash=True),
 )
 @click.option(
-    "--c3sexceptions",
+    "--c3s-exceptions",
     required=False,
     help="Specific C3S exceptions to be used",
     type=click.Path(exists=True, dir_okay=False, resolve_path=True, allow_dash=True),
@@ -155,7 +156,7 @@ def main(
             print(f"     - {name}")
         sys.exit(0)
 
-    if "c3s" in tests_family:
+    if tests_family == "c3s":
         tests_list = [
             "c3s_filename_convention",
             "c3s_filename_reconstruction",
@@ -183,7 +184,7 @@ def main(
             "c3s_missing_values_consistency",
             "c3s_realization_format",
         ]
-    elif "cf" in tests_family:
+    elif tests_family == "cf":
         tests_list = [
             "cf_filename_extension",
             "cf_convention",
@@ -207,18 +208,14 @@ def main(
             "cf_coordinates",
             "cf_cell_methods",
         ]
-    elif "cerise" in tests_family:
+    elif tests_family == "cerise":
         tests_list = [
             "c3s_filename_convention",
             "c3s_filename_reconstruction",
             "c3s_coordinates_attributes",
         ]
-    elif "all" in tests_family:
-        tests_list = checks_all
     else:
-        logging.error(f"The tests family ('{tests_family}') is unknown")
-        logging.info("Possible tests families: 'c3s', 'cf' ")
-        sys.exit(1)
+        tests_list = checks_all
 
     if tests_family:
         checks = {

@@ -1,6 +1,4 @@
 """Unit tests for C3S Seasonal Forecast Checking"""
-from c3schecker.cop.Cpchecker import Cpchecker
-
 CHECK_TYPE = "seasonal"
 
 
@@ -255,9 +253,8 @@ class TestC3S01:
 
     @staticmethod
     def _check_and_assert_status(checker, status):
-        checker.cp_check_compliance()
-        assert checker.status == status
+        assert False
 
     @staticmethod
     def _get_checker(ds, check):
-        return Cpchecker(ds, c3stype=CHECK_TYPE, checks=check, passedcheckinfo=True)
+        return None

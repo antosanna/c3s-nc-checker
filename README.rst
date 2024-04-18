@@ -1,6 +1,6 @@
 
 *****************************
-C3S NetCDF Compliancy Checker 
+C3S NetCDF Compliance Checker
 *****************************
 
 
@@ -15,7 +15,7 @@ C:
 http://www.unidata.ucar.edu/software/udunits/udunits-current/doc/udunits/udunits2.html#Binary
 
 
-If you do not wish to install to the system Python, you can create a virtualenv 
+If you do not wish to install to the system Python, you can create a virtualenv
 environment and install the checker and associated packages there:
 
 
@@ -32,12 +32,12 @@ Create directory for checker::
 
 To deploy the 'master' branch from the GIT repository::
 
- git clone ssh://git@git.ecmwf.int/sapp/c3s-nc-checker.git 
+ git clone ssh://git@git.ecmwf.int/sapp/c3s-nc-checker.git
 
 Switch to checker directory::
 
  cd checker
- 
+
 Switch to master branch::
 
  git checkout master
@@ -45,11 +45,11 @@ Switch to master branch::
 Install dependencies if needed::
 
  pip install -r requirements.txt
- 
-Install Checker:: 
-  
+
+Install Checker::
+
  python setup.py install
- 
+
 
 Option 2: Install to a conda virtual environment on your system
 ------------------------------------------------
@@ -61,14 +61,14 @@ Create Conda virtual environment::
  conda create -n c3s-nc-checker -c conda-forge -y python=3.10
  conda env update -n c3s-nc-checker -f environment.yml
  conda activate c3s-nc-checker
- 
+
 Install Checker from git repository
 
  pip3 install git+ssh://git@git.ecmwf.int/sapp/c3s-nc-checker.git
 
 Or from a specific git branch (e.g. cerise-refactoring)
 
- pip3 install git+ssh://git@git.ecmwf.int/sapp/c3s-nc-checker.git@cerise-refactoring 
+ pip3 install git+ssh://git@git.ecmwf.int/sapp/c3s-nc-checker.git@cerise-refactoring
 
 
 Option 3: Install to a virtualenv on your system
@@ -91,12 +91,12 @@ Create directory for checker::
 
 To deploy the 'master' branch from the GIT repository::
 
- git clone ssh://git@git.ecmwf.int/sapp/c3s-nc-checker.git 
+ git clone ssh://git@git.ecmwf.int/sapp/c3s-nc-checker.git
 
 Switch to checker directory::
 
  cd checker
- 
+
 Switch to master branch::
 
  git checkout master
@@ -104,18 +104,18 @@ Switch to master branch::
 Install dependencies if needed::
 
  pip install -r requirements.txt
- 
-Install Checker:: 
-  
+
+Install Checker::
+
  python setup.py install
 
 
 Option 4: Install Checker in editable mode
 ------------------------------------------------
 
-Install Checker in editable mode:: 
-  
- python -m pip install -e . 
+Install Checker in editable mode::
+
+ python -m pip install -e .
 
 Initial Test
 ------------
@@ -153,5 +153,5 @@ Optional arguments:
 *   --c3sexceptions       Specific C3S exceptions to be used
 *   --json                Print output in json format
 *   -p, --operational     Operational mode
-*   -l, --tests_list      List of the available tests                    
+*   -l, --tests_list      List of the available tests
 
