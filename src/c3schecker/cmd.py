@@ -38,6 +38,15 @@ logging.basicConfig(
 )
 
 
+def list_tests(ctx, param, value):
+    if not value or ctx.resilient_parsing:
+        return
+    click.echo("List of all the available tests:")
+    for name, _ in ChecksRegistry().__contains__().items():
+        click.echo(f"     - {name}")
+    ctx.exit()
+
+
 @click.command("c3s-checker")
 @click.option(
     "-t",
@@ -59,22 +68,35 @@ logging.basicConfig(
     "--constraints",
     required=False,
     type=click.Path(exists=True, dir_okay=False, resolve_path=True, allow_dash=True),
+    help=(
+        "JSON file representing the constraints for the convention that the NetCDF "
+        "file(s) must follow. If this is not given, The -C/--convention option is used "
+        "to load a default constraint file embedded with the package (see the option's "
+        "docs). Otherwise, the -C/--convention is ignored."
+    ),
 )
 @click.option(
-    "--c3s-exceptions",
+    "--exceptions",
     required=False,
-    help="Specific C3S exceptions to be used",
+    help=(
+        "JSON file representing what kind of deviation from the constraints are "
+        "authorized. If a test fails but that failure is specified in this file, the "
+        "overall test result isn't affected."
+    ),
     type=click.Path(exists=True, dir_okay=False, resolve_path=True, allow_dash=True),
 )
 @click.option(
     "--convention",
     "-C",
-    "conventions",
     required=False,
-    default=["C3S-0.3"],
-    multiple=True,
-    type=click.STRING,
-    help="The NetCDF convention followed by the constraints file",
+    default="C3S-0.3",
+    show_default=True,
+    type=click.Choice(["C3S-0.1", "C3S-0.2", "C3S-0.3"]),
+    help=(
+        "The NetCDF convention to use for the test suite. This is used to load a "
+        "default constraint file corresponding to the convention, and is ignored if "
+        "the --constraints option is given."
+    ),
     callback=lambda ctx, param, value: set(value),
 )
 @click.option(
@@ -84,8 +106,8 @@ logging.basicConfig(
     "--score-threshold",
     help=(
         "The minimum score a file must have to be considered as passing all "
-        "the checks (expressed as a percentage - i.e between 0 and 100). For operational "
-        "run the score should be 100"
+        "the checks (expressed as a percentage - i.e between 0 and 100). "
+        "For operational run the score should be 100"
     ),
     type=click.IntRange(min=0, max=100),
     default=100,
@@ -103,12 +125,23 @@ logging.basicConfig(
     show_default=True,
 )
 @click.option("-v", "--verbose", is_flag=True, help="Enables verbose mode")
-@click.option("-p", "--operational", is_flag=True, help="Operational check")
+@click.option(
+    "-p",
+    "--operational",
+    is_flag=True,
+    help="Run in operational mode, where any failed test makes the overall test fail",
+)
 @click.option(
     "-l",
-    "--tests_list",
+    "--list-tests",
     is_flag=True,
-    help="List of available tests that can be executed",
+    is_eager=True,
+    expose_value=False,
+    callback=list_tests,
+    help=(
+        "List the available tests that can be executed. Run this first if you want to "
+        "select only a few tests to run"
+    ),
 )
 @click.argument(
     "inputs", nargs=-1, callback=lambda ctx, param, value: [Path(v) for v in value]
@@ -116,25 +149,25 @@ logging.basicConfig(
 def main(
     inputs,
     tests_family,
-    conventions,
+    convention,
     constraints,
-    c3sexceptions,
+    exceptions,
     tests,
     js,
     verbose,
     operational,
     score_threshold,
     min_passing_files,
-    tests_list,
 ):
-    """Check the input NetCDF files against the specified constraints file"""
+    """Check the input NetCDF files against a specified convention or set of
+    constraints"""
 
     logging.info("")
     logging.info(
         "====================================================================="
     )
     logging.info("")
-    logging.info("        ECMWF C3S Checker")
+    logging.info("        ECMWF NetCDF Checker")
     logging.info(
         f"        Report generated at "
         f"{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
@@ -149,12 +182,6 @@ def main(
         for name, func in ChecksRegistry().__contains__().items()
         if not tests or tests and name in set(tests)
     }
-
-    if tests_list:
-        logging.info("The list of all the available test:")
-        for name, _ in ChecksRegistry().__contains__().items():
-            print(f"     - {name}")
-        sys.exit(0)
 
     if tests_family == "c3s":
         tests_list = [
@@ -222,47 +249,43 @@ def main(
             name: func for name, func in checks_all.items() if name in set(tests_list)
         }
 
-    logging.info(f"File(s) will be checked against the conventions: {conventions}")
-
-    if "C3S-0.1" in conventions:
-        constraints = resource_filename(
-            "c3schecker", "resources/c3s01_seasonal_constraints.json"
-        )
-        logging.info(
-            f"The default C3S-0.1 constrains will "
-            f"be used for the checks [{constraints}]"
-        )
-    elif "C3S-0.2" in conventions:
-        constraints = resource_filename(
-            "c3schecker", "resources/c3s01_seasonal_constraints.json"
-        )
-        logging.info(
-            f"The default C3S-0.1 (same as C3S-0.1) constrains will "
-            f"be used for the checks [{constraints}]"
-        )
-    elif "C3S-0.3" in conventions:
-        constraints = resource_filename(
-            "c3schecker", "resources/c3s03_seasonal_constraints.json"
-        )
-        logging.info(
-            f"The default C3S-0.3 constrains will "
-            f"be used for the checks [{constraints}]"
-        )
-    else:
-        logging.error(f"The convention is not supported. Exit ...  ")
-        sys.exit(1)
-
     if constraints:
-        with open(constraints) as cf:
-            spec = json.load(cf)
+        logging.info(f"Using the provided constraint file: {constraints}")
     else:
-        spec = {}
+        logging.info(f"File(s) will be checked against the conventions: {convention}")
+        if "C3S-0.1" == convention:
+            constraints = resource_filename(
+                "c3schecker", "resources/c3s01_seasonal_constraints.json"
+            )
+            logging.info(
+                f"The default C3S-0.1 constrains will "
+                f"be used for the checks [{constraints}]"
+            )
+        elif "C3S-0.2" == convention:
+            constraints = resource_filename(
+                "c3schecker", "resources/c3s01_seasonal_constraints.json"
+            )
+            logging.info(
+                f"The default C3S-0.1 (same as C3S-0.1) constrains will "
+                f"be used for the checks [{constraints}]"
+            )
+        elif "C3S-0.3" == convention:
+            constraints = resource_filename(
+                "c3schecker", "resources/c3s03_seasonal_constraints.json"
+            )
+            logging.info(
+                f"The default C3S-0.3 constrains will "
+                f"be used for the checks [{constraints}]"
+            )
+
+    with open(constraints) as fd:
+        spec = json.load(fd)
 
     # Exceptions
-    if c3sexceptions:
-        with open(c3sexceptions) as file:
+    if exceptions:
+        with open(exceptions) as file:
             c3s_excep = json.load(file)
-        logging.info(f"Users C3S exceptions: {c3sexceptions}")
+        logging.info(f"Users exceptions: {exceptions}")
     else:
         c3s_excep = {}
 
@@ -321,12 +344,12 @@ def run_checks(input_files, checks, spec, c3s_excep, verbose, operational):
                 file_outcome[check_name] = outcome
                 if verbose:
                     if outcome["status"] == 1:
-                        logging.info(f"Check#{i} was successful.")
+                        logging.info(f"Check#{i} was OK.")
                     else:
-                        logging.error(f"Check#{i} was failed. ")
+                        logging.error(f"Check#{i} was KO. ")
                 i += 1
         except OSError:
-            logging.error(f"Not an NetCDF file, continue ... ")
+            logging.error(f"Not a NetCDF file, skipping ... ")
 
     return outcomes
 

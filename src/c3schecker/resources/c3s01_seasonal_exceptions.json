@@ -1,4 +1,4 @@
-{   
+{
     "exceptions": {
         "ecmf": {},
         "egrr": {
@@ -33,20 +33,20 @@
                         }
                     }
                 },
-                
+
                 "units": {
                     "temperature": "C"
                 },
-                "missing_values" : [ "hus" ]                
+                "missing_values" : [ "hus" ]
             }
         },
-        
+
         "lfpw": {
             "System8-v20210101": {
                 "filename" : [
-                    "clivi", 
-                    "cllvi", 
-                    "prw", 
+                    "clivi",
+                    "cllvi",
+                    "prw",
                     "mrlsl",
                     "mlotstheta001",
                     "mlotstheta003",
@@ -91,11 +91,11 @@
                             "calendar",
                             "units",
                             "long_name"
-                            
+
                         ]
                     }
                 },
-                "missing_values" : [ "orog", "hus", "ta", "ua", "va", "zg", "clt", "psl", "hfls", "hfss", "sftlf" ]               
+                "missing_values" : [ "orog", "hus", "ta", "ua", "va", "zg", "clt", "psl", "hfls", "hfss", "sftlf" ]
             }
         },
         "cmcc": {
@@ -120,7 +120,7 @@
                             "calendar",
                             "units",
                             "long_name"
-                            
+
                         ]
                     }
                 }
@@ -186,7 +186,7 @@
                 },
                 "units": {
                     "temperature": "C"
-                }, 
+                },
                 "data_values": {
                     "plev": [
                         1000.0,
@@ -210,11 +210,11 @@
                             "calendar",
                             "units",
                             "long_name"
-                            
+
                         ]
                     }
                 }
-                
+
             },
             "GEM5-NEMO-v20211130": {
                 "attributes_values_per_var_name": {
@@ -237,7 +237,7 @@
                 },
                 "units": {
                     "temperature": "C"
-                }, 
+                },
                 "data_values": {
                     "plev": [
                         1000.0,
@@ -261,11 +261,11 @@
                             "calendar",
                             "units",
                             "long_name"
-                            
+
                         ]
                     }
                 }
-                
+
             }
 
         },
@@ -278,7 +278,7 @@
                             "calendar",
                             "units",
                             "long_name"
-                            
+
                         ]
                     }
                 },
@@ -325,7 +325,7 @@
             }
 
         }
-        
-    }    
-    
+
+    }
+
 }
