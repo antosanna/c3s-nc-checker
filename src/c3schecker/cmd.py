@@ -179,7 +179,7 @@ def main(
 
     checks_all = {
         name: func
-        for name, func in ChecksRegistry().__contains__().items()
+        for name, func in ChecksRegistry().items()
         if not tests or tests and name in set(tests)
     }
 

@@ -5,19 +5,22 @@ class ChecksRegistry(metaclass=Singleton):
     __registry = {}
 
     def register(self, check_name, check_implementation):
-        try:
-            self.update({check_name: check_implementation})
-        except KeyError:
-            self.__registry = {check_name: check_implementation}
+        """Register a function to be used as a check under the check_name.
+        Note, if a function was already registered for check_name, it will be
+        overridden by subsequent registrations"""
+        self.update({check_name: check_implementation})
 
     def update(self, checks):
         self.__registry.update(checks)
 
-    def __getitem__(self):
-        return self.__registry
+    def items(self):
+        return self.__registry.items()
 
-    def __contains__(self):
-        return self.__registry
+    def __getitem__(self, check_name):
+        return self.__registry[check_name]
+
+    def __contains__(self, check_name):
+        return check_name in self.__registry
 
 
 def register(check_name):
