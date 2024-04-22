@@ -72,10 +72,11 @@ Command Line Usage
   constraints
 
   Options:
-      -t, --tests TEXT                Specific test (s) to be run
-      -f, --tests-family [c3s|cf|cerise|all]
-                                      Specific group of tests to be run  [default:
-                                      all]
+      -t, --tests TEXT                Specific test (s) to be run Can be
+                                      specified multiple times
+      -f, --tests-family [c3s|cf|cerise]
+                                      Specific group of tests to be run. Can be
+                                      specified multiple times  [default: c3s, cf]
       --constraints FILE              JSON file representing the constraints for
                                       the convention that the NetCDF file(s) must
                                       follow. If this is not given, The

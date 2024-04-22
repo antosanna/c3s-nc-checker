@@ -53,16 +53,17 @@ def list_tests(ctx, param, value):
     "--tests",
     "tests",
     multiple=True,
-    help="Specific test (s) to be run",
+    help="Specific test (s) to be run. Can be specified multiple times",
 )
 @click.option(
     "-f",
     "--tests-family",
+    multiple=True,
     required=False,
-    default="all",
+    default=["c3s", "cf"],
     show_default=True,
-    type=click.Choice(["c3s", "cf", "cerise", "all"]),
-    help="Specific group of tests to be run",
+    type=click.Choice(["c3s", "cf", "cerise"]),
+    help="Specific group of tests to be run. Can be specified multiple times",
 )
 @click.option(
     "--constraints",
@@ -177,77 +178,77 @@ def main(
         "====================================================================="
     )
 
-    checks_all = {
-        name: func
-        for name, func in ChecksRegistry().items()
-        if not tests or tests and name in set(tests)
-    }
+    test_list = []
 
-    if tests_family == "c3s":
-        tests_list = [
-            "c3s_filename_convention",
-            "c3s_filename_reconstruction",
-            "c3s_metadata_convention",
-            "c3s_netcdf_format",
-            "c3s_scientific_variables_per_file",
-            "c3s_dimensions",
-            "c3s_dimensions_per_variable",
-            "c3s_variables",
-            "c3s_coordinates_attributes",
-            "c3s_calendar",
-            "c3s_exact_attributes_values",
-            "c3s_global_attributes",
-            "c3s_global_attributes_values",
-            "c3s_global_date_attributes_format",
-            "c3s_variables_exact_dimensions",
-            "c3s_data_intervals",
-            "c3s_data_min_max",
-            "c3s_data_ranges",
-            "c3s_data_values",
-            "c3s_variable_units",
-            "c3s_time_bnds_consistency",
-            "c3s_time_values",
-            "c3s_time_consistency",
-            "c3s_missing_values_consistency",
-            "c3s_realization_format",
-        ]
-    elif tests_family == "cf":
-        tests_list = [
-            "cf_filename_extension",
-            "cf_convention",
-            "cf_data_types",
-            "cf_dimensions_order",
-            "cf_dimensions_unicity",
-            "cf_global_attributes",
-            "cf_missing_data",
-            "cf_attributes_values_type",
-            "cf_naming_convention",
-            "cf_naming_unicity",
-            "cf_ancillary_data",
-            "cf_standard_names",
-            "cf_units",
-            "cf_flags",
-            "cf_coordinates_variables",
-            "cf_dimensionless_vertical_coordinates",
-            "cf_latitude",
-            "cf_longitude",
-            "cf_time",
-            "cf_coordinates",
-            "cf_cell_methods",
-        ]
-    elif tests_family == "cerise":
-        tests_list = [
-            "c3s_filename_convention",
-            "c3s_filename_reconstruction",
-            "c3s_coordinates_attributes",
-        ]
-    else:
-        tests_list = checks_all
+    if "c3s" in tests_family:
+        test_list.extend(
+            [
+                "c3s_filename_convention",
+                "c3s_filename_reconstruction",
+                "c3s_metadata_convention",
+                "c3s_netcdf_format",
+                "c3s_scientific_variables_per_file",
+                "c3s_dimensions",
+                "c3s_dimensions_per_variable",
+                "c3s_variables",
+                "c3s_coordinates_attributes",
+                "c3s_calendar",
+                "c3s_exact_attributes_values",
+                "c3s_global_attributes",
+                "c3s_global_attributes_values",
+                "c3s_global_date_attributes_format",
+                "c3s_variables_exact_dimensions",
+                "c3s_data_intervals",
+                "c3s_data_min_max",
+                "c3s_data_ranges",
+                "c3s_data_values",
+                "c3s_variable_units",
+                "c3s_time_bnds_consistency",
+                "c3s_time_values",
+                "c3s_time_consistency",
+                "c3s_missing_values_consistency",
+                "c3s_realization_format",
+            ]
+        )
+    if "cf" in tests_family:
+        test_list.extend(
+            [
+                "cf_filename_extension",
+                "cf_convention",
+                "cf_data_types",
+                "cf_dimensions_order",
+                "cf_dimensions_unicity",
+                "cf_global_attributes",
+                "cf_missing_data",
+                "cf_attributes_values_type",
+                "cf_naming_convention",
+                "cf_naming_unicity",
+                "cf_ancillary_data",
+                "cf_standard_names",
+                "cf_units",
+                "cf_flags",
+                "cf_coordinates_variables",
+                "cf_dimensionless_vertical_coordinates",
+                "cf_latitude",
+                "cf_longitude",
+                "cf_time",
+                "cf_coordinates",
+                "cf_cell_methods",
+            ]
+        )
+    if "cerise" in tests_family:
+        test_list.extend(
+            [
+                "c3s_filename_convention",
+                "c3s_filename_reconstruction",
+                "c3s_coordinates_attributes",
+            ]
+        )
 
-    if tests_family:
-        checks = {
-            name: func for name, func in checks_all.items() if name in set(tests_list)
-        }
+    if not tests:
+        tests = test_list
+
+    checks = {name: func for name, func in set(test_list) if name in tests}
 
     if constraints:
         logging.info(f"Using the provided constraint file: {constraints}")
