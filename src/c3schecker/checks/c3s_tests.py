@@ -2273,7 +2273,10 @@ def c3s_time_values_check(
         leadt_computed_ = (end - start) / 2
         leadt_computed_ocean = []
 
-        for n in range(1, 8):
+        number_of_months = int(leadt[-1]/24/30)
+        
+
+        for n in range(1, number_of_months+1):
             month = reft + relativedelta.relativedelta(months=+n)
             number_of_days = calendar.monthrange(year, month.month)[1]
             number_of_step = number_of_days * 24
