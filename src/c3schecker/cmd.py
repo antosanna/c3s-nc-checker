@@ -286,12 +286,16 @@ def main(
         spec = json.load(fd)
 
     # Exceptions
+    # Load the default exception file
+    with open(
+        resource_filename("c3schecker", "resources/c3s01_seasonal_exceptions.json")
+    ) as fp:
+        c3s_excep = json.load(fp)
+        logging.info("Default exceptions loaded")
     if exceptions:
+        logging.info(f"Updating default exceptions with user exceptions: {exceptions}")
         with open(exceptions) as file:
-            c3s_excep = json.load(file)
-        logging.info(f"Users exceptions: {exceptions}")
-    else:
-        c3s_excep = {}
+            c3s_excep.update(json.load(file))
 
     logging.info(
         "====================================================================="
