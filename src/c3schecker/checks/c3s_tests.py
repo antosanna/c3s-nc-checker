@@ -872,7 +872,7 @@ def c3s_meta_attributes_exact_values_per_var_name(
                 check_result = actual_value == expected_value
             else:
                 check_result = re.match(expected_value, actual_value)
-            if check_result and attr_name not in "cell_methods":
+            if check_result and attr_name != "cell_methods":
                 outcome.setdefault("info", []).append(f"{var_name} {attr_name}: OK")
                 if verbose:
                     logging.info(
@@ -882,9 +882,10 @@ def c3s_meta_attributes_exact_values_per_var_name(
             elif check_result and attr_name == "cell_methods":
                 if "point" not in actual_value:
                     outcome.setdefault("warnings", []).append(
-                        f"Variable: '{var_name}', attribute: '{attr_name}', "
+                        f"Variable: '{var_name}', attribute: 'cell_methods', "
                         f"actual value '{actual_value}' "
-                        f"manual inspection: the interval is required to have a value<=3 hours"
+                        f"If the cell method involves an interval, please make sure "
+                        f"the interval has a value <= 3 hours"
                     )
                     if verbose:
                         logging.info(
@@ -896,8 +897,8 @@ def c3s_meta_attributes_exact_values_per_var_name(
                         logging.warning(
                             f"Variable: {var_name:<15} attribute {' '*6}: "
                             f"{attr_name:<17} "
-                            f"Manual inspection of the interval. "
-                            f"The interval is required to have a value<=3 hours)"
+                            f"If the cell method involves an interval, please make sure"
+                            f" the interval has a value <= 3 hours"
                         )
                         logging.info(
                             f"Variable: {var_name:<15} attribute {' '*6}: "
@@ -2273,10 +2274,9 @@ def c3s_time_values_check(
         leadt_computed_ = (end - start) / 2
         leadt_computed_ocean = []
 
-        number_of_months = int(leadt[-1]/24/30)
-        
+        number_of_months = int(leadt[-1] / 24 / 30)
 
-        for n in range(1, number_of_months+1):
+        for n in range(1, number_of_months + 1):
             month = reft + relativedelta.relativedelta(months=+n)
             number_of_days = calendar.monthrange(year, month.month)[1]
             number_of_step = number_of_days * 24
@@ -2385,7 +2385,9 @@ def c3s_time_values_check(
         leadt_bnds = ds.variables["leadtime_bnds"][:]
         bnds_check = True
 
-        for n in range(1, 8):
+        number_of_months = int(leadt[-1] / 24 / 30)
+
+        for n in range(1, number_of_months + 1):
             month = reft + relativedelta.relativedelta(months=+n)
             number_of_days = calendar.monthrange(year, month.month)[1]
             number_of_step = number_of_days * 24
