@@ -248,6 +248,10 @@ def main(
         tests = test_list
 
     checks = {name: ChecksRegistry()[name] for name in set(test_list) if name in tests}
+ 
+    if not checks:
+        print("Not valid tests. Exit ... ")
+        sys.exit(1)
 
     if constraints:
         logging.info(f"Using the provided constraint file: {constraints}")
