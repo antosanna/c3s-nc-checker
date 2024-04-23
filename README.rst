@@ -30,6 +30,10 @@ Option 1: Install in a conda environment
 ::
 
  python -m pip install .
+ 
+Or to install in editable mode::
+
+ python -m pip install -e .
 
 
 Option 2: Install in a virtualenv
