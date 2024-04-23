@@ -98,7 +98,6 @@ def list_tests(ctx, param, value):
         "default constraint file corresponding to the convention, and is ignored if "
         "the --constraints option is given."
     ),
-    callback=lambda ctx, param, value: set(value),
 )
 @click.option(
     "--json", "js", help="Print output in json format", is_flag=True, flag_value=True
@@ -248,7 +247,7 @@ def main(
     if not tests:
         tests = test_list
 
-    checks = {name: func for name, func in set(test_list) if name in tests}
+    checks = {name: ChecksRegistry()[name] for name in set(test_list) if name in tests}
 
     if constraints:
         logging.info(f"Using the provided constraint file: {constraints}")
@@ -332,7 +331,7 @@ def run_checks(input_files, checks, spec, c3s_excep, verbose, operational):
     for input_file in input_files:
         i = 1
         logging.info("--------------------------------------------")
-        logging.info(f"Checking file: [{input_file}]")
+        logging.info(f"Checking file: {input_file}")
         try:
             dataset = Dataset(input_file)
 
