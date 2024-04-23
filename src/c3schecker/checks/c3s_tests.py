@@ -883,7 +883,7 @@ def c3s_meta_attributes_exact_values_per_var_name(
                 if "point" not in actual_value:
                     outcome.setdefault("warnings", []).append(
                         f"Variable: '{var_name}', attribute: 'cell_methods', "
-                        f"actual value '{actual_value}' "
+                        f"actual value '{actual_value}'. "
                         f"If the cell method involves an interval, please make sure "
                         f"the interval has a value <= 3 hours"
                     )
@@ -896,7 +896,7 @@ def c3s_meta_attributes_exact_values_per_var_name(
                         )
                         logging.warning(
                             f"Variable: {var_name:<15} attribute {' '*6}: "
-                            f"{attr_name:<17} "
+                            f"{attr_name:<17}. "
                             f"If the cell method involves an interval, please make sure"
                             f" the interval has a value <= 3 hours"
                         )
