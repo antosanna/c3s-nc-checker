@@ -560,18 +560,30 @@ def c3s_coordinates_per_var_name(
         # We don't need another check
 
         if len(additional) > 0:
+            institute_id = ds.institute_id
+            system = ds.source.split()[0].split(":")[0]
+
+            exceptions = (
+                excep.get("exceptions", {})
+                .get(institute_id, {})
+                .get(system, {})
+                .get("variables_per_var_name", {})
+                .get(parameters_var_name, {})
+                .get("expected", [])
+            )
             for var in additional:
                 # TODO: if we can describe the error/warning better.
                 #  What if the coordinate is dimensionless?
-                status = 0
-                outcome.setdefault("errors", []).append(
-                    f"Additional variable ('{var}') was found"
-                )
-                if verbose:
-                    logging.error(
-                        f"Additional variable ('{str(var):15}') was "
-                        f"found {' '*90} --> NOK"
+                if var not in exceptions:
+                    status = 0
+                    outcome.setdefault("errors", []).append(
+                        f"Additional variable ('{var}') was found"
                     )
+                    if verbose:
+                        logging.error(
+                            f"Additional variable ('{str(var):15}') was "
+                            f"found {' '*90} --> NOK"
+                        )
     except:
         status = 0
         outcome.setdefault("errors", []).append(
@@ -786,29 +798,17 @@ def c3s_meta_attributes_exact_values_per_var_name(
                         f"value: {actual_global_value:<60} {' '*8} --> OK"
                     )
 
-        actual_data_vars = _get_data_vars(ds)
-        scientific_var_name = actual_data_vars[0].name
-
         for attr_name, expected_value in var_specific_constraints.get(
             "expected", {}
         ).items():
             var_attrs.append(attr_name)
 
+        nc_var_attrs = nc_var.ncattrs()
         for attr_name, expected_value in var_specific_constraints.get(
             "expected", {}
         ).items():
-            if (
-                scientific_var_name == "uas"
-                or scientific_var_name == "vas"
-                or scientific_var_name == "wsgmax"
-            ):
-                if attr_name == "valid_max":
-                    expected_value = 30.0
-
-            if attr_name in nc_var.ncattrs():
-                pass
-            else:
-                if len(nc_var.ncattrs()) > len(var_attrs):
+            if attr_name not in nc_var_attrs:
+                if len(nc_var_attrs) > len(var_attrs):
                     if verbose:
                         logging.warning(
                             f"Variable: {var_name:<15} attributes {' '*6}: "
@@ -816,7 +816,7 @@ def c3s_meta_attributes_exact_values_per_var_name(
                         )
                         logging.error(
                             f"Variable: {var_name:<15} attributes {' '*6}: "
-                            f"actual attributes: {nc_var.ncattrs()} "
+                            f"actual attributes: {nc_var_attrs} "
                             f"expected attributes: {var_attrs}"
                         )
             try:
@@ -866,7 +866,6 @@ def c3s_meta_attributes_exact_values_per_var_name(
 
             actual_value = str(actual_value)
             expected_value = str(expected_value)
-            check_result = actual_value == expected_value
 
             if attr_name not in check_regex:
                 check_result = actual_value == expected_value
@@ -2197,12 +2196,11 @@ def c3s_time_values_check(
     leadt_units = ds.variables["leadtime"].units
 
     try:
-        cell_method = constraints.get(scientific_var_name)["cell_methods"]
-        step = constraints.get(scientific_var_name)["step"]
-    except:
+        var_constraints = constraints[scientific_var_name]
+    except KeyError:
         status = 0
         outcome.setdefault("errors", []).append(
-            f"Variable ({scientific_var_name}) is not a C3S " f"parameter"
+            f"Variable ({scientific_var_name}) is not a C3S parameter"
         )
         if verbose:
             logging.error(
@@ -2212,18 +2210,20 @@ def c3s_time_values_check(
             )
         outcome["status"] = status
         return outcome
+    cell_method = var_constraints["cell_methods"]
+    step = var_constraints["step"]
 
     if cell_method == "point":
-        start_point = step
+        start_point = 0
     else:
-        start_point = step / 2
+        start_point = 0.5
 
     leadt_computed = np.array([start_point + (step * n) for n in range(len(leadt))])
     leadtime_ckeck = True
 
     # Check the leadtime
     # Case 1: NO ocean variables --> check the leadtime
-    if ds.level_type not in "ocean2d":
+    if ds.level_type != "ocean2d":
         if np.all(np.isin(leadt, leadt_computed)):
             status = 1
             outcome.setdefault("info", []).append(
@@ -2251,7 +2251,7 @@ def c3s_time_values_check(
             else:
                 leadtime_ckeck = False
                 status = 1
-                outcome.setdefault("info", []).append(
+                outcome.setdefault("warnings", []).append(
                     f"Variable leadtime: values don't follow operational standards"
                 )
                 if verbose:
@@ -2271,7 +2271,6 @@ def c3s_time_values_check(
         month = reft.month
         start = 0
         end = calendar.monthrange(year, month)[1] * 24
-        leadt_computed_ = (end - start) / 2
         leadt_computed_ocean = []
 
         number_of_months = int(leadt[-1] / 24 / 30)
@@ -2330,7 +2329,7 @@ def c3s_time_values_check(
     # Check the leadtime_bnds, leadtime_bnds only for variables where
     # cell_method != point
     # Case 1. No ocean variable
-    if cell_method not in "point" and ds.level_type not in "ocean2d":
+    if cell_method != "point" and ds.level_type != "ocean2d":
         center = step / 2
         leadt_bnds = ds.variables["leadtime_bnds"][:]
         validt_computed = np.array([(n - center, n + center) for n in leadt])
@@ -2453,7 +2452,7 @@ def c3s_time_values_check(
             if verbose:
                 logging.error(
                     f"Variable:  {str('time'):<15} leadtime and time values are equal "
-                    f"but leadtime values are not coorect {' '*42} --> NOK"
+                    f"but leadtime values are not correct {' '*42} --> NOK"
                 )
     else:
         status = 0

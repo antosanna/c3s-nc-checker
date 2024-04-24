@@ -123,6 +123,18 @@
 
                         ]
                     }
+                },
+                "variables_per_var_name": {
+                    "sftlf": {
+                        "expected": [
+                            "realization"
+                        ]
+                    },
+                    "orog": {
+                        "expected": [
+                            "realization"
+                        ]
+                    }
                 }
             }
         },
