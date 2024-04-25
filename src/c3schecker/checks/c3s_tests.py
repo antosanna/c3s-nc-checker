@@ -506,6 +506,15 @@ def c3s_coordinates_per_var_name(
         if verbose:
             logging.info("Operational mode: No additional checks were made.")
 
+    # institute_id = ds.institute_id
+    # system = ds.source.split()[0].split(":")[0]
+
+    # exceptions = (
+    #     excep.get("exceptions", {})
+    #     .get(institute_id, {})
+    #     .get(system, {})
+    #     .get("variables_per_var_name")    )
+        
     status = 1
     outcome = {"status": status}
 
@@ -529,6 +538,7 @@ def c3s_coordinates_per_var_name(
                             f"{' '*93} --> OK"
                         )
             except KeyError:
+                
                 outcome.setdefault("errors", []).append(
                     f"Variable ({coordinate}) is required "
                     f"for the parameter {parameters_var_name} "
@@ -541,7 +551,7 @@ def c3s_coordinates_per_var_name(
                         f"{' '*103} --> NOK"
                     )
 
-        actual_coordinates = []
+        actual_coordinates = [] 
         for var_name, nc_var in ds.variables.items():
             if (
                 var_name == parameters_var_name
@@ -555,10 +565,9 @@ def c3s_coordinates_per_var_name(
         additional = [
             item for item in actual_coordinates if item not in expected_coordinates
         ]
-
+        
         # missing coordinates have been already detected about.
         # We don't need another check
-
         if len(additional) > 0:
             institute_id = ds.institute_id
             system = ds.source.split()[0].split(":")[0]
@@ -584,7 +593,16 @@ def c3s_coordinates_per_var_name(
                             f"Additional variable ('{str(var):15}') was "
                             f"found {' '*90} --> NOK"
                         )
-    except:
+                else:
+                    outcome.setdefault("warning", []).append(
+                        f"Additional variable ('{var}') was found, under exception"
+                    )
+                    if verbose:
+                        logging.warning(
+                            f"Additional variable ('{str(var):15}') was "
+                            f"found {' '*90} --> OK under exception"
+                        )
+    except:        
         status = 0
         outcome.setdefault("errors", []).append(
             f"Variable ({parameters_var_name}) is not a C3S " f"parameter"
@@ -779,9 +797,21 @@ def c3s_meta_attributes_exact_values_per_var_name(
     system = ds.source.split()[0].split(":")[0]
 
     for var_name, nc_var in ds.variables.items():
-        var_specific_constraints = overall_constraints.get(var_name, {})
-        var_attrs = []
-
+        actual_data_vars = _get_data_vars(ds)
+        data_name = actual_data_vars[0].name   
+        # hardcode in the code the difference for the valid_max between wind and temperature values
+        var_name_ = var_name
+        if (data_name == "uasmean" or 
+            data_name == "vasmean" or
+            data_name == "uas" or
+            data_name == "vas" or
+            data_name == "wsgmax"
+            ) and var_name == "height":
+            var_name_ = 'height_wind'
+        
+        var_specific_constraints = overall_constraints.get(var_name_, {})
+        var_attrs = []      
+        
         for global_attr_name, expected_value in var_specific_constraints.get(
             "global", {}
         ).items():
@@ -793,11 +823,11 @@ def c3s_meta_attributes_exact_values_per_var_name(
                 )
                 if verbose:
                     logging.info(
-                        f"Variable:  {var_name:<15} global attribute:  "
+                        f"Variable: {var_name:<15} global attribute: "
                         f"{global_attr_name:<17} "
-                        f"value: {actual_global_value:<60} {' '*8} --> OK"
+                        f"value: {actual_global_value:<60} {' '*10} --> OK"
                     )
-
+        
         for attr_name, expected_value in var_specific_constraints.get(
             "expected", {}
         ).items():
@@ -820,7 +850,8 @@ def c3s_meta_attributes_exact_values_per_var_name(
                             f"expected attributes: {var_attrs}"
                         )
             try:
-                actual_value = str(nc_var.getncattr(attr_name))
+                # actual_value = str(nc_var.getncattr(attr_name))
+                actual_value = nc_var.getncattr(attr_name)
             except AttributeError:
                 exceptions = (
                     excep.get("exceptions", {})
@@ -863,14 +894,95 @@ def c3s_meta_attributes_exact_values_per_var_name(
                             f"{attr_name:<17} not found {' '*68} --> NOK"
                         )
                     continue
+            
+            if attr_name in "valid_min" or attr_name in "valid_max":
+                if not isinstance(
+                    nc_var.getncattr(attr_name), np.float32
+                ) and not isinstance(
+                    nc_var.getncattr(attr_name), np.float64
+                ):  
+                    exceptions = (
+                        excep.get("exceptions", {})
+                        .get(institute_id, {})
+                        .get(system, {})
+                        .get("attributes_values_per_var_name", {})
+                        .get(var_name, {})
+                        .get("expected", {})
+                    )
+                    try:
+                    #if type(exceptions[attr_name]) == type(actual_value):
+                        type(exceptions[attr_name]) == type(actual_value)
+                        message_type = "warnings"
+                        new_status = 1
+                        outcome.setdefault(message_type, []).append(
+                            f"Attribute '{attr_name}' of variable '{var_name}' "
+                            f"has dtype '{type(exceptions[attr_name])}'. Expected: "
+                            f"{type(expected_value)}. Under exception. "
+                        )
+                        if verbose:
+                            logging.warning(
+                                f"Variable: {var_name:<15} "
+                                f"attribute {' '*6}: {attr_name:<17} value: "
+                                f"{actual_value:<60} {' '*10} --> "
+                                f"OK under exception (expected dtype: float; actual:"
+                                f"({type(nc_var.getncattr(attr_name))}))"
+                            )
+                    except:
+                    # else:
+                        message_type = "errors"
+                        new_status = 0
+                        outcome.setdefault(message_type, []).append(
+                            f"Attribute '{attr_name}' of variable '{var_name}' "
+                            f"has dtype '{type(actual_value)}'. Expected: "
+                            f"{type(expected_value)}."
+                        )
+                        if verbose:
+                            logging.error(
+                                f"Variable: {var_name:<15} "
+                                f"attribute {' '*6}: {attr_name:<17} value: "
+                                f"{actual_value:<60} {' '*10} --> "
+                                f"NOK (expected dtype: float; actual:"
+                                f"({type(nc_var.getncattr(attr_name))}))"
+                            )
 
-            actual_value = str(actual_value)
-            expected_value = str(expected_value)
 
-            if attr_name not in check_regex:
-                check_result = actual_value == expected_value
+
+
+
+
+
+
+
+            if isinstance(
+                actual_value, np.float32
+                ) or isinstance(
+                    actual_value, np.float64
+                ):
+                actual_value_ = actual_value
+                expected_value_ = float(expected_value)
+            elif isinstance(
+                actual_value, np.int32
+                ) or isinstance(
+                    actual_value, np.int64
+                ):
+                actual_value_ = actual_value
+                expected_value_ = int(expected_value)
+            elif (isinstance(actual_value, str)) and (
+                attr_name == "valid_min" or
+                attr_name == "valid_max"
+            ):
+                actual_value_ = float(actual_value)  
+                expected_value_ = float(expected_value)
+
             else:
-                check_result = re.match(expected_value, actual_value)
+                actual_value_ = str(actual_value)
+                expected_value_ = str(expected_value)
+            
+            if attr_name not in check_regex:
+                check_result = actual_value_ == expected_value_          
+            else:
+                check_result = re.match(expected_value, actual_value)      
+
             if check_result and attr_name != "cell_methods":
                 outcome.setdefault("info", []).append(f"{var_name} {attr_name}: OK")
                 if verbose:
@@ -923,8 +1035,9 @@ def c3s_meta_attributes_exact_values_per_var_name(
                         .get(var_name, {})
                         .get("expected", {})
                     )
+
                     if str(nc_var.getncattr(attr_name)) not in str(
-                        exceptions.get(attr_name)
+                        exceptions.get(attr_name) 
                     ):
                         message_type = "errors"
                         new_status = 0
@@ -942,20 +1055,21 @@ def c3s_meta_attributes_exact_values_per_var_name(
                                 f"NOK (wrong attribute value; expected value: "
                                 f"({expected_value})"
                             )
-                        if attr_name in "valid_min" or attr_name in "valid_max":
-                            if not isinstance(
-                                nc_var.getncattr(attr_name), np.float32
-                            ) or not isinstance(
-                                nc_var.getncattr(attr_name), np.float64
-                            ):
-                                if verbose:
-                                    logging.error(
-                                        f"Variable: {var_name:<15} "
-                                        f"attribute {' '*6}: {attr_name:<17} value: "
-                                        f"{actual_value:<60} {' '*10} --> "
-                                        f"NOK (expected dtype: float; actual:"
-                                        f"({type(nc_var.getncattr(attr_name))}))"
-                                    )
+
+                        # if attr_name in "valid_min" or attr_name in "valid_max":
+                        #     if not isinstance(
+                        #         nc_var.getncattr(attr_name), np.float32
+                        #     ) and not isinstance(
+                        #         nc_var.getncattr(attr_name), np.float64
+                        #     ):
+                        #         if verbose:
+                        #             logging.error(
+                        #                 f"Variable: {var_name:<15} "
+                        #                 f"attribute {' '*6}: {attr_name:<17} value: "
+                        #                 f"{actual_value:<60} {' '*10} --> "
+                        #                 f"NOK (expected dtype: float; actual:"
+                        #                 f"({type(nc_var.getncattr(attr_name))}))"
+                        #             )
                     else:
                         message_type = "warnings"
                         new_status = 1
@@ -2177,6 +2291,7 @@ def c3s_time_values_check(
             logging.info(
                 "Operational mode: Time frequency should follow the C3S standards."
             )
+    status = 1
     outcome = {"status": 1}
     constraints = spec.get("time_coordinates_values_per_var_name")
     actual_data_vars = _get_data_vars(ds)
@@ -2194,7 +2309,7 @@ def c3s_time_values_check(
 
     leadt = ds.variables["leadtime"][:]
     leadt_units = ds.variables["leadtime"].units
-
+    
     try:
         var_constraints = constraints[scientific_var_name]
     except KeyError:
@@ -2217,9 +2332,24 @@ def c3s_time_values_check(
         start_point = 0
     else:
         start_point = 0.5
-
-    leadt_computed = np.array([start_point + (step * n) for n in range(len(leadt))])
+    
+    if str(leadt_units) == 'days':
+        leadt_computed = np.array([((start_point*step) + (step * n))/24 for n in range(len(leadt))])
+        leadt_units_ = 'hours'
+    else:
+        leadt_computed = np.array([(start_point*step) + (step * n) for n in range(len(leadt))])
+        leadt_units_ = leadt_units
     leadtime_ckeck = True
+
+    institute_id = ds.institute_id
+    system = ds.source.split()[0].split(":")[0]
+
+    exceptions = (
+        excep.get("exceptions", {})
+        .get(institute_id, {})
+        .get(system, {})
+        .get('time_coordinates_values_per_var_name')
+    )
 
     # Check the leadtime
     # Case 1: NO ocean variables --> check the leadtime
@@ -2233,21 +2363,44 @@ def c3s_time_values_check(
                 logging.info(
                     f"Variable:  {str('leadtime'):15} values as expected, "
                     f"range [{str(leadt[0]):<4}, {str(leadt[-1]):<7}], "
-                    f"frequency {str(step):<3} {str(leadt_units):10} "
+                    f"frequency {str(step):<3} {str(leadt_units_):10} "
                     f"{' '*45} --> OK"
                 )
         else:
             if operational:
-                leadtime_ckeck = False
-                status = 0
-                outcome.setdefault("errors", []).append(
-                    f"Variable leadtime: Unexpected values were found"
-                )
-                if verbose:
-                    logging.error(
-                        f"Variable:  {str('leadtime'):15} unexpected values were found "
-                        f"{' '*84} -->  NOK"
-                    )
+                if (scientific_var_name == 'hus' or
+                    scientific_var_name == 'ta' or
+                    scientific_var_name == 'ua' or
+                    scientific_var_name == 'va' or
+                    scientific_var_name == 'zg'
+                ):
+                
+                    try:
+                        exception = exceptions.get('start_point_upper_level_var', {})
+                        leadt_computed = np.array([(start_point*step) + (step * n) for n in range(exception, len(leadt)+exception)])
+                        if np.all(np.isin(leadt, leadt_computed)):
+                            status = 1
+                            outcome.setdefault("warnings", []).append(
+                                f"Variable leadtime: values as expected OK"
+                            )
+                            if verbose:
+                                logging.warning(
+                                    f"Variable:  {str('leadtime'):15} values as expected, "
+                                    f"range [{str(leadt[0]):<4}, {str(leadt[-1]):<7}], "
+                                    f"frequency {str(step):<3} {str(leadt_units):10} "
+                                    f"{' '*45} --> OK under exception"
+                                )
+                    except:
+                        leadtime_ckeck = False
+                        status = 0
+                        outcome.setdefault("errors", []).append(
+                            f"Variable leadtime: Unexpected values were found"
+                        )
+                        if verbose:
+                            logging.error(
+                                f"Variable:  {str('leadtime'):15} unexpected values were found "
+                                f"{' '*84} --> NOK"
+                            )
             else:
                 leadtime_ckeck = False
                 status = 1
@@ -2332,7 +2485,18 @@ def c3s_time_values_check(
     if cell_method != "point" and ds.level_type != "ocean2d":
         center = step / 2
         leadt_bnds = ds.variables["leadtime_bnds"][:]
-        validt_computed = np.array([(n - center, n + center) for n in leadt])
+        
+        # validt_computed = np.array([(n - center, n + center) for n in leadt])
+
+        if str(leadt_units) == 'days':
+            leadt_computed = np.array([((start_point*step) + (step * n))/24 for n in range(len(leadt))])
+            leadt_units_ = 'hours'
+            validt_computed = np.array([(n - (center/24), n + (center/24)) for n in leadt])
+        else:
+            leadt_computed = np.array([(start_point*step) + (step * n) for n in range(len(leadt))])
+            leadt_units_ = leadt_units
+            validt_computed = np.array([(n - center, n + center) for n in leadt])
+
         if np.all(validt_computed == leadt_bnds):
             status = 1
             outcome.setdefault("info", []).append(

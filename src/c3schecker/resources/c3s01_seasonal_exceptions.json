@@ -95,7 +95,19 @@
                         ]
                     }
                 },
-                "missing_values" : [ "orog", "hus", "ta", "ua", "va", "zg", "clt", "psl", "hfls", "hfss", "sftlf" ]
+                "missing_values" : [ "orog", "hus", "ta", "ua", "va", "zg", "clt", "psl", "hfls", "hfss", "sftlf" ],
+                "variables_per_var_name": {
+                    "sftlf": {
+                        "expected": [
+                            "realization"
+                        ]
+                    },
+                    "orog": {
+                        "expected": [
+                            "realization"
+                        ]
+                    }
+                }
             }
         },
         "cmcc": {
@@ -140,6 +152,18 @@
         },
         "cwao": {
             "CanCM4i-v20190731": {
+                "variables_per_var_name": {
+                    "orog": {
+                        "expected": [
+                            "realization"
+                        ]
+                },
+                "sftlf": {
+                    "expected": [
+                        "realization"
+                    ]
+            }
+            },
                 "attributes_values_per_var_name": {
                     "sftlf": {
                         "expected": {
@@ -229,6 +253,18 @@
 
             },
             "GEM5-NEMO-v20211130": {
+                "variables_per_var_name": {
+                    "orog": {
+                        "expected": [
+                            "realization"
+                        ]
+                    },
+                    "sftlf": {
+                        "expected": [
+                            "realization"
+                        ]
+                    }
+                },
                 "attributes_values_per_var_name": {
                     "sftlf": {
                         "expected": {
@@ -276,6 +312,9 @@
 
                         ]
                     }
+                },
+                "time_coordinates_values_per_var_name": {
+                    "start_point_upper_level_var": 1
                 }
 
             }
@@ -309,8 +348,8 @@
                             "long_name": "latitude",
                             "standard_name": "latitude",
                             "axis": "Y",
-                            "valid_min": -90.0,
-                            "valid_max": 90.0,
+                            "valid_min": "-90.0",
+                            "valid_max": "90.0",
                             "bounds": "lat_bnds"
                         }
                     },
@@ -320,9 +359,15 @@
                             "long_name": "longitude",
                             "standard_name": "longitude",
                             "axis": "X",
-                            "valid_min": 0.0,
-                            "valid_max": 360.0,
+                            "valid_min": "0.0",
+                            "valid_max": "360.0",
                             "bounds": "lon_bnds"
+                        }
+                    },
+                    "height": {
+                        "expected": {
+                            "valid_min": "1.",
+                            "valid_max": "30."
                         }
                     },
                     "hcrs": {
@@ -333,6 +378,25 @@
                 },
                 "units": {
                     "temperature": "C"
+                },
+                "time_coordinates_values_per_var_name": {
+                    "start_point_upper_level_var": 1
+                },
+                "cf_attributes_values_type": {
+                    "valid_min": "str",
+                    "valid_max": "str"
+                },
+                "variables_per_var_name": {
+                    "sftlf": {
+                        "expected": [
+                            "realization"
+                        ]
+                    },
+                    "orog": {
+                        "expected": [
+                            "realization"
+                        ]
+                    }
                 }
             }
 

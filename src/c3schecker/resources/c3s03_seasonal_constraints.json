@@ -391,6 +391,31 @@
             "lat", 
             "lon"
         ],
+        "cltmean": [
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
+        "tasmean": [
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
+        "uasmean": [
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
+        "vasmean": [
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
+        "tsomean": [
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
         "required":["mandatory"]
     },
     "variables_per_var_name": {
@@ -939,6 +964,49 @@
             "lon",
             "hcrs"
         ],
+        "cltmean": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "lat", 
+            "lon"
+        ],
+        "tasmean": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "height",
+            "lat", 
+            "lon"
+        ],
+        "uasmean": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "height",
+            "lat", 
+            "lon"
+        ],
+        "vasmean": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime", 
+            "height",
+            "lat", 
+            "lon"
+        ],
+        "tsomean": [
+            "reftime", 
+            "realization", 
+            "time", 
+            "leadtime",
+            "lat", 
+            "lon"
+        ],
         "required":["mandatory"]
     },
     "attributes_per_var_names": {
@@ -1117,6 +1185,17 @@
                 "positive": "up",
                 "standard_name": "height",
                 "valid_max": "10.",
+                "valid_min": 1.0
+            }
+        },
+        "height_wind": {
+            "expected": {
+                "units": "m",
+                "long_name": "height",
+                "axis": "Z",
+                "positive": "up",
+                "standard_name": "height",
+                "valid_max": "30.",
                 "valid_min": 1.0
             }
         },
@@ -3026,7 +3105,7 @@
         },
         "rhosn": {
             "cell_methods": "point",
-            "step": 6
+            "step": 24
         },
         "lweprs": {
             "cell_methods": "sum",
@@ -3190,6 +3269,26 @@
         },
         "clivi": {
             "cell_methods": "point",
+            "step": 24
+        },
+        "cltmean": {
+            "cell_methods": "mean",
+            "step": 24
+        },
+        "tasmean": {
+            "cell_methods": "mean",
+            "step": 24
+        },
+        "uasmean": {
+            "cell_methods": "mean",
+            "step": 24
+        },
+        "vasmean": {
+            "cell_methods": "mean",
+            "step": 24
+        },
+        "tsomean": {
+            "cell_methods": "mean",
             "step": 24
         },
         "required":["mandatory"]

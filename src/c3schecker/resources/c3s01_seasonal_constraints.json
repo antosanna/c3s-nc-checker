@@ -3195,6 +3195,10 @@
             "cell_methods": "point",
             "step": 24
         },
+        "cltmean": {
+            "cell_methods": "mean",
+            "step": 24
+        },
         "required":["mandatory"]
     },
     "data_values": {
