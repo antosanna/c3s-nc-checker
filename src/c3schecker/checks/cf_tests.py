@@ -575,7 +575,8 @@ def cf_attributes_values_type_check(ds: Dataset, _, excep: dict, verbose, operat
                             outcome.setdefault("warnings", []).append(
                                 f"Variable: {str(var_name)} attribute {str(attr)} "
                                 f"attribute value: {str(attribute_value)} "
-                                f"type: {str(type(attribute_value))} wrong attribute value type NOK"
+                                f"type: {str(type(attribute_value))} wrong attribute value type OK "
+                                f"Under exception "
                             )
                             if verbose:
                                 logging.warning(
@@ -1002,7 +1003,7 @@ def cf_units_check(ds: Dataset, _, excep: dict, verbose, operational):
                                             f"Units of variable '{var_name}' ('{units}') "
                                             f"is not consistent with standard name "
                                             f"canonical units ('{known_units}'). "
-                                            f"Under exception."
+                                            f"OK Under exception."
                                         )
                                         if verbose:
                                             logging.warning(

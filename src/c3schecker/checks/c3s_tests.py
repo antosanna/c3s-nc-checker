@@ -678,8 +678,8 @@ def c3s_meta_attributes_per_var_name(
                 if set(exceptions) == set(variable.ncattrs()):
                     message_type = "warnings"
                     outcome.setdefault(message_type, []).append(
-                        f"{var_name}: unter exception, instantaneous variable, "
-                        f"expected: {expected}; Actual: {variable.ncattrs()}"
+                        f"{var_name}: instantaneous variable, "
+                        f"expected: {expected}; Actual: {variable.ncattrs()}, OK under exception"
                     )
                     if verbose:
                         logging.warning(
@@ -839,12 +839,16 @@ def c3s_meta_attributes_exact_values_per_var_name(
         ).items():
             if attr_name not in nc_var_attrs:
                 if len(nc_var_attrs) > len(var_attrs):
+                    outcome.setdefault("warnings", []).append(
+                        f"Variable '{var_name}', additional attribute "
+                        f"were found."
+                    )
                     if verbose:
                         logging.warning(
                             f"Variable: {var_name:<15} attributes {' '*6}: "
                             f"additional attributes were found"
                         )
-                        logging.error(
+                        logging.warning(
                             f"Variable: {var_name:<15} attributes {' '*6}: "
                             f"actual attributes: {nc_var_attrs} "
                             f"expected attributes: {var_attrs}"
@@ -871,12 +875,11 @@ def c3s_meta_attributes_exact_values_per_var_name(
                         f"Variable {var_name}' is missing attribute "
                         f"'{attr_name}'. OK under exception'"
                     )
-                    outcome["status"] = 1
                     if verbose:
                         logging.warning(
                             f"Variable: {var_name:<15} attribute {' '*6}: "
                             f"{attr_name:<17} (missing, as an exception) "
-                            f"{' '*51} --> OK "
+                            f"{' '*51} --> OK under exception"
                         )
                         logging.warning(
                             f"Variable: {var_name:<15} attribute {' '*6}: "
@@ -917,7 +920,7 @@ def c3s_meta_attributes_exact_values_per_var_name(
                         outcome.setdefault(message_type, []).append(
                             f"Attribute '{attr_name}' of variable '{var_name}' "
                             f"has dtype '{type(exceptions[attr_name])}'. Expected: "
-                            f"{type(expected_value)}. Under exception. "
+                            f"{type(expected_value)}. OK Under exception. "
                         )
                         if verbose:
                             logging.warning(
@@ -930,7 +933,7 @@ def c3s_meta_attributes_exact_values_per_var_name(
                     except:
                     # else:
                         message_type = "errors"
-                        new_status = 0
+                        outcome["status"] = 0
                         outcome.setdefault(message_type, []).append(
                             f"Attribute '{attr_name}' of variable '{var_name}' "
                             f"has dtype '{type(actual_value)}'. Expected: "
@@ -944,14 +947,6 @@ def c3s_meta_attributes_exact_values_per_var_name(
                                 f"NOK (expected dtype: float; actual:"
                                 f"({type(nc_var.getncattr(attr_name))}))"
                             )
-
-
-
-
-
-
-
-
 
             if isinstance(
                 actual_value, np.float32
@@ -1040,7 +1035,7 @@ def c3s_meta_attributes_exact_values_per_var_name(
                         exceptions.get(attr_name) 
                     ):
                         message_type = "errors"
-                        new_status = 0
+                        outcome["status"] = 0
                         outcome.setdefault(message_type, []).append(
                             f"Attribute '{attr_name}' of variable '{var_name}' "
                             f"({actual_value}) is not allowed. Expected: "
@@ -1072,7 +1067,6 @@ def c3s_meta_attributes_exact_values_per_var_name(
                         #             )
                     else:
                         message_type = "warnings"
-                        new_status = 1
                         if verbose:
                             logging.warning(
                                 f"Variable: {var_name:<15} attribute {' '*6}: "
@@ -1095,14 +1089,12 @@ def c3s_meta_attributes_exact_values_per_var_name(
                             f"Actual value: ({nc_var.getncattr(attr_name)})"
                         )
                     message_type = "errors"
-                    new_status = 0
+                    outcome["status"] = 0
                     outcome.setdefault(message_type, []).append(
                         f"Attribute '{attr_name}' of variable '{var_name}' "
                         f"({actual_value})"
                         f" is not allowed. Expected: {expected_value}"
                     )
-
-                outcome["status"] = outcome["status"] and new_status
     return outcome
 
 
@@ -1973,7 +1965,7 @@ def c3s_data_values(ds: Dataset, spec: dict, excep: dict, verbose, operational) 
                         level, status = "warnings", 1
                         msg = (
                             f"Invalid order found for '{name}':  "
-                            f"It's under exception."
+                            f"OK Under exception."
                         )
                         if verbose:
                             logging.warning(
@@ -2223,7 +2215,7 @@ def c3s_leadtime_bnds_coordinates_check(
             logging.info(
                 f"Variable:  {str(scientific_var_name):<15} instantaneous "
                 f"parameter, no boundaries "
-                f"{' '*74} --> NOK"
+                f"{' '*74} --> OK"
             )
         return outcome
 
@@ -2350,11 +2342,12 @@ def c3s_time_values_check(
         .get(system, {})
         .get('time_coordinates_values_per_var_name')
     )
-
+    frequency_ok = False
     # Check the leadtime
     # Case 1: NO ocean variables --> check the leadtime
     if ds.level_type != "ocean2d":
         if np.all(np.isin(leadt, leadt_computed)):
+            frequency_ok = True
             status = 1
             outcome.setdefault("info", []).append(
                 f"Variable leadtime: values as expected OK"
@@ -2367,53 +2360,63 @@ def c3s_time_values_check(
                     f"{' '*45} --> OK"
                 )
         else:
-            if operational:
-                if (scientific_var_name == 'hus' or
-                    scientific_var_name == 'ta' or
-                    scientific_var_name == 'ua' or
-                    scientific_var_name == 'va' or
-                    scientific_var_name == 'zg'
-                ):
-                
-                    try:
-                        exception = exceptions.get('start_point_upper_level_var', {})
-                        leadt_computed = np.array([(start_point*step) + (step * n) for n in range(exception, len(leadt)+exception)])
-                        if np.all(np.isin(leadt, leadt_computed)):
-                            status = 1
-                            outcome.setdefault("warnings", []).append(
-                                f"Variable leadtime: values as expected OK"
-                            )
-                            if verbose:
-                                logging.warning(
-                                    f"Variable:  {str('leadtime'):15} values as expected, "
-                                    f"range [{str(leadt[0]):<4}, {str(leadt[-1]):<7}], "
-                                    f"frequency {str(step):<3} {str(leadt_units):10} "
-                                    f"{' '*45} --> OK under exception"
-                                )
-                    except:
-                        leadtime_ckeck = False
-                        status = 0
-                        outcome.setdefault("errors", []).append(
-                            f"Variable leadtime: Unexpected values were found"
+            try:
+                # if the step 0 is missing don't raise it as exception
+                #exception = exceptions.get('start_point_upper_level_var', {})
+                step_0 = 1
+                #leadt_computed = np.array([(start_point*step) + (step * n) for n in range(exception, len(leadt)+exception)])
+                leadt_computed = np.array([(start_point*step) + (step * n) for n in range(step_0, len(leadt)+step_0)])
+                if np.all(np.isin(leadt, leadt_computed)):
+                    frequency_ok = True
+                    status = 1
+                    outcome.setdefault("info", []).append(
+                        f"Variable leadtime: values as expected OK"
+                    )
+                    if verbose:
+                        logging.info(
+                            f"Variable:  {str('leadtime'):15} values as expected, "
+                            f"range [{str(leadt[0]):<4}, {str(leadt[-1]):<7}], "
+                            f"frequency {str(step):<3} {str(leadt_units):10} "
+                            f"{' '*45} --> OK Step 0 is missing"
                         )
-                        if verbose:
-                            logging.error(
-                                f"Variable:  {str('leadtime'):15} unexpected values were found "
-                                f"{' '*84} --> NOK"
-                            )
-            else:
+            except:
                 leadtime_ckeck = False
-                status = 1
-                outcome.setdefault("warnings", []).append(
-                    f"Variable leadtime: values don't follow operational standards"
+                status = 0
+                outcome.setdefault("errors", []).append(
+                    f"Variable leadtime: Unexpected values were found"
                 )
                 if verbose:
-                    logging.warning(
-                        f"Variable:  {str('leadtime'):15} "
-                        f"range [{str(leadt[0]):<4}, {str(leadt[1]):<4}, ..., "
-                        f"{str(leadt[-1]):<7}], "
-                        f"doesn't follow the operational standards"
+                    logging.error(
+                        f"Variable:  {str('leadtime'):15} unexpected values were found "
+                        f"{' '*84} --> NOK"
                     )
+        if operational and not frequency_ok:
+            # operational means the frequency that has been specified in the C3S-0.X encoding standards
+            # for research project the frequency can be different. 
+            outcome.setdefault("errors", []).append(
+                f"Variable leadtime: Unexpected values were found"
+            )
+            if verbose:
+                logging.error(
+                    f"Variable:  {str('leadtime'):15} unexpected values were found "
+                    f"{' '*84} --> NOK"
+                )
+            
+        elif operational and frequency_ok:
+            pass        
+        else:
+            #leadtime_ckeck = False
+            #status = 1
+            outcome.setdefault("warnings", []).append(
+                f"Variable leadtime: values don't follow operational standards"
+            )
+            if verbose:
+                logging.warning(
+                    f"Variable:  {str('leadtime'):15} "
+                    f"range [{str(leadt[0]):<4}, {str(leadt[1]):<4}, ..., "
+                    f"{str(leadt[-1]):<7}], "
+                    f"doesn't follow the operational standards"
+                )
 
     # Case 2: Ocean variables --> check the leadtime
     if ds.level_type == "ocean2d":
@@ -2899,7 +2902,8 @@ def c3s_21_missing_values_check(
             if thisvar.name in exceptions:
                 outcome.setdefault("warning", []).append(
                     f"The data array does not have missing values "
-                    f"(missing_value=_FillValue={thisFV} not needed).'"
+                    f"(missing_value=_FillValue={thisFV} not needed).' "
+                    f"OK Under exception"
                 )
                 if verbose:
                     logging.warning(

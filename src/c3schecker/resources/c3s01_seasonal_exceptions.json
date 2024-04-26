@@ -339,7 +339,9 @@
                             "units": "1",
                             "grid_mapping": "hcrs",
                             "long_name": "Land Area Fraction",
-                            "coordinates": "lat lon"
+                            "coordinates": "lat lon",
+                            "valid_min": "0",
+                            "valid_max": "1"
                         }
                     },
                     "lat": {
