@@ -867,8 +867,7 @@ def c3s_meta_attributes_exact_values_per_var_name(
                 )
                 exception = False
                 for attr, value in exceptions.items():
-                    exception = False
-                    if attr_name not in attr:
+                    if attr_name in attr:
                         exception = True
                 if exception:
                     outcome.setdefault("warnings", []).append(
@@ -883,7 +882,7 @@ def c3s_meta_attributes_exact_values_per_var_name(
                         )
                         logging.warning(
                             f"Variable: {var_name:<15} attribute {' '*6}: "
-                            f"{attr_name:<17}. The exception is {exceptions}."
+                            f"{attr_name:<17} The exception is {exceptions}."
                         )
                     continue
                 else:

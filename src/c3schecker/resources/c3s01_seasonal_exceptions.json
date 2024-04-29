@@ -120,6 +120,11 @@
                             "long_name": "Land Area Fraction",
                             "coordinates": "lat lon"
                         }
+                    },
+                    "uas": {
+                        "expected": {
+                            "valid_max": 30
+                        }
                     }
                 },
                 "units": {
