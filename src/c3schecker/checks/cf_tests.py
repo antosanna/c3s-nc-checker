@@ -566,11 +566,11 @@ def cf_attributes_values_type_check(ds: Dataset, _, excep: dict, verbose, operat
                         excep.get("exceptions", {})
                         .get(institute_id, {})
                         .get(system, {})
-                        .get('cf_attributes_values_type')
+                        .get("cf_attributes_values_type")
                         .get(attr)
                     )
                     try:
-                        exception == 'str'
+                        exception == "str"
                         if isinstance(attribute_value, str):
                             outcome.setdefault("warnings", []).append(
                                 f"Variable: {str(var_name)} attribute {str(attr)} "
