@@ -1,131 +1,123 @@
 
 *****************************
-C3S NetCDF Compliancy Checker 
+C3S NetCDF Compliance Checker
 *****************************
 
 
 System setup
 ------------
-C3S_Checker makes use of Numpy, netCDF4-python, and Unidata udunits2 (> 2.2.17 ).
 
-You need to make sure these dependencies are properly installed.
+Clone the repository from Bitbucket and change to the checker's directory::
 
-C:
+ git clone https://git.ecmwf.int/scm/sapp/c3s-nc-checker.git
+ cd c3s-nc-checker
 
-http://www.unidata.ucar.edu/software/udunits/udunits-current/doc/udunits/udunits2.html#Binary
+Option 1: Install in a conda environment
+========================================
 
-
-If you do not wish to install to the system Python, you can create a virtualenv 
-environment and install the checker and associated packages there:
-
-
-Option 1: Install directly to your system
----------------------------------------
-
-Update pip::
- pip install --upgrade pip
-
-Create directory for checker::
-
- mkdir <code_dir>
- cd <code_dir>
-
-To deploy the 'master' branch from the GIT repository::
-
- git clone https://software.ecmwf.int/stash/scm/cds/checker.git
-
-Switch to checker directory::
-
- cd checker
- 
-Switch to master branch::
-
- git checkout master
-
-Install dependencies if needed::
-
- pip install -r requirements.txt
- 
-Install Checker:: 
-  
- python setup.py install
- 
- 
-
-Option 2: Install to a virtualenv on your system
-------------------------------------------------
-
-
-Create Virtualenv and installation directory::
-
- virtualenv <install_dir>
- cd <install_dir>
- source bin/activate
-
-Update pip::
- pip install --upgrade pip
-
-Create directory for checker::
-
- mkdir <code_dir>
- cd <code_dir>
-
-To deploy the 'master' branch from the GIT repository::
-
- git clone https://software.ecmwf.int/stash/scm/cds/checker.git
-
-Switch to checker directory::
-
- cd checker
- 
-Switch to master branch::
-
- git checkout master
-
-Install dependencies if needed::
-
- pip install -r requirements.txt
- 
-Install Checker:: 
-  
- python setup.py install
-
-
-
-Initial Test
-------------
-
-NOT YET IMPLEMENTED
-
-Install Unidata NetCDF utilities -  ncgen should be properly installed and available.
-
-Test with::
-
-    ./tests/run_checkertests.py
-
-
-
-
-Basic Command Line Usage
-========================
+1. Create a Conda environment
 
 ::
- C3Schecker [-h] [-V] [-v] [-d {info,warning,error}] -t{seasonal,nemo,...} [-c] [-k C3SCHECK] [-i C3SCHECK] [-s] inputfiles [inputfiles ...]
 
-Positional arguments::
-----------------------
-      inputfiles            NetCDF files list separated by blank
+ conda -V
+ conda update conda
+ conda create -n c3s-nc-checker -c conda-forge -y python=3.10
+ conda env update -n c3s-nc-checker -f environment.yml
+ conda activate c3s-nc-checker
 
-Optional arguments:
--------------------
+2. Install the checker from
 
-*   -h, --help            show this help message and exit
-*   -V, --version         CF Version
-*   -v, --verbose         Verbose
-*   -d {info,warning,error}, --infolevel {info,warning,error} Information Level output
-*   -t {seasonal,nemo}, --c3stype {seasonal,nemo} Type of Datasetset(['seasonal', 'nemo'])
-*   -c, --cf              CF Checkings ONLY
-*   -k C3SCHECK, --checks  Optional List of checks - Default [All]
-*   -i C3SCHECK, --ignorechecks  Optional List of ignored checks - Default [None]
-*   -s, --stop            Stop on error
+::
 
+ python -m pip install .
+ 
+Or to install in editable mode::
+
+ python -m pip install -e .
+
+
+Option 2: Install in a virtualenv
+=================================
+
+1. Create the virtualenv and installation directory
+
+::
+
+ virtualenv .venv
+ source .venv/bin/activate
+
+2. Update pip
+
+::
+
+ python -m pip install --upgrade pip
+
+3. Install
+
+::
+
+ python -m pip install .
+
+Or to install in editable mode::
+
+ python -m pip install -e .
+
+
+
+Command Line Usage
+------------------------
+
+::
+
+ c3s-checker --help
+ Usage: c3s-checker [OPTIONS] [INPUTS]...
+
+  Check the input NetCDF files against a specified convention or set of
+  constraints
+
+  Options:
+      -t, --tests TEXT                Specific test (s) to be run Can be
+                                      specified multiple times
+      -f, --tests-family [c3s|cf|cerise]
+                                      Specific group of tests to be run. Can be
+                                      specified multiple times  [default: c3s, cf]
+      --constraints FILE              JSON file representing the constraints for
+                                      the convention that the NetCDF file(s) must
+                                      follow. If this is not given, The
+                                      -C/--convention option is used to load a
+                                      default constraint file embedded with the
+                                      package (see the option's docs). Otherwise,
+                                      the -C/--convention is ignored.
+      --exceptions FILE               JSON file representing what kind of
+                                      deviation from the constraints are
+                                      authorized. If a test fails but that failure
+                                      is specified in this file, the overall test
+                                      result isn't affected.
+      -C, --convention [C3S-0.1|C3S-0.2|C3S-0.3]
+                                      The NetCDF convention to use for the test
+                                      suite. This is used to load a default
+                                      constraint file corresponding to the
+                                      convention, and is ignored if the
+                                      --constraints option is given.  [default:
+                                      C3S-0.3]
+      --json                          Print output in json format
+      --score-threshold INTEGER RANGE
+                                      The minimum score a file must have to be
+                                      considered as passing all the checks
+                                      (expressed as a percentage - i.e between 0
+                                      and 100). For operational run the score
+                                      should be 100  [default: 100; 0<=x<=100]
+      --min-passing-files INTEGER RANGE
+                                      The minimum number of files that must pass
+                                      to consider the command as passing
+                                      (expressed as a percentage - i.e between 0
+                                      and 100) For operational runs all the files
+                                      should have pass all the tests.  [default:
+                                      100; 0<=x<=100]
+      -v, --verbose                   Enables verbose mode
+      -p, --operational               Run in operational mode, where any failed
+                                      test makes the overall test fail
+      -l, --list-tests                List the available tests that can be
+                                      executed. Run this first if you want to
+                                      select only a few tests to run
+      --help                          Show this message and exit.

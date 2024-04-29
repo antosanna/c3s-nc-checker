@@ -8,3 +8,5 @@ compliance_checker.egg-info
 htmlcov
 *.log
 *.nc
+*.DS_Store
+.vscode/

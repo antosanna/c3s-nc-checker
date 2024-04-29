@@ -1,0 +1,10 @@
+name: c3s-nc-checker
+channels:
+  - conda-forge
+dependencies:
+- netCDF4
+- cfunits
+- numpy
+- click
+- python-dateutil
+- pip
