@@ -67,7 +67,9 @@
                             "units": "1",
                             "grid_mapping": "hcrs",
                             "long_name": "Land Area Fraction",
-                            "coordinates": "lat lon"
+                            "coordinates": "lat lon",
+                            "valid_max": 1,
+                            "valid_min": 0
                         }
                     },
                     "mrlsl": {
@@ -78,6 +80,18 @@
                             "standard_name": "moisture_content_of_soil_layer",
                             "cell_methods": "leadtime: mean (interval: 600 s)",
                             "grid_mapping": "hcrs"
+                        }
+                    },
+                    "uas": {
+                        "expected": {
+                            "valid_max": 30.0,
+                            "valid_min": 1.0
+                        }
+                    },
+                    "vas": {
+                        "expected": {
+                            "valid_max": 30.0,
+                            "valid_min": 1.0
                         }
                     }
                 },
@@ -118,12 +132,22 @@
                             "units": "1",
                             "grid_mapping": "hcrs",
                             "long_name": "Land Area Fraction",
-                            "coordinates": "lat lon"
+                            "coordinates": "lat lon",
+                            "valid_max": 30.0,
+                            "valid_min": 1.0
+
                         }
                     },
                     "uas": {
                         "expected": {
-                            "valid_max": 30
+                            "valid_max": 30.0,
+                            "valid_min": 1.0
+                        }
+                    },
+                    "vas": {
+                        "expected": {
+                            "valid_max": 30.0,
+                            "valid_min": 1.0
                         }
                     }
                 },
@@ -175,7 +199,9 @@
                             "units": "1",
                             "grid_mapping": "hcrs",
                             "long_name": "Land Area Fraction",
-                            "coordinates": "realization lat lon"
+                            "coordinates": "realization lat lon",
+                            "valid_max": 1,
+                            "valid_min": 0
                         }
                     },
                     "orog": {
@@ -276,7 +302,9 @@
                             "units": "1",
                             "grid_mapping": "hcrs",
                             "long_name": "Land Area Fraction",
-                            "coordinates": "realization lat lon"
+                            "coordinates": "realization lat lon",
+                            "valid_max": 1,
+                            "valid_min": 0
                         }
                     },
                     "orog": {
@@ -285,6 +313,18 @@
                             "grid_mapping": "hcrs",
                             "long_name": "Land Area Fraction",
                             "coordinates": "realization lat lon"
+                        }
+                    },
+                    "uas": {
+                        "expected": {
+                            "valid_max": 30.0,
+                            "valid_min": 1.0
+                        }
+                    },
+                    "vas": {
+                        "expected": {
+                            "valid_max": 30.0,
+                            "valid_min": 1.0
                         }
                     }
                 },
@@ -379,7 +419,14 @@
                     },
                     "hcrs": {
                         "expected": {
-                            "grid_mappping_name": "latitude_longitude"
+                            "grid_mappping_name": "latitude_longitude",
+                            "grid_mapping_name": "latitude_longitude"
+                        }
+                    },
+                    "uas": {
+                        "expected": {
+                            "valid_min": 1.0,
+                            "valid_max": 30.0
                         }
                     }
                 },

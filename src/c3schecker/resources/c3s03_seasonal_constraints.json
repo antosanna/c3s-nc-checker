@@ -1341,7 +1341,8 @@
                 "standard_name": "x_wind",
                 "cell_methods": "leadtime: point",
                 "grid_mapping": "hcrs",
-                "valid_max": 30.0
+                "valid_max": 30.0,
+                "valid_min": 1.0
             },
             "global": {
                 "frequency": "6hr",
@@ -1356,7 +1357,9 @@
                 "coordinates": "reftime realization time leadtime height lat lon",
                 "standard_name": "y_wind",
                 "cell_methods": "leadtime: point",
-                "grid_mapping": "hcrs"
+                "grid_mapping": "hcrs",
+                "valid_max": 30.0,
+                "valid_min": 1.0
             },
             "global": {
                 "frequency": "6hr",
