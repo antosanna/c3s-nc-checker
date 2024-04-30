@@ -2192,7 +2192,7 @@
         "expected": {
             "Conventions": {
                 "value":[
-                "CF-1.6 C3S-0.1"
+                "CF-1.11 C3S-0.3"
             ],
             "required": "mandatory"
         },
@@ -2265,7 +2265,7 @@
                 "DWD, Deutscher Wetterdienst, Offenbach, Germany",
                 "CMCC, Centro Euro-Mediterraneo sui Cambiamenti Climatici, Bologna, Italy",
                 "ECCC, Environment and Climate Change Canada, Montreal, QC, Canada",
-                "Bureau of Meteorology, Melbourne, Australia"
+                "BOM, Australian Bureau of Meteorology, Melbourne, Australia"
             ],
             "required": "optional"
         },
