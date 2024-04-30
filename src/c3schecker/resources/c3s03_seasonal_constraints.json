@@ -1,7 +1,7 @@
 {
     "convention": 
     {
-        "expected": "CF-1.6 C3S-0.1" 
+        "expected": "CF-1.6 C3S-0.3" 
     },
     "netcdf_format": {
         "expected": "NETCDF4_CLASSIC"
@@ -1184,7 +1184,7 @@
                 "axis": "Z",
                 "positive": "up",
                 "standard_name": "height",
-                "valid_max": "10.",
+                "valid_max": 10.0,
                 "valid_min": 1.0
             }
         },
@@ -1195,7 +1195,7 @@
                 "axis": "Z",
                 "positive": "up",
                 "standard_name": "height",
-                "valid_max": "30.",
+                "valid_max": 30.0,
                 "valid_min": 1.0
             }
         },
@@ -1340,9 +1340,7 @@
                 "coordinates": "reftime realization time leadtime height lat lon",
                 "standard_name": "x_wind",
                 "cell_methods": "leadtime: point",
-                "grid_mapping": "hcrs",
-                "valid_max": 30.0,
-                "valid_min": 1.0
+                "grid_mapping": "hcrs"
             },
             "global": {
                 "frequency": "6hr",
@@ -1357,9 +1355,7 @@
                 "coordinates": "reftime realization time leadtime height lat lon",
                 "standard_name": "y_wind",
                 "cell_methods": "leadtime: point",
-                "grid_mapping": "hcrs",
-                "valid_max": 30.0,
-                "valid_min": 1.0
+                "grid_mapping": "hcrs"
             },
             "global": {
                 "frequency": "6hr",

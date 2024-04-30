@@ -250,7 +250,7 @@ def c3s_meta_convention_check(
 
     # outcome = outcome | result  # In Python 3.9.0 or greater
     outcome = {**outcome, **result}  # In Python 3.5.0 or greater
-
+    
     if verbose:
         if outcome["status"] == 1:
             logging.info(f"The convention(s) are: {str(actual):<20} {' '*96} --> OK")
@@ -3026,10 +3026,10 @@ def _simple_equality_check(actual, constraints, warning_msgs, error_msgs):
         if not constraints.get("mandatory", True):
             outcome = {
                 "status": 1,
-                "warnings": [m.format(**context) for m in warning_msgs],
+                "warnings": [m.format(**context) for m in [warning_msgs]],
             }
         else:
-            outcome = {"status": 0, "errors": [m.format(**context) for m in error_msgs]}
+            outcome = {"status": 0, "errors": [m.format(**context) for m in [error_msgs]]}
     return outcome
 
 
