@@ -560,16 +560,15 @@ def cf_attributes_values_type_check(ds: Dataset, _, excep: dict, verbose, operat
                             f"type of attributes's value: {str(type(attribute_value)):<25} "
                             f"{' '*28} --> OK"
                         )
-
                 else:
-                    exception = (
-                        excep.get("exceptions", {})
-                        .get(institute_id, {})
-                        .get(system, {})
-                        .get("cf_attributes_values_type")
-                        .get(attr)
-                    )
                     try:
+                        exception = (
+                            excep.get("exceptions", {})
+                            .get(institute_id, {})
+                            .get(system, {})
+                            .get("cf_attributes_values_type")
+                            .get(attr)
+                        )
                         exception == "str"
                         if isinstance(attribute_value, str):
                             outcome.setdefault("warnings", []).append(
