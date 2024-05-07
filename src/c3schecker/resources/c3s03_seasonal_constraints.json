@@ -1,7 +1,7 @@
 {
     "convention": 
     {
-        "expected": "CF-1.6 C3S-0.3" 
+        "expected": "CF-1.11 C3S-0.3" 
     },
     "netcdf_format": {
         "expected": "NETCDF4_CLASSIC"
