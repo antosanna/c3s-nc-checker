@@ -13,7 +13,7 @@ from c3schecker.checks import register
 from c3schecker.utils import Singleton, powerset
 from pkg_resources import resource_filename
 
-CONVENTION = "CF-1.11"
+CONVENTION = "CF"
 
 
 class UnknownStandardNameError(Exception):
@@ -946,7 +946,7 @@ def cf_units_check(ds: Dataset, _, excep: dict, verbose, operational):
                         if verbose:
                             logging.error(
                                 f"Variable:  {str(var_name):<15} value of attribute 'units' "
-                                f"is invalid: {str(units):20} {' '*52} --> NOK"
+                                f"is invalid: {str(units):51} {' '*22} --> NOK"
                             )
                     elif "standard_name" in attrs:
                         std_name, modifier = __get_std_name(
@@ -1356,14 +1356,13 @@ def cf_coordinates_variables_check(ds: Dataset, _, excep: dict, verbose, operati
                     if axis == "E" and "C3S" in ds.Conventions:
                         outcome.setdefault("warnings", []).append(
                             f"Axis E of coordinate '{var_name}' is not part of "
-                            f"CF-1.11 but it is mandatory in C3S-0.1 "
-                            f"(may be allowed in CF higher version)"
-                        )
+                            f"CF but it is mandatory in C3S convention "
+                            )
                         if verbose:
                             logging.info(
                                 f"Variable:  {str(var_name):<15} axis E of "
                                 f"coordinate {str(var_name):<15} is not part of "
-                                f"CF-1.11 but it's mandatory in C3S 0.1 {' '*24} --> OK"
+                                f"CF but it's mandatory in C3S convention {' '*21} --> OK"
                             )
                     elif not axis:
                         outcome.setdefault("warnings", []).append(

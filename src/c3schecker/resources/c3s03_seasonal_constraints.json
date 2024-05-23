@@ -1,7 +1,7 @@
 {
     "convention": 
     {
-        "expected": "CF-1.11 C3S-0.3" 
+        "expected": "C3S-0.3" 
     },
     "netcdf_format": {
         "expected": "NETCDF4_CLASSIC"
@@ -1208,7 +1208,7 @@
         },
         "temperature": {
             "expected": {
-                "units": "C",
+                "units": "degC",
                 "long_name": "Isotherm Temperature",
                 "standard_name": "sea_water_potential_temperature"
                 }
@@ -2192,7 +2192,7 @@
         "expected": {
             "Conventions": {
                 "value":[
-                "CF-1.11 C3S-0.3"
+                "C3S-0.3"
             ],
             "required": "mandatory"
         },

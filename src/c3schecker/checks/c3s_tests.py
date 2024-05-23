@@ -257,7 +257,7 @@ def c3s_meta_convention_check(
         else:
             logging.error(
                 f"The convention(s) are: {str(actual):<20} different from "
-                f"the expected {str(expected):<20} {' '*67} --> NOK"
+                f"the expected {str(expected):<20} {' '*47} --> NOK"
             )
     return outcome
 
@@ -522,7 +522,7 @@ def c3s_coordinates_per_var_name(
     parameters_var_name = actual_data_vars[0].name
     try:
         expected_coordinates = overall_constraints[parameters_var_name]
-
+        
         for coordinate in expected_coordinates:
             try:
                 coords_var = ds.variables[coordinate]
@@ -556,6 +556,8 @@ def c3s_coordinates_per_var_name(
                 var_name == parameters_var_name
                 or "bnds" in var_name
                 or var_name == "hcrs"
+                or (var_name == "realization" and parameters_var_name == "sftlf") 
+                or (var_name == "realization" and parameters_var_name == "orog") 
             ):
                 continue
             else:
@@ -564,7 +566,6 @@ def c3s_coordinates_per_var_name(
         additional = [
             item for item in actual_coordinates if item not in expected_coordinates
         ]
-
         # missing coordinates have been already detected about.
         # We don't need another check
         if len(additional) > 0:
@@ -1253,6 +1254,30 @@ def c3s_meta_global_attributes_possible_values(
                         f"Global attribute:  {attribute:<25} follows "
                         f"the Controlled Vocabulary {' '*61} --> OK"
                     )
+            elif 'CF' in actual_value:
+                if possible_values[0] in actual_value:
+                    outcome.setdefault("info", []).append(
+                        f"{attribute} follows the "
+                        f"Controlled Vocabulary, ({required} attribute)"
+                    )
+                    if verbose:
+                        logging.info(
+                            f"Global attribute:  {attribute:<25} follows "
+                            f"the Controlled Vocabulary {' '*61} --> OK"
+                        )
+                else:
+                    outcome.setdefault("errors", []).append(
+                        f"{attribute}: doens't follow the Controlled "
+                        f"Vocabulary and it's '{required}' attribute. "
+                        f"Possible values for: {attribute}: "
+                        f"{possible_values} but actual value is {actual_value} "
+                    )
+                    if verbose:
+                        logging.error(
+                            f"Global attribute:  {attribute:<25} doesn't follow the Controlled "
+                            f"Vocabulary {' '*54} --> NOK"
+                        )
+                        
             else:
                 if required in "mandatory":
                     status = 0
@@ -2066,6 +2091,7 @@ def c3s_19_units_check(
                             f"invalid units {' '*51} --> NOK"
                         )
                     status_flag = False
+                    continue
 
             if standard_name:
                 __std_names_tree = ElementTree.parse(
@@ -2429,34 +2455,46 @@ def c3s_time_values_check(
         end = calendar.monthrange(year, month)[1] * 24
         leadt_computed_ocean = []
 
-        number_of_months = int(leadt[-1] / 24 / 30)
+        if leadt_units == 'hours':
+            number_of_months = int(leadt[-1] / 24 / 30)
 
-        for n in range(1, number_of_months + 1):
-            month = reft + relativedelta.relativedelta(months=+n)
-            number_of_days = calendar.monthrange(year, month.month)[1]
-            number_of_step = number_of_days * 24
-            leadt_computed_ = ((end - start) / 2) + start
+            for n in range(1, number_of_months + 1):
+                month = reft + relativedelta.relativedelta(months=+n)
+                number_of_days = calendar.monthrange(year, month.month)[1]
+                number_of_step = number_of_days * 24
+                leadt_computed_ = ((end - start) / 2) + start
+                start = end
+                end = end + number_of_step
 
-            start = end
-            end = end + number_of_step
-
-            leadt_computed_ocean.append(leadt_computed_)
-            computed = np.array(leadt_computed_ocean)
-
-        if np.all(np.isin(leadt, computed)):
-            status = 1
-            outcome.setdefault("info", []).append(
-                f"Variable leadtime: values as expected OK"
-            )
-            if verbose:
-                logging.info(
-                    f"Variable:  {str('leadtime'):15} values as expected, "
-                    f"range [{str(leadt[0]):<4}, {str(leadt[-1]):<7}], "
-                    f"frequency 'monthly' "
-                    f"{' '*49} --> OK"
+                leadt_computed_ocean.append(leadt_computed_)
+                computed = np.array(leadt_computed_ocean)
+            
+            if np.all(np.isin(leadt, computed)):
+                status = 1
+                outcome.setdefault("info", []).append(
+                    f"Variable leadtime: values as expected OK"
                 )
+                if verbose:
+                    logging.info(
+                        f"Variable:  {str('leadtime'):15} values as expected, "
+                        f"range [{str(leadt[0]):<4}, {str(leadt[-1]):<7}], "
+                        f"frequency 'monthly' "
+                        f"{' '*49} --> OK"
+                    )
         else:
-            if operational:
+            if leadt_units == 'months':
+                status = 0
+                outcome.setdefault("errors", []).append(
+                    f"Variable leadtime: ocean variable, time units not correct."
+                )
+                if verbose:
+                    logging.error(
+                        f"Variable:  {str('leadtime'):<15} leadtime units ({leadt_units}) "
+                        f"for ocean variables is not correct."
+                        f"{' '*54} --> NOK"
+                    )
+            
+            elif operational:
                 leadtime_ckeck = False
                 status = 0
                 outcome.setdefault("errors", []).append(
@@ -2556,15 +2594,15 @@ def c3s_time_values_check(
         leadt_computed_ocean = []
         leadt_bnds = ds.variables["leadtime_bnds"][:]
         bnds_check = True
-
         number_of_months = int(leadt[-1] / 24 / 30)
+        if number_of_months < 1:
+            leadtime_bnds_check = False
 
         for n in range(1, number_of_months + 1):
             month = reft + relativedelta.relativedelta(months=+n)
             number_of_days = calendar.monthrange(year, month.month)[1]
             number_of_step = number_of_days * 24
             computed_bnds = [start, end]
-
             if all(leadt_bnds[n - 1] == computed_bnds):
                 pass
             else:
@@ -2602,6 +2640,17 @@ def c3s_time_values_check(
                     f"Variable:  {str('leadtime_bnds'):<15} values as expected "
                     f"start: {str(leadt_bnds[0]):<3} end: "
                     f"{str(leadt_bnds[-1]):<8} {' '*69} --> OK"
+                )
+        else:
+            status = 0
+            outcome.setdefault("errors", []).append(
+                f"Variable leadtime_bnds: npt expected values."
+            )
+            if verbose:
+                logging.error(
+                    f"Variable:  {str('leadtime_bnds'):<15} not expected values "
+                    f"start: {str(leadt_bnds[0]):<3} end: "
+                    f"{str(leadt_bnds[-1]):<8} {' '*64} --> NOK"
                 )
 
     # Check that variables time and leadtime are equal
@@ -2728,12 +2777,19 @@ def c3s_20_time_coordinates_check(
                 f"Time coordinates:  unexpected time: {str(e):<30} {' '*73} -->  NOK"
             )
     try:
-        validt = nc.num2date(ds.variables["time"][:], ds.variables["time"].units)
+        validt = nc.num2date(ds.variables["time"][:], ds.variables["time"].units)      
     except:
         validt = []
-        outcome.setdefault("errors", []).append(f"No data")
-        if verbose:
-            logging.error(f"Time coordinates:  no data {' '*113} -->  NOK")
+        if 'months' in ds.variables["time"].units:
+            outcome.setdefault("errors", []).append(f"Wrong units, yesy cannot continue")
+            if verbose:
+                logging.error(f"Time coordinates:  wrong units, test cannot continue {' '*87} -->  NOK")
+            outcome["status"] = 0
+            return outcome
+        else:
+            outcome.setdefault("errors", []).append(f"No data")
+            if verbose:
+                logging.error(f"Time coordinates:  no data {' '*113} -->  NOK")
 
     leadt = ds.variables["leadtime"][:]
     leadt_units = ds.variables["leadtime"].units
@@ -3019,7 +3075,7 @@ def _simple_equality_check(actual, constraints, warning_msgs, error_msgs):
     if not constraints:
         return {"status": 1, "info": ["No constraints -> Skipped"]}
     expected = constraints["expected"]
-    if actual == expected:
+    if str(expected) in str(actual):
         outcome = {"status": 1, "info": ["Test successful OK"]}
     else:
         context = locals()
