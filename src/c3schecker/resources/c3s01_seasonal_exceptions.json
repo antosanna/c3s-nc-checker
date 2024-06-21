@@ -40,7 +40,6 @@
                 "missing_values" : [ "hus" ]
             }
         },
-
         "lfpw": {
             "System8-v20210101": {
                 "filename" : [
@@ -362,8 +361,46 @@
                     "start_point_upper_level_var": 1
                 }
 
-            }
+            },
+            "CanESM5.1p1bc-v20240611": {
+                "attributes_values_per_var_name": {
+                    "sftlf": {
+                        "expected": {
+                            "units": "1",
+                            "grid_mapping": "hcrs",
+                            "long_name": "Land Area Fraction",
+                            "coordinates": "realization lat lon",
+                            "valid_max": 1,
+                            "valid_min": 0
+                        }
+                    },
+                    "orog": {
+                        "expected": {
+                            "units": "1",
+                            "grid_mapping": "hcrs",
+                            "long_name": "Land Area Fraction",
+                            "coordinates": "realization lat lon"
+                        }
+                    }
+                },
+                "data_values": {
+                    "plev": [
+                        1000.0,
+                        3000.0,
+                        5000.0,
+                        10000.0,
+                        20000.0,
+                        30000.0,
+                        40000.0,
+                        50000.0,
+                        70000.0,
+                        85000.0,
+                        92500.0,
+                        100000.0
+                    ]
+                }
 
+            }
         },
         "edzw": {
             "GCFS2.1-v20200320": {
