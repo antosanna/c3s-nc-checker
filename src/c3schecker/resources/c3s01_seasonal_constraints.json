@@ -1,7 +1,7 @@
 {
-    "convention": 
+    "convention":
     {
-        "expected": "CF-1.6 C3S-0.1" 
+        "expected": "CF-1.6 C3S-0.1"
     },
     "netcdf_format": {
         "expected": "NETCDF4_CLASSIC"
@@ -36,14 +36,14 @@
             "lat"
         ],
         "lat_bnds": [
-            "lat", 
+            "lat",
             "bnds"
         ],
         "lon": [
             "lon"
         ],
         "lon_bnds": [
-            "lon", 
+            "lon",
             "bnds"
         ],
         "plev": [
@@ -59,10 +59,10 @@
 
         ],
          "depth_bnds": [
-             "depth", 
+             "depth",
              "bnds"
          ],
-         "depth_bnds_ocean": [ 
+         "depth_bnds_ocean": [
             "bnds"
         ],
         "height": [
@@ -92,919 +92,919 @@
 
         ],
         "sftlf": [
-            "lat", 
+            "lat",
             "lon"
         ],
         "orog": [
-            "lat", 
+            "lat",
             "lon"
         ],
         "tas": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"
         ],
         "tasmax": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"
         ],
         "tasmin": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"
         ],
         "tdps": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"
         ],
         "uas": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"
         ],
         "vas": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"
         ],
         "wsgmax": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"
         ],
         "psl": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"
         ],
         "clt": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"
         ],
         "tsl": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"
         ],
         "tso": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"
         ],
         "sitemptop": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"
         ],
         "sic": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"
         ],
         "mrlsl": [
-            "leadtime", 
-            "depth", 
-            "lat", 
+            "leadtime",
+            "depth",
+            "lat",
             "lon"
         ],
         "lwesnw": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"
         ],
         "rhosn": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"
         ],
         "lweprs": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"
         ],
         "lweprc": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"
         ],
         "lwepr": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"
         ],
         "lweprsn": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"
         ],
         "hfss": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"
         ],
         "hfls": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"
         ],
         "rsds": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"
         ],
         "rlds": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"
         ],
         "rss": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"
         ],
         "rls": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"
         ],
         "rst": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"
         ],
         "rlt": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"
         ],
         "rsdt": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"
         ],
         "tauu": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"
         ],
         "tauv": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"
         ],
         "lwee": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"
         ],
         "mrroa": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"
         ],
         "mrroas": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"
         ],
         "mrroab": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"
         ],
         "zg": [
-            "leadtime", 
-            "plev", 
-            "lat", 
+            "leadtime",
+            "plev",
+            "lat",
             "lon"
         ],
         "ta": [
-            "leadtime", 
-            "plev", 
-            "lat", 
+            "leadtime",
+            "plev",
+            "lat",
             "lon"
         ],
         "hus": [
-            "leadtime", 
-            "plev", 
-            "lat", 
+            "leadtime",
+            "plev",
+            "lat",
             "lon"
         ],
         "rv": [
-            "leadtime", 
-            "plev", 
-            "lat", 
+            "leadtime",
+            "plev",
+            "lat",
             "lon"
         ],
         "wnddiv": [
-            "leadtime", 
-            "plev", 
-            "lat", 
+            "leadtime",
+            "plev",
+            "lat",
             "lon"
         ],
         "ua": [
-            "leadtime", 
-            "plev", 
-            "lat", 
+            "leadtime",
+            "plev",
+            "lat",
             "lon"
         ],
         "va": [
-            "leadtime", 
-            "plev", 
-            "lat", 
+            "leadtime",
+            "plev",
+            "lat",
             "lon"
         ],
         "mlotstheta001": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"
         ],
         "mlotstheta003": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"
         ],
         "sithick": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"
         ],
         "sos": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"
         ],
         "sot300": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"],
         "t14d": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"
         ],
         "t17d": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"
         ],
         "t20d": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"
         ],
         "t26d": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"
         ],
         "t28d": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"
         ],
         "thetaot300": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"
         ],
         "zos": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"
         ],
         "prw": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"
         ],
         "cllvi": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"
         ],
         "clivi": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"
         ],
         "cltmean": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"
         ],
         "tasmean": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"
         ],
         "uasmean": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"
         ],
         "vasmean": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"
         ],
         "tsomean": [
-            "leadtime", 
-            "lat", 
+            "leadtime",
+            "lat",
             "lon"
         ],
         "required":["mandatory"]
     },
     "variables_per_var_name": {
         "sftlf": [
-            "lat", 
+            "lat",
             "lon"
         ],
         "orog": [
-            "lat", 
+            "lat",
             "lon"
         ],
         "tas": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "height", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "height",
+            "lat",
             "lon",
             "hcrs"
         ],
         "tasmax": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "height", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "height",
+            "lat",
             "lon",
             "hcrs"
         ],
         "tasmin": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "height", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "height",
+            "lat",
             "lon",
             "hcrs"
-        ],        
+        ],
         "tdps": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "height", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "height",
+            "lat",
             "lon",
             "hcrs"
         ],
         "uas": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "height", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "height",
             "lat",
             "lon",
             "hcrs"
         ],
         "vas": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "height", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "height",
+            "lat",
             "lon",
             "hcrs"
         ],
         "wsgmax":[
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "height", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "height",
+            "lat",
             "lon",
             "hcrs"
-        ],      
+        ],
         "psl": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "lat",
             "lon",
             "hcrs"
         ],
         "clt": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "lat",
             "lon",
             "hcrs"
         ],
         "tsl": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "lat",
             "lon",
             "hcrs"
         ],
         "tso": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "lat",
             "lon",
             "hcrs"
         ],
         "sitemptop": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "lat",
             "lon",
             "hcrs"
         ],
         "sic": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "lat",
             "lon",
             "hcrs"
         ],
         "mrlsl": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "depth", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "depth",
+            "lat",
             "lon",
             "hcrs"
         ],
         "lwesnw": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "lat",
             "lon",
             "hcrs"
         ],
         "rhosn": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "lat",
             "lon",
             "hcrs"
         ],
         "lweprs": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "lat",
             "lon",
             "hcrs"
         ],
         "lweprc": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "lat",
             "lon",
             "hcrs"
         ],
         "lwepr": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "lat",
             "lon",
             "hcrs"
         ],
         "lweprsn": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "lat",
             "lon",
             "hcrs"
         ],
         "hfss": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "lat",
             "lon",
             "hcrs"
         ],
         "hfls": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "lat",
             "lon",
             "hcrs"
         ],
         "rsds": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "lat",
             "lon",
             "hcrs"
         ],
         "rlds": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "lat",
             "lon",
             "hcrs"
         ],
         "rss": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "lat",
             "lon",
             "hcrs"
         ],
         "rls": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "lat",
             "lon",
             "hcrs"
         ],
         "rst": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "lat",
             "lon",
             "hcrs"
         ],
         "rlt": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "lat",
             "lon",
             "hcrs"
         ],
         "rsdt": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "lat",
             "lon",
             "hcrs"
         ],
         "tauu": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "lat",
             "lon",
             "hcrs"
         ],
         "tauv": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "lat",
             "lon",
             "hcrs"
         ],
         "lwee": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "lat",
             "lon",
             "hcrs"
         ],
         "mrroa": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "lat",
             "lon",
             "hcrs"
         ],
         "mrroas": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "lat",
             "lon",
             "hcrs"
         ],
         "mrroab": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "lat",
             "lon",
             "hcrs"
         ],
         "zg": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "plev", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "plev",
+            "lat",
             "lon",
             "hcrs"
         ],
         "ta": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "plev", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "plev",
+            "lat",
             "lon",
             "hcrs"
         ],
         "hus": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "plev", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "plev",
+            "lat",
             "lon",
             "hcrs"
         ],
         "rv": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "plev", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "plev",
+            "lat",
             "lon",
             "hcrs"
         ],
         "wnddiv": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "plev", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "plev",
+            "lat",
             "lon",
             "hcrs"
         ],
         "ua": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "plev", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "plev",
+            "lat",
             "lon",
             "hcrs"
         ],
         "va": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "plev", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "plev",
+            "lat",
             "lon",
             "hcrs"
         ],
         "mlotstheta001": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "sigma_theta", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "sigma_theta",
+            "lat",
             "lon",
             "hcrs"
         ],
         "mlotstheta003": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "sigma_theta", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "sigma_theta",
+            "lat",
             "lon",
             "hcrs"
         ],
         "sithick": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "lat",
             "lon",
             "hcrs"
         ],
         "sos": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "lat",
             "lon",
             "hcrs"
         ],
         "sot300": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "depth", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "depth",
+            "lat",
             "lon",
             "hcrs"
         ],
         "t14d": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "lat",
             "lon",
             "hcrs",
             "temperature"
         ],
         "t17d": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "lat",
             "lon",
             "hcrs",
             "temperature"
         ],
         "t20d": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "lat",
             "lon",
             "hcrs",
             "temperature"
         ],
         "t26d": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "lat",
             "lon",
             "hcrs",
             "temperature"
         ],
         "t28d": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "lat",
             "lon",
             "hcrs",
             "temperature"
         ],
         "thetaot300": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "depth", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "depth",
+            "lat",
             "lon",
             "hcrs"
         ],
         "zos": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "lat",
             "lon",
             "hcrs"
         ],
         "prw": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "lat",
             "lon",
             "hcrs"
         ],
         "cllvi": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "lat",
             "lon",
             "hcrs"
         ],
         "clivi": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "lat",
             "lon",
             "hcrs"
         ],
         "cltmean": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
-            "lat", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "lat",
             "lon"
         ],
         "tasmean": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
             "height",
-            "lat", 
+            "lat",
             "lon"
         ],
         "uasmean": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
             "height",
-            "lat", 
+            "lat",
             "lon"
         ],
         "vasmean": [
-            "reftime", 
-            "realization", 
-            "time", 
-            "leadtime", 
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
             "height",
-            "lat", 
+            "lat",
             "lon"
         ],
         "tsomean": [
-            "reftime", 
-            "realization", 
-            "time", 
+            "reftime",
+            "realization",
+            "time",
             "leadtime",
-            "lat", 
+            "lat",
             "lon"
         ],
         "required":["mandatory"]
@@ -1016,7 +1016,7 @@
                 "calendar",
                 "long_name",
                 "standard_name"
-                
+
             ]
         },
         "time_accu": {
@@ -1026,7 +1026,7 @@
                 "calendar",
                 "long_name",
                 "standard_name"
-                
+
             ]
         },
         "reftime": {
@@ -1106,14 +1106,14 @@
         },
         "sigma_theta": {
             "expected": [
-                "units",               
+                "units",
                 "standard_name",
                 "long_name"
             ]
         },
         "temperature": {
             "expected": [
-                "units",               
+                "units",
                 "standard_name",
                 "long_name"
             ]
@@ -2125,7 +2125,7 @@
         },
         "required":["mandatory"]
     },
-    
+
     "global_attributes": {
         "expected": {
             "Conventions": {
@@ -2281,12 +2281,12 @@
         },
         "required": ["mandatory"]
     },
-    
+
     "global_attributes_date_format": {
         "expected": {
             "creation_date": "%Y-%m-%dT%H:%M:%S",
             "forecast_reference_time": "%Y-%m-%dT%H:%M:%S"
-        }   
+        }
     },
     "variables_exact_dimensions": {
         "expected": {
@@ -2320,13 +2320,13 @@
                 "lon"
             ],
             "height": [
-                
+
             ],
             "sigma_theta": [
-                
+
             ],
             "temperature": [
-                
+
             ],
             "tas": [
                 "leadtime",
@@ -2666,11 +2666,11 @@
                     "standard_name": "significant_height_of_swell_waves"
                 }
             }
-        }, 
+        },
         "required": "mandatory"
     },
     "data_intervals": {
-        "required": "mandatory", 
+        "required": "mandatory",
         "expected": {
             "default": {
                 "lat": 1.0,
@@ -2934,19 +2934,19 @@
             "prw": {
                 "with_cell_methods": "leadtime: point",
                 "dimensions": {
-                    "leadtime": 1
+                    "leadtime": 6
                 }
             },
             "cllvi": {
                 "with_cell_methods": "leadtime: point",
                 "dimensions": {
-                    "leadtime": 1
+                    "leadtime": 6
                 }
             },
             "clivi": {
                 "with_cell_methods": "leadtime: point",
                 "dimensions": {
-                    "leadtime": 1
+                    "leadtime": 6
                 }
             }
         }
@@ -3021,7 +3021,7 @@
         "tasmin": {
             "cell_methods": "minimum",
             "step": 24
-        },       
+        },
         "tdps": {
             "cell_methods": "point",
             "step": 6
@@ -3228,15 +3228,15 @@
         },
         "prw": {
             "cell_methods": "point",
-            "step": 24
+            "step": 6
         },
         "cllvi": {
             "cell_methods": "point",
-            "step": 24
+            "step": 6
         },
         "clivi": {
             "cell_methods": "point",
-            "step": 24
+            "step": 6
         },
         "cltmean": {
             "cell_methods": "mean",
@@ -4947,7 +4947,7 @@
                 "temperature_t28d":[
                     28.0
                 ]
-                
+
             }
         }
     },
