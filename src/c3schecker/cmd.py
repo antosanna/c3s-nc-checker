@@ -42,7 +42,7 @@ def list_tests(ctx, param, value):
     if not value or ctx.resilient_parsing:
         return
     click.echo("List of all the available tests:")
-    for name, _ in ChecksRegistry().__contains__().items():
+    for name, _ in ChecksRegistry().items():
         click.echo(f"     - {name}")
     ctx.exit()
 
