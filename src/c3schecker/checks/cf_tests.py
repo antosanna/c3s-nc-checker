@@ -1357,7 +1357,7 @@ def cf_coordinates_variables_check(ds: Dataset, _, excep: dict, verbose, operati
                         outcome.setdefault("warnings", []).append(
                             f"Axis E of coordinate '{var_name}' is not part of "
                             f"CF but it is mandatory in C3S convention "
-                            )
+                        )
                         if verbose:
                             logging.info(
                                 f"Variable:  {str(var_name):<15} axis E of "

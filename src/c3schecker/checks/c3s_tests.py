@@ -250,7 +250,7 @@ def c3s_meta_convention_check(
 
     # outcome = outcome | result  # In Python 3.9.0 or greater
     outcome = {**outcome, **result}  # In Python 3.5.0 or greater
-    
+
     if verbose:
         if outcome["status"] == 1:
             logging.info(f"The convention(s) are: {str(actual):<20} {' '*96} --> OK")
@@ -522,7 +522,7 @@ def c3s_coordinates_per_var_name(
     parameters_var_name = actual_data_vars[0].name
     try:
         expected_coordinates = overall_constraints[parameters_var_name]
-        
+
         for coordinate in expected_coordinates:
             try:
                 coords_var = ds.variables[coordinate]
@@ -556,8 +556,8 @@ def c3s_coordinates_per_var_name(
                 var_name == parameters_var_name
                 or "bnds" in var_name
                 or var_name == "hcrs"
-                or (var_name == "realization" and parameters_var_name == "sftlf") 
-                or (var_name == "realization" and parameters_var_name == "orog") 
+                or (var_name == "realization" and parameters_var_name == "sftlf")
+                or (var_name == "realization" and parameters_var_name == "orog")
             ):
                 continue
             else:
@@ -1254,7 +1254,7 @@ def c3s_meta_global_attributes_possible_values(
                         f"Global attribute:  {attribute:<25} follows "
                         f"the Controlled Vocabulary {' '*61} --> OK"
                     )
-            elif 'CF' in actual_value:
+            elif "CF" in actual_value:
                 if possible_values[0] in actual_value:
                     outcome.setdefault("info", []).append(
                         f"{attribute} follows the "
@@ -1277,7 +1277,7 @@ def c3s_meta_global_attributes_possible_values(
                             f"Global attribute:  {attribute:<25} doesn't follow the Controlled "
                             f"Vocabulary {' '*54} --> NOK"
                         )
-                        
+
             else:
                 if required in "mandatory":
                     status = 0
@@ -2455,7 +2455,7 @@ def c3s_time_values_check(
         end = calendar.monthrange(year, month)[1] * 24
         leadt_computed_ocean = []
 
-        if leadt_units == 'hours':
+        if leadt_units == "hours":
             number_of_months = int(leadt[-1] / 24 / 30)
 
             for n in range(1, number_of_months + 1):
@@ -2468,7 +2468,7 @@ def c3s_time_values_check(
 
                 leadt_computed_ocean.append(leadt_computed_)
                 computed = np.array(leadt_computed_ocean)
-            
+
             if np.all(np.isin(leadt, computed)):
                 status = 1
                 outcome.setdefault("info", []).append(
@@ -2482,7 +2482,7 @@ def c3s_time_values_check(
                         f"{' '*49} --> OK"
                     )
         else:
-            if leadt_units == 'months':
+            if leadt_units == "months":
                 status = 0
                 outcome.setdefault("errors", []).append(
                     f"Variable leadtime: ocean variable, time units not correct."
@@ -2493,7 +2493,7 @@ def c3s_time_values_check(
                         f"for ocean variables is not correct."
                         f"{' '*54} --> NOK"
                     )
-            
+
             elif operational:
                 leadtime_ckeck = False
                 status = 0
@@ -2777,13 +2777,17 @@ def c3s_20_time_coordinates_check(
                 f"Time coordinates:  unexpected time: {str(e):<30} {' '*73} -->  NOK"
             )
     try:
-        validt = nc.num2date(ds.variables["time"][:], ds.variables["time"].units)      
+        validt = nc.num2date(ds.variables["time"][:], ds.variables["time"].units)
     except:
         validt = []
-        if 'months' in ds.variables["time"].units:
-            outcome.setdefault("errors", []).append(f"Wrong units, yesy cannot continue")
+        if "months" in ds.variables["time"].units:
+            outcome.setdefault("errors", []).append(
+                f"Wrong units, yesy cannot continue"
+            )
             if verbose:
-                logging.error(f"Time coordinates:  wrong units, test cannot continue {' '*87} -->  NOK")
+                logging.error(
+                    f"Time coordinates:  wrong units, test cannot continue {' '*87} -->  NOK"
+                )
             outcome["status"] = 0
             return outcome
         else:
@@ -3085,7 +3089,10 @@ def _simple_equality_check(actual, constraints, warning_msgs, error_msgs):
                 "warnings": [m.format(**context) for m in [warning_msgs]],
             }
         else:
-            outcome = {"status": 0, "errors": [m.format(**context) for m in [error_msgs]]}
+            outcome = {
+                "status": 0,
+                "errors": [m.format(**context) for m in [error_msgs]],
+            }
     return outcome
 
 
