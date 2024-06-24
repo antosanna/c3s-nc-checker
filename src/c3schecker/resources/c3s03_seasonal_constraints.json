@@ -170,6 +170,12 @@
             "lat",
             "lon"
         ],
+        "mrsolfrac": [
+            "leadtime",
+            "depth",
+            "lat",
+            "lon"
+        ],
         "lwesnw": [
             "leadtime",
             "lat",
@@ -552,6 +558,16 @@
             "hcrs"
         ],
         "mrlsl": [
+            "reftime",
+            "realization",
+            "time",
+            "leadtime",
+            "depth",
+            "lat",
+            "lon",
+            "hcrs"
+        ],
+        "mrsolfrac": [
             "reftime",
             "realization",
             "time",
@@ -1474,6 +1490,21 @@
                 "units": "kg m-2",
                 "coordinates": "reftime realization time leadtime depth lat lon",
                 "standard_name": "moisture_content_of_soil_layer",
+                "cell_methods": "leadtime: point",
+                "grid_mapping": "hcrs"
+            },
+            "global": {
+                "frequency": "day",
+                "level_type": "soil",
+                "modeling_realm": "land"
+            }
+        },
+        "mrsolfrac": {
+            "expected": {
+                "long_name": "Water Fraction of Soil Layers",
+                "units": "1",
+                "coordinates": "reftime realization time leadtime depth lat lon",
+                "standard_name": "volume_fraction_of_condensed_water_in_soil",
                 "cell_methods": "leadtime: point",
                 "grid_mapping": "hcrs"
             },
@@ -2432,6 +2463,12 @@
                 "lat",
                 "lon"
             ],
+            "mrsolfrac": [
+                "leadtime",
+                "depth",
+                "lat",
+                "lon"
+            ],
             "lwesnw": [
                 "leadtime",
                 "lat",
@@ -2802,6 +2839,12 @@
                     "leadtime": 1
                 }
             },
+            "mrsolfrac": {
+                "with_cell_methods": "leadtime: point",
+                "dimensions": {
+                    "leadtime": 24
+                }
+            },
             "rhosn": {
                 "with_cell_methods": "leadtime: point",
                 "dimensions": {
@@ -3169,6 +3212,10 @@
         },
         "lwee": {
             "cell_methods": "sum",
+            "step": 24
+        },
+        "mrsolfrac": {
+            "cell_methods": "point",
             "step": 24
         },
         "mrroa": {
