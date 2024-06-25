@@ -2968,43 +2968,43 @@
             "zg": {
                 "with_cell_methods": "leadtime: point",
                 "dimensions": {
-                    "leadtime": 0.5
+                    "leadtime": 12
                 }
             },
             "ta": {
                 "with_cell_methods": "leadtime: point",
                 "dimensions": {
-                    "leadtime": 0.5
+                    "leadtime": 12
                 }
             },
             "hus": {
                 "with_cell_methods": "leadtime: point",
                 "dimensions": {
-                    "leadtime": 0.5
+                    "leadtime": 12
                 }
             },
             "rv": {
                 "with_cell_methods": "leadtime: point",
                 "dimensions": {
-                    "leadtime": 0.5
+                    "leadtime": 12
                 }
             },
             "wnddiv": {
                 "with_cell_methods": "leadtime: point",
                 "dimensions": {
-                    "leadtime": 0.5
+                    "leadtime": 12
                 }
             },
             "ua": {
                 "with_cell_methods": "leadtime: point",
                 "dimensions": {
-                    "leadtime": 0.5
+                    "leadtime": 12
                 }
             },
             "va": {
                 "with_cell_methods": "leadtime: point",
                 "dimensions": {
-                    "leadtime": 0.5
+                    "leadtime": 12
                 }
             },
             "prw": {
