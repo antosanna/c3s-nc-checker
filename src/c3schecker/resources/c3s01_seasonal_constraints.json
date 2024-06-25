@@ -1224,7 +1224,7 @@
         },
         "temperature": {
             "expected": {
-                "units": "C",
+                "units": "degC",
                 "long_name": "Isotherm Temperature",
                 "standard_name": "sea_water_potential_temperature"
                 }
