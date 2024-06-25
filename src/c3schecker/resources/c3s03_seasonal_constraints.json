@@ -2759,7 +2759,7 @@
             "tas": {
                 "with_cell_methods": "leadtime: point",
                 "dimensions": {
-                    "leadtime": 0.25
+                    "leadtime": 6
                 }
             },
             "tasmax": {
@@ -2776,25 +2776,25 @@
             "tdps": {
                 "with_cell_methods": "leadtime: point",
                 "dimensions": {
-                    "leadtime": 0.25
+                    "leadtime": 6
                 }
             },
             "tsl": {
                 "with_cell_methods": "leadtime: point",
                 "dimensions": {
-                    "leadtime": 0.25
+                    "leadtime": 6
                 }
             },
             "uas": {
                 "with_cell_methods": "leadtime: point",
                 "dimensions": {
-                    "leadtime": 0.25
+                    "leadtime": 6
                 }
             },
             "vas": {
                 "with_cell_methods": "leadtime: point",
                 "dimensions": {
-                    "leadtime": 0.25
+                    "leadtime": 6
                 }
             },
             "wsgmax": {
@@ -2806,37 +2806,37 @@
             "psl": {
                 "with_cell_methods": "leadtime: point",
                 "dimensions": {
-                    "leadtime": 0.25
+                    "leadtime": 6
                 }
             },
             "clt": {
                 "with_cell_methods": "leadtime: point",
                 "dimensions": {
-                    "leadtime": 0.25
+                    "leadtime": 6
                 }
             },
             "tso": {
                 "with_cell_methods": "leadtime: point",
                 "dimensions": {
-                    "leadtime": 0.25
+                    "leadtime": 6
                 }
             },
             "sitemptop": {
                 "with_cell_methods": "leadtime: point",
                 "dimensions": {
-                    "leadtime": 0.25
+                    "leadtime": 6
                 }
             },
             "sic": {
                 "with_cell_methods": "leadtime: point",
                 "dimensions": {
-                    "leadtime": 1
+                    "leadtime": 24
                 }
             },
             "mrlsl": {
                 "with_cell_methods": "leadtime: point",
                 "dimensions": {
-                    "leadtime": 1
+                    "leadtime": 24
                 }
             },
             "mrsolfrac": {
@@ -2848,7 +2848,7 @@
             "rhosn": {
                 "with_cell_methods": "leadtime: point",
                 "dimensions": {
-                    "leadtime": 1
+                    "leadtime": 24
                 }
             },
             "lweprs": {
