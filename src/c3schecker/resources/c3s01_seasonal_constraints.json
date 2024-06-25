@@ -2731,13 +2731,13 @@
             },
             "tasmax": {
                 "dimensions": {
-                    "leadtime": 1
+                    "leadtime": 24
                 }
             },
             "tasmin": {
                 "with_cell_methods": "leadtime: minimum (interval: 0.75 hour)",
                 "dimensions": {
-                    "leadtime": 1
+                    "leadtime": 24
                 }
             },
             "tdps": {
@@ -2767,7 +2767,7 @@
             "wsgmax": {
                 "with_cell_methods": "leadtime: maximum (interval: 1 hour)",
                 "dimensions": {
-                    "leadtime": 1
+                    "leadtime": 24
                 }
             },
             "psl": {
@@ -2818,118 +2818,118 @@
                     "leadtime": 24
                 }
             },
-            "lweprs": {
+                    "lweprs": {
                 "with_cell_methods": "leadtime: sum",
                 "dimensions": {
-                    "leadtime": 1
+                    "leadtime": 24
                 }
             },
             "lweprc": {
                 "with_cell_methods": "leadtime: sum",
                 "dimensions": {
-                    "leadtime": 1
+                    "leadtime": 24
                 }
             },
             "lwepr": {
                 "with_cell_methods": "leadtime: sum",
                 "dimensions": {
-                    "leadtime": 1
+                    "leadtime": 24
                 }
             },
             "lweprsn": {
                 "with_cell_methods": "leadtime: sum",
                 "dimensions": {
-                    "leadtime": 1
+                    "leadtime": 24
                 }
             },
             "hfss": {
                 "with_cell_methods": "leadtime: mean (interval: 1 hour)",
                 "dimensions": {
-                    "leadtime": 1
+                    "leadtime": 24
                 }
             },
             "hfls": {
                 "with_cell_methods": "leadtime: mean (interval: 1 hour)",
                 "dimensions": {
-                    "leadtime": 1
+                    "leadtime": 24
                 }
             },
             "rsds": {
                 "with_cell_methods": "leadtime: mean (interval: 1 hour)",
                 "dimensions": {
-                    "leadtime": 1
+                    "leadtime": 24
                 }
             },
             "rlds": {
                 "with_cell_methods": "leadtime: mean (interval: 1 hour)",
                 "dimensions": {
-                    "leadtime": 1
+                    "leadtime": 24
                 }
             },
             "rss": {
                 "with_cell_methods": "leadtime: mean (interval: 1 hour)",
                 "dimensions": {
-                    "leadtime": 1
+                    "leadtime": 24
                 }
             },
             "rls": {
                 "with_cell_methods": "leadtime: mean (interval: 1 hour)",
                 "dimensions": {
-                    "leadtime": 1
+                    "leadtime": 24
                 }
             },
             "rst": {
                 "with_cell_methods": "leadtime: mean (interval: 1 hour)",
                 "dimensions": {
-                    "leadtime": 1
+                    "leadtime": 24
                 }
             },
             "rlt": {
                 "with_cell_methods": "leadtime: mean (interval: 1 hour)",
                 "dimensions": {
-                    "leadtime": 1
+                    "leadtime": 24
                 }
             },
             "rsdt": {
                 "with_cell_methods": "leadtime: mean (interval: 1 hour)",
                 "dimensions": {
-                    "leadtime": 1
+                    "leadtime": 24
                 }
             },
             "tauu": {
                 "with_cell_methods": "leadtime: mean (interval: 1 hour)",
                 "dimensions": {
-                    "leadtime": 1
+                    "leadtime": 24
                 }
             },
             "tauv": {
                 "with_cell_methods": "leadtime: mean (interval: 1 hour)",
                 "dimensions": {
-                    "leadtime": 1
+                    "leadtime": 24
                 }
             },
             "lwee": {
                 "with_cell_methods": "leadtime: sum",
                 "dimensions": {
-                    "leadtime": 1
+                    "leadtime": 24
                 }
             },
             "mrroa": {
                 "with_cell_methods": "leadtime: sum",
                 "dimensions": {
-                    "leadtime": 1
+                    "leadtime": 24
                 }
             },
             "mrroas": {
                 "with_cell_methods": "leadtime: sum",
                 "dimensions": {
-                    "leadtime": 1
+                    "leadtime": 24
                 }
             },
             "mrroab": {
                 "with_cell_methods": "leadtime: sum",
                 "dimensions": {
-                    "leadtime": 1
+                    "leadtime": 24
                 }
             },
             "zg": {
