@@ -1521,16 +1521,15 @@ def c3s_data_intervals(
                 if var_dimension == dimension:
                     dim_values = ds.variables[var_dimension]
                     all_intervals = dim_values[1:] - dim_values[:-1]
-                    not_matching_intervals = all_intervals[
-                        np.asarray(all_intervals != expected_value).nonzero()
-                    ]
-                    not_matching_intervals_ = all_intervals[
-                        np.asarray(all_intervals != expected_value * 24).nonzero()
-                    ]
-                    if (
-                        len(not_matching_intervals) == 0
-                        or len(not_matching_intervals_) == 0
-                    ):
+                    if isinstance(expected_value, (list, tuple)):
+                        not_matching_intervals = all_intervals[
+                            np.isin(all_intervals, expected_value, invert=True)
+                        ]
+                    else:
+                        not_matching_intervals = all_intervals[
+                            np.asarray(all_intervals != expected_value).nonzero()
+                        ]
+                    if len(not_matching_intervals) == 0:
                         failure = False
                     else:
                         failure = True
@@ -1540,8 +1539,6 @@ def c3s_data_intervals(
                         failure = True
                     elif len(not_matching_intervals) == 0:
                         bad_intervals = list(not_matching_intervals)
-                    elif len(not_matching_intervals_) == 0:
-                        bad_intervals = list(not_matching_intervals_)
 
                     results = {
                         "var_name": name,
@@ -2336,6 +2333,8 @@ def c3s_time_values_check(
         return outcome
     cell_method = var_constraints["cell_methods"]
     step = var_constraints["step"]
+    if not isinstance(step, (list, tuple)):
+        step = [step]
 
     if cell_method == "point":
         start_point = 0
@@ -2344,12 +2343,18 @@ def c3s_time_values_check(
 
     if str(leadt_units) == "days":
         leadt_computed = np.array(
-            [((start_point * step) + (step * n)) / 24 for n in range(len(leadt))]
+            [
+                [((start_point * _step) + (_step * n)) / 24 for n in range(len(leadt))]
+                for _step in step
+            ]
         )
         leadt_units_ = "hours"
     else:
         leadt_computed = np.array(
-            [(start_point * step) + (step * n) for n in range(len(leadt))]
+            [
+                [(start_point * _step) + (_step * n) for n in range(len(leadt))]
+                for _step in step
+            ]
         )
         leadt_units_ = leadt_units
     leadtime_ckeck = True
@@ -2388,8 +2393,11 @@ def c3s_time_values_check(
                 # leadt_computed = np.array([(start_point*step) + (step * n) for n in range(exception, len(leadt)+exception)])
                 leadt_computed = np.array(
                     [
-                        (start_point * step) + (step * n)
-                        for n in range(step_0, len(leadt) + step_0)
+                        [
+                            (start_point * _step) + (_step * n)
+                            for n in range(step_0, len(leadt) + step_0)
+                        ]
+                        for _step in step
                     ]
                 )
                 if np.all(np.isin(leadt, leadt_computed)):
@@ -2524,25 +2532,38 @@ def c3s_time_values_check(
     # cell_method != point
     # Case 1. No ocean variable
     if cell_method != "point" and ds.level_type != "ocean2d":
-        center = step / 2
         leadt_bnds = ds.variables["leadtime_bnds"][:]
 
         # validt_computed = np.array([(n - center, n + center) for n in leadt])
 
         if str(leadt_units) == "days":
             leadt_computed = np.array(
-                [((start_point * step) + (step * n)) / 24 for n in range(len(leadt))]
+                [
+                    [
+                        ((start_point * _step) + (_step * n)) / 24
+                        for n in range(len(leadt))
+                    ]
+                    for _step in step
+                ]
             )
             leadt_units_ = "hours"
             validt_computed = np.array(
-                [(n - (center / 24), n + (center / 24)) for n in leadt]
+                [
+                    [(n - ((_step / 2) / 24), n + ((_step / 2) / 24)) for n in leadt]
+                    for _step in step
+                ]
             )
         else:
             leadt_computed = np.array(
-                [(start_point * step) + (step * n) for n in range(len(leadt))]
+                [
+                    [(start_point * _step) + (_step * n) for n in range(len(leadt))]
+                    for _step in step
+                ]
             )
             leadt_units_ = leadt_units
-            validt_computed = np.array([(n - center, n + center) for n in leadt])
+            validt_computed = np.array(
+                [[(n - _step / 2, n + _step / 2) for n in leadt] for _step in step]
+            )
 
         if np.all(validt_computed == leadt_bnds):
             status = 1

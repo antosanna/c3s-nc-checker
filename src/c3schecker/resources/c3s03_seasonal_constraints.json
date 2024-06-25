@@ -3010,19 +3010,19 @@
             "prw": {
                 "with_cell_methods": "leadtime: point",
                 "dimensions": {
-                    "leadtime": 6
+                    "leadtime": [6, 24]
                 }
             },
             "cllvi": {
                 "with_cell_methods": "leadtime: point",
                 "dimensions": {
-                    "leadtime": 6
+                    "leadtime": [6, 24]
                 }
             },
             "clivi": {
                 "with_cell_methods": "leadtime: point",
                 "dimensions": {
-                    "leadtime": 6
+                    "leadtime": [6, 24]
                 }
             }
         }
@@ -3308,15 +3308,15 @@
         },
         "prw": {
             "cell_methods": "point",
-            "step": 6
+            "step": [6, 24]
         },
         "cllvi": {
             "cell_methods": "point",
-            "step": 6
+            "step": [6, 24]
         },
         "clivi": {
             "cell_methods": "point",
-            "step": 6
+            "step": [6, 24]
         },
         "cltmean": {
             "cell_methods": "mean",

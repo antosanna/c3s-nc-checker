@@ -33,16 +33,17 @@
                         }
                     }
                 },
-
                 "units": {
                     "temperature": "C"
                 },
-                "missing_values" : [ "hus" ]
+                "missing_values": [
+                    "hus"
+                ]
             }
         },
         "lfpw": {
             "System8-v20210101": {
-                "filename" : [
+                "filename": [
                     "clivi",
                     "cllvi",
                     "prw",
@@ -59,7 +60,7 @@
                     "t28d",
                     "thetaot300",
                     "zos"
-                   ],
+                ],
                 "attributes_values_per_var_name": {
                     "sftlf": {
                         "expected": {
@@ -95,7 +96,7 @@
                     }
                 },
                 "units_per_variable": {
-                    "t20d" : "C"
+                    "t20d": "C"
                 },
                 "attributes_per_var_name": {
                     "time": {
@@ -104,11 +105,22 @@
                             "calendar",
                             "units",
                             "long_name"
-
                         ]
                     }
                 },
-                "missing_values" : [ "orog", "hus", "ta", "ua", "va", "zg", "clt", "psl", "hfls", "hfss", "sftlf" ],
+                "missing_values": [
+                    "orog",
+                    "hus",
+                    "ta",
+                    "ua",
+                    "va",
+                    "zg",
+                    "clt",
+                    "psl",
+                    "hfls",
+                    "hfss",
+                    "sftlf"
+                ],
                 "variables_per_var_name": {
                     "sftlf": {
                         "expected": [
@@ -134,7 +146,6 @@
                             "coordinates": "lat lon",
                             "valid_max": 30.0,
                             "valid_min": 1.0
-
                         }
                     },
                     "uas": {
@@ -160,7 +171,6 @@
                             "calendar",
                             "units",
                             "long_name"
-
                         ]
                     }
                 },
@@ -185,13 +195,13 @@
                         "expected": [
                             "realization"
                         ]
+                    },
+                    "sftlf": {
+                        "expected": [
+                            "realization"
+                        ]
+                    }
                 },
-                "sftlf": {
-                    "expected": [
-                        "realization"
-                    ]
-            }
-            },
                 "attributes_values_per_var_name": {
                     "sftlf": {
                         "expected": {
@@ -276,11 +286,9 @@
                             "calendar",
                             "units",
                             "long_name"
-
                         ]
                     }
                 }
-
             },
             "GEM5-NEMO-v20211130": {
                 "variables_per_var_name": {
@@ -353,14 +361,12 @@
                             "calendar",
                             "units",
                             "long_name"
-
                         ]
                     }
                 },
                 "time_coordinates_values_per_var_name": {
                     "start_point_upper_level_var": 1
                 }
-
             },
             "CanESM5.1p1bc-v20240611": {
                 "attributes_values_per_var_name": {
@@ -399,7 +405,6 @@
                         100000.0
                     ]
                 }
-
             }
         },
         "edzw": {
@@ -411,7 +416,6 @@
                             "calendar",
                             "units",
                             "long_name"
-
                         ]
                     }
                 },
@@ -490,9 +494,6 @@
                     }
                 }
             }
-
         }
-
     }
-
 }
