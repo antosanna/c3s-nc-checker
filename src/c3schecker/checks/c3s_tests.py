@@ -2234,23 +2234,31 @@ def c3s_leadtime_bnds_coordinates_check(
         return outcome
 
     leadt = ds.variables["leadtime"][:]
-    leadt_units = ds.variables["leadtime"].units
     leadt_bnds = ds.variables["leadtime_bnds"][:]
 
-    step = 0
-    for n in range(len(leadt)):
-        center = (leadt_bnds[n][1] - leadt_bnds[n][0]) / 2 + step
-        step = (leadt_bnds[n][1] - leadt_bnds[n][0]) + step
-        if center == leadt[n]:
-            result = True
-        else:
+    if leadt_bnds.shape != (len(leadt), 2):
+        result = False
+        status = 0
+        if verbose:
+            logging.error(
+                f"Variable:  {str('leadtime'):15} bad shape for the leadtime bounds: "
+                f"{leadt_bnds.shape:<10} "
+                f"should be: {(len(leadt), 2):<15} "
+                f"{' ' * 37} --> NOK"
+            )
+    else:
+        leadtime_from_bounds = np.apply_along_axis(
+            lambda x: (x[0] + x[1]) / 2, 1, leadt_bnds
+        )
+        selection = leadtime_from_bounds != leadt
+        for lt, interval in zip(leadt[selection], leadt_bnds[selection]):
             result = False
             status = 0
             if verbose:
                 logging.error(
                     f"Variable:  {str('leadtime'):15} leadtime value "
-                    f"{str(leadt[n]):<10} "
-                    f"not in the middle of the boundary {str(leadt_bnds[n]):<15} "
+                    f"{str(lt):<10} "
+                    f"not in the middle of the boundary {str(interval):<15} "
                     f"{' '*37} --> NOK"
                 )
 
