@@ -2468,8 +2468,6 @@ def c3s_time_values_check(
     if cell_method != "point" and ds.level_type != "ocean2d":
         leadt_bnds = ds.variables["leadtime_bnds"][:]
 
-        # validt_computed = np.array([(n - center, n + center) for n in leadt])
-
         if str(leadt_units) == "days":
             leadt_computed = np.array(
                 [
@@ -2540,16 +2538,9 @@ def c3s_time_values_check(
     # Check that variables time and leadtime are equal
     time = ds.variables["time"][:]
 
-    if np.all(
-        leadt
-        == np.array(
-            [
-                (datetime.datetime.fromtimestamp(x * 3600) - reft).total_seconds()
-                / 3600
-                for x in time
-            ]
-        )
-    ):
+    units_check = ds.variables["time"].units == ds.variables["reftime"].units
+
+    if units_check and np.all(time == ds.variables["reftime"][:] + leadt):
         if leadtime_ckeck:
             outcome.setdefault("info", []).append(
                 f"leadtime and time values are equal, values OK"
@@ -2585,19 +2576,8 @@ def c3s_time_values_check(
         try:
             time_bnds = ds.variables["time_bnds"][:]
             if np.all(
-                leadt_bnds
-                == np.array(
-                    [
-                        [
-                            (
-                                datetime.datetime.fromtimestamp(v * 3600) - reft
-                            ).total_seconds()
-                            / 3600
-                            for v in (x, y)
-                        ]
-                        for x, y in time_bnds
-                    ]
-                )
+                ds.variables["leadtime_bnds"][:] + ds.variables["reftime"][:]
+                == time_bnds
             ):
                 if leadtime_bnds_check:
                     outcome.setdefault("info", []).append(
