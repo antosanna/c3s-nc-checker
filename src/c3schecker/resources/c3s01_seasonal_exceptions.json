@@ -405,6 +405,39 @@
                         100000.0
                     ]
                 }
+            },
+            "GEM5.2-NEMO-v20240611": {
+                "attributes_values_per_var_name": {
+                    "sftlf": {
+                        "expected": {
+                            "coordinates": "realization lat lon",
+                            "valid_min" : "",
+                            "valid_max" : ""
+                        }
+                    },
+                    "orog": {
+                        "expected": {
+                            "coordinates": "realization lat lon"
+                        }
+                    }
+                },                
+                "data_values": {
+                    "plev": [
+                        1000.0,
+                        3000.0,
+                        5000.0,
+                        10000.0,
+                        20000.0,
+                        30000.0,
+                        40000.0,
+                        50000.0,
+                        70000.0,
+                        85000.0,
+                        92500.0,
+                        100000.0
+                    ]
+                }
+
             }
         },
         "edzw": {
