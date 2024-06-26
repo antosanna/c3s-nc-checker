@@ -2321,6 +2321,7 @@ def c3s_time_values_check(
         )
         return outcome
 
+    reft = datetime.datetime.strptime(ds.forecast_reference_time, "%Y-%m-%dT%H:%M:%SZ")
     leadt = ds.variables["leadtime"][:]
     leadt_units = ds.variables["leadtime"].units
 
@@ -2460,82 +2461,6 @@ def c3s_time_values_check(
                     f"doesn't follow the operational standards"
                 )
 
-    # Case 2: Ocean variables --> check the leadtime
-    if ds.level_type == "ocean2d":
-        reft = datetime.datetime.strptime(
-            ds.forecast_reference_time, "%Y-%m-%dT%H:%M:%SZ"
-        )
-        year = reft.year
-        month = reft.month
-        start = 0
-        end = calendar.monthrange(year, month)[1] * 24
-        leadt_computed_ocean = []
-
-        if leadt_units == "hours":
-            number_of_months = int(leadt[-1] / 24 / 30)
-
-            for n in range(1, number_of_months + 1):
-                month = reft + relativedelta.relativedelta(months=+n)
-                number_of_days = calendar.monthrange(year, month.month)[1]
-                number_of_step = number_of_days * 24
-                leadt_computed_ = ((end - start) / 2) + start
-                start = end
-                end = end + number_of_step
-
-                leadt_computed_ocean.append(leadt_computed_)
-                computed = np.array(leadt_computed_ocean)
-
-            if np.all(np.isin(leadt, computed)):
-                status = 1
-                outcome.setdefault("info", []).append(
-                    f"Variable leadtime: values as expected OK"
-                )
-                if verbose:
-                    logging.info(
-                        f"Variable:  {str('leadtime'):15} values as expected, "
-                        f"range [{str(leadt[0]):<4}, {str(leadt[-1]):<7}], "
-                        f"frequency 'monthly' "
-                        f"{' '*49} --> OK"
-                    )
-        else:
-            if leadt_units == "months":
-                status = 0
-                outcome.setdefault("errors", []).append(
-                    f"Variable leadtime: ocean variable, time units not correct."
-                )
-                if verbose:
-                    logging.error(
-                        f"Variable:  {str('leadtime'):<15} leadtime units ({leadt_units}) "
-                        f"for ocean variables is not correct."
-                        f"{' '*54} --> NOK"
-                    )
-
-            elif operational:
-                leadtime_ckeck = False
-                status = 0
-                outcome.setdefault("errors", []).append(
-                    f"Variable leadtime: ocean variable, frequency should be monthly"
-                )
-                if verbose:
-                    logging.warning(
-                        f"Variable:  {str('leadtime'):<15} frequency should be monthly "
-                        f"for ocean variables "
-                        f"{' '*65} --> NOK"
-                    )
-            else:
-                leadtime_ckeck = False
-                status = 1
-                outcome.setdefault("warnings", []).append(
-                    f"Variable leadtime: ocean variable doesn't follow operational "
-                    f"standards"
-                )
-                if verbose:
-                    logging.warning(
-                        f"Variable:  {str('leadtime'):<15} "
-                        f"Variable leadtime: ocean variable doesn't follow operational "
-                        f"standards"
-                    )
-
     # Check the leadtime_bnds, leadtime_bnds only for variables where
     # cell_method != point
     # Case 1. No ocean variable
@@ -2610,82 +2535,20 @@ def c3s_time_values_check(
                         f"Variable:  {str('leadtime_bnds'):<15} "
                         f"doesn't follow operational standards "
                     )
-    # Case 2. Ocean variables
-    elif ds.level_type == "ocean2d":
-        reft = datetime.datetime.strptime(
-            ds.forecast_reference_time, "%Y-%m-%dT%H:%M:%SZ"
-        )
-        year = reft.year
-        month = reft.month
-        start = 0
-        end = calendar.monthrange(year, month)[1] * 24
-        leadt_computed_ = (end - start) / 2
-        leadt_computed_ocean = []
-        leadt_bnds = ds.variables["leadtime_bnds"][:]
-        bnds_check = True
-        number_of_months = int(leadt[-1] / 24 / 30)
-        if number_of_months < 1:
-            leadtime_bnds_check = False
-
-        for n in range(1, number_of_months + 1):
-            month = reft + relativedelta.relativedelta(months=+n)
-            number_of_days = calendar.monthrange(year, month.month)[1]
-            number_of_step = number_of_days * 24
-            computed_bnds = [start, end]
-            if all(leadt_bnds[n - 1] == computed_bnds):
-                pass
-            else:
-                if operational:
-                    leadtime_bnds_check = False
-                    status = 0
-                    outcome.setdefault("errors", []).append(
-                        f"Variable leadtime_bnds: Unexpected values were found"
-                    )
-                    if verbose:
-                        logging.error(
-                            f"Variable:  {str('leadtime_bnds'):<15} unexpected values "
-                            f"found, "
-                            f"expected boundary: {str(computed_bnds):<15} "
-                            f"actual boundary: {str(leadt_bnds[n-1]):<15} "
-                            f"{' '*20} --> NOK"
-                        )
-                else:
-                    if verbose:
-                        logging.error(
-                            f"Variable:  {str('leadtime_bnds'):<15} "
-                            f"doesn't follow the operational standards "
-                        )
-
-            start = end
-            end = end + number_of_step
-
-        if leadtime_bnds_check:
-            status = 1
-            outcome.setdefault("info", []).append(
-                f"Variable leadtime_bnds: values as expected."
-            )
-            if verbose:
-                logging.info(
-                    f"Variable:  {str('leadtime_bnds'):<15} values as expected "
-                    f"start: {str(leadt_bnds[0]):<3} end: "
-                    f"{str(leadt_bnds[-1]):<8} {' '*69} --> OK"
-                )
-        else:
-            status = 0
-            outcome.setdefault("errors", []).append(
-                f"Variable leadtime_bnds: npt expected values."
-            )
-            if verbose:
-                logging.error(
-                    f"Variable:  {str('leadtime_bnds'):<15} not expected values "
-                    f"start: {str(leadt_bnds[0]):<3} end: "
-                    f"{str(leadt_bnds[-1]):<8} {' '*64} --> NOK"
-                )
 
     # Check that variables time and leadtime are equal
     time = ds.variables["time"][:]
 
-    if np.all(leadt == time):
+    if np.all(
+        leadt
+        == np.array(
+            [
+                (datetime.datetime.fromtimestamp(x * 3600) - reft).total_seconds()
+                / 3600
+                for x in time
+            ]
+        )
+    ):
         if leadtime_ckeck:
             outcome.setdefault("info", []).append(
                 f"leadtime and time values are equal, values OK"
@@ -2717,10 +2580,24 @@ def c3s_time_values_check(
             )
 
     # Check that variables leadtime_bnds and time_bnds are equal
-    if cell_method not in "point":
+    if "point" not in cell_method:
         try:
             time_bnds = ds.variables["time_bnds"][:]
-            if np.all(leadt_bnds == time_bnds):
+            if np.all(
+                leadt_bnds
+                == np.array(
+                    [
+                        [
+                            (
+                                datetime.datetime.fromtimestamp(v * 3600) - reft
+                            ).total_seconds()
+                            / 3600
+                            for v in (x, y)
+                        ]
+                        for x, y in time_bnds
+                    ]
+                )
+            ):
                 if leadtime_bnds_check:
                     outcome.setdefault("info", []).append(
                         f"leadtime_bnds and time_bnds values are equal, values OK"
