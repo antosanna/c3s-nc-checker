@@ -219,7 +219,7 @@ def main(
                 "cf_dimensions_unicity",
                 "cf_global_attributes",
                 "cf_missing_data",
-                "cf_attributes_values_type",
+                # "cf_attributes_values_type",
                 "cf_naming_convention",
                 "cf_naming_unicity",
                 "cf_ancillary_data",
