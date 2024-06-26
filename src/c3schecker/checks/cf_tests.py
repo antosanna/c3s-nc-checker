@@ -528,101 +528,101 @@ def cf_missing_data_check(ds: Dataset, _, excep: dict, verbose, operational):
 
 
 # Test 8.
-@register("cf_attributes_values_type")
-def cf_attributes_values_type_check(ds: Dataset, _, excep: dict, verbose, operational):
-    institute_id = ds.institute_id
-    system = ds.source.split()[0].split(":")[0]
-    if verbose:
-        logging.info("Check the attributes values.")
-    status = 1
-    outcome = {"status": status}
-    for var_name, nc_var in ds.variables.items():
-        attrs = nc_var.ncattrs()
-        # print(attrs)
-        for attr in attrs:
-            attribute_value = nc_var.getncattr(attr)
-            # print(f"Variable: {var_name}, Attribute: {attr}, value: {attribute_value}, Data Type: {type(attribute_value)}")
-            if attr in ["valid_min", "valid_max", "_FillValue", "missing_value"]:
-                if (
-                    isinstance(attribute_value, np.float32)
-                    or isinstance(attribute_value, np.float64)
-                    or isinstance(attribute_value, np.int32)
-                    or isinstance(attribute_value, np.int64)
-                ):
-                    outcome.setdefault("info", []).append(
-                        f"Variable: {str(var_name)} attribute {str(attr)} "
-                        f"attribute value: {str(attribute_value)} "
-                        f"type: {str(type(attribute_value))} OK"
-                    )
-                    if verbose:
-                        logging.info(
-                            f"Variable:  {str(var_name):<15} attribute {str(attr):<20} "
-                            f"type of attributes's value: {str(type(attribute_value)):<25} "
-                            f"{' '*28} --> OK"
-                        )
-                else:
-                    try:
-                        exception = (
-                            excep.get("exceptions", {})
-                            .get(institute_id, {})
-                            .get(system, {})
-                            .get("cf_attributes_values_type")
-                            .get(attr)
-                        )
-                        exception == "str"
-                        if isinstance(attribute_value, str):
-                            outcome.setdefault("warnings", []).append(
-                                f"Variable: {str(var_name)} attribute {str(attr)} "
-                                f"attribute value: {str(attribute_value)} "
-                                f"type: {str(type(attribute_value))} wrong attribute value type OK "
-                                f"Under exception "
-                            )
-                            if verbose:
-                                logging.warning(
-                                    f"Variable:  {str(var_name):<15} attribute {str(attr):<20} "
-                                    f"type of attributes's value: {str(type(attribute_value)):<25} "
-                                    f"(expected type: 'numeric') {' '*1} --> OK under exception"
-                                )
-                    except:
-                        status = 0
-                        outcome.setdefault("errors", []).append(
-                            f"Variable: {str(var_name)} attribute {str(attr)} "
-                            f"attribute value: {str(attribute_value)} "
-                            f"type: {str(type(attribute_value))} wrong attribute value type NOK"
-                        )
-                        if verbose:
-                            logging.error(
-                                f"Variable:  {str(var_name):<15} attribute {str(attr):<20} "
-                                f"type of attributes's value: {str(type(attribute_value)):<25} "
-                                f"(expected type: 'numeric') {' '*1} --> NOK "
-                            )
-            else:
-                if isinstance(attribute_value, str) or isinstance(attribute_value, str):
-                    outcome.setdefault("info", []).append(
-                        f"Variable '{var_name}' with correct attributes value type ({type(attribute_value)})"
-                    )
-                    if verbose:
-                        logging.info(
-                            f"Variable:  {str(var_name):<15} attribute {str(attr):<20} "
-                            f"type of attributes's value: {str(type(attribute_value)):<25} "
-                            f"{' '*28} --> OK"
-                        )
-                else:
-                    status = 0
-                    outcome.setdefault("errors", []).append(
-                        f"Variable: {str(var_name)} attribute {str(attr)} "
-                        f"attribute value: {str(attribute_value)} "
-                        f"type: {str(type(attribute_value))} wrong attribute value type NOK"
-                    )
-                    if verbose:
-                        logging.error(
-                            f"Variable:  {str(var_name):<15} attribute {str(attr):<20} "
-                            f"type of attributes's value: {str(type(attribute_value)):<25} "
-                            f"(expected type: 'string') {' '*1} --> NOK "
-                        )
-
-    outcome["status"] = status
-    return outcome
+# @register("cf_attributes_values_type")
+# def cf_attributes_values_type_check(ds: Dataset, _, excep: dict, verbose, operational):
+#     institute_id = ds.institute_id
+#     system = ds.source.split()[0].split(":")[0]
+#     if verbose:
+#         logging.info("Check the attributes values.")
+#     status = 1
+#     outcome = {"status": status}
+#     for var_name, nc_var in ds.variables.items():
+#         attrs = nc_var.ncattrs()
+#         # print(attrs)
+#         for attr in attrs:
+#             attribute_value = nc_var.getncattr(attr)
+#             # print(f"Variable: {var_name}, Attribute: {attr}, value: {attribute_value}, Data Type: {type(attribute_value)}")
+#             if attr in ["valid_min", "valid_max", "_FillValue", "missing_value"]:
+#                 if (
+#                     isinstance(attribute_value, np.float32)
+#                     or isinstance(attribute_value, np.float64)
+#                     or isinstance(attribute_value, np.int32)
+#                     or isinstance(attribute_value, np.int64)
+#                 ):
+#                     outcome.setdefault("info", []).append(
+#                         f"Variable: {str(var_name)} attribute {str(attr)} "
+#                         f"attribute value: {str(attribute_value)} "
+#                         f"type: {str(type(attribute_value))} OK"
+#                     )
+#                     if verbose:
+#                         logging.info(
+#                             f"Variable:  {str(var_name):<15} attribute {str(attr):<20} "
+#                             f"type of attributes's value: {str(type(attribute_value)):<25} "
+#                             f"{' '*28} --> OK"
+#                         )
+#                 else:
+#                     try:
+#                         exception = (
+#                             excep.get("exceptions", {})
+#                             .get(institute_id, {})
+#                             .get(system, {})
+#                             .get("cf_attributes_values_type")
+#                             .get(attr)
+#                         )
+#                         exception == "str"
+#                         if isinstance(attribute_value, str):
+#                             outcome.setdefault("warnings", []).append(
+#                                 f"Variable: {str(var_name)} attribute {str(attr)} "
+#                                 f"attribute value: {str(attribute_value)} "
+#                                 f"type: {str(type(attribute_value))} wrong attribute value type OK "
+#                                 f"Under exception "
+#                             )
+#                             if verbose:
+#                                 logging.warning(
+#                                     f"Variable:  {str(var_name):<15} attribute {str(attr):<20} "
+#                                     f"type of attributes's value: {str(type(attribute_value)):<25} "
+#                                     f"(expected type: 'numeric') {' '*1} --> OK under exception"
+#                                 )
+#                     except:
+#                         status = 0
+#                         outcome.setdefault("errors", []).append(
+#                             f"Variable: {str(var_name)} attribute {str(attr)} "
+#                             f"attribute value: {str(attribute_value)} "
+#                             f"type: {str(type(attribute_value))} wrong attribute value type NOK"
+#                         )
+#                         if verbose:
+#                             logging.error(
+#                                 f"Variable:  {str(var_name):<15} attribute {str(attr):<20} "
+#                                 f"type of attributes's value: {str(type(attribute_value)):<25} "
+#                                 f"(expected type: 'numeric') {' '*1} --> NOK "
+#                             )
+#             else:
+#                 if isinstance(attribute_value, str):
+#                     outcome.setdefault("info", []).append(
+#                         f"Variable '{var_name}' with correct attributes value type ({type(attribute_value)})"
+#                     )
+#                     if verbose:
+#                         logging.info(
+#                             f"Variable:  {str(var_name):<15} attribute {str(attr):<20} "
+#                             f"type of attributes's value: {str(type(attribute_value)):<25} "
+#                             f"{' '*28} --> OK"
+#                         )
+#                 else:
+#                     status = 0
+#                     outcome.setdefault("errors", []).append(
+#                         f"Variable: {str(var_name)} attribute {str(attr)} "
+#                         f"attribute value: {str(attribute_value)} "
+#                         f"type: {str(type(attribute_value))} wrong attribute value type NOK"
+#                     )
+#                     if verbose:
+#                         logging.error(
+#                             f"Variable:  {str(var_name):<15} attribute {str(attr):<20} "
+#                             f"type of attributes's value: {str(type(attribute_value)):<25} "
+#                             f"(expected type: 'string') {' '*1} --> NOK "
+#                         )
+#
+#     outcome["status"] = status
+#     return outcome
 
 
 # Test 9.
