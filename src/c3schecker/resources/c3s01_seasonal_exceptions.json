@@ -31,6 +31,11 @@
                             "standard_name": "depth_of_isosurface_of_sea_water_potential_temperature",
                             "units": "m"
                         }
+                    },
+                    "temperature": {
+                        "expected": {
+                            "units": "C"
+                        }
                     }
                 },
                 "units": {
@@ -420,7 +425,7 @@
                             "coordinates": "realization lat lon"
                         }
                     }
-                },                
+                },
                 "data_values": {
                     "plev": [
                         1000.0,

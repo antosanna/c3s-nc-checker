@@ -1042,21 +1042,6 @@ def c3s_meta_attributes_exact_values_per_var_name(
                                 f"NOK (wrong attribute value; expected value: "
                                 f"({expected_value})"
                             )
-
-                        # if attr_name in "valid_min" or attr_name in "valid_max":
-                        #     if not isinstance(
-                        #         nc_var.getncattr(attr_name), np.float32
-                        #     ) and not isinstance(
-                        #         nc_var.getncattr(attr_name), np.float64
-                        #     ):
-                        #         if verbose:
-                        #             logging.error(
-                        #                 f"Variable: {var_name:<15} "
-                        #                 f"attribute {' '*6}: {attr_name:<17} value: "
-                        #                 f"{actual_value:<60} {' '*10} --> "
-                        #                 f"NOK (expected dtype: float; actual:"
-                        #                 f"({type(nc_var.getncattr(attr_name))}))"
-                        #             )
                     else:
                         message_type = "warnings"
                         if verbose:
