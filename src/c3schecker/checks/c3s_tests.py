@@ -2251,6 +2251,7 @@ def c3s_leadtime_bnds_coordinates_check(
             lambda x: (x[0] + x[1]) / 2, 1, leadt_bnds
         )
         selection = leadtime_from_bounds != leadt
+        result = True
         for lt, interval in zip(leadt[selection], leadt_bnds[selection]):
             result = False
             status = 0
