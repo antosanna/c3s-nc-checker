@@ -932,7 +932,7 @@ def c3s_meta_attributes_exact_values_per_var_name(
             if attr_name not in check_regex:
                 check_result = actual_value == expected_value
             else:
-                check_result = re.match(expected_value, actual_value)
+                check_result = re.match(expected_value, str(actual_value))
 
             if check_result and attr_name != "cell_methods":
                 outcome.setdefault("info", []).append(f"{var_name} {attr_name}: OK")
