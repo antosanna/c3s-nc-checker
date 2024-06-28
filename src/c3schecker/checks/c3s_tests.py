@@ -856,6 +856,7 @@ def c3s_meta_attributes_exact_values_per_var_name(
             try:
                 actual_value = np.array(nc_var.getncattr(attr_name))
             except AttributeError:
+                logging.exception("Exception Received:")
                 exceptions = (
                     excep.get("exceptions", {})
                     .get(institute_id, {})
@@ -898,6 +899,7 @@ def c3s_meta_attributes_exact_values_per_var_name(
             try:
                 actual_value = actual_value.astype(type(expected_value))
             except ValueError:
+                logging.exception("Exception Received:")
                 exceptions = (
                     excep.get("exceptions", {})
                     .get(institute_id, {})
