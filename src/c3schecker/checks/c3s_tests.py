@@ -854,8 +854,7 @@ def c3s_meta_attributes_exact_values_per_var_name(
                             f"expected attributes: {var_attrs}"
                         )
             try:
-                # actual_value = str(nc_var.getncattr(attr_name))
-                actual_value = nc_var.getncattr(attr_name)
+                actual_value = np.array(nc_var.getncattr(attr_name))
             except AttributeError:
                 exceptions = (
                     excep.get("exceptions", {})
@@ -896,77 +895,42 @@ def c3s_meta_attributes_exact_values_per_var_name(
                             f"{attr_name:<17} not found {' '*68} --> NOK"
                         )
                     continue
-
-            if attr_name in "valid_min" or attr_name in "valid_max":
-                if not isinstance(
-                    nc_var.getncattr(attr_name), np.float32
-                ) and not isinstance(nc_var.getncattr(attr_name), np.float64):
-                    exceptions = (
-                        excep.get("exceptions", {})
-                        .get(institute_id, {})
-                        .get(system, {})
-                        .get("attributes_values_per_var_name", {})
-                        .get(var_name, {})
-                        .get("expected", {})
+            try:
+                actual_value = actual_value.astype(type(expected_value))
+            except ValueError:
+                exceptions = (
+                    excep.get("exceptions", {})
+                    .get(institute_id, {})
+                    .get(system, {})
+                    .get("attributes_values_per_var_name", {})
+                    .get(var_name, {})
+                    .get("expected", {})
+                )
+                exception = False
+                for attr, value in exceptions.items():
+                    if attr_name in attr:
+                        exception = True
+                msg = (
+                    f"Attribute '{attr_name}' (value: {actual_value}) of variable "
+                    f"'{var_name}' is not convertible to its expected value type "
+                    f"({type(expected_value)})."
+                )
+                if exception:
+                    outcome.setdefault("warnings", []).append(
+                        msg + " OK under exception"
                     )
-                    try:
-                        # if type(exceptions[attr_name]) == type(actual_value):
-                        type(exceptions[attr_name]) == type(actual_value)
-                        message_type = "warnings"
-                        new_status = 1
-                        outcome.setdefault(message_type, []).append(
-                            f"Attribute '{attr_name}' of variable '{var_name}' "
-                            f"has dtype '{type(exceptions[attr_name])}'. Expected: "
-                            f"{type(expected_value)}. OK Under exception. "
-                        )
-                        if verbose:
-                            logging.warning(
-                                f"Variable: {var_name:<15} "
-                                f"attribute {' '*6}: {attr_name:<17} value: "
-                                f"{actual_value:<60} {' '*10} --> "
-                                f"OK under exception (expected dtype: float; actual:"
-                                f"({type(nc_var.getncattr(attr_name))}))"
-                            )
-                    except:
-                        # else:
-                        message_type = "errors"
-                        outcome["status"] = 0
-                        outcome.setdefault(message_type, []).append(
-                            f"Attribute '{attr_name}' of variable '{var_name}' "
-                            f"has dtype '{type(actual_value)}'. Expected: "
-                            f"{type(expected_value)}."
-                        )
-                        if verbose:
-                            logging.error(
-                                f"Variable: {var_name:<15} "
-                                f"attribute {' '*6}: {attr_name:<17} value: "
-                                f"{actual_value:<60} {' '*10} --> "
-                                f"NOK (expected dtype: float; actual:"
-                                f"({type(nc_var.getncattr(attr_name))}))"
-                            )
-
-            if isinstance(actual_value, np.float32) or isinstance(
-                actual_value, np.float64
-            ):
-                actual_value_ = actual_value
-                expected_value_ = float(expected_value)
-            elif isinstance(actual_value, np.int32) or isinstance(
-                actual_value, np.int64
-            ):
-                actual_value_ = actual_value
-                expected_value_ = int(expected_value)
-            elif (isinstance(actual_value, str)) and (
-                attr_name == "valid_min" or attr_name == "valid_max"
-            ):
-                actual_value_ = float(actual_value)
-                expected_value_ = float(expected_value)
-
-            else:
-                actual_value_ = str(actual_value)
-                expected_value_ = str(expected_value)
+                    if verbose:
+                        logging.warning(msg)
+                    continue
+                else:
+                    outcome.setdefault("errors", []).append(msg + " --> NOK")
+                    outcome["status"] = 0
+                    if verbose:
+                        logging.error(msg + " --> NOK")
+                    continue
 
             if attr_name not in check_regex:
-                check_result = actual_value_ == expected_value_
+                check_result = actual_value == expected_value
             else:
                 check_result = re.match(expected_value, actual_value)
 
@@ -1011,7 +975,6 @@ def c3s_meta_attributes_exact_values_per_var_name(
                             f"{attr_name:<17} "
                             f"value: {actual_value:<60} {' '*10} --> OK"
                         )
-
             else:
                 try:
                     exceptions = (
