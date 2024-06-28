@@ -867,7 +867,7 @@ def c3s_meta_attributes_exact_values_per_var_name(
                 )
                 exception = False
                 for attr, value in exceptions.items():
-                    if attr_name in attr:
+                    if attr_name == attr:
                         exception = True
                 if exception:
                     outcome.setdefault("warnings", []).append(

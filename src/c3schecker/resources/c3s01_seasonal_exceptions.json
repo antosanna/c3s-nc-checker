@@ -9,7 +9,9 @@
                             "units": "1",
                             "grid_mapping": "hcrs",
                             "long_name": "Land Area Fraction",
-                            "coordinates": "lat lon"
+                            "coordinates": "lat lon",
+                            "valid_min": null,
+                            "valid_max": null
                         }
                     },
                     "t20d": {
@@ -43,7 +45,12 @@
                 },
                 "missing_values": [
                     "hus"
-                ]
+                ],
+                "data_values": {
+                    "height": [
+                        1.5
+                    ]
+                }
             }
         },
         "lfpw": {
