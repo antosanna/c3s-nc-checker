@@ -1914,7 +1914,8 @@ def c3s_data_values(ds: Dataset, spec: dict, excep: dict, verbose, operational) 
                 )
         else:
             if results["operational_check"]:
-                if not list(values[np.isin(values, expected, invert=True)]):
+                values_not_expected = values[np.isin(values, expected, invert=True)]
+                if np.any(values_not_expected):
                     institute_id = ds.institute_id
                     system = ds.source.split()[0][:-1]
                     exceptions = (
