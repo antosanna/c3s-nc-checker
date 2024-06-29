@@ -1950,6 +1950,7 @@ def c3s_data_values(ds: Dataset, spec: dict, excep: dict, verbose, operational) 
                     if verbose:
                         logging.error(
                             f"Variable:  {name:<15} invalid values found "
+                            f"({list(values_not_expected)})"
                             f"{' '*93} --> NOK, "
                         )
 
