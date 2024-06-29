@@ -1902,8 +1902,6 @@ def c3s_data_values(ds: Dataset, spec: dict, excep: dict, verbose, operational) 
                     "failure": True,
                     "operational_check": operational,
                 }
-                invalid_values = list(values[np.isin(values, expected, invert=True)])
-                valid_values = expected
 
         if not results["failure"]:
             level = "info"
@@ -1914,8 +1912,8 @@ def c3s_data_values(ds: Dataset, spec: dict, excep: dict, verbose, operational) 
                 )
         else:
             if results["operational_check"]:
-                values_not_expected = values[np.isin(values, expected, invert=True)]
-                if np.any(values_not_expected):
+                values_not_expected = results["invalid_values"]
+                if not values_not_expected:
                     institute_id = ds.institute_id
                     system = ds.source.split()[0][:-1]
                     exceptions = (
@@ -1927,10 +1925,6 @@ def c3s_data_values(ds: Dataset, spec: dict, excep: dict, verbose, operational) 
                     )
                     if exceptions == list(values):
                         level, status = "warnings", 1
-                        msg = (
-                            f"Invalid order found for '{name}':  "
-                            f"OK Under exception."
-                        )
                         if verbose:
                             logging.warning(
                                 f"Variable:  {name:<15} invalid order found (under exception) "
@@ -1953,7 +1947,6 @@ def c3s_data_values(ds: Dataset, spec: dict, excep: dict, verbose, operational) 
                             f"({list(values_not_expected)})"
                             f"{' '*93} --> NOK, "
                         )
-
             else:
                 level, status = "warnings", 1
                 msg = f"Values found for '{name}'"
