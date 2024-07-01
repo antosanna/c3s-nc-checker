@@ -1913,16 +1913,16 @@ def c3s_data_values(ds: Dataset, spec: dict, excep: dict, verbose, operational) 
         else:
             if results["operational_check"]:
                 values_not_expected = results["invalid_values"]
+                institute_id = ds.institute_id
+                system = ds.source.split()[0][:-1]
+                exceptions = (
+                    excep.get("exceptions", {})
+                    .get(institute_id, {})
+                    .get(system, {})
+                    .get("data_values", {})
+                    .get(var_name, {})
+                )
                 if not values_not_expected:
-                    institute_id = ds.institute_id
-                    system = ds.source.split()[0][:-1]
-                    exceptions = (
-                        excep.get("exceptions", {})
-                        .get(institute_id, {})
-                        .get(system, {})
-                        .get("data_values", {})
-                        .get(var_name, {})
-                    )
                     if exceptions == list(values):
                         level, status = "warnings", 1
                         if verbose:
@@ -1939,14 +1939,22 @@ def c3s_data_values(ds: Dataset, spec: dict, excep: dict, verbose, operational) 
                                 f"{' '*93} --> NOK, "
                             )
                 else:
-                    level, status = "errors", 0
-                    msg = f"Invalid values found for '{name}'"
-                    if verbose:
-                        logging.error(
-                            f"Variable:  {name:<15} invalid values found "
-                            f"({list(values_not_expected)})"
-                            f"{' '*93} --> NOK, "
-                        )
+                    if exceptions == list(values):
+                        level, status = "warnings", 1
+                        if verbose:
+                            logging.warning(
+                                f"Variable:  {name:<15} invalid values found (under exception) "
+                                f"{' ' * 75} --> OK"
+                            )
+                    else:
+                        level, status = "errors", 0
+                        msg = f"Invalid values found for '{name}'"
+                        if verbose:
+                            logging.error(
+                                f"Variable:  {name:<15} invalid values found "
+                                f"({list(values_not_expected)})"
+                                f"{' '*93} --> NOK, "
+                            )
             else:
                 level, status = "warnings", 1
                 msg = f"Values found for '{name}'"
