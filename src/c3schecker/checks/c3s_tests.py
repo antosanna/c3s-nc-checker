@@ -988,8 +988,8 @@ def c3s_meta_attributes_exact_values_per_var_name(
                         .get("expected", {})
                     )
 
-                    if str(nc_var.getncattr(attr_name)) not in str(
-                        exceptions.get(attr_name)
+                    if str(nc_var.getncattr(attr_name)) != str(
+                        exceptions.get(attr_name, "")
                     ):
                         message_type = "errors"
                         outcome["status"] = 0
