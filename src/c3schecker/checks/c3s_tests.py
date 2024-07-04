@@ -2484,37 +2484,49 @@ def c3s_time_values_check(
     # Check that variables time and leadtime are equal
     time = ds.variables["time"][:]
 
-    units_check = ds.variables["time"].units == ds.variables["reftime"].units
+    time_unit = Units(ds.variables["time"].units)
+    reftime_unit = Units(ds.variables["reftime"].units)
+    units_check = time_unit == reftime_unit
 
     if units_check and np.all(time == ds.variables["reftime"][:] + leadt):
         if leadtime_ckeck:
             outcome.setdefault("info", []).append(
-                f"leadtime and time values are equal, values OK"
+                f"time == reftime + leadtime, values OK"
             )
             if verbose:
                 logging.info(
-                    f"Variable:  {str('time'):<15} leadtime and time values are equal "
-                    f"[leadtime == time] {' '*59} --> OK"
+                    f"Variable:  {str('time'):<15} time == reftime + leadtime "
+                    f"{' '*59} --> OK"
                 )
         else:
             outcome.setdefault("errors", []).append(
-                f"leadtime and time values are equal, but leadtime values "
-                f"are not correct"
+                f"time == reftime + leadtime, but leadtime values " f"are not correct"
             )
             if verbose:
                 logging.error(
-                    f"Variable:  {str('time'):<15} leadtime and time values are equal "
+                    f"Variable:  {str('time'):<15} time == reftime + leadtime "
                     f"but leadtime values are not correct {' '*42} --> NOK"
                 )
-    else:
+    elif not units_check:
         status = 0
         outcome.setdefault("errors", []).append(
-            f"leadtime and time values are not equal, values NOK"
+            f"time and reftime units (resp. {time_unit} and {reftime_unit}) are not "
+            f"equal (or equivalent)"
         )
         if verbose:
             logging.error(
-                f"Variable:  {str('time'):<15} leadtime and time values are not equal "
-                f"[leadtime != time] {' '*55} --> OK"
+                f"Variable:  {'time':<15} time and reftime units (resp. {time_unit} "
+                f"and {reftime_unit}) are not equal (or equivalent) {' ' * 55} --> OK"
+            )
+    else:
+        status = 0
+        outcome.setdefault("errors", []).append(
+            f"time != reftime + leadtime, values NOK"
+        )
+        if verbose:
+            logging.error(
+                f"Variable:  {str('time'):<15} time != reftime + leadtime "
+                f" {' '*55} --> OK"
             )
 
     # Check that variables leadtime_bnds and time_bnds are equal
