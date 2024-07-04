@@ -852,11 +852,10 @@ def c3s_meta_attributes_exact_values_per_var_name(
                             f"Variable: {var_name:<15} attributes {' '*6}: "
                             f"actual attributes: {nc_var_attrs} "
                             f"expected attributes: {var_attrs}"
-                        )
+                        )            
             try:
                 actual_value = np.array(nc_var.getncattr(attr_name))
             except AttributeError:
-                logging.exception("Exception Received:")
                 exceptions = (
                     excep.get("exceptions", {})
                     .get(institute_id, {})
@@ -895,7 +894,7 @@ def c3s_meta_attributes_exact_values_per_var_name(
                             f"Variable: {var_name:<15} attribute {' '*6}: "
                             f"{attr_name:<17} not found {' '*68} --> NOK"
                         )
-                    continue
+                    continue            
             try:
                 actual_value = actual_value.astype(type(expected_value))
             except ValueError:
