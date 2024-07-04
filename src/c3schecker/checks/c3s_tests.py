@@ -2275,7 +2275,6 @@ def c3s_time_values_check(
         )
         return outcome
 
-    reft = datetime.datetime.strptime(ds.forecast_reference_time, "%Y-%m-%dT%H:%M:%SZ")
     leadt = ds.variables["leadtime"][:]
     leadt_units = ds.variables["leadtime"].units
 
@@ -2325,12 +2324,6 @@ def c3s_time_values_check(
     institute_id = ds.institute_id
     system = ds.source.split()[0].split(":")[0]
 
-    exceptions = (
-        excep.get("exceptions", {})
-        .get(institute_id, {})
-        .get(system, {})
-        .get("time_coordinates_values_per_var_name")
-    )
     frequency_ok = False
     # Check the leadtime
     # Case 1: NO ocean variables --> check the leadtime
