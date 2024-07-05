@@ -182,6 +182,9 @@
                             "valid_max": 30.0,
                             "valid_min": 1.0
                         }
+                    },
+                    "temperature": {
+                        "expected": {"units":  "C"}
                     }
                 },
                 "units": {
