@@ -1471,6 +1471,16 @@ def c3s_data_intervals(
                 if var_dimension == dimension:
                     dim_values = ds.variables[var_dimension]
                     all_intervals = dim_values[1:] - dim_values[:-1]
+                    # Ugly workaround for the case of leadtime dimension:
+                    # We take the units into account, transforming the actual intervals
+                    # in hours, assuming the constraint file is given in hours
+                    if var_dimension == "leadtime":
+                        if dim_values.units == "days":
+                            all_intervals *= 24
+                        if dim_values.units == "seconds":
+                            all_intervals /= 3600
+                        if dim_values.units == "minutes":
+                            all_intervals /= 60
                     if isinstance(expected_value, (list, tuple)):
                         not_matching_intervals = all_intervals[
                             np.isin(all_intervals, expected_value, invert=True)
