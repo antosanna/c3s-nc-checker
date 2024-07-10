@@ -876,9 +876,8 @@ def c3s_meta_attributes_exact_values_per_var_name(
                         )
             try:
                 actual_value = np.array(nc_var.getncattr(attr_name))
-                # actual_value = nc_var.getncattr(attr_name) (cxhk)
             except AttributeError:
-                logging.exception("Exception Received:")
+                # logging.exception("Exception Received:")
                 exceptions = (
                     excep.get("exceptions", {})
                     .get(institute_id, {})
@@ -1010,8 +1009,11 @@ def c3s_meta_attributes_exact_values_per_var_name(
                         .get("expected", {})
                     )
 
-                    if str(nc_var.getncattr(attr_name)) not in str(
-                        exceptions.get(attr_name)
+                    # if str(nc_var.getncattr(attr_name)) not in str(
+                    #     exceptions.get(attr_name)
+                    # ):
+                    if str(nc_var.getncattr(attr_name)) != str(
+                        exceptions.get(attr_name, "")
                     ):
                         message_type = "errors"
                         outcome["status"] = 0
@@ -1493,6 +1495,16 @@ def c3s_data_intervals(
                 if var_dimension == dimension:
                     dim_values = ds.variables[var_dimension]
                     all_intervals = dim_values[1:] - dim_values[:-1]
+                    # Ugly workaround for the case of leadtime dimension:
+                    # We take the units into account, transforming the actual intervals
+                    # in hours, assuming the constraint file is given in hours
+                    if var_dimension == "leadtime":
+                        if dim_values.units == "days":
+                            all_intervals *= 24
+                        if dim_values.units == "seconds":
+                            all_intervals /= 3600
+                        if dim_values.units == "minutes":
+                            all_intervals /= 60
                     if isinstance(expected_value, (list, tuple)):
                         not_matching_intervals = all_intervals[
                             np.isin(all_intervals, expected_value, invert=True)
@@ -2311,7 +2323,7 @@ def c3s_time_values_check(
         )
         return outcome
 
-    reft = datetime.datetime.strptime(ds.forecast_reference_time, "%Y-%m-%dT%H:%M:%SZ")
+    # reft = datetime.datetime.strptime(ds.forecast_reference_time, "%Y-%m-%dT%H:%M:%SZ")
     leadt = ds.variables["leadtime"][:]
     leadt_units = ds.variables["leadtime"].units
 
@@ -2545,7 +2557,7 @@ def c3s_time_values_check(
     if units_check and np.all(time == ds.variables["reftime"][:] + leadt):
         if leadtime_ckeck:
             outcome.setdefault("info", []).append(
-                f"[time == reftime + time], values OK"
+                f"[time == reftime + leadtime], values OK"
             )
             if verbose:
                 logging.info(
@@ -2997,3 +3009,4 @@ def _simple_equality_check(actual, constraints, warning_msgs, error_msgs):
 
 def _get_data_vars(dataset):
     return dataset.get_variables_by_attributes(coordinates=_ncattr_present)
+
