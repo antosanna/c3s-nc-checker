@@ -92,6 +92,10 @@ class CFREF(metaclass=Singleton):
             r"z2\s*:\s*[\w_]+\s+a\s*:\s*[\w_]+\s+href\s*:\s*[\w_]+\s+"
             r"k_c\s*:\s*[\w_]+\s*"
         ),
+        "area_type": re.compile(
+            # r"leadtime: point  area: mean where vegetation_type"
+            r"\s*point\s*:\s*[\w_]+\s+area\s*:\s*[\w_]+\s+vegetation:\s*[\w_]+\s*"
+        ),
     }
     cf_units_modifiers = {
         "detection_minimum": None,

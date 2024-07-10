@@ -140,6 +140,7 @@ def c3s_filename_reconstruction_check(
                 "time",
                 "time_bnds",
                 "realization",
+                "vegetation_type",
                 "depth",
                 "depth_bnds",
             ]
@@ -638,12 +639,14 @@ def c3s_meta_attributes_per_var_name(
 
     outcome = {"status": 1}
     new_status = 1
+    actual_data_vars = _get_data_vars(ds)
+    scientific_var_name = actual_data_vars[0].name
     for var_name, constraints in overall_constraints.items():
         instantaneous = ds.get_variables_by_attributes(cell_methods="leadtime: point")
         if var_name == "required" or var_name == "test":
             continue
         expected = constraints["expected"]
-        if var_name == "time_accu" and instantaneous:
+        if var_name == "time_accu" and (instantaneous or scientific_var_name == 'cnc' or scientific_var_name == 'lai'):
             continue
         if var_name == "time_inst" and not instantaneous:
             continue
@@ -809,6 +812,12 @@ def c3s_meta_attributes_exact_values_per_var_name(
             or data_name == "wsgmax"
         ) and var_name == "height":
             var_name_ = "height_wind"
+        
+        if (
+            data_name == "ua100m"
+            or data_name == "va100m"
+        ) and var_name == "height":
+            var_name_ = "height_wind_100"
 
         var_specific_constraints = overall_constraints.get(var_name_, {})
         var_attrs = []
@@ -816,7 +825,20 @@ def c3s_meta_attributes_exact_values_per_var_name(
         for global_attr_name, expected_value in var_specific_constraints.get(
             "global", {}
         ).items():
+            
             actual_global_value = ds.getncattr(global_attr_name)
+            # print(f"attr_name: {global_attr_name}")
+            # print(f"actual_value: {actual_global_value}")
+            # print()
+
+            if not operational and global_attr_name == "frequency":
+                if verbose:
+                    logging.info(
+                        f"Variable: {var_name:<15} global attribute: "
+                        f"{global_attr_name:<17} "
+                        f"value: {actual_global_value:<60} {' '*10} --> Not operational "
+                    )
+                continue
 
             if actual_global_value == expected_value:
                 outcome.setdefault("info", []).append(
@@ -827,6 +849,18 @@ def c3s_meta_attributes_exact_values_per_var_name(
                         f"Variable: {var_name:<15} global attribute: "
                         f"{global_attr_name:<17} "
                         f"value: {actual_global_value:<60} {' '*10} --> OK"
+                    )
+            else: 
+                outcome["status"] = 0
+                outcome.setdefault("errors", []).append(
+                    f"{var_name} {global_attr_name}: NOK"
+                )
+                if verbose:
+                    logging.info(
+                        f"Variable: {var_name:<15} global attribute: "
+                        f"{global_attr_name:<17} "
+                        f"value: {actual_global_value:<60} {' '*10} --> NOK "
+                        f"expected value: {expected_value}"
                     )
 
         for attr_name, expected_value in var_specific_constraints.get(
@@ -855,8 +889,11 @@ def c3s_meta_attributes_exact_values_per_var_name(
                         )
             try:
                 actual_value = np.array(nc_var.getncattr(attr_name))
+                # print(f"attr_name: {attr_name}")
+                # print(f"actual_value: {actual_value}")
+                # print()
             except AttributeError:
-                logging.exception("Exception Received:")
+                # logging.exception("Exception Received:")
                 exceptions = (
                     excep.get("exceptions", {})
                     .get(institute_id, {})
@@ -988,7 +1025,7 @@ def c3s_meta_attributes_exact_values_per_var_name(
                         .get("expected", {})
                     )
 
-                    if str(nc_var.getncattr(attr_name)) != str(
+                    if str(nc_var.getncattr(attr_name)) != in str(
                         exceptions.get(attr_name, "")
                     ):
                         message_type = "errors"
@@ -1537,14 +1574,14 @@ def c3s_data_intervals(
                                 f"dimension '{dim_values.dimensions}' "
                                 f"(expected interval: {expected_value} or "
                                 f"{expected_value*24} {dim_values.units}): "
-                                f"{bad_intervals}"
+                                f"{bad_intervals} (operational)"
                             )
                             if verbose:
                                 logging.error(
                                     f"Variable:  {name:<15}  interval: "
                                     f"{str(dim_values.dimensions):<20} "
                                     f"not matching intervals "
-                                    f"operational, actual interval: "
+                                    f"(operational), actual interval: "
                                     f"{expected_value:<4} {str(dim_values.units):<20} "
                                     f"{' '*2} --> NOK"
                                 )
@@ -1682,10 +1719,24 @@ def c3s_data_ranges(ds: Dataset, spec: dict, excep: dict, verbose, operational) 
                 "Operational mode: Data ranges should follow the described values."
             )
 
+    actual_data_vars = _get_data_vars(ds)
+    data_name = actual_data_vars[0].name
     for name, var_spec in constraints.get("default", {}).items():
         try:
-            values = ds.variables[name][:]
+                        
             bottom, top = var_spec
+            if ( 
+                data_name == "ua100m" 
+                or data_name == "va100m" 
+                ) and name == "height":
+                continue
+            
+            if ( 
+                data_name == "ua100m" 
+                or data_name == "va100m"
+                ) and name == "height_100":
+                name = "height"
+            values = ds.variables[name][:]
             if isinstance(values, MaskedArray):
                 # We don't want masked values to pollute our
                 # conformity test, why we need that, is it by default the values
@@ -2053,75 +2104,75 @@ def c3s_19_units_check(
                     status_flag = False
                     continue
 
-            if standard_name:
-                __std_names_tree = ElementTree.parse(
-                    resource_filename(
-                        "c3schecker", "resources/cf-standard-name-table.xml"
-                    )
-                )
-                for elt in __std_names_tree.iter("entry"):
-                    if elt.attrib["id"] == standard_name:
-                        cfcheck = {
-                            "units": elt.findtext("canonical_units"),
-                            "grib": elt.findtext("grib"),
-                            "amip": elt.findtext("amip"),
-                            "description": elt.findtext("description"),
-                        }
-                u = Units(cfcheck["units"])
-                if u.islatitude:
-                    pass
-                elif u.islongitude:
-                    pass
-                elif var_name == "leadtime":
-                    if str(units_attr) == str(units):
-                        status_flag = True
-                elif var_name == "reftime":
-                    if str(units_attr) == str(units):
-                        status_flag = True
-                elif var_name == "time":
-                    if str(units_attr) == str(units):
-                        status_flag = True
-                elif ds.level_type == "ocean2d":
-                    if str(units_attr) == str(units):
-                        status_flag = True
-                elif str(units_attr) not in str(cfcheck["units"]):
-                    institute_id = ds.institute_id
-                    system = ds.source.split()[0][:-1]
-                    exceptions = (
-                        excep.get("exceptions", {})
-                        .get(institute_id, {})
-                        .get(system, {})
-                        .get("units", {})
-                        .get(var_name, {})
-                    )
-                    if units_attr not in exceptions:
-                        status_flag = False
-                        outcome["status"] = 0
-                        outcome.setdefault("errors", []).append(
-                            f"Variable '{var_name}' (units: {units_attr}): NOK. "
-                            f"Expected CF units {cfcheck['units']}"
-                        )
-                        if verbose:
-                            logging.error(
-                                f"Variable:  {var_name:<15} units: {units_attr:<40} "
-                                f"not correct. Please further check with CF Checks "
-                                f"{' '*16} --> NOK Expected units"
-                                f"{cfcheck['units']}"
-                            )
-                    else:
-                        status_flag = False
-                        outcome.setdefault("warnings", []).append(
-                            f"Variable '{var_name}' (units: {units_attr}): NOK. "
-                            f"Expected CF units {cfcheck['units']}. "
-                            f"Under expection for {institute_id} : {system}"
-                        )
-                        if verbose:
-                            logging.warning(
-                                f"Variable:  {var_name:<15} units: {units_attr:<40} "
-                                f"(under expection for {str(institute_id):<15} : "
-                                f"{str(system):15}) "
-                                f"{' '*10} --> OK, expected CF units {cfcheck['units']}"
-                            )
+            # if standard_name:
+            #     __std_names_tree = ElementTree.parse(
+            #         resource_filename(
+            #             "c3schecker", "resources/cf-standard-name-table.xml"
+            #         )
+            #     )
+            #     for elt in __std_names_tree.iter("entry"):
+            #         if elt.attrib["id"] == standard_name:
+            #             cfcheck = {
+            #                 "units": elt.findtext("canonical_units"),
+            #                 "grib": elt.findtext("grib"),
+            #                 "amip": elt.findtext("amip"),
+            #                 "description": elt.findtext("description"),
+            #             }
+            #     u = Units(cfcheck["units"])
+            #     if u.islatitude:
+            #         pass
+            #     elif u.islongitude:
+            #         pass
+            #     elif var_name == "leadtime":
+            #         if str(units_attr) == str(units):
+            #             status_flag = True
+            #     elif var_name == "reftime":
+            #         if str(units_attr) == str(units):
+            #             status_flag = True
+            #     elif var_name == "time":
+            #         if str(units_attr) == str(units):
+            #             status_flag = True
+            #     elif ds.level_type == "ocean2d":
+            #         if str(units_attr) == str(units):
+            #             status_flag = True
+            #     elif str(units_attr) not in str(cfcheck["units"]):
+            #         institute_id = ds.institute_id
+            #         system = ds.source.split()[0][:-1]
+            #         exceptions = (
+            #             excep.get("exceptions", {})
+            #             .get(institute_id, {})
+            #             .get(system, {})
+            #             .get("units", {})
+            #             .get(var_name, {})
+            #         )
+            #         if units_attr not in exceptions:
+            #             status_flag = False
+            #             outcome["status"] = 0
+            #             outcome.setdefault("errors", []).append(
+            #                 f"Variable '{var_name}' (units: {units_attr}): NOK. "
+            #                 f"Expected CF units {cfcheck['units']}"
+            #             )
+            #             if verbose:
+            #                 logging.error(
+            #                     f"Variable:  {var_name:<15} units: {units_attr:<40} "
+            #                     f"not correct. Please further check with CF Checks "
+            #                     f"{' '*16} --> NOK Expected units"
+            #                     f"{cfcheck['units']}"
+            #                 )
+            #         else:
+            #             status_flag = False
+            #             outcome.setdefault("warnings", []).append(
+            #                 f"Variable '{var_name}' (units: {units_attr}): NOK. "
+            #                 f"Expected CF units {cfcheck['units']}. "
+            #                 f"Under expection for {institute_id} : {system}"
+            #             )
+            #             if verbose:
+            #                 logging.warning(
+            #                     f"Variable:  {var_name:<15} units: {units_attr:<40} "
+            #                     f"(under expection for {str(institute_id):<15} : "
+            #                     f"{str(system):15}) "
+            #                     f"{' '*10} --> OK, expected CF units {cfcheck['units']}"
+            #                 )
             if status_flag:
                 if verbose:
                     logging.info(
@@ -2285,6 +2336,7 @@ def c3s_time_values_check(
         )
         return outcome
 
+    # reft = datetime.datetime.strptime(ds.forecast_reference_time, "%Y-%m-%dT%H:%M:%SZ")
     leadt = ds.variables["leadtime"][:]
     leadt_units = ds.variables["leadtime"].units
 
@@ -2404,6 +2456,8 @@ def c3s_time_values_check(
 
         elif operational and frequency_ok:
             pass
+        elif not operational and frequency_ok:
+            pass
         else:
             # leadtime_ckeck = False
             # status = 1
@@ -2494,6 +2548,8 @@ def c3s_time_values_check(
     # Check that variables time and leadtime are equal
     time = ds.variables["time"][:]
 
+    # units_check = ds.variables["time"].units == ds.variables["reftime"].units
+
     time_unit = Units(ds.variables["time"].units)
     reftime_unit = Units(ds.variables["reftime"].units)
     units_check = time_unit == reftime_unit
@@ -2501,20 +2557,20 @@ def c3s_time_values_check(
     if units_check and np.all(time == ds.variables["reftime"][:] + leadt):
         if leadtime_ckeck:
             outcome.setdefault("info", []).append(
-                f"time == reftime + leadtime, values OK"
+                f"[time == reftime + leadtime], values OK"
             )
             if verbose:
                 logging.info(
-                    f"Variable:  {str('time'):<15} time == reftime + leadtime "
+                    f"Variable:  {str('time'):<15} [time == reftime + leadtime] "
                     f"{' '*59} --> OK"
                 )
         else:
             outcome.setdefault("errors", []).append(
-                f"time == reftime + leadtime, but leadtime values " f"are not correct"
+                f"[time == reftime + leadtime], but leadtime value are not correct
             )
             if verbose:
                 logging.error(
-                    f"Variable:  {str('time'):<15} time == reftime + leadtime "
+                    f"Variable:  {str('time'):<15} [time == reftime + leadtime] "
                     f"but leadtime values are not correct {' '*42} --> NOK"
                 )
     elif not units_check:
@@ -2535,8 +2591,8 @@ def c3s_time_values_check(
         )
         if verbose:
             logging.error(
-                f"Variable:  {str('time'):<15} time != reftime + leadtime "
-                f" {' '*55} --> OK"
+                f"Variable:  {str('time'):<15} [time != reftime + leadtime] "
+                f"{' '*55} --> OK"
             )
 
     # Check that variables leadtime_bnds and time_bnds are equal
@@ -2953,3 +3009,4 @@ def _simple_equality_check(actual, constraints, warning_msgs, error_msgs):
 
 def _get_data_vars(dataset):
     return dataset.get_variables_by_attributes(coordinates=_ncattr_present)
+
