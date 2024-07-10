@@ -827,10 +827,6 @@ def c3s_meta_attributes_exact_values_per_var_name(
         ).items():
             
             actual_global_value = ds.getncattr(global_attr_name)
-            # print(f"attr_name: {global_attr_name}")
-            # print(f"actual_value: {actual_global_value}")
-            # print()
-
             if not operational and global_attr_name == "frequency":
                 if verbose:
                     logging.info(
@@ -889,9 +885,6 @@ def c3s_meta_attributes_exact_values_per_var_name(
                         )
             try:
                 actual_value = np.array(nc_var.getncattr(attr_name))
-                # print(f"attr_name: {attr_name}")
-                # print(f"actual_value: {actual_value}")
-                # print()
             except AttributeError:
                 # logging.exception("Exception Received:")
                 exceptions = (
@@ -1025,7 +1018,7 @@ def c3s_meta_attributes_exact_values_per_var_name(
                         .get("expected", {})
                     )
 
-                    if str(nc_var.getncattr(attr_name)) != in str(
+                    if str(nc_var.getncattr(attr_name)) != str(
                         exceptions.get(attr_name, "")
                     ):
                         message_type = "errors"
@@ -2566,7 +2559,7 @@ def c3s_time_values_check(
                 )
         else:
             outcome.setdefault("errors", []).append(
-                f"[time == reftime + leadtime], but leadtime value are not correct
+                f"[time == reftime + leadtime], but leadtime value are not correct"
             )
             if verbose:
                 logging.error(
