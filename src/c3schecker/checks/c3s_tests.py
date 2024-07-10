@@ -825,7 +825,20 @@ def c3s_meta_attributes_exact_values_per_var_name(
         for global_attr_name, expected_value in var_specific_constraints.get(
             "global", {}
         ).items():
+            
             actual_global_value = ds.getncattr(global_attr_name)
+            # print(f"attr_name: {global_attr_name}")
+            # print(f"actual_value: {actual_global_value}")
+            # print()
+
+            if not operational and global_attr_name == "frequency":
+                if verbose:
+                    logging.info(
+                        f"Variable: {var_name:<15} global attribute: "
+                        f"{global_attr_name:<17} "
+                        f"value: {actual_global_value:<60} {' '*10} --> Not operational "
+                    )
+                continue
 
             if actual_global_value == expected_value:
                 outcome.setdefault("info", []).append(
@@ -876,6 +889,9 @@ def c3s_meta_attributes_exact_values_per_var_name(
                         )
             try:
                 actual_value = np.array(nc_var.getncattr(attr_name))
+                # print(f"attr_name: {attr_name}")
+                # print(f"actual_value: {actual_value}")
+                # print()
             except AttributeError:
                 # logging.exception("Exception Received:")
                 exceptions = (
@@ -1561,14 +1577,14 @@ def c3s_data_intervals(
                                 f"dimension '{dim_values.dimensions}' "
                                 f"(expected interval: {expected_value} or "
                                 f"{expected_value*24} {dim_values.units}): "
-                                f"{bad_intervals}"
+                                f"{bad_intervals} (operational)"
                             )
                             if verbose:
                                 logging.error(
                                     f"Variable:  {name:<15}  interval: "
                                     f"{str(dim_values.dimensions):<20} "
                                     f"not matching intervals "
-                                    f"operational, actual interval: "
+                                    f"(operational), actual interval: "
                                     f"{expected_value:<4} {str(dim_values.units):<20} "
                                     f"{' '*2} --> NOK"
                                 )

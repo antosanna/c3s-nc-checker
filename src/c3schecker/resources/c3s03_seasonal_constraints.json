@@ -2600,7 +2600,7 @@
                 "grid_mapping": "hcrs"
             },
             "global": {
-                "frequency": "day",
+                "frequency": "6hr",
                 "level_type": "surface",
                 "modeling_realm": "atmos"
             }
@@ -2630,7 +2630,7 @@
                 "grid_mapping": "hcrs"
             },
             "global": {
-                "frequency": "day",
+                "frequency": "6hr",
                 "level_type": "surface",
                 "modeling_realm": "atmos"
             }
@@ -2645,7 +2645,7 @@
                 "grid_mapping": "hcrs"
             },
             "global": {
-                "frequency": "day",
+                "frequency": "6hr",
                 "level_type": "surface",
                 "modeling_realm": "atmos"
             }
@@ -3886,7 +3886,7 @@
             "cll": {
                 "with_cell_methods": "leadtime: point",
                 "dimensions": {
-                    "leadtime": 24
+                    "leadtime": 6
                 }
             },
             "evspsblpot": {
@@ -3898,13 +3898,13 @@
             "ts": {
                 "with_cell_methods": "leadtime: point",
                 "dimensions": {
-                    "leadtime": 24
+                    "leadtime": 6
                 }
             },
             "tsn": {
                 "with_cell_methods": "leadtime: point",
                 "dimensions": {
-                    "leadtime": 24
+                    "leadtime": 6
                 }
             },
             "albs": {
@@ -4334,7 +4334,7 @@
         },
         "cll": {
             "cell_methods": "point",
-            "step": 24
+            "step": [6, 24]
         },
         "evspsblpot": {
             "cell_methods": "mean",
@@ -4342,11 +4342,11 @@
         },
         "ts": {
             "cell_methods": "point",
-            "step": 24
+            "step": [3, 6, 24]
         },
         "tsn": {
             "cell_methods": "point",
-            "step": 24
+            "step": [6, 24]
         },
         "albs": {
             "cell_methods": "point",
