@@ -1025,10 +1025,7 @@ def c3s_meta_attributes_exact_values_per_var_name(
                         .get("expected", {})
                     )
 
-                    # if str(nc_var.getncattr(attr_name)) not in str(
-                    #     exceptions.get(attr_name)
-                    # ):
-                    if str(nc_var.getncattr(attr_name)) != str(
+                    if str(nc_var.getncattr(attr_name)) != in str(
                         exceptions.get(attr_name, "")
                     ):
                         message_type = "errors"
@@ -2389,12 +2386,6 @@ def c3s_time_values_check(
     institute_id = ds.institute_id
     system = ds.source.split()[0].split(":")[0]
 
-    exceptions = (
-        excep.get("exceptions", {})
-        .get(institute_id, {})
-        .get(system, {})
-        .get("time_coordinates_values_per_var_name")
-    )
     frequency_ok = False
     # Check the leadtime
     # Case 1: NO ocean variables --> check the leadtime
@@ -2558,18 +2549,11 @@ def c3s_time_values_check(
     time = ds.variables["time"][:]
 
     # units_check = ds.variables["time"].units == ds.variables["reftime"].units
-    
+
     time_unit = Units(ds.variables["time"].units)
     reftime_unit = Units(ds.variables["reftime"].units)
     units_check = time_unit == reftime_unit
 
-    # print(f"ds.variables['time'].units: {ds.variables["time"].units}")
-    # print(f"ds.variables['reftime'].units: {ds.variables["reftime"].units}")
-    # print(f"units_check: {units_check}")
-    # print(f'ds.variables["time"]: {ds.variables["time"][:]}')
-    # print(f'ds.variables["reftime"]: {ds.variables["reftime"][:]}')
-    # print(f'leadt: {leadt}')
-    # print()
     if units_check and np.all(time == ds.variables["reftime"][:] + leadt):
         if leadtime_ckeck:
             outcome.setdefault("info", []).append(
@@ -2582,7 +2566,7 @@ def c3s_time_values_check(
                 )
         else:
             outcome.setdefault("errors", []).append(
-                f"[time == reftime + leadtime], but leadtime value are not correct"
+                f"[time == reftime + leadtime], but leadtime value are not correct
             )
             if verbose:
                 logging.error(
@@ -2608,7 +2592,7 @@ def c3s_time_values_check(
         if verbose:
             logging.error(
                 f"Variable:  {str('time'):<15} [time != reftime + leadtime] "
-                f"{' '*55} --> NOK"
+                f"{' '*55} --> OK"
             )
 
     # Check that variables leadtime_bnds and time_bnds are equal

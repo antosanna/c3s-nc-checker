@@ -1,6 +1,17 @@
 {
     "exceptions": {
-        "ecmf": {},
+        "ecmf": {
+            "SEAS5-v20171101": {
+                "attributes_values_per_var_name": {
+                    "temperature": {
+                        "expected": {"long_name": "Isotherm temperature"}
+                    },
+                    "sigma_theta": {
+                        "expected": {"long_name": "Sigma-theta of sea water"}
+                    }
+                }
+            }
+        },
         "egrr": {
             "HadGEM3-GC3.2-v20200929": {
                 "attributes_values_per_var_name": {
@@ -171,6 +182,9 @@
                             "valid_max": 30.0,
                             "valid_min": 1.0
                         }
+                    },
+                    "temperature": {
+                        "expected": {"units":  "C"}
                     }
                 },
                 "units": {
@@ -514,6 +528,9 @@
                             "valid_min": 1.0,
                             "valid_max": 30.0
                         }
+                    },
+                    "temperature": {
+                        "expected": {"units":  "C"}
                     }
                 },
                 "units": {
