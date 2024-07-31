@@ -288,7 +288,7 @@ def main(
     # Exceptions
     # Load the default exception file
     with open(
-        resource_filename("c3schecker", "resources/c3s01_seasonal_exceptions.json")
+        resource_filename("c3schecker", "resources/c3s03_seasonal_exceptions.json")
     ) as fp:
         c3s_excep = json.load(fp)
         logging.info("Default exceptions loaded")
